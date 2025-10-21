@@ -1,1 +1,2 @@
-# network-model
+# porous-network
+Network model of porous media.

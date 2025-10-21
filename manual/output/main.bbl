@@ -1,0 +1,77 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{aker1998two}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=0bcb4bf0fa477a19a328549171ff4094}{%
+           family={Aker},
+           familyi={A\bibinitperiod},
+           given={Eyvind},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=85215ef0caba9533d995f8f53da07344}{%
+           family={J{Ø}rgen\bibnamedelima M{Å}l{Ø}y},
+           familyi={J\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Knut},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b22c32add9367f01096dac1564673c3}{%
+           family={Hansen},
+           familyi={H\bibinitperiod},
+           given={Alex},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8fb6d32313a52ccf1c1ca4b89a6387a3}{%
+           family={Batrouni},
+           familyi={B\bibinitperiod},
+           given={G\bibnamedelima George},
+           giveni={G\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{f724e7f719b064d408708f2a81458305}
+      \strng{fullhash}{887b73402c40e6bcb0793d04532ba44d}
+      \strng{bibnamehash}{f724e7f719b064d408708f2a81458305}
+      \strng{authorbibnamehash}{f724e7f719b064d408708f2a81458305}
+      \strng{authornamehash}{f724e7f719b064d408708f2a81458305}
+      \strng{authorfullhash}{887b73402c40e6bcb0793d04532ba44d}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transport in porous media}
+      \field{title}{A two-dimensional network simulator for two-phase flow in porous media}
+      \field{volume}{32}
+      \field{year}{1998}
+      \field{pages}{163\bibrangedash 186}
+      \range{pages}{24}
+      \verb{doi}
+      \verb 10.1023/A:1006510106194
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
