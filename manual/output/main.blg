@@ -1,17 +1,9 @@
 [0] Config.pm:307> INFO - This is Biber 2.19
 [0] Config.pm:310> INFO - Logfile is 'output/main.blg'
-[46] biber:340> INFO - === Вт окт 21, 2025, 15:03:08
+[48] biber:340> INFO - === Пт окт 24, 2025, 12:23:43
 [59] Biber.pm:419> INFO - Reading 'output/main.bcf'
-[97] Biber.pm:979> INFO - Found 1 citekeys in bib section 0
-[105] Biber.pm:4419> INFO - Processing section 0
-[113] Biber.pm:4610> INFO - Looking for bibtex file 'references.bib' for section 0
-[116] bibtex.pm:1713> INFO - LaTeX decoding ...
-[158] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
-[189] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[189] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[189] Biber.pm:4239> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[189] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
-[190] bbl.pm:660> INFO - Writing 'output/main.bbl' with encoding 'UTF-8'
-[191] bbl.pm:763> INFO - Output to output/main.bbl
-[191] Biber.pm:131> WARN - BibTeX subsystem: /tmp/biber_tmp_uBMG/33e59b5ca9ec342068223d604c3f8d55_25881.utf8, line 785, warning: 360 characters of junk seen at toplevel
-[191] Biber.pm:133> INFO - WARNINGS: 1
+[99] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[107] bbl.pm:660> INFO - Writing 'output/main.bbl' with encoding 'UTF-8'
+[107] bbl.pm:763> INFO - Output to output/main.bbl
+[107] Biber.pm:131> WARN - The file 'output/main.bcf' does not contain any citations!
+[107] Biber.pm:133> INFO - WARNINGS: 1
