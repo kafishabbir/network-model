@@ -17,12 +17,26 @@
 	\end{enumerate}
 
 
-	What are the featured of Makefile:
+\section{makefilegen program}
+	Makefilegen is a program. This program is an exe file, compiled from a C++ source code. It reads makefilegen-config.txt which cointains information about the sourcecode and generates a Makefile. This makefile eases the process of compilation.
+
+	This must be the file and folder structure \textbf{network-model/} for makefilegen to function properly:
 	\begin{enumerate}
-		\item all: default option:
+		\item makefilegen/
 			\begin{enumerate}
-				\item delete the output filescompile new and run the code
-			\end{enumerate}
+				\item src/
+					\begin{enumerate}
+						\item decl.h: basic declaration file containing basic file and folder names
+						\item main.cpp: contains int main(), uses the Class Menu, and runs the most basic commands from Class Menu, all of which writes some
+						\item menu.cpp
+						\item menu.h
+						\item print.cpp
+						\item print.h
+					\end{enumerate}
+				\item build/
 		\item manual/: documentation.
 		\item run/: temporary files and results.
+		\item src/: the source code.
+		\item Makefile: scripts to ease compilation and running of the program.
+		\item README.md: information for git hub.
 	\end{enumerate}
