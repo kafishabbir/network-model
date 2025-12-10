@@ -1,5 +1,5 @@
 all: run
-	@echo "Makefile generated for porousfluid"
+	@echo "makefilegen.exe(makefilegen-config.txt) -> Makefile"
 
 edit:
 	geany -i src/main.cpp src/decl.h src/print.h src/print.cpp  src/menu.h src/menu.cpp

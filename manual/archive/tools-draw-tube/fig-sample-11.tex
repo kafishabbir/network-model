@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+
+	\fill[cnw] (0,0) rectangle (5, 5);
+	\fill[cw, rounded corners=10pt] (0, 0) -- (2, 1) -- (1.5, 1.5) -- (3.5, 3.5) -- (0, 5) -- (0, 0);
+	\fill[cnw, rounded corners=1pt] (0.8, 0.8) -- (1.1, 1) -- (1.3, 1.2) -- (1.2, 1.2) -- (0.7, 0.9) -- cycle;
+	\fill[cnw, rounded corners=1pt] (0.8, 2.8) -- (1.1, 3) -- (1.2, 3.5) -- (1.0, 3.6) -- (0.6, 3) -- cycle;
+	\fill[pattern={north east lines}] (2,0) rectangle (2.5,5);
+	\draw (2, -0.5) -- (2, 5.5);
+	\draw (2.5, -0.5) -- (2.5, 5.5);
+	\draw[<->] (2, 5.3) -- (2.5, 5.3);
+	\node at (2.25, 5.8) {$\Delta x$};
+	\node at (-1, 0) {$P_{in}(t)$};
+	\node at (6, 0) {$P_{out}$};
+	\node at (-2, 2.5) {$Q=const$};
+
+	\draw[->, draw=cw, line width=4] (-1, 3.5) -- (0, 3.5);
+	\draw[->, draw=cw, line width=4] (-1, 1.5) -- (0, 1.5);
+	\draw[->, draw=cnw, line width=4] (5, 1.5) -- (6, 1.5);
+	\draw[->, draw=cnw, line width=4] (5, 3.5) -- (6, 3.5);
+
+	\draw[] (0,0) -- (5, 0);
+	\draw[] (0,5) -- (5, 5);
+
+	\draw[-, thick] (0.5,4) -- (-0.5,5) node[left] {1};
+	\draw[-, thick] (4.5,4) -- (5.5,5) node[right] {2};
+\end{tikzpicture}

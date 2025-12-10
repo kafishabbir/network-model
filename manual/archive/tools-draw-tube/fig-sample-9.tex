@@ -1,0 +1,273 @@
+\begin{tikzpicture}
+	\tikzmath{
+		\widthpic = 8;
+		\small = \widthpic / 400; %the filling rectangle in the nodes should be a bit submerged
+		\l = 4; %distance between the nodes
+	}
+
+	%CENTRAL NODE PARAMETERS
+	\tikzmath{
+		\r = 0.8;
+	}
+
+	% draw central node
+	\draw[fill=cw] (0, 0) circle (\r);
+
+	\begin{scope}[rotate=45]
+		%characterstics of 2nd node and properties
+		\tikzmath{
+			\d = 0.6; %thickness of the capillary
+		}
+		\tikzmath{
+			\pb = sqrt(\r * \r - \d * \d / 4); % p border
+			\pr = \pb - \small; %p length
+		}
+		\begin{scope}[shift={(\pr, 0)}]
+			%default one
+			\fill[cnw] (0, \d/2) rectangle (\l, -\d/2);
+
+
+
+			\begin{scope}
+				\tikzmath{
+					\pos1 = 0.7;
+					\pos2 = 0.9;
+				}
+				\fill[cw] (\pos1 * \l, \d/2) rectangle (\pos2 * \l, -\d/2);
+			\end{scope}
+
+			%drawing a meniscus
+			\begin{scope}
+				%SET MENISCUS POSITION
+				\tikzmath{
+					\meniscuspos = 0.7; %in 0-1 coordinates
+					\meniscusrot = 0; %0=) 180=(
+				}
+				%drawing meniscus
+				\begin{scope}[shift={(\meniscuspos*\l,0)}]
+					\begin{scope}[rotate=\meniscusrot]
+						\begin{scope}[shift={(-\d/4,0)}]
+							\fill[cw] (0, \d / 2) rectangle (\d/2 + \small, -\d / 2);
+							\fill[cnw] (0, -\d/2) arc(-90:90:\d /2) -- cycle;
+							\draw[] (0, -\d/2) arc(-90:90:\d /2);
+						\end{scope}
+					\end{scope}
+				\end{scope}
+			\end{scope}
+
+
+			%drawing a meniscus
+			\begin{scope}
+				%SET MENISCUS POSITION
+				\tikzmath{
+					\meniscuspos = 0.9; %in 0-1 coordinates
+					\meniscusrot = 180; %0=) 180=(
+				}
+				%drawing meniscus
+				\begin{scope}[shift={(\meniscuspos*\l,0)}]
+					\begin{scope}[rotate=\meniscusrot]
+						\begin{scope}[shift={(-\d/4,0)}]
+							\fill[cw] (0, \d / 2) rectangle (\d/2 + \small, -\d / 2);
+							\fill[cnw] (0, -\d/2) arc(-90:90:\d /2) -- cycle;
+							\draw[] (0, -\d/2) arc(-90:90:\d /2);
+						\end{scope}
+					\end{scope}
+				\end{scope}
+			\end{scope}
+
+
+			\begin{scope}
+				\tikzmath{
+					\pos1 = 0.3;
+					\pos2 = 0.5;
+				}
+				\fill[cw] (\pos1 * \l, \d/2) rectangle (\pos2 * \l, -\d/2);
+			\end{scope}
+
+			%drawing a meniscus
+			\begin{scope}
+				%SET MENISCUS POSITION
+				\tikzmath{
+					\meniscuspos = 0.3; %in 0-1 coordinates
+					\meniscusrot = 0; %0=) 180=(
+				}
+				%drawing meniscus
+				\begin{scope}[shift={(\meniscuspos*\l,0)}]
+					\begin{scope}[rotate=\meniscusrot]
+						\begin{scope}[shift={(-\d/4,0)}]
+							\fill[cw] (0, \d / 2) rectangle (\d/2 + \small, -\d / 2);
+							\fill[cnw] (0, -\d/2) arc(-90:90:\d /2) -- cycle;
+							\draw[] (0, -\d/2) arc(-90:90:\d /2);
+						\end{scope}
+					\end{scope}
+				\end{scope}
+			\end{scope}
+
+
+			%drawing a meniscus
+			\begin{scope}
+				%SET MENISCUS POSITION
+				\tikzmath{
+					\meniscuspos = 0.5; %in 0-1 coordinates
+					\meniscusrot = 180; %0=) 180=(
+				}
+				%drawing meniscus
+				\begin{scope}[shift={(\meniscuspos*\l,0)}]
+					\begin{scope}[rotate=\meniscusrot]
+						\begin{scope}[shift={(-\d/4,0)}]
+							\fill[cw] (0, \d / 2) rectangle (\d/2 + \small, -\d / 2);
+							\fill[cnw] (0, -\d/2) arc(-90:90:\d /2) -- cycle;
+							\draw[] (0, -\d/2) arc(-90:90:\d /2);
+						\end{scope}
+					\end{scope}
+				\end{scope}
+			\end{scope}
+
+
+			%drawing a meniscus
+			\begin{scope}
+				%SET MENISCUS POSITION
+				\tikzmath{
+					\meniscuspos = 0.03; %in 0-1 coordinates
+					\meniscusrot = 180; %0=) 180=(
+				}
+				%drawing meniscus
+				\begin{scope}[shift={(\meniscuspos*\l,0)}]
+					\begin{scope}[rotate=\meniscusrot]
+						\begin{scope}[shift={(-\d/4,0)}]
+							\fill[cw] (0, \d / 2) rectangle (\d/2 + \small, -\d / 2);
+							\fill[cnw] (0, -\d/2) arc(-90:90:\d /2) -- cycle;
+							\draw[] (0, -\d/2) arc(-90:90:\d /2);
+						\end{scope}
+					\end{scope}
+				\end{scope}
+			\end{scope}
+			%draw the main outer borders
+			\draw[] (0, \d/2) -- (\l, \d/2);
+			\draw[] (0, -\d/2) -- (\l, -\d/2);
+
+			%\draw[->, thick] (0.1*\l, 0) -- (0.5*\l, 0);
+			%\node[] at (0.4*\l, -1.5) {$+V_w = 0.3$};
+			%\node[] at (0.4*\l, -2.2) {$+V_{nw} = 0.4$};
+			\draw[fill=black] (0.4*\l, 0) circle (0.1);
+			\draw[fill=black] (0.8*\l, 0) circle (0.1);
+		\end{scope}
+	\end{scope}
+
+
+	\begin{scope}[rotate=135]
+		%characterstics of 2nd node and properties
+		\tikzmath{
+			\d = 0.4; %thickness of the capillary
+		}
+		\tikzmath{
+			\pb = sqrt(\r * \r - \d * \d / 4); % p border
+			\pr = \pb - \small; %p length
+		}
+		\begin{scope}[shift={(\pr, 0)}]
+			%default one
+			\fill[cnw] (0, \d/2) rectangle (\l, -\d/2);
+
+			%draw a slob of rectangle
+			\begin{scope}
+				\tikzmath{
+					\pos1 = 0;
+					\pos2 = 0.8;
+				}
+				\fill[cw] (\pos1 * \l, \d/2) rectangle (\pos2 * \l, -\d/2);
+			\end{scope}
+
+			%drawing a meniscus
+			\begin{scope}
+				%SET MENISCUS POSITION
+				\tikzmath{
+					\meniscuspos = 0.8; %in 0-1 coordinates
+					\meniscusrot = 180; %0=) 180=(
+				}
+				%drawing meniscus
+				\begin{scope}[shift={(\meniscuspos*\l,0)}]
+					\begin{scope}[rotate=\meniscusrot]
+						\begin{scope}[shift={(-\d/4,0)}]
+							\fill[cw] (0, \d / 2) rectangle (\d/2 + \small, -\d / 2);
+							\fill[cnw] (0, -\d/2) arc(-90:90:\d /2) -- cycle;
+							\draw[] (0, -\d/2) arc(-90:90:\d /2);
+						\end{scope}
+					\end{scope}
+				\end{scope}
+			\end{scope}
+
+			%draw the main outer borders
+			\draw[] (0, \d/2) -- (\l, \d/2);
+			\draw[] (0, -\d/2) -- (\l, -\d/2);
+			%\draw[->, thick] (0.1*\l, 0) -- (0.2*\l, 0);
+			%\node[] at (0.4*\l, -1.5) {$+V_{w} = 0.3$};
+		\end{scope}
+	\end{scope}
+
+	%tube
+	\begin{scope}[rotate=-45]
+		%characterstics of 2nd node and properties
+		\tikzmath{
+			\d = 0.8; %thickness of the capillary
+		}
+		\tikzmath{
+			\pb = sqrt(\r * \r - \d * \d / 4); % p border
+			\pr = \pb - \small; %p length
+		}
+		\begin{scope}[shift={(\pr, 0)}]
+			%default one
+			\fill[cnw] (0, \d/2) rectangle (\l, -\d/2);
+
+			%drawing a meniscus
+			\begin{scope}
+				%SET MENISCUS POSITION
+				\tikzmath{
+					\meniscuspos = 0.03; %in 0-1 coordinates
+					\meniscusrot = 180; %0=) 180=(
+				}
+				%drawing meniscus
+				\begin{scope}[shift={(\meniscuspos*\l,0)}]
+					\begin{scope}[rotate=\meniscusrot]
+						\begin{scope}[shift={(-\d/4,0)}]
+							\fill[cw] (0, \d / 2) rectangle (\d/2 + \small, -\d / 2);
+							\fill[cnw] (0, -\d/2) arc(-90:90:\d /2) -- cycle;
+							\draw[] (0, -\d/2) arc(-90:90:\d /2);
+						\end{scope}
+					\end{scope}
+				\end{scope}
+			\end{scope}
+
+
+			%draw the main outer borders
+			\draw[] (0, \d/2) -- (\l, \d/2);
+			\draw[] (0, -\d/2) -- (\l, -\d/2);
+			%\draw[<-, thick] (0.1*\l, 0) -- (0.4*\l, 0);
+			%\node[] at (0.4*\l, -1.5) {$-V_{nw} = 0.4$};
+		\end{scope}
+	\end{scope}
+
+
+
+
+	\begin{scope}[rotate=-135]
+		%characterstics of 2nd node and properties
+		\tikzmath{
+			\d = 0.8; %thickness of the capillary
+		}
+		\tikzmath{
+			\pb = sqrt(\r * \r - \d * \d / 4); % p border
+			\pr = \pb - \small; %p length
+		}
+		\begin{scope}[shift={(\pr, 0)}]
+			%default one
+			\fill[cw] (0, \d/2) rectangle (\l, -\d/2);
+
+			%draw the main outer borders
+			\draw[] (0, \d/2) -- (\l, \d/2);
+			\draw[] (0, -\d/2) -- (\l, -\d/2);
+			%\draw[<-, thick] (0.1*\l, 0) -- (0.4*\l, 0);
+			%\node[] at (0.4*\l, -1.5) {$-V_w = 0.6$};
+		\end{scope}
+	\end{scope}
+
+\end{tikzpicture}
