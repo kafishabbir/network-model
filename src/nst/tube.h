@@ -12,7 +12,7 @@ namespace nst
 		double radius;
 		double length;
 		int fluid_first;
-		std::vector<double> mpos;
+		std::vector<double> mpos; //meniscus positions
 	};
 
 }

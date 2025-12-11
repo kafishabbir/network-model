@@ -11,8 +11,8 @@ namespace generator
 
 	public:
 
-	static std::pair<std::vector<nst::Node>, std::vector<nst::Tube>>
-	square_lattice(int tube_nrows, int tube_ncols);
+		static std::pair<std::vector<nst::Node>, std::vector<nst::Tube>>
+			square_lattice(const int n_rows_tube, const int n_cols_tube);
 	};
 
 

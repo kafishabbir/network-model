@@ -1,39 +1,39 @@
 #include "generator/ic.h"
 
-int calculate_total_nodes(int nrows, int ncols)
+
+std::vector<nst::Node> generate_v_nodes_for_square_lattice(
+	const int n_rows_tube,
+	const int n_cols_tube
+)
 {
-	int cols_on_even_rows = ncols / 2 + 1;
-	int cols_on_odd_rows = (ncols + 1) / 2;
+	const int n_cols_node_at_even_rows = n_cols_tube / 2 + 1;
+	const int n_cols_node_at_odd_rows  = (n_cols_tube + 1) / 2;
 
-	int even_rows = nrows / 2 + 1;
-	int odd_rows = (nrows + 1) / 2;
+	const int n_even_rows_node = n_rows_tube / 2 + 1;
+	const int n_odd_rows_node = (n_rows_tube + 1) / 2;
 
-	return even_rows * cols_on_even_rows + odd_rows * cols_on_odd_rows;
-}
+	const int n_nodes =
+		n_cols_node_at_even_rows * n_even_rows_node +
+		n_cols_node_at_odd_rows * n_odd_rows_node;
 
-std::pair<std::vector<nst::Node>, std::vector<nst::Tube>>
-	generator::Ic::square_lattice(int nrows, int ncols)
-{
-	const int n_nodes = calculate_total_nodes(nrows, ncols);
-	std::vecotor<nst::Node> v_nodes(n_nodes);
+	std::vector<nst::Node> v_nodes(n_nodes);
+	const int n_rows_node = n_rows_tube + 1;
 
-	const int nodes_on_even_rows = ncols / 2 + 1;
-	const int nodes_on_odd_rows = (ncols + 1) / 2;
+	const double n_tubes_max_in_xy = std::max<double>(n_rows_tube, n_cols_tube);
+	const double displacement_step = 1.0 / n_tubes_max_in_xy;
+	// makes the longest side length of the system equal to 1.0
 
-	const int n_rows_of_nodes = nrows + 1;
-
-	const double max_n_tubes_in_xy = std::max<double>(nrows, ncols);
-	const double displacement_step = 1.0 / max_n_tubes_in_xy;
-
-	double y = ncols * displacement_step;
-	for(int i = 0, node_i = 0; i < n_rows_of_nodes; ++ i)
+	double y = n_rows_tube * displacement_step;
+	for(int i = 0, node_id = 0; i < n_rows_node; ++ i)
 	{
-		const bool even_row = (nrows % 2) == 0);
-		const int n_cols = (even_row ? nodes_on_even_rows : nodes_on_odd_rows);
-		double x = (even_row ? 0 : displacement_step);
-		for(int j = 0; j < n_cols; ++ j)
+		const bool is_it_even_row = ((i % 2) == 0);
+		const int n_cols_node =
+			(is_it_even_row ? n_cols_node_at_even_rows : n_cols_node_at_odd_rows);
+		double x = (is_it_even_row ? 0 : displacement_step);
+		for(int j = 0; j < n_cols_node ; ++ j)
 		{
-			auto& node = v_nodes[node_i++];
+			auto& node = v_nodes[node_id];
+			++ node_id;
 			node.x = x;
 			node.y = y;
 			x += 2.0 * displacement_step;
@@ -41,9 +41,49 @@ std::pair<std::vector<nst::Node>, std::vector<nst::Tube>>
 		y -= displacement_step;
 	}
 
+	return v_nodes;
+}
 
+std::vector<nst::Tube> generate_v_tubes_for_square_lattice(
+	const int n_rows_tube,
+	const int n_cols_tube
+)
+{
+	const int n_cols_node_at_even_rows = n_cols_tube / 2 + 1;
+	int node_up = 0;
+	int node_down = n_cols_node_at_even_rows;
+	const int n_tubes = n_rows_tube * n_cols_tube;
+	std::vector<nst::Tube> v_tubes(n_tubes);
+	for(int i = 0; i < n_rows_tube; ++ i)
+	{
+		int up_adder = (i + 1) % 2;
+		int down_adder = i % 2;
+		for(int j = 0; j < n_cols_tube; ++ j)
+		{
+			auto& tube = v_tubes[i * n_cols_tube + j];
+			tube.id_node_first = node_up;
+			tube.id_node_second = node_down;
 
+			node_up += up_adder;
+			node_down += down_adder;
 
+			up_adder = (up_adder + 1) % 2;
+			down_adder = (down_adder + 1) % 2;
+		}
+		node_up += up_adder;
+		node_down += down_adder;
+	}
 
+	return v_tubes;
+}
 
+std::pair<std::vector<nst::Node>, std::vector<nst::Tube>>
+	generator::Ic::square_lattice(const int n_rows_tube, const int n_cols_tube)
+{
+	const auto& v_nodes =
+		generate_v_nodes_for_square_lattice(n_rows_tube, n_cols_tube);
+	const auto& v_tubes =
+		generate_v_tubes_for_square_lattice(n_rows_tube, n_cols_tube);
+
+	return {v_nodes, v_tubes};
 }
