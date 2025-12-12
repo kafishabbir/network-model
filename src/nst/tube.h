@@ -13,6 +13,7 @@ namespace nst
 		double length;
 		int fluid_first;
 		std::vector<double> mpos; //meniscus positions
+		std::vector<double> mpos_long() const;
 	};
 
 }

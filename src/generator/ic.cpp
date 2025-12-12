@@ -74,6 +74,10 @@ std::vector<nst::Tube> generate_v_tubes_for_square_lattice(
 		node_down += down_adder;
 	}
 
+	for(auto& tube: v_tubes)
+	{
+		tube.radius = 0.01;
+	}
 	return v_tubes;
 }
 
