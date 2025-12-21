@@ -1,0 +1,219 @@
+\documentclass[
+	12pt
+] {article}
+
+\usepackage[
+	a4paper,
+	left=3.5cm,
+	right=1.5cm,
+	top=3cm,
+	bottom=3.2cm,
+	headheight=1cm,
+	footskip=1.6cm
+] {geometry} %for setting margin
+
+\usepackage{fancyhdr} %for header and footers
+\usepackage{parskip} %for leaving some space after paragraphs
+
+
+% Math
+\usepackage{mathtools} %helps to number equations
+\usepackage{siunitx} % Units of measurement
+
+
+% For graphs and advanced diagrams
+\usepackage{tikz} %the drawing library
+\usetikzlibrary{positioning} %some auxilary to the drawing library
+\usetikzlibrary{math} %helps to define variables in the tikz
+\usetikzlibrary{patterns} %helps to define variables in the tikz
+\usetikzlibrary{patterns.meta} %helps to define variables in the tikz
+\usetikzlibrary{hobby}
+
+% Basic graphics
+\usepackage{float} %to force the figure to be in a place among the text
+\usepackage{graphicx} %for include graphics
+\usepackage{caption} %better referencing to labels
+\usepackage{subcaption}  %helps with multiple pictures in a figure
+
+
+% Language and Font package: COMMENT THESE FOR ENGLISH ONLY
+\usepackage[T2A]{fontenc} %[RUS] loads cyrillic characters
+\usepackage[russian]{babel} %[RUS] changes date heading 'abstract' to Russian
+\usepackage[utf8]{inputenc} %[RUS] to force utf-8 encoding
+\usepackage{hyperref}
+
+%-----------------------------------------------------------------------
+\tikzset{
+    every path/.style={
+        line width=0.8pt % New default thickness
+    }
+}
+\usetikzlibrary{patterns.meta}
+
+
+\definecolor{cw}{rgb}{0.4, 0.4, 0.4}
+\definecolor{cdw}{rgb}{0.4, 0.4, 0.4}
+
+\definecolor{cnw}{rgb}{0.8, 0.8, 0.8}
+\definecolor{cdnw}{rgb}{0.8, 0.8, 0.8}
+
+\definecolor{cbg}{rgb}{0.95, 0.9, 0.5}
+
+\begin{document}
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-1}
+		\end{subfigure}
+		\caption{Sample picture generated from tikz}
+	\end{figure}
+
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-2}
+		\end{subfigure}
+		\caption{Sample picture generated from tikz}
+	\end{figure}
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-3}
+		\end{subfigure}
+		\caption{Sample picture generated from tikz}
+	\end{figure}
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-4}
+		\end{subfigure}
+		\caption{Sample picture generated from tikz}
+	\end{figure}
+
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-5}
+		\end{subfigure}
+		\caption{Sample picture generated from tikzdd}
+	\end{figure}
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-6}
+		\end{subfigure}
+		\caption{Sample picture generated from tikzdd}
+	\end{figure}
+
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-7}
+		\end{subfigure}
+		\caption{Sample picture generated from tikzdd}
+	\end{figure}
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-8}
+		\end{subfigure}
+		\caption{Sample picture generated from tikzdd}
+	\end{figure}
+
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-9}
+		\end{subfigure}
+		\caption{Sample picture generated from tikzdd}
+	\end{figure}
+
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-10}
+		\end{subfigure}
+		\caption{Sample picture generated from tikzdd}
+	\end{figure}
+
+	\newpage \begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\centering
+			\input{fig-sample-11}
+		\end{subfigure}
+		\caption{Sample picture generated from tikzdd}
+	\end{figure}
+	\[
+		Q_1 + Q_2 = Q_3 + Q_4
+	\]
+
+	\[
+		q = -\frac{k}{\mu} \nabla P
+	\]
+	\[
+		k = k(S), \quad P_c =  P_c(S)
+	\]
+	\[
+		S = S_{wetting}
+	\]
+
+	\[
+		q = Q / A
+	\]
+
+	\begin{equation}
+        P_c = P_c(S, \xi), \quad k = k(S, \xi)
+    \end{equation}
+    \begin{equation} \label{eq:kondaurov-diff-equ}
+        \frac{\partial \xi}{\partial t} = \Omega(S, \xi)
+    \end{equation}
+    \begin{equation} \label{eq:positive-dissipation-of-cap-energy}
+        \frac{\partial \xi}{\partial t} = - C\frac{\partial \psi}{\partial \xi}
+    \end{equation}
+     \begin{equation} \label{eq:kondaurov-helmholtz}
+        \psi = \frac{1}{2} \beta \xi^2 + \frac{1}{2} MS_{nw}^2 - \alpha \xi S_{nw} + \gamma S_{nw}
+    \end{equation}
+    \begin{equation}\label{eq:series}
+        \frac{\beta}{\alpha}\xi = (1 - S) + \tau\frac{\partial S}{\partial t} - \tau^2\frac{\partial^2 S}{\partial t^2} + \tau^3\frac{\partial^3 S}{\partial t^3} - \cdots
+    \end{equation}
+    \begin{equation}
+        \eta = S + \tau \frac{\partial S}{\partial t} = 2S + \frac{\beta}{\alpha} \xi - 1
+    \end{equation}
+    \begin{equation}
+        k_w(S, \xi) = k_w^e(2S + \frac{\beta}{\alpha} \xi - 1)
+    \end{equation}
+    \begin{equation}
+        k_{nw}(S, \xi) = k_{nw}^e(2 - 2S - \frac{\beta}{\alpha} \xi)
+    \end{equation}
+
+	\newpage
+    $S$ -- насыщенность смачивающей жидкости \\
+    $k$ -- проницаемость \\
+    $P_c$ -- капиллярное давление \\
+    $\xi$ -- параметр капиллярной неравновесности \\
+    $\psi$ -- свободная энергия Гельмгольца \\
+    $e$ -- равновесные фазовые проницаемости \\
+    $C$, $\alpha$, $\beta$, $\gamma$, $M$ -- положительные константы \\
+
+\end{document}

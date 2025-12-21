@@ -1,0 +1,48 @@
+\documentclass[
+	12pt
+] {article}
+
+\usepackage[
+	a4paper,
+	landscape,
+	left=2cm,
+	right=2cm,
+	top=2cm,
+	bottom=2cm
+] {geometry} %for setting margin
+
+% Math
+\usepackage{mathtools} %helps to number equations
+\usepackage{siunitx} % Units of measurement
+
+% For graphs and advanced diagrams
+\usepackage{tikz} %the drawing library
+\usetikzlibrary{positioning} %some auxilary to the drawing library
+\usetikzlibrary{math} %helps to define variables in the tikz
+
+% Basic graphics
+\usepackage{float} %to force the figure to be in a place among the text
+\usepackage{graphicx} %for include graphics
+\usepackage{caption} %better referencing to labels
+
+% Language and Font package: COMMENT THESE FOR ENGLISH ONLY
+\usepackage[T2A]{fontenc} %[RUS] loads cyrillic characters
+\usepackage[russian, english]{babel} %[RUS] changes date heading 'abstract' to Russian
+\usepackage[utf8]{inputenc} %[RUS] to force utf-8 encoding
+\usepackage{hyperref}
+
+%-----------------------------------------------------------------------
+\tikzset{
+    every path/.style={
+        line width=0.8pt % New default thickness
+    }
+}
+
+\definecolor{cw}{rgb}{0.4, 0.4, 0.4}
+\definecolor{cnw}{rgb}{0.8, 0.8, 0.8}
+
+\newcommand{\imagewidthscale}{20} % all images made by the c++ code has width of 1 cm
+
+\begin{document}
+	\input{listfigures}
+\end{document}

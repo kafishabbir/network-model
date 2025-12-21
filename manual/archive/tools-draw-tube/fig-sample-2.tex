@@ -1,0 +1,156 @@
+\begin{tikzpicture}
+\begin{scope}[rotate=-90]
+	\tikzmath{
+		\widthpic = 8;
+		\small = \widthpic / 400; %the filling rectangle in the nodes should be a bit submerged
+		\l = 4; %distance between the nodes
+	}
+
+	%CENTRAL NODE PARAMETERS
+	\tikzmath{
+		\r = 0.8;
+	}
+
+	% draw central node
+	\draw[fill=cnw] (0, 0) circle (\r);
+	\node[] at (0, 0) {$\nu_0$};
+	\begin{scope}[rotate=45]
+		%characterstics of 2nd node and properties
+		\tikzmath{
+			\d = 0.6; %thickness of the capillary
+		}
+		\tikzmath{
+			\pb = sqrt(\r * \r - \d * \d / 4); % p border
+			\pr = \pb - \small; %p length
+		}
+		\begin{scope}[shift={(\pr, 0)}]
+			\draw[dashed] (\l + \r/2.5, 0) circle (\r/1.5);
+			%default one
+			\fill[cnw] (0, \d/2) rectangle (\l, -\d/2);
+
+
+			%draw the main outer borders
+			\draw[] (0, \d/2) -- (\l, \d/2);
+			\draw[] (0, -\d/2) -- (\l, -\d/2);
+			\draw[->, thick] (0.1*\l, 0) -- (0.5*\l, 0);
+			\node[] at (0.25*\l, -0.6) {$Q_1$};
+			\node[] at (1.05*\l, 0) {$\nu_1$};
+		\end{scope}
+	\end{scope}
+
+
+	\begin{scope}[rotate=135]
+		%characterstics of 2nd node and properties
+		\tikzmath{
+			\d = 0.4; %thickness of the capillary
+		}
+		\tikzmath{
+			\pb = sqrt(\r * \r - \d * \d / 4); % p border
+			\pr = \pb - \small; %p length
+		}
+		\begin{scope}[shift={(\pr, 0)}]
+			\draw[dashed] (\l + \r/4, 0) circle (\r/2);
+			%default one
+			\fill[cnw] (0, \d/2) rectangle (\l, -\d/2);
+
+
+
+
+			%draw the main outer borders
+			\draw[] (0, \d/2) -- (\l, \d/2);
+			\draw[] (0, -\d/2) -- (\l, -\d/2);
+			\draw[->, thick] (0.1*\l, 0) -- (0.2*\l, 0);
+			\node[] at (0.25*\l, -0.6) {$Q_2$};
+			\node[] at (1.05*\l, 0) {$\nu_2$};
+			\draw[] (0.8 * \l, 0) -- (0.8 * \l, 2*\d) node[left] {$2$};
+		\end{scope}
+	\end{scope}
+
+	%tube
+	\begin{scope}[rotate=-45]
+		%characterstics of 2nd node and properties
+		\tikzmath{
+			\d = 0.8; %thickness of the capillary
+		}
+		\tikzmath{
+			\pb = sqrt(\r * \r - \d * \d / 4); % p border
+			\pr = \pb - \small; %p length
+		}
+		\begin{scope}[shift={(\pr, 0)}]
+			\draw[dashed] (\l + \r/2.5, 0) circle (\r/1.5);
+			%default one
+			\fill[cnw] (0, \d/2) rectangle (\l, -\d/2);
+
+			%~ %draw a slob of rectangle
+			%~ \begin{scope}
+				%~ \tikzmath{
+					%~ \pos1 = 0;
+					%~ \pos2 = 0.4;
+				%~ }
+				%~ \fill[cdnw] (\pos1 * \l, \d/2) rectangle (\pos2 * \l, -\d/2);
+			%~ \end{scope}
+
+
+			%draw the main outer borders
+			\draw[] (0, \d/2) -- (\l, \d/2);
+			\draw[] (0, -\d/2) -- (\l, -\d/2);
+			\draw[<-, thick] (0.1*\l, 0) -- (0.4*\l, 0);
+			\node[] at (0.25*\l, -0.8) {$Q_3$};
+			\node[] at (1.05*\l, 0) {$\nu_3$};
+		\end{scope}
+	\end{scope}
+
+
+
+
+	\begin{scope}[rotate=-135]
+		%characterstics of 2nd node and properties
+		\tikzmath{
+			\d = 0.8; %thickness of the capillary
+		}
+		\tikzmath{
+			\pb = sqrt(\r * \r - \d * \d / 4); % p border
+			\pr = \pb - \small; %p length
+		}
+		\begin{scope}[shift={(\pr, 0)}]
+			\draw[dashed] (\l + \r/2.5, 0) circle (\r/1.5);
+			%default one
+			\fill[cw] (0, \d/2) rectangle (\l, -\d/2);
+
+			%draw a slob of rectangle
+			\begin{scope}
+				\tikzmath{
+					\pos1 = 0;
+					\pos2 = 0.2;
+				}
+				\fill[cnw] (\pos1 * \l, \d/2) rectangle (\pos2 * \l, -\d/2);
+			\end{scope}
+
+			%drawing a meniscus
+			\begin{scope}
+				%SET MENISCUS POSITION
+				\tikzmath{
+					\meniscuspos = 0.2; %in 0-1 coordinates
+					\meniscusrot = 0; %0=) 180=(
+				}
+				%drawing meniscus
+				\begin{scope}[rotate=\meniscusrot, shift={(\meniscuspos*\l - \d/4,0)}]
+					\fill[cw] (0, \d / 2) rectangle (\d/2, -\d / 2);
+					\fill[cnw] (0, -\d/2) arc(-90:90:\d /2) -- cycle;
+					\draw[] (0, -\d/2) arc(-90:90:\d /2);
+				\end{scope}
+				\draw[] (\meniscuspos * \l + \d/4, \d/4) -- (\meniscuspos * \l + \d/4, + 2*\d) node[left] {$3$};
+			\end{scope}
+
+
+			%draw the main outer borders
+			\draw[] (0, \d/2) -- (\l, \d/2);
+			\draw[] (0, -\d/2) -- (\l, -\d/2);
+			\draw[<-, thick] (0.1*\l, 0) -- (0.4*\l, 0);
+			\node[] at (0.25*\l, -0.8) {$Q_4$};
+			\node[] at (1.05*\l, 0) {$\nu_4$};
+			\draw[] (0.8 * \l, 0) -- (0.8 * \l, - 2*\d) node[right] {$1$};
+		\end{scope}
+	\end{scope}
+\end{scope}
+\end{tikzpicture}

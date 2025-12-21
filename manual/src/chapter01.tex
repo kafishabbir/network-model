@@ -1,0 +1,42 @@
+\section{Organizational structure}
+	Contents of \textbf{~/porous-media/}
+	\begin{enumerate}
+		\item materials/: contains articles, books, videos.
+		\item network-model/: the code and its documentation.
+		\item work-record/: old results and calculations.
+	\end{enumerate}
+
+	Contents of \textbf{~/porous-media/network-model/}:
+	\begin{enumerate}
+		\item makefilegen/: this is the makefile generator program.
+		\item manual/: documentation.
+		\item run/: temporary files and results.
+		\item src/: the source code.
+		\item Makefile: scripts to ease compilation and running of the program.
+		\item README.md: information for git hub.
+	\end{enumerate}
+
+
+\section{makefilegen program}
+	Makefilegen is a program. This program is an exe file, compiled from a C++ source code. It reads makefilegen-config.txt which cointains information about the sourcecode and generates a Makefile. This makefile eases the process of compilation.
+
+	This must be the file and folder structure \textbf{network-model/} for makefilegen to function properly:
+	\begin{enumerate}
+		\item makefilegen/
+			\begin{enumerate}
+				\item src/
+					\begin{enumerate}
+						\item decl.h: basic declaration file containing basic file and folder names
+						\item main.cpp: contains int main(), uses the Class Menu, and runs the most basic commands from Class Menu, all of which writes some
+						\item menu.cpp
+						\item menu.h
+						\item print.cpp
+						\item print.h
+					\end{enumerate}
+				\item build/
+		\item manual/: documentation.
+		\item run/: temporary files and results.
+		\item src/: the source code.
+		\item Makefile: scripts to ease compilation and running of the program.
+		\item README.md: information for git hub.
+	\end{enumerate}

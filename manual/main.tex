@@ -1,0 +1,128 @@
+\documentclass[
+	11pt,
+	twoside
+] {book}
+	%openright
+\usepackage[
+	a4paper,
+	inner=2.5cm,
+	outer=1.5cm,
+	top=3cm,
+	bottom=3.2cm,
+	headheight=1cm,
+	footskip=1.6cm
+] {geometry} %for setting margin
+
+
+%Language
+\usepackage[T2A]{fontenc} %[RUS] loads cyrillic characters
+\usepackage[russian, english]{babel} %[RUS] changes date heading 'abstract' to Russian
+\usepackage[utf8]{inputenc} %[RUS] to force utf-8 encoding
+
+%\usepackage{afterpage}
+%\afterpage{\clearpage}
+
+%Header and footer
+\usepackage{fancyhdr} %for header and footers
+\pagestyle{fancy}
+
+
+%Paragraph
+\usepackage{parskip} %for leaving some space after paragraphs
+%\usepackage{indentfirst}
+%\setlength{\parindent}{2em} %paragraph indent length
+
+
+% Math
+\usepackage{mathtools} % helps to number equations
+\usepackage{siunitx} % Units of measurement
+%\sisetup{detect-all,mode=text} % Allow Cyrillic in units
+%\sisetup{locale = RU}   % Use russiky system of units -- does not work
+%\DeclareSIUnit{\kilogram}{\text{кг}}
+%\DeclareSIUnit{\meter}{\text{м}}
+%\DeclareSIUnit{\second}{\text{с}}
+
+%\sisetup{output-decimal-marker = {,}} %[RUS] changes all ordinary decimal separator to rassiky commas
+
+
+% Basic graphics
+\usepackage{float} %to force the figure to be in a place among the text
+\usepackage{graphicx} %for include graphics
+\usepackage{caption} %better referencing to labels
+\usepackage{subcaption}  %helps with multiple pictures in a figure
+%\renewcommand\thesubfigure{\asbuk{subfigure}} %[RUS] for renaming subfigures to russian
+\graphicspath{{figures/}}
+
+
+% For graphs and advanced diagrams
+\usepackage{tikz} %the drawing library
+\usetikzlibrary{positioning} %some auxilary to the drawing library
+\usetikzlibrary{math} %helps to define variables in the tikz
+%\usetikzlibrary{patterns}
+\usetikzlibrary{patterns.meta}
+\usetikzlibrary{patterns}
+
+
+%tables
+\usepackage{array}    % For better column
+\renewcommand{\arraystretch}{1.8}
+
+
+%Hyper ref
+\usepackage{hyperref}
+
+
+%Title page
+\usepackage{authblk} %authors and their affiliations
+%-----------------------------------------------------------------------
+\definecolor{cw}{rgb}{0.65, 0.85, 1.0}
+\definecolor{cnw}{rgb}{1.0, 0.55, 0.55}
+\tikzset{
+    every path/.style={
+        line width=0.8pt % New default thickness
+    }
+}
+
+
+\author[1]{Shabbir Kafi Ul}
+\affil[1]{Московский Физико-Технический Институт (национальный исследовательский университет)}
+
+\title{Network model for Two-phase flow simulation in porous media}
+%\fancyhead{}
+%\fancyhead[L]{Shabbir K.}
+%\fancyhead[C]{}
+%\fancyhead[R]{\the\year}
+
+% Bibliography
+\usepackage[backend=biber, style=authoryear]{biblatex}
+\addbibresource{references.bib} % Your bibliography file
+
+
+\begin{document}
+\maketitle
+\frontmatter
+\tableofcontents
+
+\mainmatter
+\chapter{one}
+	\input{src/chapter01}
+
+\chapter{two}
+	\input{src/chapter02}
+
+\chapter{three}
+	\input{src/chapter03}
+
+\chapter{four}
+	\input{src/chapter04}
+
+\chapter{five}
+	\input{src/chapter05}
+
+\chapter{six}
+	\input{src/chapter06}
+
+\backmatter
+\printbibliography
+
+\end{document}
