@@ -1,0 +1,41 @@
+#ifndef VISUALIZE_LATEX_BASIC_COMMANDS_H
+#define VISUALIZE_LATEX_BASIC_COMMANDS_H
+
+#include <string>
+#include <sstream>
+
+namespace visualize
+{
+	class LatexBasicCommands
+	{
+
+	public:
+		// command_name{command_body}
+		static std::string command(
+			const std::string& command_name,
+			const std::string& command_body = ""
+		);
+
+		// begin{scope_name}[scope_arguments]
+		// 		commands...
+		// end{scope_name}
+		static std::string scope(
+			const std::string& scope_name,
+			const std::string& commands,
+			const std::string& scope_arguments = ""
+		);
+
+		// begin{figure}[H]
+		//   centering
+		//   input{figure/fig-1}
+		//   caption{}
+		// end{figure}
+		static std::string begin_end_figure_with_captions(
+			const std::string& file_name_of_tikz_code_for_input,
+			const std::string& caption
+		);
+
+	};
+}
+
+#endif

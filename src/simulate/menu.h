@@ -1,0 +1,29 @@
+#ifndef SIMULATE_MENU_H
+#define SIMULATE_MENU_H
+
+//#include "ic/flow-visualization.h"
+#include "ic/displacement-test.h"
+
+#include "simulate/step-preparation.h"
+#include "simulate/step1-pressure.h"
+#include "simulate/step2-flow-rate.h"
+#include "simulate/step3-velocity.h"
+#include "simulate/step4-time-step.h"
+#include "simulate/step5-integration.h"
+
+#include "visualize/flow.h"
+
+namespace simulate
+{
+
+	class Menu
+	{
+
+	public:
+
+		static void displace();
+		static void generate_and_plot();
+	};
+}
+
+#endif
