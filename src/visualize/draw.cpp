@@ -1,6 +1,30 @@
 #include "visualize/draw-shapes.h"
 
-std::string visualize::DrawShapes::mpos_horizontal_rectangles(
+std::string visualize::Draw::arrow(
+	const double x_begin,
+	const double x_end,
+	const double y
+)
+{
+	std::stringstream ss;
+	ss << "\\draw[->] (" << x_begin << ", " << y << ")";
+	ss << " -- ";
+	ss << "(" << x_end << ", " << y << ");";
+	return ss.str();
+}
+
+
+static std::string visualize::Draw::num(double val)
+{
+	std::stringstream ss;
+	ss << "\\num{";
+	ss << std::setprecision(3) << val;
+	ss << "}";
+	return ss.str();
+}
+
+
+std::string visualize::Draw::mpos_horizontal_rectangles(
 	const nst::Tube& tube,
 	const std::vector<std::string>& colors
 )
@@ -27,7 +51,7 @@ std::string visualize::DrawShapes::mpos_horizontal_rectangles(
 }
 
 
-std::string visualize::DrawShapes::circle(
+std::string visualize::Draw::circle(
 	const double x,
 	const double y,
 	const double radius
@@ -38,7 +62,7 @@ std::string visualize::DrawShapes::circle(
 	return ss.str();
 }
 
-std::string visualize::DrawShapes::node(
+std::string visualize::Draw::node(
 	const double x,
 	const double y,
 	const std::string& node_text

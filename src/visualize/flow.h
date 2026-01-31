@@ -9,6 +9,7 @@ namespace visualize
 {
 	class Flow
 	{
+
 		static const bool PLOT_FEATURE_LABEL_NODE_NUMBER;
 		static const bool PLOT_FEATURE_LABEL_TUBE_NUMBER;
 		static const bool PLOT_FEATURE_LABEL_TUBE_FLOW_RATE;

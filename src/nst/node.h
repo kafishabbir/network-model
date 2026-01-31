@@ -7,12 +7,21 @@ namespace nst
 {
 	class Node
 	{
+		struct Visual
+		{
+			double x;
+			double y;
+			double radius;
+		};
+
 	public:
 		double x;
 		double y;
 		double radius;
 		double pressure;
 		bool is_open_boundary;
+
+		Visual visual;
 
 		double distance(const Node& node) const;
 		double relative_angle(const Node& node) const;

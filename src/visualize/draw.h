@@ -3,10 +3,11 @@
 
 #include "nst/tube.h"
 #include "visualize/tikz-draw.h"
+#include <iomanip>
 
 namespace visualize
 {
-	class DrawShapes
+	class Draw
 	{
 
 	public:
@@ -25,6 +26,14 @@ namespace visualize
 			const double x,
 			const double y,
 			const std::string& node_text
+		);
+
+		static std::string num(double val);
+
+		static std::string arrow(
+			const double x_begin,
+			const double x_end,
+			const double y
 		);
 	};
 
