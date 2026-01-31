@@ -18,6 +18,11 @@ namespace nst
 		Tube();
 
 		std::vector<double> mpos_long() const;
+		std::vector<double> mpos_long_displaced_scaled(
+			const double p1,
+			const double p2
+		) const;
+
 		int id_other_node(const int id_this_node) const;
 		double mu(const double mu1, const double mu2) const;
 	};

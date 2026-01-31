@@ -24,7 +24,7 @@ void
 
 void io::FileWrite::write_to_particular_folder_in_run(
 	const std::vector<std::pair<std::string, std::string>>&
-	vec_file_name_and_content,
+	file_name_and_content_v,
 	const std::string& folder_or_result_name
 )
 {
@@ -33,7 +33,7 @@ void io::FileWrite::write_to_particular_folder_in_run(
 
 	perform_folder_check_and_clear(folder_path_output);
 
-	for(const auto& [file_name, file_content]: vec_file_name_and_content)
+	for(const auto& [file_name, file_content]: file_name_and_content_v)
 	{
 		std::ofstream fout(folder_path_output + file_name);
 		fout << file_content;
@@ -42,8 +42,8 @@ void io::FileWrite::write_to_particular_folder_in_run(
 
 void io::FileWrite::flow(
 	const std::vector<std::pair<std::string, std::string>>&
-	vec_file_name_and_content
+	file_name_and_content_v
 )
 {
-	write_to_particular_folder_in_run(vec_file_name_and_content, "flow/");
+	write_to_particular_folder_in_run(file_name_and_content_v, "flow/");
 }

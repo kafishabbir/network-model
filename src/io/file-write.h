@@ -21,7 +21,7 @@ namespace io
 
 		static void write_to_particular_folder_in_run(
 			const std::vector<std::pair<std::string, std::string>>&
-			vec_file_name_and_content,
+			file_name_and_content_v,
 			const std::string& folder_or_result_name
 		);
 
@@ -29,7 +29,7 @@ namespace io
 
         static void flow(
 			const std::vector<std::pair<std::string, std::string>>&
-			vec_file_name_and_content
+			file_name_and_content_v
 		);
     };
 }
