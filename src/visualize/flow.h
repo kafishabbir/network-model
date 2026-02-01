@@ -15,8 +15,6 @@ namespace visualize
 		static const bool PLOT_FEATURE_LABEL_TUBE_FLOW_RATE;
 		static const std::vector<std::string> COLORS;
 
-
-
 		static std::string tikz_string_single_plot(
 			const State& state
 		);
@@ -28,9 +26,5 @@ namespace visualize
 				const States& states
 			);
 	};
-
-
 }
-
-
 #endif

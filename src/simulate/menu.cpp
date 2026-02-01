@@ -20,8 +20,11 @@ void set_boundaries(State& state)
 void simulate::Menu::generate_and_plot()
 {
 	State state = ic::DisplacementTest::generate_rectangular();
+	visualize::Menu visualize_menu;
 	set_boundaries(state);
 	simulate::Step1Pressure::solve_and_assign_pressure_at_nodes(state);
 	simulate::Step2FlowRate::calculate_and_assign_flow_rates_to_tubes(state);
-	visualize::Flow::mpos_multiple_plots_in_1_pdf({state});
+
+	visualize_menu.flow({state});
+	io::FileWrite::flow(visualize_menu.out());
 }

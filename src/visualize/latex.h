@@ -6,7 +6,7 @@
 
 namespace visualize
 {
-	class LatexBasicCommands
+	class Latex
 	{
 
 	public:

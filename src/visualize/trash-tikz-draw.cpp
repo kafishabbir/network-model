@@ -29,5 +29,5 @@ std::string visualize::TikzDraw::scope(
 	ss << "shift={(" << shift_to_x << ", " << shift_to_y << ")}";
 	ss << ", rotate=" << rotate_angle;
 
-	return visualize::LatexBasicCommands::scope("scope", draw_commands_to_be_scoped, ss.str());
+	return visualize::Latex::scope("scope", draw_commands_to_be_scoped, ss.str());
 }

@@ -7,9 +7,25 @@ namespace visualize
 {
     class Menu
     {
+		static const std::string FOLDER_NAME_FIGURES;
+		static const std::string FILE_NAME_INITIAL;
+		static const std::string FILE_NAME_LIST_FIGURES;
+
+		std::vector<std::pair<std::string, std::string>>
+		caption_and_code_v;
+
+		void append(
+			const std::vector<std::pair<std::string, std::string>>&
+			caption_and_code_new_v
+		);
+
         public:
         // strings<file_name, file_content>
-        std::vector<std::pair<std::string, std::string>> flow(const State& state);
+        void flow(
+			const States& states
+		);
+
+		std::vector<std::pair<std::string, std::string>> out() const;
     };
 }
 

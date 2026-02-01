@@ -1,6 +1,6 @@
 #include "visualize/latex-basic-commands.h"
 
-std::string visualize::LatexBasicCommands::command(
+std::string visualize::Latex::command(
 	const std::string& command_name,
 	const std::string& command_body
 )
@@ -15,7 +15,7 @@ std::string visualize::LatexBasicCommands::command(
 	return ss.str();
 }
 
-std::string visualize::LatexBasicCommands::scope(
+std::string visualize::Latex::scope(
 	const std::string& scope_name,
 	const std::string& commands,
 	const std::string& scope_arguments
@@ -35,15 +35,15 @@ std::string visualize::LatexBasicCommands::scope(
 	return ss.str();
 }
 
-std::string visualize::LatexBasicCommands::begin_end_figure_with_captions(
-	const std::string& file_name_of_tikz_code_for_input,
+std::string begin_end_figure_scope(
+	const std::string& file_name,
 	const std::string& caption
 )
 {
 	std::stringstream ss;
 	ss << command("centering") << '\n';
-	ss << command("input", file_name_of_tikz_code_for_input) << '\n';
+	ss << command("input", file_name) << '\n';
 	ss << command("caption", caption) << '\n';
-
+	ss << command("label", file_name) << '\n';
 	return scope("figure", ss.str(), "H");
 }

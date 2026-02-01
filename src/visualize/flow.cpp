@@ -85,12 +85,14 @@ std::string visualize::Flow::label_tube_below(const nst::Tube& tube)
 	double q = tube.flow_rate;
 	double arrow_begin = lv/8;
 	double arrow_end = lv*3/8;
+	double q_pos = lv*3/8;
 	if(q < 0)
 	{
 		std::swap(i, j);
 		arrow_begin = lv*7/8;
 		arrow_end = lv*5/8;
 		q = std::abs(q);
+		q_pos = lv*5/8;
 	}
 
 	if(PLOT_FEATURE_LABEL_TUBE_FLOW_RATE)
