@@ -21,10 +21,9 @@ namespace visualize
 
 	public:
 
-		static std::vector<global::str_pair>
-			caption_and_code_multiple_plots(
-				const nst::nst::States& states
-			);
+		static std::vector<global::str_pair> caption_and_code_multiple_plots(
+			const nst::nst::States& states
+		);
 	};
 }
 #endif

@@ -9,7 +9,8 @@ namespace utility
 	{
 		public:
 		static std::vector<double> gaussian_elimination(
-			global::Matrix set_linear_equaitions
+			const global::Matrix A,
+			const std::vector<double> B
 		);
 	};
 }

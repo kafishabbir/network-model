@@ -1,5 +1,5 @@
-#ifndef VISUALIZE_DRAW_SHAPES_H
-#define VISUALIZE_DRAW_SHAPES_H
+#ifndef VISUALIZE_DRAW_H
+#define VISUALIZE_DRAW_H
 
 #include "nst/tube.h"
 #include "visualize/latex.h"

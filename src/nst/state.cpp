@@ -1,6 +1,6 @@
 #include "nst/state.h"
 
-nst::State::nst::State(
+nst::State::State(
 	const nst::Nodes& nodes,
 	const nst::Tubes& tubes,
 	const double mu1,

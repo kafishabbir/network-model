@@ -9,7 +9,7 @@ namespace simulate
 {
     class Step1Pressure
     {
-		static global::Matrix generate_linear_equations(
+		static std::pair<global::Matrix, std::vector<double>> generate_linear_equations(
 			const nst::State& state
 		);
 

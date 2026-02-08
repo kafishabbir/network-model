@@ -1,6 +1,6 @@
 #include "simulate/menu.h"
 
-void set_boundaries(nst::State& state)
+void simulate::Menu::set_boundaries(nst::State& state)
 {
 	auto& nodes = state.nodes;
 	nodes[0].is_open_boundary = true;

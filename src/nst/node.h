@@ -20,11 +20,11 @@ namespace nst
 	public:
 		double x;
 		double y;
-		double radius;
 		double pressure;
 		bool is_open_boundary;
-
 		Visual visual;
+
+		Node();
 	};
 
 	typedef std::vector<nst::Node> Nodes;

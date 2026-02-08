@@ -2,10 +2,7 @@
 const std::string visualize::Menu::FILE_NAME_INITIAL = "figure-";
 const std::string visualize::Menu::FILE_NAME_LIST_FIGURES = "list-figures";
 
-void append(
-	const std::vector<global::str_pair>&
-	caption_and_code_new_v
-)
+void append(const std::vector<global::str_pair>& caption_and_code_new_v)
 {
 	auto& parent = caption_and_code_v;
 	const auto& child = caption_and_code_new_v;
@@ -13,30 +10,24 @@ void append(
 	parent.insert(parent.end(), child.cbegin(), child.cend());
 }
 
-void visualize::Menu::flow(
-	const nst::nst::States& states
-)
+void visualize::Menu::flow(const nst::nst::States& states)
 {
-	append(
-		visualize::Flow::caption_and_code_multiple_plots(states)
-	);
+	append(visualize::Flow::caption_and_code_multiple_plots(states));
 }
 
-std::string generate_file_name_from_index(const int i)
+std::string visualize::Menu::generate_file_name_from_index(const int i)
 {
 	std::stringstream ss;
 	ss << FILE_NAME_INITIAL << 1000 + i;
 	return ss.str();
 }
 
-std::vector<global::str_pair>
-visualize::Menu::out() const
+std::vector<global::str_pair> visualize::Menu::out() const
 {
 	const int n_files = caption_and_code_v.size();
 
 	std::stringstream ss;
-	std::vector<global::str_pair>
-	file_name_and_file_content_v(n_files + 1);
+	std::vector<global::str_pair> file_name_and_file_content_v(n_files + 1);
 
 	for(int i = 0; i < n_files; ++ i)
 	{

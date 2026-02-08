@@ -1,5 +1,5 @@
-#ifndef VISUALIZE_LATEX_BASIC_COMMANDS_H
-#define VISUALIZE_LATEX_BASIC_COMMANDS_H
+#ifndef VISUALIZE_LATEX_H
+#define VISUALIZE_LATEX_H
 
 #include <string>
 #include <sstream>

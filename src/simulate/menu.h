@@ -19,9 +19,10 @@ namespace simulate
 	class Menu
 	{
 
+		static void set_boundaries(nst::State& state);
 	public:
 
-		static void displace();
+		// static void displace();
 		static void generate_and_plot();
 	};
 }

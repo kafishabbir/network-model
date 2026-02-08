@@ -10,14 +10,13 @@ namespace visualize
 		static const std::string FILE_NAME_INITIAL;
 		static const std::string FILE_NAME_LIST_FIGURES;
 
-		std::vector<global::str_pair>
-		caption_and_code_v;
+		std::vector<global::str_pair> caption_and_code_v;
 
 		void append(
-			const std::vector<global::str_pair>&
-			caption_and_code_new_v
+			const std::vector<global::str_pair>& caption_and_code_new_v
 		);
 
+		static std::string generate_file_name_from_index(const int i);
         public:
         // strings<file_name, file_content>
         void flow(

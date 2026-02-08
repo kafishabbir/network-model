@@ -1,5 +1,5 @@
-#ifndef NST_STATE
-#define NST_STATE
+#ifndef NST_STATE_H
+#define NST_STATE_H
 
 #include "nst/node.h"
 #include "nst/tube.h"

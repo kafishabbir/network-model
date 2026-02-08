@@ -1,20 +1,24 @@
 #include "simulate/step1-pressure.h"
 
-global::Matrix simulate::Step1Pressure::generate_linear_equations(
+std::pair<global::Matrix, std::vector<double>>
+simulate::Step1Pressure::generate_linear_equations(
 	const nst::State& state
 )
 {
 	const int n_nodes = state.nodes.size();
-	global::Matrix gauss_matrix(n_nodes, std::vector<double>(n_nodes + 1));
+	global::Matrix A(n_nodes, std::vector<double>(n_nodes));
+	std::vector<double> B(n_nodes);
 
 	for(int i = 0; i < n_nodes; ++ i)
 	{
 		const auto& node = state.nodes[i];
-		auto& gauss_row = gauss_matrix[i];
+		auto& row = A[i];
+		auto& b = B[i];
+
 		if(node.is_open_boundary)
 		{
-			gauss_row[i] = 1;
-			gauss_row.back() = node.pressure;
+			row[i] = 1;
+			b = node.pressure;
 			continue;
 		}
 
@@ -25,13 +29,13 @@ global::Matrix simulate::Step1Pressure::generate_linear_equations(
 			const int tube_id = tubes_connected_to_node[j];
 			const auto& tube = state.tubes[tube_id];
 			const int id_node_second = tube.id_other_node(i);
-			const double a = simulate::Physics::calculate_a(tube, state);
-			gauss_row[i] += a;
-			gauss_row[id_node_second] -= a;
+			const double resistance = simulate::Physics::calculate_resistance(tube, state);
+			row[i] += resistance;
+			row[id_node_second] = -resistance;
 		}
 	}
 
-	return gauss_matrix;
+	return {A, B};
 }
 
 void simulate::Step1Pressure::assign_pressures_to_each_node(
@@ -51,7 +55,7 @@ void simulate::Step1Pressure::solve_and_assign_pressure_at_nodes(
 	nst::State& state
 )
 {
-	auto linear_equaitions = generate_linear_equations(state);
-	const std::vector<double>& known_pressures = utility::Math::gaussian_elimination(linear_equaitions);
+	const auto& [A, B] = generate_linear_equations(state);
+	const std::vector<double>& known_pressures = utility::Math::gaussian_elimination(A, B);
 	assign_pressures_to_each_node(state.nodes, known_pressures);
 }

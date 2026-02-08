@@ -15,8 +15,8 @@ void simulate::Step2FlowRate::calculate_and_assign_flow_rates_to_tubes(
 		const double p1 = node_first.pressure;
 		const double p2 = node_second.pressure;
 		const double delta_p = p1 - p2;
-		const double a = simulate::Physics::calculate_a(tube, state);
-		const double flow_rate = a * delta_p;
-		tube.flow_rate = flow_rate;
+		const double resistance = simulate::Physics::calculate_resistance(tube, state);
+		const double flow_rate = resistance * delta_p;
+		tube.calculated.flow_rate = flow_rate;
 	}
 }
