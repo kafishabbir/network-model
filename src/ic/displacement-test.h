@@ -8,24 +8,24 @@ namespace ic
 {
 	class DisplacementTest
 	{
-		static Tubes generate_tubes_rectangular(
+		static nst::Tubes generate_tubes_rectangular(
 			const int n_rows_tube,
 			const int n_cols_tube
 		);
 
-		static Nodes generate_nodes_rectangular(
+		static nst::Nodes generate_nodes_rectangular(
 			const int n_rows_tube,
 			const int n_cols_tube
 		);
 
-		static State generate_rectangular(
+		static nst::State generate_rectangular(
 			const int n_rows_tube,
 			const int n_cols_tube
 		);
 	public:
 
 
-		static State generate_rectangular();
+		static nst::State generate_rectangular();
 	};
 
 }

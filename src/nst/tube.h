@@ -14,6 +14,13 @@ namespace nst
 			double radius;
 			double length;
 			std::vector<double> mpos;
+
+
+		};
+
+		struct Calculated
+		{
+			double flow_rate;
 		};
 
 		int id_node_first;
@@ -22,8 +29,8 @@ namespace nst
 		double length;
 		std::vector<double> mpos; //meniscus positions
 		int fluid_first;
-		double flow_rate;
 
+		Calculated calculated;
 		Visual visual;
 		Tube();
 
@@ -32,11 +39,12 @@ namespace nst
 			const double p1,
 			const double p2
 		) const;
-
 		int id_other_node(const int id_this_node) const;
 		double mu(const double mu1, const double mu2) const;
 	};
+
+	typedef std::vector<nst::Tube> Tubes;
 }
 
-typedef std::vector<nst::Tube> Tubes;
+
 #endif

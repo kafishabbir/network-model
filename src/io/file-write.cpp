@@ -91,7 +91,7 @@ void io::FileWrite::create_makefile_and_main_tex(
 
 
 void io::FileWrite::write_to_particular_folder_in_run(
-	const std::vector<str_pair>& file_name_and_content_v,
+	const std::vector<global::str_pair>& file_name_and_content_v,
 	const std::string& folder_or_result_name
 )
 {
@@ -113,7 +113,7 @@ void io::FileWrite::write_to_particular_folder_in_run(
 }
 
 void io::FileWrite::flow(
-	const std::vector<str_pair>& file_name_and_content_v
+	const std::vector<global::str_pair>& file_name_and_content_v
 )
 {
 	write_to_particular_folder_in_run(file_name_and_content_v, "flow");

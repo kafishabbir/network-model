@@ -1,6 +1,6 @@
 #include "utility/math.h"
 
-std::vector<double> utility::Math::gaussian_elimination(Matrix set_linear_equations)
+std::vector<double> utility::Math::gaussian_elimination(global::Matrix set_linear_equations)
 {
     auto& v = set_linear_equations;
     const int n = set_linear_equations.size();
@@ -40,7 +40,7 @@ std::vector<double> utility::Math::gaussian_elimination(Matrix set_linear_equati
     return ans;
 }
 
-std::vector<double> utility::Math::jacobi_method(Matrix augmented_matrix,
+std::vector<double> utility::Math::jacobi_method(global::Matrix augmented_matrix,
                                                  int max_iterations,
                                                  double tolerance)
 {
@@ -49,7 +49,7 @@ std::vector<double> utility::Math::jacobi_method(Matrix augmented_matrix,
     std::vector<double> x_new(n, 0.0);
 
     // Extract coefficient matrix A and vector b from augmented matrix
-    Matrix A(n, std::vector<double>(n));
+    global::Matrix A(n, std::vector<double>(n));
     std::vector<double> b(n);
 
     for(int i = 0; i < n; ++i)
@@ -95,7 +95,7 @@ std::vector<double> utility::Math::jacobi_method(Matrix augmented_matrix,
     return x;
 }
 
-std::vector<double> utility::Math::gauss_seidel_method(Matrix augmented_matrix,
+std::vector<double> utility::Math::gauss_seidel_method(global::Matrix augmented_matrix,
                                                        int max_iterations,
                                                        double tolerance)
 {
@@ -103,7 +103,7 @@ std::vector<double> utility::Math::gauss_seidel_method(Matrix augmented_matrix,
     std::vector<double> x(n, 0.0);  // Initial guess
 
     // Extract coefficient matrix A and vector b from augmented matrix
-    Matrix A(n, std::vector<double>(n));
+    global::Matrix A(n, std::vector<double>(n));
     std::vector<double> b(n);
 
     for(int i = 0; i < n; ++i)

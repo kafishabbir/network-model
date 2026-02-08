@@ -1,6 +1,6 @@
 #include "simulate/physics.h"
 
-double simulate::Physics::calculate_a(const nst::Tube& tube, const State& state)
+double simulate::Physics::calculate_a(const nst::Tube& tube, const nst::State& state)
 {
 	const double r = tube.radius;
 	const double l = tube.length;

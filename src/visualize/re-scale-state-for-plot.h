@@ -5,7 +5,7 @@
 
 namespace visualize
 {
-    class ReScaleStateForPlot
+    class ReScalenst::StateForPlot
     {
 		static const double R_MIN;
 		static const double R_MAX;
@@ -31,23 +31,23 @@ namespace visualize
 		);
 
 		//sets x_max - x_min = 1
-		static void node_coordinates(State& state);
+		static void node_coordinates(nst::State& state);
 
 		//length from node positions
-		static void tube_lengths(State& state);
+		static void tube_lengths(nst::State& state);
 
 		//radius scaled to R_MIN R_MAX
-		static void tube_radius(State& state);
+		static void tube_radius(nst::State& state);
 
 		//a circular node sets the tubes radially further
-		static void node_radius(State& state);
+		static void node_radius(nst::State& state);
 
 		//makes mpos long format, if needed, displaces to make space for node
-		static void mpos(State& state);
+		static void mpos(nst::State& state);
 
         public:
 
-        static void add_state_visual(State& state);
+        static void add_state_visual(nst::State& state);
     };
 }
 

@@ -16,14 +16,14 @@ namespace visualize
 		static const std::vector<std::string> COLORS;
 
 		static std::string tikz_string_single_plot(
-			const State& state
+			const nst::State& state
 		);
 
 	public:
 
-		static std::vector<std::pair<std::string, std::string>>
+		static std::vector<global::str_pair>
 			caption_and_code_multiple_plots(
-				const States& states
+				const nst::nst::States& states
 			);
 	};
 }

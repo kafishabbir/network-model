@@ -10,7 +10,7 @@ namespace simulate
     {
         public:
         static void calculate_and_assign_flow_rates_to_tubes(
-			State& state
+			nst::State& state
 		);
     };
 }

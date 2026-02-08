@@ -9,7 +9,7 @@ std::vector<double> nst::Tube::mpos_long() const
 	return v;
 }
 
-std::vector<double> nst::Tube::mpos_long(
+std::vector<double> nst::Tube::mpos_long_displaced_scaled(
 	const double p1,
 	const double p2
 ) const

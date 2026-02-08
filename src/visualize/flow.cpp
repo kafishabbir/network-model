@@ -109,7 +109,7 @@ std::string visualize::Flow::label_tube_below(const nst::Tube& tube)
 }
 
 
-std::string visualize::Flow::code_tube(const State& state, const int tube_id)
+std::string visualize::Flow::code_tube(const nst::State& state, const int tube_id)
 {
 	const auto& tube = state.tubes[tube_id];
 	const auto& node_first = state.nodes[tube.id_node_first];
@@ -135,7 +135,7 @@ std::string visualize::Flow::code_tube(const State& state, const int tube_id)
 	);
 }
 
-std::sttring visualize::Flow::code_nodes(const State& state)
+std::sttring visualize::Flow::code_nodes(const nst::State& state)
 {
 	const auto& nodes = state.nodes;
 	const int n = n_nodes;
@@ -148,7 +148,7 @@ std::sttring visualize::Flow::code_nodes(const State& state)
 	return ss.str();
 }
 
-std::sttring visualize::Flow::code_tubes(const State& state)
+std::sttring visualize::Flow::code_tubes(const nst::State& state)
 {
 	const auto& tubes = state_visual.tubes;
 	const int n_tubes = tubes.size();
@@ -162,9 +162,9 @@ std::sttring visualize::Flow::code_tubes(const State& state)
 }
 
 
-std::string visualize::Flow::code_plot(State& state)
+std::string visualize::Flow::code_plot(nst::State& state)
 {
-	visualize::ReScaleStateForPlot::add_state_visual(state);
+	visualize::ReScalenst::StateForPlot::add_state_visual(state);
 
 	std::stringstream ss;
 
@@ -174,7 +174,7 @@ std::string visualize::Flow::code_plot(State& state)
 	return visualize::Draw::scope_tikzpicture(ss.str());;
 }
 
-std::string visualize::Flow::caption_plot(const State& state)
+std::string visualize::Flow::caption_plot(const nst::State& state)
 {
 	const int n_nodes = state.nodes.size();
 	const int n_tubes = state.tubes.size();
@@ -192,13 +192,13 @@ std::string visualize::Flow::caption_plot(const State& state)
 	return ss.str();
 }
 
-std::vector<std::pair<std::string, std::string>>
+std::vector<global::str_pair>
 visualize::Flow::caption_and_code_multiple_plots(
-	const States& states
+	const nst::nst::States& states
 )
 {
 	const int n_plots = states.size();
-	std::vector<std::pair<std::string, std::string>> caption_and_code_v(n_plots);
+	std::vector<global::str_pair> caption_and_code_v(n_plots);
 	for(int i = 0; i < n_plots; ++ i)
 	{
 		const auto& state = states[i];

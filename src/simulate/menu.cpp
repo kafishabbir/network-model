@@ -1,6 +1,6 @@
 #include "simulate/menu.h"
 
-void set_boundaries(State& state)
+void set_boundaries(nst::State& state)
 {
 	auto& nodes = state.nodes;
 	nodes[0].is_open_boundary = true;
@@ -19,7 +19,7 @@ void set_boundaries(State& state)
 
 void simulate::Menu::generate_and_plot()
 {
-	State state = ic::DisplacementTest::generate_rectangular();
+	nst::State state = ic::DisplacementTest::generate_rectangular();
 	visualize::Menu visualize_menu;
 	set_boundaries(state);
 	simulate::Step1Pressure::solve_and_assign_pressure_at_nodes(state);

@@ -10,7 +10,7 @@ namespace simulate
         public:
 
 		// resistence factor of tube in pousielle equation
-        static double calculate_a(const nst::Tube& tube, const State& state);
+        static double calculate_a(const nst::Tube& tube, const nst::State& state);
     };
 }
 

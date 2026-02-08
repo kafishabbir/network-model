@@ -1,8 +1,8 @@
 #include "nst/state.h"
 
-State::State(
-	const Nodes& nodes,
-	const Tubes& tubes,
+nst::State::nst::State(
+	const nst::Nodes& nodes,
+	const nst::Tubes& tubes,
 	const double mu1,
 	const double mu2,
 	const double sigma
@@ -15,7 +15,7 @@ State::State(
 	table_tubes_connected_to_nodes(generate_table_tubes_connected_to_nodes())
 {}
 
-std::vector<std::vector<int>> State::generate_table_tubes_connected_to_nodes() const
+std::vector<std::vector<int>> nst::State::generate_table_tubes_connected_to_nodes() const
 {
 	const int n_nodes = nodes.size();
 	std::vector<std::vector<int>> v(n_nodes);
@@ -34,7 +34,7 @@ std::vector<std::vector<int>> State::generate_table_tubes_connected_to_nodes() c
 	return v;
 }
 
-std::vector<int> State::tubes_connected_to_this_node(const int id_node) const
+std::vector<int> nst::State::tubes_connected_to_this_node(const int id_node) const
 {
 	return table_tubes_connected_to_nodes[id_node];
 }

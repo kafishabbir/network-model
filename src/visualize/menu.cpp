@@ -3,7 +3,7 @@ const std::string visualize::Menu::FILE_NAME_INITIAL = "figure-";
 const std::string visualize::Menu::FILE_NAME_LIST_FIGURES = "list-figures";
 
 void append(
-	const std::vector<std::pair<std::string, std::string>>&
+	const std::vector<global::str_pair>&
 	caption_and_code_new_v
 )
 {
@@ -14,7 +14,7 @@ void append(
 }
 
 void visualize::Menu::flow(
-	const States& states
+	const nst::nst::States& states
 )
 {
 	append(
@@ -29,13 +29,13 @@ std::string generate_file_name_from_index(const int i)
 	return ss.str();
 }
 
-std::vector<std::pair<std::string, std::string>>
+std::vector<global::str_pair>
 visualize::Menu::out() const
 {
 	const int n_files = caption_and_code_v.size();
 
 	std::stringstream ss;
-	std::vector<std::pair<std::string, std::string>>
+	std::vector<global::str_pair>
 	file_name_and_file_content_v(n_files + 1);
 
 	for(int i = 0; i < n_files; ++ i)

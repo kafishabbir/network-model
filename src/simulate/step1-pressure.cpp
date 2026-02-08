@@ -1,11 +1,11 @@
 #include "simulate/step1-pressure.h"
 
-Matrix simulate::Step1Pressure::generate_linear_equations(
-	const State& state
+global::Matrix simulate::Step1Pressure::generate_linear_equations(
+	const nst::State& state
 )
 {
 	const int n_nodes = state.nodes.size();
-	Matrix gauss_matrix(n_nodes, std::vector<double>(n_nodes + 1));
+	global::Matrix gauss_matrix(n_nodes, std::vector<double>(n_nodes + 1));
 
 	for(int i = 0; i < n_nodes; ++ i)
 	{
@@ -35,7 +35,7 @@ Matrix simulate::Step1Pressure::generate_linear_equations(
 }
 
 void simulate::Step1Pressure::assign_pressures_to_each_node(
-	Nodes& nodes,
+	nst::Nodes& nodes,
 	const std::vector<double>& pressures
 )
 {
@@ -48,7 +48,7 @@ void simulate::Step1Pressure::assign_pressures_to_each_node(
 }
 
 void simulate::Step1Pressure::solve_and_assign_pressure_at_nodes(
-	State& state
+	nst::State& state
 )
 {
 	auto linear_equaitions = generate_linear_equations(state);

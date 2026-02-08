@@ -1,6 +1,6 @@
 #include "nst/node.h"
 
-double nst::Node::distance(const Node& node) const
+double nst::Node::Visual::distance(const Node& node) const
 {
 	const double dx = node.x - x;
 	const double dy = node.y - y;
@@ -8,7 +8,7 @@ double nst::Node::distance(const Node& node) const
 	return std::sqrt(dx * dx + dy * dy);
 }
 
-double nst::Node::relative_angle(const Node& node) const
+double nst::Node::Visual::relative_angle(const Node& node) const
 {
 	const double x1 = visual.x;
 	const double y1 = visual.y;

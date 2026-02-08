@@ -2,7 +2,7 @@
 
 
 void simulate::Step2FlowRate::calculate_and_assign_flow_rates_to_tubes(
-	State& state
+	nst::State& state
 )
 {
 	for(auto& tube: state.tubes)

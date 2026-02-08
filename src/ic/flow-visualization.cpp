@@ -1,7 +1,7 @@
 #include "ic/flow-visualization.h"
 
 
-Nodes ic::FlowVisualization::generate_nodes_rectangular(
+nst::Nodes ic::FlowVisualization::generate_nodes_rectangular(
 	const int n_rows_tube,
 	const int n_cols_tube
 )
@@ -16,7 +16,7 @@ Nodes ic::FlowVisualization::generate_nodes_rectangular(
 		n_cols_node_at_even_rows * n_even_rows_node +
 		n_cols_node_at_odd_rows * n_odd_rows_node;
 
-	Nodes nodes(n_nodes);
+	nst::Nodes nodes(n_nodes);
 	const int n_rows_node = n_rows_tube + 1;
 
 	// const double n_tubes_max_in_xy = std::max<double>(n_rows_tube, n_cols_tube);
@@ -46,7 +46,7 @@ Nodes ic::FlowVisualization::generate_nodes_rectangular(
 	return nodes;
 }
 
-Tubes ic::FlowVisualization::generate_tubes_rectangular(
+nst::Tubes ic::FlowVisualization::generate_tubes_rectangular(
 	const int n_rows_tube,
 	const int n_cols_tube
 )
@@ -55,7 +55,7 @@ Tubes ic::FlowVisualization::generate_tubes_rectangular(
 	int node_up = 0;
 	int node_down = n_cols_node_at_even_rows;
 	const int n_tubes = n_rows_tube * n_cols_tube;
-	Tubes tubes(n_tubes);
+	nst::Tubes tubes(n_tubes);
 	for(int i = 0; i < n_rows_tube; ++ i)
 	{
 		int up_adder = (i + 1) % 2;
@@ -79,7 +79,7 @@ Tubes ic::FlowVisualization::generate_tubes_rectangular(
 	return tubes;
 }
 
-State ic::FlowVisualization::generate_rectangular(
+nst::State ic::FlowVisualization::generate_rectangular(
 	const int n_rows_tube,
 	const int n_cols_tube
 )
@@ -89,10 +89,10 @@ State ic::FlowVisualization::generate_rectangular(
 	const auto& tubes =
 		generate_tubes_rectangular(n_rows_tube, n_cols_tube);
 
-	return State(nodes, tubes);
+	return nst::State(nodes, tubes);
 }
 
-States ic::FlowVisualization::generate_states_rectangular_plus_random()
+nst::nst::States ic::FlowVisualization::generate_states_rectangular_plus_random()
 {
 	const std::vector<std::vector<double>> mpos_combinations
 	{
@@ -114,10 +114,10 @@ States ic::FlowVisualization::generate_states_rectangular_plus_random()
 		2
 	};
 
-	States v;
+	nst::nst::States v;
 	for(int j = 0; j < 10; ++ j)
 	{
-		State state = generate_rectangular(4, 6);
+		nst::State state = generate_rectangular(4, 6);
 		auto& tubes = state.tubes;
 		auto& nodes = state.nodes;
 		const int n_tubes = tubes.size();

@@ -45,14 +45,14 @@ namespace io
 		);
 
 		static void write_to_particular_folder_in_run(
-			const std::vector<str_pair>& file_name_and_content_v,
+			const std::vector<global::str_pair>& file_name_and_content_v,
 			const std::string& folder_or_result_name
 		);
 
         public:
 
         static void flow(
-			const std::vector<str_pair>& file_name_and_content_v
+			const std::vector<global::str_pair>& file_name_and_content_v
 		);
     };
 }

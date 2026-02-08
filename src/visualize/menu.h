@@ -10,21 +10,21 @@ namespace visualize
 		static const std::string FILE_NAME_INITIAL;
 		static const std::string FILE_NAME_LIST_FIGURES;
 
-		std::vector<std::pair<std::string, std::string>>
+		std::vector<global::str_pair>
 		caption_and_code_v;
 
 		void append(
-			const std::vector<std::pair<std::string, std::string>>&
+			const std::vector<global::str_pair>&
 			caption_and_code_new_v
 		);
 
         public:
         // strings<file_name, file_content>
         void flow(
-			const States& states
+			const nst::nst::States& states
 		);
 
-		std::vector<std::pair<std::string, std::string>> out() const;
+		std::vector<global::str_pair> out() const;
     };
 }
 

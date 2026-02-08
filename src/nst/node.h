@@ -12,6 +12,9 @@ namespace nst
 			double x;
 			double y;
 			double radius;
+
+			double distance(const Node& node) const;
+			double relative_angle(const Node& node) const;
 		};
 
 	public:
@@ -22,12 +25,11 @@ namespace nst
 		bool is_open_boundary;
 
 		Visual visual;
-
-		double visual_distance(const Node& node) const;
-		double relative_angle(const Node& node) const;
 	};
+
+	typedef std::vector<nst::Node> Nodes;
 }
 
-typedef std::vector<nst::Node> Nodes;
+
 
 #endif
