@@ -125,10 +125,12 @@ States ic::FlowVisualization::generate_states_rectangular_plus_random()
 		{
 			auto& tube = tubes[i];
 			const int mpos_combinations_size = mpos_combinations.size();
-			tube.mpos = mpos_combinations[(j * i + j + i) % mpos_combinations_size];
+			const int rand_int_mpos = utility::Random::integer_from_zero_until_n(mpos_combinations_size);
+			tube.mpos = mpos_combinations[rand_int_mpos];
 			const int radius_possible_size = radius_possible.size();
-			tube.fluid_first = (i * j + j + i) % 2;
-			tube.radius = radius_possible[(3 * i * j + i + j) % radius_possible_size];
+			const int rand_int_radius = utility::Random::integer_from_zero_until_n(radius_possible_size);
+			tube.fluid_first =  utility::Random::integer_from_zero_until_n(2);
+			tube.radius = radius_possible[rand_int_radius];
 		}
 
 		nst::Tube add_tube;

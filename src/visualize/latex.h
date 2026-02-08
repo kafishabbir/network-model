@@ -30,7 +30,7 @@ namespace visualize
 		//   input{figure/fig-1}
 		//   caption{}
 		// end{figure}
-		static std::string begin_end_figure_with_captions(
+		static std::string begin_end_figure_scope(
 			const std::string& file_name_of_tikz_code_for_input,
 			const std::string& caption
 		);

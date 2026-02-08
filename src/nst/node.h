@@ -23,7 +23,7 @@ namespace nst
 
 		Visual visual;
 
-		double distance(const Node& node) const;
+		double visual_distance(const Node& node) const;
 		double relative_angle(const Node& node) const;
 	};
 }

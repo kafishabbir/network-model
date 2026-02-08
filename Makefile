@@ -38,11 +38,11 @@ clear_build:
 
 
 edit:
-	geany -i  src/exe/simulate.cpp src/global/dst.h src/ic/displacement-test.cpp src/ic/displacement-test.h src/ic/flow-visualization.cpp src/ic/flow-visualization.h src/io/file-write.cpp src/io/file-write.h src/nst/node.cpp src/nst/node.h src/nst/state.cpp src/nst/state.h src/nst/tube.cpp src/nst/tube.h src/simulate/menu.cpp src/simulate/menu.h src/simulate/physics.cpp src/simulate/physics.h src/simulate/step-preparation.cpp src/simulate/step-preparation.h src/simulate/step1-pressure.cpp src/simulate/step1-pressure.h src/simulate/step2-flow-rate.cpp src/simulate/step2-flow-rate.h src/simulate/step3-velocity.cpp src/simulate/step3-velocity.h src/simulate/step4-time-step.cpp src/simulate/step4-time-step.h src/simulate/step5-integration.cpp src/simulate/step5-integration.h src/utility/math.cpp src/utility/math.h src/utility/measure.cpp src/utility/measure.h src/visualize/draw.cpp src/visualize/draw.h src/visualize/flow.cpp src/visualize/flow.h src/visualize/latex.cpp src/visualize/latex.h src/visualize/menu.cpp src/visualize/menu.h src/visualize/re-scale-state-for-plot.cpp src/visualize/re-scale-state-for-plot.h src/visualize/trash-flow-file-out.cpp src/visualize/trash-flow-file-out.h src/visualize/trash-tikz-draw.cpp src/visualize/trash-tikz-draw.h
+	geany -i  src/exe/simulate.cpp src/global/dst.h src/ic/displacement-test.cpp src/ic/displacement-test.h src/ic/flow-visualization.cpp src/ic/flow-visualization.h src/io/file-write.cpp src/io/file-write.h src/nst/node.cpp src/nst/node.h src/nst/state.cpp src/nst/state.h src/nst/tube.cpp src/nst/tube.h src/simulate/menu.cpp src/simulate/menu.h src/simulate/physics.cpp src/simulate/physics.h src/simulate/step-preparation.cpp src/simulate/step-preparation.h src/simulate/step1-pressure.cpp src/simulate/step1-pressure.h src/simulate/step2-flow-rate.cpp src/simulate/step2-flow-rate.h src/simulate/step3-velocity.cpp src/simulate/step3-velocity.h src/simulate/step4-time-step.cpp src/simulate/step4-time-step.h src/simulate/step5-integration.cpp src/simulate/step5-integration.h src/utility/math.cpp src/utility/math.h src/utility/measure.cpp src/utility/measure.h src/utility/random.cpp src/utility/random.h src/visualize/draw.cpp src/visualize/draw.h src/visualize/flow.cpp src/visualize/flow.h src/visualize/latex.cpp src/visualize/latex.h src/visualize/menu.cpp src/visualize/menu.h src/visualize/re-scale-state-for-plot.cpp src/visualize/re-scale-state-for-plot.h
 
 
-run/simulate.exe: run/build/exe_simulate.o run/build/ic_displacement-test.o run/build/ic_flow-visualization.o run/build/io_file-write.o run/build/nst_node.o run/build/nst_state.o run/build/nst_tube.o run/build/simulate_menu.o run/build/simulate_physics.o run/build/simulate_step-preparation.o run/build/simulate_step1-pressure.o run/build/simulate_step2-flow-rate.o run/build/simulate_step3-velocity.o run/build/simulate_step4-time-step.o run/build/simulate_step5-integration.o run/build/utility_math.o run/build/utility_measure.o run/build/visualize_draw.o run/build/visualize_flow.o run/build/visualize_latex.o run/build/visualize_menu.o run/build/visualize_re-scale-state-for-plot.o run/build/visualize_trash-flow-file-out.o run/build/visualize_trash-tikz-draw.o
-	g++  run/build/exe_simulate.o run/build/ic_displacement-test.o run/build/ic_flow-visualization.o run/build/io_file-write.o run/build/nst_node.o run/build/nst_state.o run/build/nst_tube.o run/build/simulate_menu.o run/build/simulate_physics.o run/build/simulate_step-preparation.o run/build/simulate_step1-pressure.o run/build/simulate_step2-flow-rate.o run/build/simulate_step3-velocity.o run/build/simulate_step4-time-step.o run/build/simulate_step5-integration.o run/build/utility_math.o run/build/utility_measure.o run/build/visualize_draw.o run/build/visualize_flow.o run/build/visualize_latex.o run/build/visualize_menu.o run/build/visualize_re-scale-state-for-plot.o run/build/visualize_trash-flow-file-out.o run/build/visualize_trash-tikz-draw.o -o run/simulate.exe
+run/simulate.exe: run/build/exe_simulate.o run/build/ic_displacement-test.o run/build/ic_flow-visualization.o run/build/io_file-write.o run/build/nst_node.o run/build/nst_state.o run/build/nst_tube.o run/build/simulate_menu.o run/build/simulate_physics.o run/build/simulate_step-preparation.o run/build/simulate_step1-pressure.o run/build/simulate_step2-flow-rate.o run/build/simulate_step3-velocity.o run/build/simulate_step4-time-step.o run/build/simulate_step5-integration.o run/build/utility_math.o run/build/utility_measure.o run/build/utility_random.o run/build/visualize_draw.o run/build/visualize_flow.o run/build/visualize_latex.o run/build/visualize_menu.o run/build/visualize_re-scale-state-for-plot.o
+	g++  run/build/exe_simulate.o run/build/ic_displacement-test.o run/build/ic_flow-visualization.o run/build/io_file-write.o run/build/nst_node.o run/build/nst_state.o run/build/nst_tube.o run/build/simulate_menu.o run/build/simulate_physics.o run/build/simulate_step-preparation.o run/build/simulate_step1-pressure.o run/build/simulate_step2-flow-rate.o run/build/simulate_step3-velocity.o run/build/simulate_step4-time-step.o run/build/simulate_step5-integration.o run/build/utility_math.o run/build/utility_measure.o run/build/utility_random.o run/build/visualize_draw.o run/build/visualize_flow.o run/build/visualize_latex.o run/build/visualize_menu.o run/build/visualize_re-scale-state-for-plot.o -o run/simulate.exe
 	@echo "run/simulate.exe created."
 	@echo " "
 
@@ -149,6 +149,12 @@ run/build/utility_measure.o: src/utility/measure.cpp src/utility/measure.h src/g
 	@echo " "
 
 
+run/build/utility_random.o: src/utility/random.cpp src/utility/random.h src/global/dst.h
+	g++ -c -Wall -std=c++17 -Isrc/ src/utility/random.cpp -o run/build/utility_random.o
+	@echo "run/build/utility_random.o created."
+	@echo " "
+
+
 run/build/visualize_draw.o: src/visualize/draw.cpp src/visualize/draw.h src/global/dst.h
 	g++ -c -Wall -std=c++17 -Isrc/ src/visualize/draw.cpp -o run/build/visualize_draw.o
 	@echo "run/build/visualize_draw.o created."
@@ -176,16 +182,4 @@ run/build/visualize_menu.o: src/visualize/menu.cpp src/visualize/menu.h src/glob
 run/build/visualize_re-scale-state-for-plot.o: src/visualize/re-scale-state-for-plot.cpp src/visualize/re-scale-state-for-plot.h src/global/dst.h
 	g++ -c -Wall -std=c++17 -Isrc/ src/visualize/re-scale-state-for-plot.cpp -o run/build/visualize_re-scale-state-for-plot.o
 	@echo "run/build/visualize_re-scale-state-for-plot.o created."
-	@echo " "
-
-
-run/build/visualize_trash-flow-file-out.o: src/visualize/trash-flow-file-out.cpp src/visualize/trash-flow-file-out.h src/global/dst.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/visualize/trash-flow-file-out.cpp -o run/build/visualize_trash-flow-file-out.o
-	@echo "run/build/visualize_trash-flow-file-out.o created."
-	@echo " "
-
-
-run/build/visualize_trash-tikz-draw.o: src/visualize/trash-tikz-draw.cpp src/visualize/trash-tikz-draw.h src/global/dst.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/visualize/trash-tikz-draw.cpp -o run/build/visualize_trash-tikz-draw.o
-	@echo "run/build/visualize_trash-tikz-draw.o created."
 	@echo " "

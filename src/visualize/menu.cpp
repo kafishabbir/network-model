@@ -1,9 +1,6 @@
 #include "visualize/menu.h"
-const std::string visualize::Menu::FOLDER_NAME_FIGURES = "figures/";
-const std::string visualize::Menu::FILE_NAME_INITIAL =
-	FOLDER_NAME_FIGURES + "figure-";
-const std::string visualize::Menu::FILE_NAME_LIST_FIGURES =
-	FOLDER_NAME_FIGURES + "list-figures";
+const std::string visualize::Menu::FILE_NAME_INITIAL = "figure-";
+const std::string visualize::Menu::FILE_NAME_LIST_FIGURES = "list-figures";
 
 void append(
 	const std::vector<std::pair<std::string, std::string>>&

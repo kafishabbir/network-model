@@ -2,7 +2,7 @@
 #define IC_FLOW_VISUALIZATION_H
 
 #include "global/dst.h"
-#include <utility>
+#include "utility/random.h"
 
 namespace ic
 {

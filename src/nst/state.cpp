@@ -34,7 +34,7 @@ std::vector<std::vector<int>> State::generate_table_tubes_connected_to_nodes() c
 	return v;
 }
 
-const std::vector<int>& State::tubes_connected_to_this_node(const int id_node) const
+std::vector<int> State::tubes_connected_to_this_node(const int id_node) const
 {
 	return table_tubes_connected_to_nodes[id_node];
 }

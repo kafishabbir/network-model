@@ -1,4 +1,4 @@
-#include "visualize/draw-shapes.h"
+#include "visualize/draw.h"
 
 std::string visualize::Draw::arrow(
 	const double x_begin,
@@ -14,7 +14,7 @@ std::string visualize::Draw::arrow(
 }
 
 
-static std::string visualize::Draw::num(double val)
+std::string visualize::Draw::num(const double val)
 {
 	std::stringstream ss;
 	ss << "\\num{";
@@ -43,7 +43,7 @@ std::string visualize::Draw::mpos_horizontal_rectangles(
 		const double x2 = v[i];
 		const double y2 = - radius;
 		const auto& tikz_str_single_fluid_block =
-			visualize::TikzDraw::rectangle(color, x1, y1, x2, y2);
+			rectangle(color, x1, y1, x2, y2);
 
 		ss << tikz_str_single_fluid_block << '\n';
 	}
@@ -72,3 +72,37 @@ std::string visualize::Draw::node(
 	ss << "\\node" << " at " << "(" << x << ", " << y << ") " << "{" << node_text << "}" << ";";
 	return ss.str();
 }
+
+
+std::string visualize::Draw::rectangle(
+	const std::string& color,
+	const double x1,
+	const double y1,
+	const double x2,
+	const double y2
+)
+{
+	std::stringstream ss;
+	ss << "\\fill" << "[" << color << "]";
+	ss << "(" << x1 << ", " << y1 << ")";
+	ss << " rectangle" << " ";
+	ss << "(" << x2 << ", " << y2 << ")" << ";";
+	return ss.str();
+}
+
+
+
+std::string visualize::Draw::scope_shift_and_rotate(
+	const double shift_to_x,
+	const double shift_to_y,
+	const double rotate_angle,
+	const std::string& draw_commands_to_be_scoped
+)
+{
+	std::stringstream ss;
+	ss << "shift={(" << shift_to_x << ", " << shift_to_y << ")}";
+	ss << ", rotate=" << rotate_angle;
+
+	return visualize::Latex::scope("scope", draw_commands_to_be_scoped, ss.str());
+}
+

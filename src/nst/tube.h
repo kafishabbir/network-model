@@ -6,13 +6,16 @@ namespace nst
 {
 	class Tube
 	{
+
+
+	public:
 		struct Visual
 		{
 			double radius;
 			double length;
+			std::vector<double> mpos;
 		};
 
-	public:
 		int id_node_first;
 		int id_node_second;
 		double radius;

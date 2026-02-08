@@ -1,4 +1,4 @@
-#include "visualize/latex-basic-commands.h"
+#include "visualize/latex.h"
 
 std::string visualize::Latex::command(
 	const std::string& command_name,
@@ -35,7 +35,7 @@ std::string visualize::Latex::scope(
 	return ss.str();
 }
 
-std::string begin_end_figure_scope(
+std::string visualize::Latex::begin_end_figure_scope(
 	const std::string& file_name,
 	const std::string& caption
 )

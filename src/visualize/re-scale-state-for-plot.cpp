@@ -30,6 +30,24 @@ std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
     return {min_val, max_val};
 }
 
+template<class val, class T, class U>
+std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
+    const std::vector<T>& v,
+    U T::*member,  // Pointer to member U in T
+    val U::*submember  // Pointer to member val in U
+)
+{
+    val min_val = (v.front().*member).*submember;
+    val max_val = (v.front().*member).*submember;
+    for(const auto& x : v)
+    {
+        min_val = std::min(min_val, (x.*member).*submember);
+        max_val = std::max(max_val, (x.*member).*submember);
+    }
+
+    return {min_val, max_val};
+}
+
 void visualize::ReScaleStateForPlot::node_coordinates(State& state)
 {
 	const auto& [min_x, max_x] = min_max(state.nodes, &nst::Node::x);
@@ -38,8 +56,8 @@ void visualize::ReScaleStateForPlot::node_coordinates(State& state)
 
 	for(auto& node: state.nodes)
 	{
-		node.x /= length;
-		node.y /= length;
+		node.visual.x = node.x / length;
+		node.visual.y = node.y / length;
 	}
 }
 
@@ -53,7 +71,7 @@ void visualize::ReScaleStateForPlot::tube_lengths(State& state)
 	{
 		const auto& node_first = nodes[tube.id_node_first];
 		const auto& node_second = nodes[tube.id_node_second];
-		tube.length = node_first.distance(node_second);
+		tube.visual.length = node_first.visual_distance(node_second);
 	}
 }
 
@@ -64,13 +82,13 @@ void visualize::ReScaleStateForPlot::tube_radius(State& state)
 
 	const double delta_r = r_max - r_min;
 	const bool slope_not_possible = ((delta_r / r_max) <= 0.01);
-	const auto& [length_min, length_max] = min_max(tubes, &nst::Tube::length);
+	const auto& [length_min, length_max] = min_max(tubes, &nst::Tube::visual, &nst::Tube::Visual::length);
 
 	if(slope_not_possible)
 	{
 		for(auto& tube: tubes)
 		{
-			tube.radius = length_min * (R_MIN + R_MAX) / 2;
+			tube.visual.radius = length_min * (R_MIN + R_MAX) / 2;
 		}
 		return;
 	}
@@ -78,7 +96,7 @@ void visualize::ReScaleStateForPlot::tube_radius(State& state)
 
 	for(auto& tube: tubes)
 	{
-		tube.radius = length_min * (
+		tube.visual.radius = length_min * (
 			R_MIN + DELTA_R / delta_r * (tube.radius - r_min)
 		);
 	}
@@ -97,15 +115,15 @@ void visualize::ReScaleStateForPlot::node_radius(State& state)
 		double radius_max = 0;
 		for(const int tube_id: tube_id_v)
 		{
-			std::max(state.tubes[tube_id].radius, radius_max);
+			std::max(state.tubes[tube_id].visual.radius, radius_max);
 		}
 
 		const auto theta = LARGEST_ANGLE_A_TUBE_CAN_PROJECT_ON_NODE;
-		node.radius = radius_max / std::sin(theta / 2.0);
+		node.visual.radius = radius_max / std::sin(theta / 2.0);
 	}
 }
 
-double visualize::ReScaleStateForPlot::calculate_tube_displacement_due_to_node(
+double visualize::ReScaleStateForPlot::calculate_tube_visual_displacement_due_to_node(
 	const double r_node,
 	const double r_tube
 )
@@ -126,24 +144,21 @@ void visualize::ReScaleStateForPlot::mpos(State& state)
 	{
 		const auto& node_first = nodes[tube.id_node_first];
 		const auto& node_second = nodes[tube.id_node_second];
-		const double p1 = calculate_tube_displacement_due_to_node(node_first.radius, tube.radius);
-		const double p2 = calculate_tube_displacement_due_to_node(node_second.radius, tube.radius);
+		const double p1 = calculate_tube_visual_displacement_due_to_node(node_first.visual.radius, tube.visual.radius);
+		const double p2 = calculate_tube_visual_displacement_due_to_node(node_second.visual.radius, tube.visual.radius);
 
-		tube.mpos = tube.mpos_long_displaced_scaled(p1, p2);
+		tube.visual.mpos = tube.mpos_long_displaced_scaled(p1, p2);
 	}
 
 }
 
-State visualize::ReScaleStateForPlot::create_state_visual(
-	const State& state
+void visualize::ReScaleStateForPlot::add_state_visual(
+	State& state
 )
 {
-	State state_visual(state);
-
-	node_coordinates(state_visual);
-	tube_lengths(state_visual);
-	tube_radius(state_visual);
-	node_radius(state_visual);
-	mpos(state_visual);
-	return state_visual;
+	node_coordinates(state);
+	tube_lengths(state);
+	tube_radius(state);
+	node_radius(state);
+	mpos(state);
 }

@@ -7,7 +7,6 @@ namespace visualize
 {
     class Menu
     {
-		static const std::string FOLDER_NAME_FIGURES;
 		static const std::string FILE_NAME_INITIAL;
 		static const std::string FILE_NAME_LIST_FIGURES;
 

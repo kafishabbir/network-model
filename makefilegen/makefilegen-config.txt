@@ -13,6 +13,7 @@ nst/state
 
 utility/math
 utility/measure
+utility/random
 
 simulate/menu
 simulate/physics
@@ -28,7 +29,5 @@ visualize/flow
 visualize/re-scale-state-for-plot
 visualize/menu
 visualize/latex
-visualize/trash-flow-file-out
-visualize/trash-tikz-draw
 
 

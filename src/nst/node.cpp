@@ -10,11 +10,11 @@ double nst::Node::distance(const Node& node) const
 
 double nst::Node::relative_angle(const Node& node) const
 {
-	const double x1 = x;
-	const double y1 = y;
+	const double x1 = visual.x;
+	const double y1 = visual.y;
 
-	const double x2 = node.x;
-	const double y2 = node.y;
+	const double x2 = node.visual.x;
+	const double y2 = node.visual.y;
 
 	const double delta_x = x2 - x1;
 	const double delta_y = y2 - y1;

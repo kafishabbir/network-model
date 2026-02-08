@@ -162,15 +162,14 @@ std::sttring visualize::Flow::code_tubes(const State& state)
 }
 
 
-std::string visualize::Flow::code_plot(const State& state)
+std::string visualize::Flow::code_plot(State& state)
 {
-	const auto state_visual =
-		visualize::ReScaleStateForPlot::create_state_visual(state);
+	visualize::ReScaleStateForPlot::add_state_visual(state);
 
 	std::stringstream ss;
 
-	ss << code_nodes(state_visual) << '\n';
-	ss << code_tubes(state_visual) << '\n';
+	ss << code_nodes(state) << '\n';
+	ss << code_tubes(state) << '\n';
 
 	return visualize::Draw::scope_tikzpicture(ss.str());;
 }

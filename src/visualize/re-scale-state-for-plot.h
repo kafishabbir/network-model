@@ -18,7 +18,14 @@ namespace visualize
 			val T::*member
 		);
 
-		static double calculate_tube_displacement_due_to_node(
+		template<class val, class T, class U>
+		static std::pair<val, val> min_max(
+			const std::vector<T>& v,
+			U T::*member,
+			val U::*submember
+		);
+
+		static double calculate_tube_visual_displacement_due_to_node(
 			const double r_node,
 			const double r_tube
 		);
@@ -40,7 +47,7 @@ namespace visualize
 
         public:
 
-        static State create_state_visual(const State& state);
+        static void add_state_visual(State& state);
     };
 }
 

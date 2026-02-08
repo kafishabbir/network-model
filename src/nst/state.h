@@ -23,7 +23,7 @@ public:
 	);
 
 	std::vector<std::vector<int>> generate_table_tubes_connected_to_nodes() const;
-	const std::vector<int>& tubes_connected_to_this_node(const int id_node) const;
+	std::vector<int> tubes_connected_to_this_node(const int id_node) const;
 };
 
 typedef std::vector<State> States; // Sadly not the United States of America
