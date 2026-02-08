@@ -29,7 +29,7 @@ std::string visualize::Latex::scope(
 	}
 	ss << '\n';
 
-	ss << commands;
+	ss << commands << '\n';
 
 	ss << command("end", scope_name) << '\n';
 	return ss.str();
@@ -44,6 +44,15 @@ std::string visualize::Latex::begin_end_figure_scope(
 	ss << command("centering") << '\n';
 	ss << command("input", file_name) << '\n';
 	ss << command("caption", caption) << '\n';
-	ss << command("label", file_name) << '\n';
+	ss << command("label", file_name);
 	return scope("figure", ss.str(), "H");
+}
+
+
+std::string visualize::Latex::begin_end_document_scope(
+	const std::string& file_name_of_tex_code_for_input
+)
+{
+	const auto& command_input_list_figures = command("input", file_name_of_tex_code_for_input);
+	return scope("document", command_input_list_figures);
 }

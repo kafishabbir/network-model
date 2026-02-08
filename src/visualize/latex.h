@@ -35,6 +35,11 @@ namespace visualize
 			const std::string& caption
 		);
 
+		static std::string begin_end_document_scope(
+			const std::string& file_name_of_tex_code_for_input
+		);
+
+
 	};
 }
 
