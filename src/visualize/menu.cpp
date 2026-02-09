@@ -1,8 +1,6 @@
 #include "visualize/menu.h"
-const std::string visualize::Menu::FILE_NAME_INITIAL = "figure-";
-const std::string visualize::Menu::FILE_NAME_LIST_FIGURES = "list-figures";
 
-void visualize::Menu::append(const std::vector<global::str_pair>& caption_and_code_new_v)
+void visualize::Menu::append(const std::vector<dst::str_pair>& caption_and_code_new_v)
 {
 	auto& parent = caption_and_code_v;
 	const auto& child = caption_and_code_new_v;
@@ -10,7 +8,7 @@ void visualize::Menu::append(const std::vector<global::str_pair>& caption_and_co
 	parent.insert(parent.end(), child.cbegin(), child.cend());
 }
 
-void visualize::Menu::flow(nst::States& states)
+void visualize::Menu::flow(dst::States& states)
 {
 	append(visualize::Flow::caption_and_code_multiple_plots(states));
 }
@@ -18,16 +16,16 @@ void visualize::Menu::flow(nst::States& states)
 std::string visualize::Menu::generate_file_name_from_index(const int i)
 {
 	std::stringstream ss;
-	ss << FILE_NAME_INITIAL << 1001 + i;
+	ss << decl::nps_latex_plot::nps_file::figure_initial << 1001 + i;
 	return ss.str();
 }
 
-std::vector<global::str_pair> visualize::Menu::out() const
+std::vector<dst::str_pair> visualize::Menu::out() const
 {
 	const int n_files = caption_and_code_v.size();
 
 	std::stringstream ss;
-	std::vector<global::str_pair> file_name_and_file_content_v(n_files + 1);
+	std::vector<dst::str_pair> file_name_and_file_content_v(n_files + 1);
 
 	for(int i = 0; i < n_files; ++ i)
 	{
@@ -41,7 +39,7 @@ std::vector<global::str_pair> visualize::Menu::out() const
 		ss << begin_end_figure_code << '\n';
 	}
 
-	file_name_and_file_content_v.front() = {FILE_NAME_LIST_FIGURES, ss.str()};
+	file_name_and_file_content_v.front() = {decl::nps_latex_plot::nps_file::list_figures, ss.str()};
 
 	return file_name_and_file_content_v;
 }

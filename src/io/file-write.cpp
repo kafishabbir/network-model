@@ -1,23 +1,18 @@
 #include "io/file-write.h"
 
-const std::string io::FileWrite::FOLDER_NAME_RESULTS = "run/results/";
-const std::string io::FileWrite::FILE_NAME_TEMPLATE = "template/main.tex";
-const std::string io::FileWrite::FOLDER_NAME_FIGURES = "figures/";
-const std::string io::FileWrite::FOLDER_NAME_OUTPUT = "output";
-
 std::string io::FileWrite::generate_folder_path_figures(
 	const std::string& folder_or_result_name
 )
 {
 	const auto& folder_path_root = generate_folder_path_root(folder_or_result_name);
-	return folder_path_root + FOLDER_NAME_FIGURES;
+	return folder_path_root + decl::nps_latex_plot::nps_folder::figures;
 }
 
 std::string io::FileWrite::generate_folder_path_root(
 	const std::string& folder_or_result_name
 )
 {
-	return FOLDER_NAME_RESULTS + folder_or_result_name + "/";
+	return decl::nps_latex_plot::nps_folder::results + folder_or_result_name + "/";
 }
 
 // REPLACE .TEX extensions with command const string
@@ -30,7 +25,7 @@ void io::FileWrite::clear_result_and_generate_folders(
 	const std::string folder_path_figures =
 		generate_folder_path_figures(folder_or_result_name);
 	const std::string folder_path_output =
-		folder_path_root + FOLDER_NAME_OUTPUT;
+		folder_path_root + decl::nps_latex_plot::nps_folder::output;
 
 	// Clear and Create results/flow/figures
 	std::filesystem::remove_all(folder_path_figures);
@@ -47,8 +42,8 @@ std::string io::FileWrite::makefile_text(
 	std::stringstream ss;
 
 	ss << "all:" << '\n';
-	ss << '\t' << "pdflatex -output-directory=" << FOLDER_NAME_OUTPUT << " " << folder_or_result_name << '\n';
-	ss << '\t' << "mv " << FOLDER_NAME_OUTPUT << "/" << folder_or_result_name << ".pdf " << folder_or_result_name << ".pdf" << '\n';
+	ss << '\t' << "pdflatex -output-directory=" << decl::nps_latex_plot::nps_folder::output << " " << folder_or_result_name << '\n';
+	ss << '\t' << "mv " << decl::nps_latex_plot::nps_folder::output << "/" << folder_or_result_name << ".pdf " << folder_or_result_name << ".pdf" << '\n';
 
 	return ss.str();
 }
@@ -58,8 +53,8 @@ std::string io::FileWrite::main_tex_text(
 	const std::string& file_name_list_figures
 )
 {
-	const std::string& file_name = FOLDER_NAME_FIGURES + file_name_list_figures;
-	std::ifstream fin(FILE_NAME_TEMPLATE);
+	const std::string& file_name = decl::nps_latex_plot::nps_folder::figures + file_name_list_figures;
+	std::ifstream fin(decl::nps_latex_plot::nps_file::template_main);
 
 	std::stringstream ss;
 
@@ -88,7 +83,7 @@ void io::FileWrite::create_makefile_and_main_tex(
 
 
 void io::FileWrite::write_to_particular_folder_in_run(
-	const std::vector<global::str_pair>& file_name_and_content_v,
+	const std::vector<dst::str_pair>& file_name_and_content_v,
 	const std::string& folder_or_result_name
 )
 {
@@ -110,7 +105,7 @@ void io::FileWrite::write_to_particular_folder_in_run(
 }
 
 void io::FileWrite::flow(
-	const std::vector<global::str_pair>& file_name_and_content_v
+	const std::vector<dst::str_pair>& file_name_and_content_v
 )
 {
 	write_to_particular_folder_in_run(file_name_and_content_v, "flow");

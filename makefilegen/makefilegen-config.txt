@@ -1,6 +1,7 @@
 exe/simulate
 
 global/dst
+global/decl
 
 ic/displacement-test
 ic/flow-visualization

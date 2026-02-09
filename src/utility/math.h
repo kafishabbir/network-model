@@ -9,7 +9,7 @@ namespace utility
 	{
 		public:
 		static std::vector<double> gaussian_elimination(
-			const global::Matrix A,
+			const dst::Matrix A,
 			const std::vector<double> B
 		);
 	};

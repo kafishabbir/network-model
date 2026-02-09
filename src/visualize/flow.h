@@ -6,20 +6,12 @@
 #include "visualize/latex.h"
 
 #include <iostream>
+#include "global/decl.h"
 
 namespace visualize
 {
 	class Flow
 	{
-		static const bool PLOT_FEATURE_LABEL_NODE_NUMBER;
-		static const bool PLOT_FEATURE_LABEL_TUBE_NUMBER;
-		static const bool PLOT_FEATURE_LABEL_TUBE_FLOW_RATE;
-		static const bool PLOT_FEATURE_DRAW_NODE;
-		static const bool PLOT_FEATURE_LABEL_NODE_PRESSURE;
-		static const bool PLOT_FEATURE_LABEL_TUBE_RADIUS;
-		static const bool PLOT_FEATURE_LABEL_TUBE_LENGTH;
-		static const std::vector<std::string> COLORS;
-
 		static std::string tikz_string_single_plot(
 			const nst::State& state
 		);
@@ -37,8 +29,8 @@ namespace visualize
 		static std::string caption_plot(const nst::State& state);
 
 	public:
-		static std::vector<global::str_pair> caption_and_code_multiple_plots(
-			nst::States& states
+		static std::vector<dst::str_pair> caption_and_code_multiple_plots(
+			dst::States& states
 		);
 	};
 }

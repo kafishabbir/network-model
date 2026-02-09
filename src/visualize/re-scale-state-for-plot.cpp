@@ -1,18 +1,5 @@
 #include "visualize/re-scale-state-for-plot.h"
 
-
-// The minumum and maximum radius in proportion to the minimum tube length
-const double visualize::ReScaleStateForPlot::R_MIN = 0.02;
-const double visualize::ReScaleStateForPlot::R_MAX = 0.10;
-
-/*
- * This controls the node size
- * Thick tube && low angle => huge node
- */
-const double visualize::ReScaleStateForPlot::LARGEST_ANGLE_A_TUBE_CAN_PROJECT_ON_NODE = std::acos(-1) / 2.0;
-
-const bool visualize::ReScaleStateForPlot::PLOT_FEATURE_ACTIVE_DISPLAY_NODE = true;
-
 template<class val, class T>
 std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
 	const std::vector<T>& v,
@@ -88,16 +75,16 @@ void visualize::ReScaleStateForPlot::tube_radius(nst::State& state)
 	{
 		for(auto& tube: tubes)
 		{
-			tube.visual.radius = length_min * (R_MIN + R_MAX) / 2;
+			tube.visual.radius = length_min * (decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_min + decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_max) / 2;
 		}
 		return;
 	}
-	const double DELTA_R = R_MAX - R_MIN;
+	const double DELTA_R = decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_max - decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_min;
 
 	for(auto& tube: tubes)
 	{
 		tube.visual.radius = length_min * (
-			R_MIN + DELTA_R / delta_r * (tube.radius - r_min)
+			decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_min + DELTA_R / delta_r * (tube.radius - r_min)
 		);
 	}
 }
@@ -121,7 +108,7 @@ void visualize::ReScaleStateForPlot::node_radius(nst::State& state)
 		}
 		//std::cout << '\n';
 
-		const auto theta = LARGEST_ANGLE_A_TUBE_CAN_PROJECT_ON_NODE;
+		const auto theta = decl::nps_latex_plot::nps_flow::nps_parameters::largest_angle_tube_project_on_node;
 		node.visual.radius = radius_max / std::sin(theta / 2.0);
 	}
 }
@@ -131,7 +118,7 @@ double visualize::ReScaleStateForPlot::calculate_tube_visual_displacement_due_to
 	const double r_tube
 )
 {
-	if(PLOT_FEATURE_ACTIVE_DISPLAY_NODE)
+	if(decl::nps_latex_plot::nps_flow::nps_feature::draw_node_perimeter)
 	{
 		return std::sqrt(r_node * r_node - r_tube * r_tube);
 	}

@@ -1,7 +1,7 @@
 #include "utility/math.h"
 
 std::vector<double> utility::Math::gaussian_elimination(
-	global::Matrix A,
+	dst::Matrix A,
 	std::vector<double> B
 )
 {

@@ -9,16 +9,16 @@ namespace nst
 	class State
 	{
 	public:
-		Nodes nodes;
-		Tubes tubes;
+		std::vector<nst::Node> nodes;
+		std::vector<nst::Tube> tubes;
 		double mu1;
 		double mu2;
 		double sigma;
 		std::vector<std::vector<int>> table_tubes_connected_to_nodes;
 
 		State(
-			const Nodes& nodes,
-			const Tubes& tubes,
+			const std::vector<nst::Node>& nodes,
+			const std::vector<nst::Tube>& tubes,
 			const double mu1 = 1,
 			const double mu2 = 1,
 			const double sigma = 1
@@ -28,6 +28,5 @@ namespace nst
 		std::vector<int> tubes_connected_to_this_node(const int id_node) const;
 	};
 
-	typedef std::vector<State> States; // Sadly not the United States of America
 }
 #endif

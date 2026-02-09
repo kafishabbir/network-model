@@ -8,12 +8,12 @@ namespace ic
 {
 	class FlowVisualization
 	{
-		static nst::Tubes generate_tubes_rectangular(
+		static dst::Tubes generate_tubes_rectangular(
 			const int n_rows_tube,
 			const int n_cols_tube
 		);
 
-		static nst::Nodes generate_nodes_rectangular(
+		static dst::Nodes generate_nodes_rectangular(
 			const int n_rows_tube,
 			const int n_cols_tube
 		);
@@ -25,7 +25,7 @@ namespace ic
 	public:
 
 
-		static nst::States generate_states_rectangular_plus_random();
+		static dst::States generate_states_rectangular_plus_random();
 	};
 
 }

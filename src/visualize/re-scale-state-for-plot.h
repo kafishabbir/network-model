@@ -3,16 +3,12 @@
 
 #include "global/dst.h"
 #include <iostream>
+#include "global/decl.h"
 
 namespace visualize
 {
     class ReScaleStateForPlot
     {
-		static const double R_MIN;
-		static const double R_MAX;
-		static const double LARGEST_ANGLE_A_TUBE_CAN_PROJECT_ON_NODE;
-		static const bool PLOT_FEATURE_ACTIVE_DISPLAY_NODE;
-
 		template<class val, class T>
 		static std::pair<val, val> min_max(
 			const std::vector<T>& v,
@@ -37,7 +33,7 @@ namespace visualize
 		//length from node positions
 		static void tube_lengths(nst::State& state);
 
-		//radius scaled to R_MIN R_MAX
+		//radius scaled to decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_min decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_max
 		static void tube_radius(nst::State& state);
 
 		//a circular node sets the tubes radially further

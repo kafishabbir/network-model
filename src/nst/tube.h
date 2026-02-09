@@ -43,7 +43,6 @@ namespace nst
 		double mu(const double mu1, const double mu2) const;
 	};
 
-	typedef std::vector<nst::Tube> Tubes;
 }
 
 

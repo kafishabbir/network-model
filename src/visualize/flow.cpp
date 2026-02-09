@@ -1,16 +1,5 @@
 #include "visualize/flow.h"
 
-const std::vector<std::string> visualize::Flow::COLORS{"cw", "cnw"};
-
-const bool visualize::Flow::PLOT_FEATURE_LABEL_NODE_NUMBER = true;
-const bool visualize::Flow::PLOT_FEATURE_LABEL_TUBE_NUMBER = true;
-const bool visualize::Flow::PLOT_FEATURE_LABEL_TUBE_FLOW_RATE = true;
-const bool visualize::Flow::PLOT_FEATURE_DRAW_NODE = true;
-const bool visualize::Flow::PLOT_FEATURE_LABEL_NODE_PRESSURE = true;
-const bool visualize::Flow::PLOT_FEATURE_LABEL_TUBE_RADIUS = true;
-const bool visualize::Flow::PLOT_FEATURE_LABEL_TUBE_LENGTH = true;
-
-
 std::string visualize::Flow::code_node(const nst::Node& node, const int node_id)
 {
 	const double x = node.visual.x;
@@ -18,7 +7,7 @@ std::string visualize::Flow::code_node(const nst::Node& node, const int node_id)
 	const double radius = node.visual.radius;
 	std::stringstream ss;
 
-	if(PLOT_FEATURE_DRAW_NODE)
+	if(decl::nps_latex_plot::nps_flow::nps_feature::draw_node_perimeter)
 	{
 		ss << visualize::Draw::circle(x, y, radius) << '\n';
 	}
@@ -33,13 +22,13 @@ std::string visualize::Flow::code_node_label(const nst::Node& node, const int no
 	//const double radius = node.visual.radius;
 	std::stringstream ss;
 
-	if(PLOT_FEATURE_LABEL_NODE_NUMBER)
+	if(decl::nps_latex_plot::nps_flow::nps_label::node_id)
 	{
 		std::stringstream ss_node;
 		ss_node << "$\\nu_{" << node_id << "}$";
 		ss << visualize::Draw::node(x, y, ss_node.str()) << '\n';
 	}
-	if(PLOT_FEATURE_LABEL_NODE_PRESSURE)
+	if(decl::nps_latex_plot::nps_flow::nps_label::node_pressure)
 	{
 		std::stringstream ss_pressure;
 		ss_pressure << "$p=" << visualize::Draw::num(node.pressure) << "$";
@@ -56,11 +45,11 @@ std::string visualize::Flow::label_tube_above(const nst::Tube& tube)
 	const double lv = tube.visual.length;
 
 	std::stringstream ss;
-	if(PLOT_FEATURE_LABEL_TUBE_RADIUS)
+	if(decl::nps_latex_plot::nps_flow::nps_label::tube_radius)
 	{
 		ss << "$r=" << visualize::Draw::num(tube.radius) << "$, ";
 	}
-	if(PLOT_FEATURE_LABEL_TUBE_LENGTH)
+	if(decl::nps_latex_plot::nps_flow::nps_label::tube_length)
 	{
 		ss << "$l=" << visualize::Draw::num(tube.length) << "$, ";
 	}
@@ -77,7 +66,7 @@ std::string visualize::Flow::label_tube_middle(const nst::Tube& tube, const int 
 	const double lv = tube.visual.length;
 	std::stringstream ss;
 
-	if(PLOT_FEATURE_LABEL_TUBE_NUMBER)
+	if(decl::nps_latex_plot::nps_flow::nps_label::tube_id)
 	{
 		ss << "$b_{" << tube_id << "}$";
 	}
@@ -112,7 +101,7 @@ std::string visualize::Flow::label_tube_below(const nst::Tube& tube)
 		q_pos = lv*5/8;
 	}
 
-	if(PLOT_FEATURE_LABEL_TUBE_FLOW_RATE)
+	if(decl::nps_latex_plot::nps_flow::nps_label::tube_flow_rate)
 	{
 		ss << visualize::Draw::arrow(arrow_begin, arrow_end, -1.75 * rv) << '\n';
 
@@ -154,7 +143,7 @@ std::string visualize::Flow::code_tube(const nst::State& state, const int tube_i
 	std::cout << "\n";
 	*/
 	std::stringstream ss;
-	ss << visualize::Draw::mpos_horizontal_rectangles(tube, COLORS);
+	ss << visualize::Draw::mpos_horizontal_rectangles(tube, decl::nps_latex_plot::nps_flow::colors_str_v);
 
 	// length, radius
 	ss << label_tube_above(tube) << '\n';
@@ -243,12 +232,12 @@ std::string visualize::Flow::caption_plot(const nst::State& state)
 	return ss.str();
 }
 
-std::vector<global::str_pair> visualize::Flow::caption_and_code_multiple_plots(
-	nst::States& states
+std::vector<dst::str_pair> visualize::Flow::caption_and_code_multiple_plots(
+	dst::States& states
 )
 {
 	const int n_plots = states.size();
-	std::vector<global::str_pair> caption_and_code_v(n_plots);
+	std::vector<dst::str_pair> caption_and_code_v(n_plots);
 	for(int i = 0; i < n_plots; ++ i)
 	{
 		auto& state = states[i];

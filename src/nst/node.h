@@ -27,7 +27,7 @@ namespace nst
 		Node();
 	};
 
-	typedef std::vector<nst::Node> Nodes;
+
 }
 
 

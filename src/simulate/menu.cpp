@@ -25,7 +25,7 @@ void simulate::Menu::generate_and_plot()
 	simulate::Step1Pressure::solve_and_assign_pressure_at_nodes(state);
 	simulate::Step2FlowRate::calculate_and_assign_flow_rates_to_tubes(state);
 
-	nst::States states{state};
+	dst::States states{state};
 	visualize_menu.flow(states);
 	io::FileWrite::flow(visualize_menu.out());
 }

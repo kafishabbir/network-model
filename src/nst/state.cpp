@@ -1,8 +1,8 @@
 #include "nst/state.h"
 
 nst::State::State(
-	const nst::Nodes& nodes,
-	const nst::Tubes& tubes,
+	const std::vector<nst::Node>& nodes,
+	const std::vector<nst::Tube>& tubes,
 	const double mu1,
 	const double mu2,
 	const double sigma
