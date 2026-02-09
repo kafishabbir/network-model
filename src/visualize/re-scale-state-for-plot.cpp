@@ -35,7 +35,7 @@ std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
     return {min_val, max_val};
 }
 
-void visualize::ReScaleStateForPlot::node_coordinates(nst::State& state)
+void visualize::ReScaleStateForPlot::node_coordinates(nst::State& state, const visualize::Property& visual_property)
 {
 	const auto& [min_x, max_x] = min_max(state.nodes, &nst::Node::x);
 
@@ -49,7 +49,7 @@ void visualize::ReScaleStateForPlot::node_coordinates(nst::State& state)
 }
 
 
-void visualize::ReScaleStateForPlot::tube_lengths(nst::State& state)
+void visualize::ReScaleStateForPlot::tube_lengths(nst::State& state, const visualize::Property& visual_property)
 {
 	auto& tubes = state.tubes;
 	auto& nodes = state.nodes;
@@ -62,7 +62,7 @@ void visualize::ReScaleStateForPlot::tube_lengths(nst::State& state)
 	}
 }
 
-void visualize::ReScaleStateForPlot::tube_radius(nst::State& state)
+void visualize::ReScaleStateForPlot::tube_radius(nst::State& state, const visualize::Property& visual_property)
 {
 	auto& tubes = state.tubes;
 	const auto& [r_min, r_max] = min_max(tubes, &nst::Tube::radius);
@@ -75,21 +75,21 @@ void visualize::ReScaleStateForPlot::tube_radius(nst::State& state)
 	{
 		for(auto& tube: tubes)
 		{
-			tube.visual.radius = length_min * (decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_min + decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_max) / 2;
+			tube.visual.radius = length_min * (visual_property.tube_radius_min + visual_property.tube_radius_max) / 2;
 		}
 		return;
 	}
-	const double DELTA_R = decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_max - decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_min;
+	const double DELTA_R = visual_property.tube_radius_max - visual_property.tube_radius_min;
 
 	for(auto& tube: tubes)
 	{
 		tube.visual.radius = length_min * (
-			decl::nps_latex_plot::nps_flow::nps_parameters::tube_radius_min + DELTA_R / delta_r * (tube.radius - r_min)
+			visual_property.tube_radius_min + DELTA_R / delta_r * (tube.radius - r_min)
 		);
 	}
 }
 
-void visualize::ReScaleStateForPlot::node_radius(nst::State& state)
+void visualize::ReScaleStateForPlot::node_radius(nst::State& state, const visualize::Property& visual_property)
 {
 	auto& nodes = state.nodes;
 	const int n_nodes = nodes.size();
@@ -108,17 +108,17 @@ void visualize::ReScaleStateForPlot::node_radius(nst::State& state)
 		}
 		//std::cout << '\n';
 
-		const auto theta = decl::nps_latex_plot::nps_flow::nps_parameters::largest_angle_tube_project_on_node;
+		const auto theta = visual_property.largest_angle_tube_project_on_node;
 		node.visual.radius = radius_max / std::sin(theta / 2.0);
 	}
 }
 
 double visualize::ReScaleStateForPlot::calculate_tube_visual_displacement_due_to_node(
 	const double r_node,
-	const double r_tube
+	const double r_tube, const visualize::Property& visual_property
 )
 {
-	if(decl::nps_latex_plot::nps_flow::nps_feature::draw_node_perimeter)
+	if(visual_property.draw_node_perimeter)
 	{
 		return std::sqrt(r_node * r_node - r_tube * r_tube);
 	}
@@ -127,7 +127,7 @@ double visualize::ReScaleStateForPlot::calculate_tube_visual_displacement_due_to
 }
 
 
-void visualize::ReScaleStateForPlot::mpos(nst::State& state)
+void visualize::ReScaleStateForPlot::mpos(nst::State& state, const visualize::Property& visual_property)
 {
 	//int i = 0;
 	const auto& nodes = state.nodes;
@@ -135,8 +135,8 @@ void visualize::ReScaleStateForPlot::mpos(nst::State& state)
 	{
 		const auto& node_first = nodes[tube.id_node_first];
 		const auto& node_second = nodes[tube.id_node_second];
-		const double p1 = calculate_tube_visual_displacement_due_to_node(node_first.visual.radius, tube.visual.radius);
-		const double p2 = calculate_tube_visual_displacement_due_to_node(node_second.visual.radius, tube.visual.radius);
+		const double p1 = calculate_tube_visual_displacement_due_to_node(node_first.visual.radius, tube.visual.radius, visual_property);
+		const double p2 = calculate_tube_visual_displacement_due_to_node(node_second.visual.radius, tube.visual.radius, visual_property);
 
 		//std::cout << "tube_id=" << i++ << '\n';
 		//std::cout << "node_first.visual.radius=" << node_first.visual.radius << '\n';
@@ -150,12 +150,12 @@ void visualize::ReScaleStateForPlot::mpos(nst::State& state)
 }
 
 void visualize::ReScaleStateForPlot::add_state_visual(
-	nst::State& state
+	nst::State& state, const visualize::Property& visual_property
 )
 {
-	node_coordinates(state);
-	tube_lengths(state);
-	tube_radius(state);
-	node_radius(state);
-	mpos(state);
+	node_coordinates(state, visual_property);
+	tube_lengths(state, visual_property);
+	tube_radius(state, visual_property);
+	node_radius(state, visual_property);
+	mpos(state, visual_property);
 }

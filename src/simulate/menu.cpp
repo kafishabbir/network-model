@@ -21,11 +21,12 @@ void simulate::Menu::generate_and_plot()
 {
 	nst::State state = ic::DisplacementTest::generate_rectangular();
 	visualize::Menu visualize_menu;
+	visualize::Property visualize_property;
 	set_boundaries(state);
 	simulate::Step1Pressure::solve_and_assign_pressure_at_nodes(state);
 	simulate::Step2FlowRate::calculate_and_assign_flow_rates_to_tubes(state);
 
 	dst::States states{state};
-	visualize_menu.flow(states);
+	visualize_menu.flow(states, visualize_property);
 	io::FileWrite::flow(visualize_menu.out());
 }

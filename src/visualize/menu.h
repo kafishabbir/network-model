@@ -2,6 +2,7 @@
 #define VISUALIZE_MENU_H
 
 #include "visualize/flow.h"
+#include "visualize/property.h"
 #include "global/decl.h"
 
 namespace visualize
@@ -19,7 +20,7 @@ namespace visualize
         public:
         // strings<file_name, file_content>
         void flow(
-			dst::States& states
+			dst::States& states, const visualize::Property& visual_property
 		);
 
 		std::vector<dst::str_pair> out() const;

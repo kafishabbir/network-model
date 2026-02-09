@@ -8,9 +8,9 @@ void visualize::Menu::append(const std::vector<dst::str_pair>& caption_and_code_
 	parent.insert(parent.end(), child.cbegin(), child.cend());
 }
 
-void visualize::Menu::flow(dst::States& states)
+void visualize::Menu::flow(dst::States& states, const visualize::Property& visual_property)
 {
-	append(visualize::Flow::caption_and_code_multiple_plots(states));
+	append(visualize::Flow::caption_and_code_multiple_plots(states, visual_property));
 }
 
 std::string visualize::Menu::generate_file_name_from_index(const int i)
@@ -35,7 +35,7 @@ std::vector<dst::str_pair> visualize::Menu::out() const
 		file_name_and_file_content_v[i + 1] = {file_name, file_content};
 
 		const auto& begin_end_figure_code =
-			visualize::Latex::begin_end_figure_scope("figures/" + file_name, caption);
+			visualize::Latex::begin_end_figure_scope(decl::nps_latex_plot::nps_folder::figures + file_name, caption);
 		ss << begin_end_figure_code << '\n';
 	}
 

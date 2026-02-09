@@ -30,5 +30,5 @@ visualize/flow
 visualize/re-scale-state-for-plot
 visualize/menu
 visualize/latex
-
+visualize/property
 
