@@ -45,6 +45,10 @@ std::string visualize::Flow::label_tube_above(const nst::Tube& tube, const visua
 	const double lv = tube.visual.length;
 
 	std::stringstream ss;
+	if(visual_property.label_tube_direction)
+	{
+		ss << "(" << tube.id_node_first << "-" << tube.id_node_second << "), ";
+	}
 	if(visual_property.label_tube_radius)
 	{
 		ss << "$r=" << visualize::Draw::num(tube.radius) << "$, ";

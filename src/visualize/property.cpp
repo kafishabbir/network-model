@@ -11,5 +11,6 @@ visualize::Property::Property():
 	label_tube_id(true),
 	label_tube_radius(true),
 	label_tube_length(true),
-	label_tube_flow_rate(true)
+	label_tube_flow_rate(true),
+	label_tube_direction(true)
 {}

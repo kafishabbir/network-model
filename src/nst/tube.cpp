@@ -32,14 +32,8 @@ nst::Tube::Tube():
 
 int nst::Tube::id_other_node(const int id_this_node) const
 {
-	if(id_this_node != id_node_first)
-	{
-		return id_node_first;
-	}
-
-	return id_node_second;
+	return (correct_direction(id_this_node) ? id_node_second : id_node_first);
 }
-
 
 double nst::Tube::mu(const double mu1, const double mu2) const
 {
@@ -56,3 +50,8 @@ double nst::Tube::mu(const double mu1, const double mu2) const
 	return sum;
 }
 
+
+bool nst::Tube::correct_direction(const int id_node_relative_to) const
+{
+	return id_node_first == id_node_relative_to;
+}

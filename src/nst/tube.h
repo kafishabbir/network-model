@@ -39,6 +39,7 @@ namespace nst
 			const double p2
 		) const;
 
+		bool correct_direction(const int id_node_relative_to) const;
 		int id_other_node(const int id_this_node) const;
 		double mu(const double mu1, const double mu2) const;
 	};

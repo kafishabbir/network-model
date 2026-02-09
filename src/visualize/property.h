@@ -26,6 +26,7 @@ namespace visualize
         bool label_tube_radius;
         bool label_tube_length;
         bool label_tube_flow_rate;
+        bool label_tube_direction;
 
 		Property();
     };
