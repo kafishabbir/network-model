@@ -8,6 +8,8 @@ namespace visualize
 {
 	class Latex
 	{
+
+	public:
 		/*
 		begin{scope_name}[scope_arguments]
 			commands...
@@ -19,7 +21,7 @@ namespace visualize
 			const std::string& scope_arguments = ""
 		);
 
-	public:
+
 		// command_name{command_body}
 		static std::string command(
 			const std::string& command_name,
@@ -58,17 +60,7 @@ namespace visualize
 			const std::string& tex_code_drawing_shapes
 		);
 
-		/*
-		begin{scope}[shift={(x, y)}, rotate=angle]
-			draw_commands_to_scope
-		end{scope}
-		*/
-		static std::string scope_shift_and_rotate(
-			const double shift_to_x,
-			const double shift_to_y,
-			const double rotate_angle,
-			const std::string& draw_commands_to_scope
-		);
+
 	};
 }
 

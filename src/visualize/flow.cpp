@@ -31,7 +31,7 @@ std::string visualize::Flow::code_node_label(const nst::Node& node, const int no
 	if(visual_property.label_node_pressure)
 	{
 		std::stringstream ss_pressure;
-		ss_pressure << "$p=" << visualize::Draw::num(node.pressure) << "$";
+		ss_pressure << "$p=" << Draw::num(node.pressure) << "$";
 		ss << visualize::Draw::node(x, y + 0.01, ss_pressure.str()) << '\n';
 	}
 	return ss.str();
@@ -41,26 +41,38 @@ std::string visualize::Flow::code_node_label(const nst::Node& node, const int no
 std::string visualize::Flow::label_tube_above(const nst::Tube& tube, const visualize::Property& visual_property)
 {
 	const double x_proportion_location = 0.3;
-	const double rv = tube.visual.radius;
+	//const double rv = tube.visual.radius;
 	const double lv = tube.visual.length;
 
 	std::stringstream ss;
+
 	if(visual_property.label_tube_direction)
 	{
-		ss << "(" << tube.id_node_first << "-" << tube.id_node_second << "), ";
+		ss << "$p_{" << tube.id_node_first << tube.id_node_second << "} = " << Draw::num(tube.calculated.capillary_pressure_magnitude) << "$, \\\\ ";
 	}
 	if(visual_property.label_tube_radius)
 	{
-		ss << "$r=" << visualize::Draw::num(tube.radius) << "$, ";
+		ss << "$r=" << Draw::num(tube.radius) << "$, ";
 	}
 	if(visual_property.label_tube_length)
 	{
-		ss << "$l=" << visualize::Draw::num(tube.length) << "$, ";
+		ss << "$l=" << Draw::num(tube.length) << "$, \\\\ ";
 	}
-
-	return visualize::Draw::node(
+	if(visual_property.label_tube_velocity)
+	{
+		ss << "$v = " << Draw::num(tube.calculated.velocity) << "$, ";
+	}
+	if(visual_property.label_tube_time)
+	{
+		ss << "$t = " << Draw::num(tube.calculated.time) << "$, ";
+		if(tube.calculated.is_minimum_time)
+		{
+			ss << "MIN HERE,";
+		}
+	}
+	return visualize::Draw::node_long(
 		lv * x_proportion_location,
-		2 * rv,
+		0.03,
 		ss.str()
 	);
 }
@@ -110,7 +122,7 @@ std::string visualize::Flow::label_tube_below(const nst::Tube& tube, const visua
 		ss << visualize::Draw::arrow(arrow_begin, arrow_end, -1.75 * rv) << '\n';
 
 		std::stringstream ss_node;
-		ss_node << "$" << "q_{" << i << j << "}=" << visualize::Draw::num(q) << "$";
+		ss_node << "$" << "q_{" << i << j << "}=" << Draw::num(q) << "$";
 
 		ss << visualize::Draw::node(q_pos, - 2 * rv, ss_node.str());
 	}
@@ -124,41 +136,17 @@ std::string visualize::Flow::code_tube(const nst::State& state, const int tube_i
 	const auto& tube = state.tubes[tube_id];
 	const auto& node_first = state.nodes[tube.id_node_first];
 	const auto& node_second = state.nodes[tube.id_node_second];
-	/*
-	std::cout << "tube_id=" << tube_id << "\n";
-	std::cout << "radius=" << tube.radius << "\n";
-	std::cout << "length=" << tube.radius << "\n";
-	std::cout << "mpos={";
-	for(auto x: tube.mpos)
-	{
-		std::cout << x << ", ";
-	}
-	std::cout << "}\n";
 
-	std::cout << "visual.radius=" << tube.visual.radius << "\n";
-	std::cout << "visual.length=" << tube.visual.length << "\n";
-	std::cout << "visual.visual.mpos={";
-	for(auto x: tube.visual.mpos)
-	{
-		std::cout << x << ", ";
-	}
-	std::cout << "}\n";
-	std::cout << "calculated.flow_rate=" << tube.calculated.flow_rate << "\n";
-	std::cout << "\n";
-	*/
 	std::stringstream ss;
 	ss << visualize::Draw::mpos_horizontal_rectangles(tube, visual_property.colors_str_v);
 
-	// length, radius
 	ss << label_tube_above(tube, visual_property) << '\n';
 
-	// tube id
 	ss << label_tube_middle(tube, tube_id, visual_property) << '\n';
 
-	// flow rate
 	ss << label_tube_below(tube, visual_property) << '\n';
 
-	return visualize::Latex::scope_shift_and_rotate(
+	return visualize::Draw::scope_shift_and_rotate(
 		node_first.visual.x,
 		node_first.visual.y,
 		node_first.visual.relative_angle(node_second),
@@ -215,6 +203,7 @@ std::string visualize::Flow::code_plot(nst::State& state, const visualize::Prope
 	ss << code_nodes(state, visual_property) << '\n';
 	ss << code_tubes(state, visual_property) << '\n';
 	ss << code_nodes_labels(state, visual_property) << '\n';
+	// ss << "\\draw (0, 0) rectangle (1, 0.5);" << '\n';
 	return visualize::Latex::scope_tikzpicture(ss.str());
 }
 
@@ -225,13 +214,15 @@ std::string visualize::Flow::caption_plot(const nst::State& state, const visuali
 	const double mu_1 = state.mu1;
 	const double mu_2 = state.mu2;
 	const double sigma = state.sigma;
+	const double time_step = state.calculated.time_step;
 
 	std::stringstream ss;
 	ss << "$n_{nodes}="	<< n_nodes	<< "$" << ", ";
 	ss << "$n_{tubes}="	<< n_tubes	<< "$" << ", ";
-	ss << "$\\mu_{1}="	<< mu_1		<< "$" << ", ";
-	ss << "$\\mu_{2}="	<< mu_2		<< "$" << ", ";
-	ss << "$\\sigma="	<< sigma	<< "$" << ".";
+	ss << "$\\mu_{1}="	<< Draw::num(mu_1)		<< "$" << ", ";
+	ss << "$\\mu_{2}="	<< Draw::num(mu_2)		<< "$" << ", ";
+	ss << "$\\sigma="	<< Draw::num(sigma)	<< "$" << ", ";
+	ss << "time step=$"	<< Draw::num(time_step)	<< "$" << ".";
 
 	return ss.str();
 }

@@ -12,5 +12,8 @@ visualize::Property::Property():
 	label_tube_radius(true),
 	label_tube_length(true),
 	label_tube_flow_rate(true),
-	label_tube_direction(true)
+	label_tube_direction(true),
+	label_capillary_pressure(true),
+	label_tube_velocity(true),
+	label_tube_time(true)
 {}

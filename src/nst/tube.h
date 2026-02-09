@@ -18,7 +18,12 @@ namespace nst
 
 		struct Calculated
 		{
+			double resistance_coefficient;
+			double capillary_pressure_magnitude;
 			double flow_rate;
+			double velocity;
+			double time;
+			bool is_minimum_time;
 		};
 
 		int id_node_first;

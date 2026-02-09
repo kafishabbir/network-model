@@ -9,7 +9,7 @@ namespace simulate
     class Step2FlowRate
     {
         public:
-        static void calculate_and_assign_flow_rates_to_tubes(
+		static void calculate_and_assign_flow_rates_to_tubes(
 			nst::State& state
 		);
     };

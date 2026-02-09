@@ -29,9 +29,16 @@ simulate::Step1Pressure::generate_linear_equations(
 			const int tube_id = tubes_connected_to_node[j];
 			const auto& tube = state.tubes[tube_id];
 			const int id_node_second = tube.id_other_node(i);
-			const double resistance = simulate::Physics::calculate_resistance(tube, state);
+
+			const double resistance = tube.calculated.resistance_coefficient;
+			const double capillary_pressure_magnitude = tube.calculated.capillary_pressure_magnitude;
+			const double capillary_pressure_sign = simulate::Physics::determine_capillary_pressure_sign(tube, i);
+			const double capillary_pressure = capillary_pressure_magnitude * capillary_pressure_sign;
+
 			row[i] += resistance;
 			row[id_node_second] = -resistance;
+
+			b -= resistance * capillary_pressure;
 		}
 	}
 

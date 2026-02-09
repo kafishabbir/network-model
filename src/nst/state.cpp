@@ -5,13 +5,15 @@ nst::State::State(
 	const std::vector<nst::Tube>& tubes,
 	const double mu1,
 	const double mu2,
-	const double sigma
+	const double sigma,
+	const double time_step_resolution
 ):
 	nodes(nodes),
 	tubes(tubes),
 	mu1(mu1),
 	mu2(mu2),
 	sigma(sigma),
+	time_step_resolution(time_step_resolution),
 	table_tubes_connected_to_nodes(generate_table_tubes_connected_to_nodes())
 {}
 

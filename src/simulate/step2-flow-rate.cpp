@@ -15,8 +15,11 @@ void simulate::Step2FlowRate::calculate_and_assign_flow_rates_to_tubes(
 		const double p1 = node_first.pressure;
 		const double p2 = node_second.pressure;
 		const double delta_p = p1 - p2;
-		const double resistance = simulate::Physics::calculate_resistance(tube, state);
-		const double flow_rate = resistance * delta_p;
+
+		const double resistance = tube.calculated.resistance_coefficient;
+		const double capillary_pressure_magnitude = tube.calculated.capillary_pressure_magnitude;
+
+		const double flow_rate = resistance * (delta_p + capillary_pressure_magnitude);
 		tube.calculated.flow_rate = flow_rate;
 	}
 }

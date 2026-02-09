@@ -16,19 +16,13 @@ namespace simulate
 			const nst::State& state
 		);
 
-		static double calculate_laplace_pressure_value(
+		static double calculate_capillary_pressure_magnitude(
 			const nst::Tube& tube,
 			const nst::State& state
 		);
 
-		static double calculate_laplace_pressure_sign(
+		static double determine_capillary_pressure_sign(
 			const nst::Tube& tube,
-			const int node_id_relative_to
-		);
-
-        static double calculate_laplace_pressure(
-			const nst::Tube& tube,
-			const nst::State& state,
 			const int node_id_relative_to
 		);
     };

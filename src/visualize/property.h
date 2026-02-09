@@ -27,6 +27,9 @@ namespace visualize
         bool label_tube_length;
         bool label_tube_flow_rate;
         bool label_tube_direction;
+        bool label_capillary_pressure;
+        bool label_tube_velocity;
+        bool label_tube_time;
 
 		Property();
     };

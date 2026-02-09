@@ -64,17 +64,3 @@ std::string visualize::Latex::scope_tikzpicture(
 	return scope_base("tikzpicture", tex_code_drawing_shapes, "scale=\\imagewidthscale");
 
 }
-
-std::string visualize::Latex::scope_shift_and_rotate(
-	const double shift_to_x,
-	const double shift_to_y,
-	const double rotate_angle,
-	const std::string& draw_commands_to_be_scoped
-)
-{
-	std::stringstream ss;
-	ss << "shift={(" << shift_to_x << ", " << shift_to_y << ")}";
-	ss << ", rotate=" << rotate_angle;
-
-	return scope_base("scope", draw_commands_to_be_scoped, ss.str());
-}
