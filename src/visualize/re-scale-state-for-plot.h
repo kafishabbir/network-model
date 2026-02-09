@@ -2,10 +2,11 @@
 #define VISUALIZE_RE_SCALE_STATE_FOR_PLOT_H
 
 #include "global/dst.h"
+#include <iostream>
 
 namespace visualize
 {
-    class ReScalenst::StateForPlot
+    class ReScaleStateForPlot
     {
 		static const double R_MIN;
 		static const double R_MAX;

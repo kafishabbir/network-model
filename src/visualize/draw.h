@@ -2,7 +2,6 @@
 #define VISUALIZE_DRAW_H
 
 #include "nst/tube.h"
-#include "visualize/latex.h"
 #include <iomanip>
 
 namespace visualize
@@ -41,13 +40,6 @@ namespace visualize
 			const double x_begin,
 			const double x_end,
 			const double y
-		);
-
-		static std::string scope_shift_and_rotate(
-			const double shift_to_x,
-			const double shift_to_y,
-			const double rotate_angle,
-			const std::string& draw_commands_to_scope
 		);
 	};
 

@@ -25,21 +25,18 @@ void io::FileWrite::clear_result_and_generate_folders(
 	const std::string& folder_or_result_name
 )
 {
-	const auto& folder_path_root =
+	const std::string folder_path_root =
 		generate_folder_path_root(folder_or_result_name);
-
-	// Clearing and creating results/flow/
-	std::filesystem::remove_all(folder_path_root);
-	std::filesystem::create_directories(folder_path_root);
-
-	// Create results/flow/figures
 	const std::string folder_path_figures =
 		generate_folder_path_figures(folder_or_result_name);
+	const std::string folder_path_output =
+		folder_path_root + FOLDER_NAME_OUTPUT;
+
+	// Clear and Create results/flow/figures
+	std::filesystem::remove_all(folder_path_figures);
 	std::filesystem::create_directories(folder_path_figures);
 
 	// Create results/flow/output
-	const std::string folder_path_output =
-		folder_path_root + FOLDER_NAME_OUTPUT;
 	std::filesystem::create_directories(folder_path_output);
 }
 
@@ -50,7 +47,7 @@ std::string io::FileWrite::makefile_text(
 	std::stringstream ss;
 
 	ss << "all:" << '\n';
-	ss << '\t' << "pdflatex -output-directory= " << FOLDER_NAME_OUTPUT << " " << folder_or_result_name << '\n';
+	ss << '\t' << "pdflatex -output-directory=" << FOLDER_NAME_OUTPUT << " " << folder_or_result_name << '\n';
 	ss << '\t' << "mv " << FOLDER_NAME_OUTPUT << "/" << folder_or_result_name << ".pdf " << folder_or_result_name << ".pdf" << '\n';
 
 	return ss.str();
@@ -62,7 +59,7 @@ std::string io::FileWrite::main_tex_text(
 )
 {
 	const std::string& file_name = FOLDER_NAME_FIGURES + file_name_list_figures;
-	std::ifstream fin("run/template/main.tex");
+	std::ifstream fin(FILE_NAME_TEMPLATE);
 
 	std::stringstream ss;
 

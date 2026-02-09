@@ -2,7 +2,7 @@
 const std::string visualize::Menu::FILE_NAME_INITIAL = "figure-";
 const std::string visualize::Menu::FILE_NAME_LIST_FIGURES = "list-figures";
 
-void append(const std::vector<global::str_pair>& caption_and_code_new_v)
+void visualize::Menu::append(const std::vector<global::str_pair>& caption_and_code_new_v)
 {
 	auto& parent = caption_and_code_v;
 	const auto& child = caption_and_code_new_v;
@@ -10,7 +10,7 @@ void append(const std::vector<global::str_pair>& caption_and_code_new_v)
 	parent.insert(parent.end(), child.cbegin(), child.cend());
 }
 
-void visualize::Menu::flow(const nst::nst::States& states)
+void visualize::Menu::flow(nst::States& states)
 {
 	append(visualize::Flow::caption_and_code_multiple_plots(states));
 }
@@ -18,7 +18,7 @@ void visualize::Menu::flow(const nst::nst::States& states)
 std::string visualize::Menu::generate_file_name_from_index(const int i)
 {
 	std::stringstream ss;
-	ss << FILE_NAME_INITIAL << 1000 + i;
+	ss << FILE_NAME_INITIAL << 1001 + i;
 	return ss.str();
 }
 
@@ -37,7 +37,7 @@ std::vector<global::str_pair> visualize::Menu::out() const
 		file_name_and_file_content_v[i + 1] = {file_name, file_content};
 
 		const auto& begin_end_figure_code =
-			visualize::Latex::begin_end_figure_scope(file_name, caption);
+			visualize::Latex::begin_end_figure_scope("figures/" + file_name, caption);
 		ss << begin_end_figure_code << '\n';
 	}
 

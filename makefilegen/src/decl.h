@@ -7,9 +7,10 @@ namespace decl
 {
 	const std::string target_output = "build/Makefile";
 	const std::string path_src_folder = "src/";
+	const std::string path_template_folder = "template/";
 	const std::string path_run_folder = "run/";
 	const std::string path_build_folder = path_run_folder + "build/";
-	const std::string path_results_folder = path_run_folder + "results/";
+	//const std::string path_results_folder = path_run_folder + "results/";
 
 	const std::string terminal_mkdir = "mkdir -p " ;
 	const std::string terminal_rmrf = "rm -rf ";
@@ -24,9 +25,9 @@ namespace decl
 		path_src_folder,
 		path_src_folder + "exe/",
 		path_src_folder + "global/",
+		path_template_folder,
 		path_run_folder,
 		path_build_folder,
-		path_results_folder
 	};
 }
 

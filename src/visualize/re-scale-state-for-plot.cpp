@@ -2,19 +2,19 @@
 
 
 // The minumum and maximum radius in proportion to the minimum tube length
-const double visualize::ReScalenst::StateForPlot::R_MIN = 0.02;
-const double visualize::ReScalenst::StateForPlot::R_MAX = 0.10;
+const double visualize::ReScaleStateForPlot::R_MIN = 0.02;
+const double visualize::ReScaleStateForPlot::R_MAX = 0.10;
 
 /*
  * This controls the node size
  * Thick tube && low angle => huge node
  */
-const double visualize::ReScalenst::StateForPlot::LARGEST_ANGLE_A_TUBE_CAN_PROJECT_ON_NODE = std::acos(-1) / 2.0;
+const double visualize::ReScaleStateForPlot::LARGEST_ANGLE_A_TUBE_CAN_PROJECT_ON_NODE = std::acos(-1) / 2.0;
 
-const bool visualize::ReScalenst::StateForPlot::PLOT_FEATURE_ACTIVE_DISPLAY_NODE = true;
+const bool visualize::ReScaleStateForPlot::PLOT_FEATURE_ACTIVE_DISPLAY_NODE = true;
 
 template<class val, class T>
-std::pair<val, val> visualize::ReScalenst::StateForPlot::min_max(
+std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
 	const std::vector<T>& v,
 	val T::*member
 )
@@ -31,7 +31,7 @@ std::pair<val, val> visualize::ReScalenst::StateForPlot::min_max(
 }
 
 template<class val, class T, class U>
-std::pair<val, val> visualize::ReScalenst::StateForPlot::min_max(
+std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
     const std::vector<T>& v,
     U T::*member,  // Pointer to member U in T
     val U::*submember  // Pointer to member val in U
@@ -48,7 +48,7 @@ std::pair<val, val> visualize::ReScalenst::StateForPlot::min_max(
     return {min_val, max_val};
 }
 
-void visualize::ReScalenst::StateForPlot::node_coordinates(nst::State& state)
+void visualize::ReScaleStateForPlot::node_coordinates(nst::State& state)
 {
 	const auto& [min_x, max_x] = min_max(state.nodes, &nst::Node::x);
 
@@ -62,7 +62,7 @@ void visualize::ReScalenst::StateForPlot::node_coordinates(nst::State& state)
 }
 
 
-void visualize::ReScalenst::StateForPlot::tube_lengths(nst::State& state)
+void visualize::ReScaleStateForPlot::tube_lengths(nst::State& state)
 {
 	auto& tubes = state.tubes;
 	auto& nodes = state.nodes;
@@ -71,11 +71,11 @@ void visualize::ReScalenst::StateForPlot::tube_lengths(nst::State& state)
 	{
 		const auto& node_first = nodes[tube.id_node_first];
 		const auto& node_second = nodes[tube.id_node_second];
-		tube.visual.length = node_first.visual_distance(node_second);
+		tube.visual.length = node_first.visual.distance(node_second);
 	}
 }
 
-void visualize::ReScalenst::StateForPlot::tube_radius(nst::State& state)
+void visualize::ReScaleStateForPlot::tube_radius(nst::State& state)
 {
 	auto& tubes = state.tubes;
 	const auto& [r_min, r_max] = min_max(tubes, &nst::Tube::radius);
@@ -102,7 +102,7 @@ void visualize::ReScalenst::StateForPlot::tube_radius(nst::State& state)
 	}
 }
 
-void visualize::ReScalenst::StateForPlot::node_radius(nst::State& state)
+void visualize::ReScaleStateForPlot::node_radius(nst::State& state)
 {
 	auto& nodes = state.nodes;
 	const int n_nodes = nodes.size();
@@ -113,17 +113,20 @@ void visualize::ReScalenst::StateForPlot::node_radius(nst::State& state)
 		const auto& tube_id_v = state.table_tubes_connected_to_nodes[i];
 
 		double radius_max = 0;
+		//std::cout << "node_id=" << i << '\n';
 		for(const int tube_id: tube_id_v)
 		{
-			std::max(state.tubes[tube_id].visual.radius, radius_max);
+			radius_max = std::max(state.tubes[tube_id].visual.radius, radius_max);
+			//std::cout << "tube_id=" << tube_id << ", visual.radius=" << state.tubes[tube_id].visual.radius << ", max_radius=" << radius_max << '\n';
 		}
+		//std::cout << '\n';
 
 		const auto theta = LARGEST_ANGLE_A_TUBE_CAN_PROJECT_ON_NODE;
 		node.visual.radius = radius_max / std::sin(theta / 2.0);
 	}
 }
 
-double visualize::ReScalenst::StateForPlot::calculate_tube_visual_displacement_due_to_node(
+double visualize::ReScaleStateForPlot::calculate_tube_visual_displacement_due_to_node(
 	const double r_node,
 	const double r_tube
 )
@@ -137,8 +140,9 @@ double visualize::ReScalenst::StateForPlot::calculate_tube_visual_displacement_d
 }
 
 
-void visualize::ReScalenst::StateForPlot::mpos(nst::State& state)
+void visualize::ReScaleStateForPlot::mpos(nst::State& state)
 {
+	//int i = 0;
 	const auto& nodes = state.nodes;
 	for(auto& tube: state.tubes)
 	{
@@ -147,12 +151,18 @@ void visualize::ReScalenst::StateForPlot::mpos(nst::State& state)
 		const double p1 = calculate_tube_visual_displacement_due_to_node(node_first.visual.radius, tube.visual.radius);
 		const double p2 = calculate_tube_visual_displacement_due_to_node(node_second.visual.radius, tube.visual.radius);
 
+		//std::cout << "tube_id=" << i++ << '\n';
+		//std::cout << "node_first.visual.radius=" << node_first.visual.radius << '\n';
+		//std::cout << "node_second.visual.radius=" << node_second.visual.radius << '\n';
+		//std::cout << "tube.visual.radius=" << tube.visual.radius << '\n';
+		//std::cout << "p1=" << p1 << ", p2=" << p2 << '\n';
+
 		tube.visual.mpos = tube.mpos_long_displaced_scaled(p1, p2);
 	}
 
 }
 
-void visualize::ReScalenst::StateForPlot::add_state_visual(
+void visualize::ReScaleStateForPlot::add_state_visual(
 	nst::State& state
 )
 {

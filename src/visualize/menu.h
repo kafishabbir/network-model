@@ -20,7 +20,7 @@ namespace visualize
         public:
         // strings<file_name, file_content>
         void flow(
-			const nst::nst::States& states
+			nst::States& states
 		);
 
 		std::vector<global::str_pair> out() const;

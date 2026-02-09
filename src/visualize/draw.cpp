@@ -29,9 +29,9 @@ std::string visualize::Draw::mpos_horizontal_rectangles(
 	const std::vector<std::string>& colors
 )
 {
-	const std::vector<double>& v = tube.mpos;
+	const std::vector<double>& v = tube.visual.mpos;
 	const int fluid_first = tube.fluid_first;
-	const double radius = tube.radius;
+	const double radius = tube.visual.radius;
 
 	const int n = v.size();
 	std::stringstream ss;
@@ -88,21 +88,5 @@ std::string visualize::Draw::rectangle(
 	ss << " rectangle" << " ";
 	ss << "(" << x2 << ", " << y2 << ")" << ";";
 	return ss.str();
-}
-
-
-
-std::string visualize::Draw::scope_shift_and_rotate(
-	const double shift_to_x,
-	const double shift_to_y,
-	const double rotate_angle,
-	const std::string& draw_commands_to_be_scoped
-)
-{
-	std::stringstream ss;
-	ss << "shift={(" << shift_to_x << ", " << shift_to_y << ")}";
-	ss << ", rotate=" << rotate_angle;
-
-	return visualize::Latex::scope("scope", draw_commands_to_be_scoped, ss.str());
 }
 

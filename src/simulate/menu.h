@@ -11,6 +11,8 @@
 #include "simulate/step4-time-step.h"
 #include "simulate/step5-integration.h"
 
+#include "io/file-write.h"
+
 #include "visualize/menu.h"
 
 namespace simulate

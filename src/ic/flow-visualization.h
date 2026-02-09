@@ -25,7 +25,7 @@ namespace ic
 	public:
 
 
-		static nst::nst::States generate_states_rectangular_plus_random();
+		static nst::States generate_states_rectangular_plus_random();
 	};
 
 }

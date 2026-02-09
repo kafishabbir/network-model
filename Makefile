@@ -9,9 +9,9 @@ folder_check:
 	mkdir -p src/
 	mkdir -p src/exe/
 	mkdir -p src/global/
+	mkdir -p template/
 	mkdir -p run/
 	mkdir -p run/build/
-	mkdir -p run/results/
 	@echo "Command executed = folder_check"
 	@echo " "
 
@@ -22,7 +22,6 @@ compile_necessary: run/simulate.exe
 
 
 run_program:
-	rm -rf run/results/*
 	./run/simulate.exe
 
 

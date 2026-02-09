@@ -14,7 +14,7 @@ std::vector<double> nst::Tube::mpos_long_displaced_scaled(
 ) const
 {
 	auto v = mpos_long();
-	const double length_effective = length - p1 - p2;
+	const double length_effective = visual.length - p1 - p2;
 	for(auto& x: v)
 	{
 		x = p1 + length_effective * x;

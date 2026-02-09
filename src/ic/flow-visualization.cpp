@@ -92,7 +92,7 @@ nst::State ic::FlowVisualization::generate_rectangular(
 	return nst::State(nodes, tubes);
 }
 
-nst::nst::States ic::FlowVisualization::generate_states_rectangular_plus_random()
+nst::States ic::FlowVisualization::generate_states_rectangular_plus_random()
 {
 	const std::vector<std::vector<double>> mpos_combinations
 	{
@@ -114,7 +114,7 @@ nst::nst::States ic::FlowVisualization::generate_states_rectangular_plus_random(
 		2
 	};
 
-	nst::nst::States v;
+	nst::States v;
 	for(int j = 0; j < 10; ++ j)
 	{
 		nst::State state = generate_rectangular(4, 6);

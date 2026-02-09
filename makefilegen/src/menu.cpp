@@ -95,7 +95,7 @@ void Menu::all(std::ofstream& fout)
 void Menu::run_program(std::ofstream& fout)
 {
 	Print::cmd(fout, "run_program");
-	Print::script(fout, decl::terminal_rmrf + decl::path_results_folder + "*");
+	//Print::script(fout, decl::terminal_rmrf + decl::path_results_folder + "*");
 	Print::script(fout, "./" + decl::path_run_folder + "simulate.exe");
 }
 

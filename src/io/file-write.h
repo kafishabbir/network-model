@@ -4,6 +4,7 @@
 #include "global/dst.h"
 #include "visualize/latex.h"
 
+#include <iostream>
 #include <filesystem>
 //#include <iostream>
 #include <fstream>
