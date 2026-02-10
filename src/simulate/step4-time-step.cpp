@@ -38,7 +38,7 @@ void simulate::Step4TimeStep::assign_time_step_to_state(
 		tube.calculated.is_minimum_time = (i == tube_id_min_time);
 	}
 
-	const double time_step = state.time_step_resolution * min_val;
+	const double time_step = state.simulation_constant.time_step_resolution * min_val;
 
 	state.calculated.time_step = time_step;
 }

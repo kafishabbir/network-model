@@ -37,14 +37,14 @@ int nst::Tube::id_other_node(const int id_this_node) const
 
 double nst::Tube::mu(const double mu1, const double mu2) const
 {
-	std::vector<double> muv{mu1, mu2};
+	std::vector<double> mu_v{mu1, mu2};
 	const auto& v = mpos_long();
 	const int n = v.size();
 	double sum = 0;
 	for(int i = 1; i < n; ++ i)
 	{
-		double l = v[i] - v[i - 1];
-		sum += l * muv[(i + 1) % 2];
+		const double l = v[i] - v[i - 1];
+		sum += l * mu_v[(i + 1) % 2];
 	}
 
 	return sum;

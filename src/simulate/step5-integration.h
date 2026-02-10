@@ -6,6 +6,7 @@ namespace simulate
     class Step5Integration
     {
         public:
+        static void integrate(nst::State& state);
     };
 }
 

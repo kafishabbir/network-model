@@ -3,10 +3,24 @@
 
 #include <cmath>
 #include <vector>
+#include "nst/tank.h"
 namespace nst
 {
 	class Node
 	{
+		struct Reference
+		{
+			std::vector<int> connections_tube_id_v;
+			std::vector<bool> is_flow_out_of_node_into_tube_v;
+		};
+
+
+		struct Calculated
+		{
+			nst::Tank tank;
+		};
+
+
 		struct Visual
 		{
 			double x;
@@ -22,12 +36,13 @@ namespace nst
 		double y;
 		double pressure;
 		bool is_open_boundary;
+		Reference reference;
+		Calculated calculated;
 		Visual visual;
+
 
 		Node();
 	};
-
-
 }
 
 

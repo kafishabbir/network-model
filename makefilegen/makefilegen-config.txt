@@ -3,14 +3,18 @@ exe/simulate
 global/dst
 global/decl
 
-ic/displacement-test
-ic/flow-visualization
+ic/menu
+ic/geometry-base
+ic/geometry-flow
+ic/geometry-rand
 
 io/file-write
 
 nst/node
 nst/tube
 nst/state
+nst/tank
+nst/fluid
 
 utility/math
 utility/measure
@@ -19,6 +23,7 @@ utility/random
 simulate/menu
 simulate/physics
 simulate/step-preparation
+simulate/step0-initialization
 simulate/step1-pressure
 simulate/step2-flow-rate
 simulate/step3-velocity

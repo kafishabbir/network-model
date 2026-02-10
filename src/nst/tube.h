@@ -33,8 +33,9 @@ namespace nst
 		std::vector<double> mpos; //meniscus positions
 		int fluid_first;
 
-		Calculated calculated;
 		Visual visual;
+		Calculated calculated;
+
 		Tube();
 
 		std::vector<double> mpos_long() const;

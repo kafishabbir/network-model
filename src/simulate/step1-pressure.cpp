@@ -22,7 +22,7 @@ simulate::Step1Pressure::generate_linear_equations(
 			continue;
 		}
 
-		const auto& tubes_connected_to_node = state.tubes_connected_to_this_node(i);
+		const auto& tubes_connected_to_node = node.reference.connections_tube_id_v;
 		const int n_connections = tubes_connected_to_node.size();
 		for(int j = 0; j < n_connections; ++ j)
 		{
