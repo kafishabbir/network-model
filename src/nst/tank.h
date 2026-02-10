@@ -16,10 +16,13 @@ namespace nst
 		std::vector<FluidFlow> fluid_v;
 
         public:
-
+		Tank();
 		void add_fluid(const int fluid_id, const double volume);
 		void fill_from_another_tank(const Tank& other);
-		Tank();
+		Tank return_sliced(const double volume) const;
+		bool is_single_fluid() const;
+		int id_single_fluid() const;
+
     };
 }
 

@@ -29,6 +29,7 @@ namespace nst
 			double volume_displacement;
 			int id_node_pour;
 			nst::Tank tank_pour_into_node;
+			nst::Tank add_tank;
 		};
 
 		nst::Tube original() const;

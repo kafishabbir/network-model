@@ -20,6 +20,9 @@ void simulate::Step0Initialization::assign_constants(nst::State& state)
 	state.physical_constant.sigma = sigma;
 	state.physical_constant.time_step_resolution = time_step_resolution;
 
+	state.calculated.total_fluid_added = nst::Tank();
+	state.calculated.total_fluid_evacuated = nst::Tank();
+
 }
 
 void simulate::Step0Initialization::assign_base_geometry(nst::State& state)

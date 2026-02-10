@@ -23,6 +23,10 @@ namespace nst
 		struct Calculated
 		{
 			double time_step;
+			nst::Tank fluid_added;
+			nst::Tank fluid_evacuated;
+			nst::Tank total_fluid_added;
+			nst::Tank total_fluid_evacuated;
 		};
 
 

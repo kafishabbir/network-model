@@ -35,3 +35,39 @@ void nst::Tank::total() const
 	return sum;
 }
 
+nst::Tank nst::Tank::return_sliced(const double volume) const
+{
+	nst::Tank tank = *this;
+	auto& water = tank.tank_v[0];
+	auto& oil = tank.tank_v[1];
+
+	if(oil.volume > volume)
+	{
+		oil.volume -= volume;
+		return tank;
+	}
+	oil.has_flowed = false;
+	water.volume -= (volume - oil.volume);
+	oil.volume = 0;
+
+	return tank;
+}
+
+
+
+bool nst::Tank::is_single_fluid() const
+{
+	int sum = 0;
+	for(const auto& fluid: fluid_v)
+	{
+		sum += fluid.has_flowed;
+	}
+
+	return (sum == 1);
+}
+
+bool nst::Tank::id_single_fluid() const
+{
+	return fluid_v[1].has_flowed;
+}
+
