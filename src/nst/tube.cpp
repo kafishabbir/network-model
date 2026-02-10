@@ -49,9 +49,64 @@ double nst::Tube::mu(const double mu1, const double mu2) const
 
 	return sum;
 }
+std::vector<double> nst::Tube::mpos_long_until(const double lp_limit) const
+{
+	const auto& v = mpos_long();
+	std::vector<double> w;
+	for(const auto& x: v)
+	{
+		if(x >= lp_limit)
+		{
+			break;
+		}
+		w.push_back(x);
+	}
 
+	w.push_back(lp_limit);
+	return w;
+}
 
 bool nst::Tube::correct_direction(const int id_node_relative_to) const
 {
 	return id_node_first == id_node_relative_to;
+}
+
+nst::Tube nst::Tube::original() const
+{
+	return *this;
+}
+
+nst::Tube nst::Tube::reversed() const
+{
+	nst::Tube tube = *this;
+	for(auto& x: tube.mpos)
+	{
+		x = 1.0 - x;
+	}
+	tube.fluid_first = (tube.fluid_first + tube.mpos.size()) % 2;
+
+	return tube;
+}
+
+nst::Tank nst::Tube::slice(const double time_step) const
+{
+	const double u = std::abs(calculated.velocity);
+	const double lp = u * time_step / length;
+	const double volume_tube = decl::pi * std::pow(radius, 2) * length;
+
+	Tube tube = ((calculated.velocity < 0) ? original() : reversed());
+
+	const auto& mpos_long_sliced = tube.mpos_long_until(lp);
+
+	const int n_mpos_long_sliced = mpos_long_sliced.size();
+	nst::Tank tank;
+	for(int i = 1; i < n_mpos_long_sliced; ++ i)
+	{
+		const int current_fluid_id = (tube.fluid_first + 1 + i) % 2;
+		const double delta_lp = mpos_long_sliced[i] - mpos_long_sliced[i - 1];
+		const double volume_fluid = volume_tube * delta_lp;
+		tank.add_fluid(current_fluid_id, volume_fluid);
+	}
+
+	return tank;
 }

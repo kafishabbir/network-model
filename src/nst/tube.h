@@ -1,14 +1,14 @@
 #ifndef NST_TUBE_H
 #define NST_TUBE_H
 
-#include <vector>
+#include "global/decl.h"
+#include "nst/tank.h"
+#include <cmath>
+
 namespace nst
 {
 	class Tube
 	{
-
-
-	public:
 		struct Visual
 		{
 			double radius;
@@ -24,7 +24,15 @@ namespace nst
 			double velocity;
 			double time;
 			bool is_minimum_time;
+			int id_node_pour;
+			nst::Tank tank_pour_into_node;
 		};
+
+		nst::Tube original() const;
+		nst::Tube reversed() const;
+		std::vector<double> mpos_long_until(const double lp_limit) const;
+
+	public:
 
 		int id_node_first;
 		int id_node_second;
@@ -48,6 +56,9 @@ namespace nst
 		bool correct_direction(const int id_node_relative_to) const;
 		int id_other_node(const int id_this_node) const;
 		double mu(const double mu1, const double mu2) const;
+
+		nst::Tank slice(const double time_step) const;
+
 	};
 
 }

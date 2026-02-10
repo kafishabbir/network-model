@@ -1,26 +1,53 @@
 #include "simulate/step5-integration.h"
 
+void simulate::Step5Integration::assign_empty_tank_to_all_nodes(
+	nst::State& state
+)
+{
+	for(auto& node: state.nodes)
+	{
+		node.calculated.tank = nst::Tank();
+	}
+}
+
 void simulate::Step5Integration::determine_tube_pour_node(
 	nst::State& state
 )
 {
-
-
-
+	for(auto& tube: state.tubes)
+	{
+		const double flow_rate = tube.calculated.flow_rate;
+		const int id_node_first = tube.id_node_first;
+		const int id_node_second = tube.id_node_second ;
+		tube.calculated.id_node_pour = ((flow_rate < 0) ? id_node_first : id_node_second);
+	}
 }
 
-void simulate::Step5Integration::assign_tank_to_nodes_from_tubes(
+void simulate::Step5Integration::determine_tube_pour_fluids(
+	nst::State& state
+)
+{
+	for(auto& tube: state.tubes)
+	{
+		tube.calculated.tank_pour_into_node = tube.slice(state.calculated.time_step);
+	}
+}
+
+
+void simulate::Step5Integration::pour_from_tubes_to_node_tanks(
 	nst::State& state
 )
 {
 	for(const auto& tube: state.tubes)
 	{
-
-
-
-
-
+		const auto& tank_from = tube.calculated.tank_pour_into_node;
+		auto& tank_to = state.nodes[tube.calculated.id_node_pour].calculated.tank;
+		tank_to.fill_from_another_tank(tank_from);
+	}
 }
+
+
+
 
 void simulate::Step5Integration::determine_direction_tube_flow_in_node(
 	nst::State& state
@@ -82,8 +109,10 @@ void simulate::Step5Integration::recombine_meniscus_in_tubes(
 
 static void simulate::Step5Integration::integrate(nst::State& state)
 {
+	assign_empty_tank_to_all_nodes(state);
 	determine_tube_pour_node(state);
-	assign_tank_to_nodes_from_tubes(state);
+	determine_tube_pour_fluids(state);
+	pour_from_tubes_to_node_tanks(state);
 
 	determine_direction_tube_flow_in_node(state);
 

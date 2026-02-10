@@ -1,21 +1,24 @@
 #ifndef NST_TANK_H
 #define NST_TANK_H
 
+#include <vector>
+
 namespace nst
 {
     class Tank
     {
-		struct Fluid
+		struct FluidFlow
 		{
 			double volume = 0;
-			bool used = false;
+			bool has_flowed = false;
 		};
 
-		std::vector<Fluid> fluid_v;
+		std::vector<FluidFlow> fluid_v;
 
         public:
 
 		void add_fluid(const int fluid_id, const double volume);
+		void fill_from_another_tank(const Tank& other);
 		Tank();
     };
 }
