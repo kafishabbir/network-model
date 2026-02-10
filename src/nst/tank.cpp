@@ -23,3 +23,15 @@ void nst::Tank::fill_from_another_tank(const Tank& other)
 		}
 	}
 }
+
+void nst::Tank::total() const
+{
+	double sum = 0;
+	for(const auto& fluid: fluid_v)
+	{
+		sum += fluid.volume;
+	}
+
+	return sum;
+}
+

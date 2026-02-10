@@ -24,6 +24,9 @@ namespace nst
 			double velocity;
 			double time;
 			bool is_minimum_time;
+			double length_displacement;
+			double length_unit_less_displacement;
+			double volume_displacement;
 			int id_node_pour;
 			nst::Tank tank_pour_into_node;
 		};

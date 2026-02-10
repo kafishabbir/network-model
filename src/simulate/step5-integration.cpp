@@ -1,5 +1,20 @@
 #include "simulate/step5-integration.h"
 
+
+
+void simulate::Step5Integration::assign_displacement_values_to_tubes(
+	nst::State& state
+)
+{
+	const double time_step = state.calculated.time_step;
+	for(auto& tube: state.tubes)
+	{
+		tube.calculated.length_displacement = time_step * std::abs(tube.calculated.velocity);
+		tube.calculated.length_unit_less_displacement = tube.calculated.length_displacement / tube.length;
+		tube.calculated.volume_displacement = time_step * std::abs(tube.calculated.flow_rate);
+	}
+}
+
 void simulate::Step5Integration::assign_empty_tank_to_all_nodes(
 	nst::State& state
 )
@@ -53,12 +68,9 @@ void simulate::Step5Integration::determine_direction_tube_flow_in_node(
 	nst::State& state
 )
 {
-	const int n_nodes = state.nodes;;
-	for(int i = 0; i < n_nodes; ++ i)
+	for(auto& node: state.nodes)
 	{
-		auto& node = state.nodes[i];
-
-		const auto& connections_v = nodes.reference.connections_tube_id_v[i];
+		const auto& connections_v = nodes.reference.connections_tube_id_v;
 		const int n_connections = connections_v.size();
 
 		std::vector<bool> is_flow_out_v(n_connections);
@@ -78,12 +90,53 @@ void simulate::Step5Integration::determine_direction_tube_flow_in_node(
 	}
 }
 
-
-void simulate::Step5Integration::assign_tank_to_open_node(
+void simulate::Step5Integration::assign_total_outflow_from_node(
 	nst::State& state
 )
 {
+	for(auto& node: state.nodes)
+	{
+		const auto& connections_v = nodes.reference.connections_tube_id_v;
+		const auto& is_flow_out_v = nodes.reference.is_flow_out_v;
 
+		const int n_connections = connections_v.size();
+		double volume_flowout = 0;
+		for(int j = 0; j < n_connections; ++ j)
+		{
+			const int tube_id = connections_v[j];
+			const bool is_flow_out = is_flow_out_v[j];
+			if(is_flow_out)
+			{
+				const auto& tube = state.tubes[tube_id];
+				volume_flowout += tube.calculated.volume_displacement;
+			}
+		}
+
+		node.calculated.volume_fluid_out = volume_flowout;
+	}
+}
+
+void simulate::Step5Integration::assign_tank_to_open_node_and_state_volume_in_out(
+	nst::State& state
+)
+{
+	nst::Tank evacuation_tank;
+	nst::Tank addition_tank;
+
+	for(auto& node: state.nodes)
+	{
+		const double flow_in_total = node.calculated.tank.total();
+		const double flow_out_total = node.calculated.volume_fluid_out;
+		const double delta_volume = std::abs(flow_in_total - flow_out_total);
+		if(flow_in_total < flow_out_total)
+		{
+			// add
+		}
+		else
+		{
+			//evacualate
+		}
+	}
 }
 
 void simulate::Step5Integration::measure_volume_and_type_fluid_flow_into_system(
@@ -109,14 +162,17 @@ void simulate::Step5Integration::recombine_meniscus_in_tubes(
 
 static void simulate::Step5Integration::integrate(nst::State& state)
 {
+	assign_displacement_values_to_tubes(state);
+
 	assign_empty_tank_to_all_nodes(state);
 	determine_tube_pour_node(state);
 	determine_tube_pour_fluids(state);
 	pour_from_tubes_to_node_tanks(state);
 
 	determine_direction_tube_flow_in_node(state);
+	assign_total_outflow_from_node(state);
 
-	assign_tank_to_open_node(state);
+	assign_tank_to_open_node_and_state_volume_in_out(state);
 	measure_volume_and_type_fluid_flow_into_system(state);
 	empty_tanks_to_tubes(state);
 	recombine_meniscus_in_tubes(state);

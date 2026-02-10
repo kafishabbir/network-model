@@ -90,8 +90,7 @@ nst::Tube nst::Tube::reversed() const
 
 nst::Tank nst::Tube::slice(const double time_step) const
 {
-	const double u = std::abs(calculated.velocity);
-	const double lp = u * time_step / length;
+	const double lp = calculated.length_unit_less_displacement;
 	const double volume_tube = decl::pi * std::pow(radius, 2) * length;
 
 	Tube tube = ((calculated.velocity < 0) ? original() : reversed());

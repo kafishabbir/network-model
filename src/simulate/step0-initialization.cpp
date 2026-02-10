@@ -33,9 +33,16 @@ void simulate::Step0Initialization::modify_geometry(nst::State& state)
 {
 	auto& nodes = state.nodes;
 	nodes[0].is_open_boundary = true;
+	nodes[0].fluid_to_input = 0;
+
 	nodes[5].is_open_boundary = true;
+	nodes[5].fluid_to_input = 0;
+
 	nodes[2].is_open_boundary = true;
+	nodes[2].fluid_to_input = 1;
+
 	nodes[7].is_open_boundary = true;
+	nodes[7].fluid_to_input = 1;
 
 	nodes[0].pressure = 10;
 	nodes[5].pressure = 10;

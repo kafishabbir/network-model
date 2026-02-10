@@ -18,6 +18,7 @@ namespace nst
 		struct Calculated
 		{
 			nst::Tank tank;
+			double volume_fluid_out;
 		};
 
 
@@ -36,6 +37,8 @@ namespace nst
 		double y;
 		double pressure;
 		bool is_open_boundary;
+		int fluid_to_input;
+
 		Reference reference;
 		Calculated calculated;
 		Visual visual;
