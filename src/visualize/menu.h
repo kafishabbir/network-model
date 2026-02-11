@@ -2,8 +2,6 @@
 #define VISUALIZE_MENU_H
 
 #include "visualize/flow.h"
-#include "visualize/property.h"
-#include "global/decl.h"
 
 namespace visualize
 {

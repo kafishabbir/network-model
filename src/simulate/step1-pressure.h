@@ -1,8 +1,7 @@
 #ifndef SIMULATE_STEP1_PRESSURE_H
 #define SIMULATE_STEP1_PRESSURE_H
 
-#include "global/dst.h"
-#include "simulate/physics.h"
+#include "simulate/step-preparation.h"
 #include "utility/math.h"
 
 namespace simulate

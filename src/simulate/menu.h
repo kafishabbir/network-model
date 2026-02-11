@@ -1,7 +1,7 @@
 #ifndef SIMULATE_MENU_H
 #define SIMULATE_MENU_H
 
-#include "ic/menu.h"
+#include "io/file-write.h"
 
 #include "simulate/step-preparation.h"
 #include "simulate/step0-initialization.h"
@@ -10,9 +10,6 @@
 #include "simulate/step3-velocity.h"
 #include "simulate/step4-time-step.h"
 #include "simulate/step5-integration.h"
-
-#include "visualize/menu.h"
-#include "io/file-write.h"
 
 
 namespace simulate

@@ -2,7 +2,6 @@
 #define SIMULATE_STEP4_TIME_STEP_H
 
 #include "global/dst.h"
-#include <iostream>
 
 namespace simulate
 {

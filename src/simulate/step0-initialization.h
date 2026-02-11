@@ -7,16 +7,10 @@ namespace simulate
 {
     class Step0Initialization
     {
-		static const double fluid_water_viscosity;
-		static const double fluid_water_density;
-		static const double fluid_oil_viscosity;
-		static const double fluid_oil_density;
-		static const double sigma;
-		static const double time_step_resolution;
-
+		static nst::State state_flow_test();
         public:
 
-		static nst::State generate_state();
+		static nst::State choose_state();
     };
 }
 

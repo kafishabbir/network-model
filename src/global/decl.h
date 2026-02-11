@@ -1,13 +1,16 @@
 #ifndef GLOBAL_DECL_H
 #define GLOBAL_DECL_H
 
-#include <string>
 #include <cmath>
+#include <string>
 #include <vector>
+#include <iostream>
+#include <stdexcept>
 
 namespace decl
 {
 	const double pi = std::acos(-1);
+	const int n_fluids = 2;
 	namespace nps_latex_plot
 	{
 		namespace nps_file

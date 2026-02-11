@@ -1,6 +1,6 @@
 #include "visualize/flow.h"
 
-std::string visualize::Flow::code_node(const nst::Node& node, const int node_id, const visualize::Property& visual_property)
+std::string visualize::Flow::code_node(const nst::Node& node, const int id_node, const visualize::Property& visual_property)
 {
 	const double x = node.visual.x;
 	const double y = node.visual.y;
@@ -15,17 +15,17 @@ std::string visualize::Flow::code_node(const nst::Node& node, const int node_id,
 }
 
 
-std::string visualize::Flow::code_node_label(const nst::Node& node, const int node_id, const visualize::Property& visual_property)
+std::string visualize::Flow::code_node_label(const nst::Node& node, const int id_node, const visualize::Property& visual_property)
 {
 	const double x = node.visual.x;
 	const double y = node.visual.y;
 	//const double radius = node.visual.radius;
 	std::stringstream ss;
 
-	if(visual_property.label_node_id)
+	if(visual_property.label_id_node)
 	{
 		std::stringstream ss_node;
-		ss_node << "$\\nu_{" << node_id << "}$";
+		ss_node << "$\\nu_{" << id_node << "}$";
 		ss << visualize::Draw::node(x, y, ss_node.str()) << '\n';
 	}
 	if(visual_property.label_node_pressure)
@@ -77,14 +77,14 @@ std::string visualize::Flow::label_tube_above(const nst::Tube& tube, const visua
 	);
 }
 
-std::string visualize::Flow::label_tube_middle(const nst::Tube& tube, const int tube_id, const visualize::Property& visual_property)
+std::string visualize::Flow::label_tube_middle(const nst::Tube& tube, const int id_tube, const visualize::Property& visual_property)
 {
 	const double lv = tube.visual.length;
 	std::stringstream ss;
 
-	if(visual_property.label_tube_id)
+	if(visual_property.label_id_tube)
 	{
-		ss << "$b_{" << tube_id << "}$";
+		ss << "$b_{" << id_tube << "}$";
 	}
 
 	return visualize::Draw::node(
@@ -131,9 +131,9 @@ std::string visualize::Flow::label_tube_below(const nst::Tube& tube, const visua
 }
 
 
-std::string visualize::Flow::code_tube(const nst::State& state, const int tube_id, const visualize::Property& visual_property)
+std::string visualize::Flow::code_tube(const nst::State& state, const int id_tube, const visualize::Property& visual_property)
 {
-	const auto& tube = state.tubes[tube_id];
+	const auto& tube = state.tubes[id_tube];
 	const auto& node_first = state.nodes[tube.id_node_first];
 	const auto& node_second = state.nodes[tube.id_node_second];
 
@@ -142,7 +142,7 @@ std::string visualize::Flow::code_tube(const nst::State& state, const int tube_i
 
 	ss << label_tube_above(tube, visual_property) << '\n';
 
-	ss << label_tube_middle(tube, tube_id, visual_property) << '\n';
+	ss << label_tube_middle(tube, id_tube, visual_property) << '\n';
 
 	ss << label_tube_below(tube, visual_property) << '\n';
 
@@ -211,9 +211,9 @@ std::string visualize::Flow::caption_plot(const nst::State& state, const visuali
 {
 	const int n_nodes = state.nodes.size();
 	const int n_tubes = state.tubes.size();
-	const double mu_1 = state.mu1;
-	const double mu_2 = state.mu2;
-	const double sigma = state.sigma;
+	const double mu_1 = state.physical_constant.fluid_v[0].viscosity;
+	const double mu_2 = state.physical_constant.fluid_v[1].viscosity;
+	const double sigma = state.physical_constant.sigma;
 	const double time_step = state.calculated.time_step;
 
 	std::stringstream ss;

@@ -8,6 +8,8 @@ namespace nst
         public:
         double viscosity;
         double density;
+
+		Fluid();
     };
 }
 

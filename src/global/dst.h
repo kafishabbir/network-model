@@ -2,7 +2,6 @@
 #define GLOBAL_DST_H
 
 #include "nst/state.h"
-#include <string>
 
 namespace dst
 {

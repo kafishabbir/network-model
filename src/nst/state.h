@@ -13,11 +13,13 @@ namespace nst
 		{
 			double sigma;
 			std::vector<nst::Fluid> fluid_v;
+			PhysicalConstant();
 		};
 
 		struct SimulationConstant
 		{
 			double time_step_resolution;
+			SimulationConstant();
 		};
 
 		struct Calculated
@@ -27,6 +29,7 @@ namespace nst
 			nst::Tank fluid_evacuated;
 			nst::Tank total_fluid_added;
 			nst::Tank total_fluid_evacuated;
+			Calculated();
 		};
 
 
@@ -39,8 +42,9 @@ namespace nst
 
 		Calculated calculated;
 
-		double fluid_zero_viscosity() const;
-		double fluid_one_viscosity() const;
+		State();
+		double water_viscosity() const;
+		double oil_viscosity() const;
 	};
 
 }

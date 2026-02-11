@@ -1,7 +1,7 @@
 #ifndef VISUALIZE_PROPERTY_H
 #define VISUALIZE_PROPERTY_H
 
-#include "global/decl.h"
+#include "global/dst.h"
 
 namespace visualize
 {
@@ -20,9 +20,9 @@ namespace visualize
         bool draw_node_perimeter;
 
         // Label visibility properties
-        bool label_node_id;
+        bool label_id_node;
         bool label_node_pressure;
-        bool label_tube_id;
+        bool label_id_tube;
         bool label_tube_radius;
         bool label_tube_length;
         bool label_tube_flow_rate;

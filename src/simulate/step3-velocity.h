@@ -1,7 +1,6 @@
 #ifndef SIMULATE_STEP3_VELOCITY_H
 #define SIMULATE_STEP3_VELOCITY_H
 
-#include "global/decl.h"
 #include "global/dst.h"
 
 namespace simulate

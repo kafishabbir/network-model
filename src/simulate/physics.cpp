@@ -4,7 +4,7 @@ double simulate::Physics::calculate_resistance(const nst::Tube& tube, const nst:
 {
 	const double r = tube.radius;
 	const double l = tube.length;
-	const double mu = tube.mu(state.mu1, state.mu2);
+	const double mu = tube.mu(state.water_viscosity(), state.oil_viscosity());
 	return decl::pi / 8 * std::pow(r, 4) / mu / l;
 }
 
@@ -18,7 +18,7 @@ double simulate::Physics::calculate_capillary_pressure_magnitude(
 	const double cntrb_n_meniscus = tube.mpos.size() % 2;
 
 	const double two = 2;
-	const double sigma = state.sigma;
+	const double sigma = state.physical_constant.sigma;
 	const double radius = tube.radius;
 	const double value_single_meniscus = two * sigma / radius;
 
@@ -27,11 +27,11 @@ double simulate::Physics::calculate_capillary_pressure_magnitude(
 
 double simulate::Physics::determine_capillary_pressure_sign(
 	const nst::Tube& tube,
-	const int node_id_relative_to
+	const int id_node_relative_to
 )
 {
 	return (
-		tube.correct_direction(node_id_relative_to) ? 1 : -1
+		tube.correct_direction(id_node_relative_to) ? 1 : -1
 	);
 }
 

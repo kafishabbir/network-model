@@ -1,9 +1,9 @@
 #ifndef VISUALIZE_DRAW_H
 #define VISUALIZE_DRAW_H
 
-#include "nst/tube.h"
 #include "visualize/latex.h"
 #include <iomanip>
+
 namespace visualize
 {
 	class Draw

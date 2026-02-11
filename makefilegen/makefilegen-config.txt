@@ -22,6 +22,7 @@ utility/random
 
 simulate/menu
 simulate/physics
+simulate/algorithm
 simulate/step-preparation
 simulate/step0-initialization
 simulate/step1-pressure

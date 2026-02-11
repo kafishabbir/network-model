@@ -1,5 +1,14 @@
 #include "nst/tube.h"
 
+double nst::Tube::area() const
+{
+	return std::pow(radius, 2) * length;
+}
+
+double nst::Tube::volume() const
+{
+	return area() * length;
+}
 
 std::vector<double> nst::Tube::mpos_long() const
 {
@@ -88,23 +97,27 @@ nst::Tube nst::Tube::reversed() const
 	return tube;
 }
 
-nst::Tank nst::Tube::slice(const double time_step) const
+nst::Tank nst::Tube::slice() const
 {
-	const double lp = calculated.length_unit_less_displacement;
-	const double volume_tube = decl::pi * std::pow(radius, 2) * length;
+	const double lp = calculated.length_displacement_p;
+	const double volume_tube = volume();
+	if(lp > 1)
+	{
+		throw std::runtime_error("nst::Tube::length_displacement_p > 1.0");
+	}
 
 	Tube tube = ((calculated.velocity < 0) ? original() : reversed());
-
 	const auto& mpos_long_sliced = tube.mpos_long_until(lp);
 
-	const int n_mpos_long_sliced = mpos_long_sliced.size();
+
 	nst::Tank tank;
+	const int n_mpos_long_sliced = mpos_long_sliced.size();
 	for(int i = 1; i < n_mpos_long_sliced; ++ i)
 	{
-		const int current_fluid_id = (tube.fluid_first + 1 + i) % 2;
+		const int current_id_fluid = (tube.fluid_first + 1 + i) % 2;
 		const double delta_lp = mpos_long_sliced[i] - mpos_long_sliced[i - 1];
 		const double volume_fluid = volume_tube * delta_lp;
-		tank.add_fluid(current_fluid_id, volume_fluid);
+		tank.add_fluid(volume_fluid, current_id_fluid);
 	}
 
 	return tank;

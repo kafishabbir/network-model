@@ -1,24 +1,20 @@
 #ifndef NST_NODE_H
 #define NST_NODE_H
 
-#include <cmath>
-#include <vector>
 #include "nst/tank.h"
+
 namespace nst
 {
 	class Node
 	{
-		struct Reference
-		{
-			std::vector<int> connections_tube_id_v;
-			std::vector<bool> is_flow_out_of_node_into_tube_v;
-		};
-
-
 		struct Calculated
 		{
 			nst::Tank tank;
 			double volume_fluid_out;
+			std::vector<int> connections_id_tube_v;
+			std::vector<bool> is_flow_out_id_tube_v;
+			std::vector<int> flow_out_sorted_id_tube_v;
+			bool is_evacuate_fluid;
 		};
 
 
@@ -39,10 +35,8 @@ namespace nst
 		bool is_open_boundary;
 		int fluid_to_input;
 
-		Reference reference;
 		Calculated calculated;
 		Visual visual;
-
 
 		Node();
 	};

@@ -1,7 +1,6 @@
 #ifndef SIMULATE_PHYSICS_H
 #define SIMULATE_PHYSICS_H
 
-#include "global/decl.h"
 #include "global/dst.h"
 
 namespace simulate
@@ -23,7 +22,7 @@ namespace simulate
 
 		static double determine_capillary_pressure_sign(
 			const nst::Tube& tube,
-			const int node_id_relative_to
+			const int id_node_relative_to
 		);
     };
 }

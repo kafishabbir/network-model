@@ -1,20 +1,20 @@
 #ifndef NST_TUBE_H
 #define NST_TUBE_H
 
-#include "global/decl.h"
 #include "nst/tank.h"
-#include <cmath>
 
 namespace nst
 {
 	class Tube
 	{
+	public:
 		struct Visual
 		{
 			double radius;
 			double length;
 			std::vector<double> mpos;
 		};
+	private:
 
 		struct Calculated
 		{
@@ -25,11 +25,12 @@ namespace nst
 			double time;
 			bool is_minimum_time;
 			double length_displacement;
-			double length_unit_less_displacement;
+			double length_displacement_p;
 			double volume_displacement;
 			int id_node_pour;
 			nst::Tank tank_pour_into_node;
 			nst::Tank add_tank;
+			bool is_locked_from_further_addition;
 		};
 
 		nst::Tube original() const;
@@ -37,7 +38,6 @@ namespace nst
 		std::vector<double> mpos_long_until(const double lp_limit) const;
 
 	public:
-
 		int id_node_first;
 		int id_node_second;
 		double radius;
@@ -50,6 +50,8 @@ namespace nst
 
 		Tube();
 
+		double area() const;
+		double volume() const;
 		std::vector<double> mpos_long() const;
 
 		std::vector<double> mpos_long_displaced_scaled(
@@ -61,7 +63,7 @@ namespace nst
 		int id_other_node(const int id_this_node) const;
 		double mu(const double mu1, const double mu2) const;
 
-		nst::Tank slice(const double time_step) const;
+		nst::Tank slice() const;
 
 	};
 

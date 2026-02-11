@@ -1,27 +1,29 @@
 #ifndef NST_TANK_H
 #define NST_TANK_H
 
-#include <vector>
+#include "global/decl.h"
 
 namespace nst
 {
     class Tank
     {
-		struct FluidFlow
+		struct Fluid
 		{
-			double volume = 0;
-			bool has_flowed = false;
+			double volume;
+			bool is_used = false;
+			Fluid();
 		};
 
-		std::vector<FluidFlow> fluid_v;
+		std::vector<Fluid> fluid_v;
 
-        public:
+	public:
 		Tank();
-		void add_fluid(const int fluid_id, const double volume);
-		void fill_from_another_tank(const Tank& other);
-		Tank return_sliced(const double volume) const;
-		bool is_single_fluid() const;
-		int id_single_fluid() const;
+		explicit Tank(const double volume, const int id_fluid);
+		void add_fluid(const double volume, const int id_fluid);
+		void add_fluid(const Tank& other);
+		Tank return_sliced_tank(const double volume) const;
+		bool is_only_water() const;
+		double total_volume() const;
 
     };
 }

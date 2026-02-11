@@ -1,7 +1,7 @@
 #ifndef VISUALIZE_LATEX_H
 #define VISUALIZE_LATEX_H
 
-#include <string>
+#include "visualize/property.h"
 #include <sstream>
 
 namespace visualize

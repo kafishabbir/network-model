@@ -2,9 +2,7 @@
 #define VISUALIZE_RE_SCALE_STATE_FOR_PLOT_H
 
 #include "visualize/property.h"
-#include "global/dst.h"
-#include "global/decl.h"
-#include <iostream>
+
 namespace visualize
 {
     class ReScaleStateForPlot

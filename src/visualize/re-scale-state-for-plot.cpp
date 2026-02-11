@@ -97,16 +97,13 @@ void visualize::ReScaleStateForPlot::node_radius(nst::State& state, const visual
 	for(int i = 0; i < n_nodes; ++ i)
 	{
 		auto& node = nodes[i];
-		const auto& tube_id_v = state.table_tubes_connected_to_nodes[i];
+		const auto& id_tube_v = node.calculated.connections_id_tube_v;
 
 		double radius_max = 0;
-		//std::cout << "node_id=" << i << '\n';
-		for(const int tube_id: tube_id_v)
+		for(const int id_tube: id_tube_v)
 		{
-			radius_max = std::max(state.tubes[tube_id].visual.radius, radius_max);
-			//std::cout << "tube_id=" << tube_id << ", visual.radius=" << state.tubes[tube_id].visual.radius << ", max_radius=" << radius_max << '\n';
+			radius_max = std::max(state.tubes[id_tube].visual.radius, radius_max);
 		}
-		//std::cout << '\n';
 
 		const auto theta = visual_property.largest_angle_tube_project_on_node;
 		node.visual.radius = radius_max / std::sin(theta / 2.0);
@@ -138,7 +135,7 @@ void visualize::ReScaleStateForPlot::mpos(nst::State& state, const visualize::Pr
 		const double p1 = calculate_tube_visual_displacement_due_to_node(node_first.visual.radius, tube.visual.radius, visual_property);
 		const double p2 = calculate_tube_visual_displacement_due_to_node(node_second.visual.radius, tube.visual.radius, visual_property);
 
-		//std::cout << "tube_id=" << i++ << '\n';
+		//std::cout << "id_tube=" << i++ << '\n';
 		//std::cout << "node_first.visual.radius=" << node_first.visual.radius << '\n';
 		//std::cout << "node_second.visual.radius=" << node_second.visual.radius << '\n';
 		//std::cout << "tube.visual.radius=" << tube.visual.radius << '\n';

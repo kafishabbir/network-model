@@ -3,9 +3,6 @@
 
 #include "visualize/re-scale-state-for-plot.h"
 #include "visualize/draw.h"
-#include "visualize/latex.h"
-#include "visualize/property.h"
-#include "global/decl.h"
 
 #include <iostream>
 
@@ -17,12 +14,12 @@ namespace visualize
 			const nst::State& state, const visualize::Property& visual_property
 		);
 
-		static std::string code_node(const nst::Node& node, const int node_id, const visualize::Property& visual_property);
-		static std::string code_node_label(const nst::Node& node, const int node_id, const visualize::Property& visual_property);
+		static std::string code_node(const nst::Node& node, const int id_node, const visualize::Property& visual_property);
+		static std::string code_node_label(const nst::Node& node, const int id_node, const visualize::Property& visual_property);
 		static std::string label_tube_above(const nst::Tube& tube, const visualize::Property& visual_property);
-		static std::string label_tube_middle(const nst::Tube& tube, const int tube_id, const visualize::Property& visual_property);
+		static std::string label_tube_middle(const nst::Tube& tube, const int id_tube, const visualize::Property& visual_property);
 		static std::string label_tube_below(const nst::Tube& tube, const visualize::Property& visual_property);
-		static std::string code_tube(const nst::State& state, const int tube_id, const visualize::Property& visual_property);
+		static std::string code_tube(const nst::State& state, const int id_tube, const visualize::Property& visual_property);
 		static std::string code_nodes(const nst::State& state, const visualize::Property& visual_property);
 		static std::string code_nodes_labels(const nst::State& state, const visualize::Property& visual_property);
 		static std::string code_tubes(const nst::State& state, const visualize::Property& visual_property);

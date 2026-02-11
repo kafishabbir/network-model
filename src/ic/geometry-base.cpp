@@ -1,6 +1,6 @@
 #include "ic/geometry-base.h"
 
-std::vector<nst::Node> ic::GeometryBase::rectangular_nodes(
+dst::Nodes ic::GeometryBase::rectangular_nodes(
 	const int n_tube_rows,
 	const int n_tube_cols
 )
@@ -15,7 +15,7 @@ std::vector<nst::Node> ic::GeometryBase::rectangular_nodes(
 		n_cols_node_at_even_rows * n_even_rows_node +
 		n_cols_node_at_odd_rows * n_odd_rows_node;
 
-	std::vector<nst::Node> nodes(n_nodes);
+	dst::Nodes nodes(n_nodes);
 	const int n_rows_node = n_tube_rows + 1;
 
 	// const double n_tubes_max_in_xy = std::max<double>(n_tube_rows, n_tube_cols);
@@ -25,7 +25,7 @@ std::vector<nst::Node> ic::GeometryBase::rectangular_nodes(
 	// makes the longest side length of the system equal to 1.0
 
 	double y = n_tube_rows * displacement_step;
-	for(int i = 0, node_id = 0; i < n_rows_node; ++ i)
+	for(int i = 0, id_node = 0; i < n_rows_node; ++ i)
 	{
 		const bool is_it_even_row = ((i % 2) == 0);
 		const int n_cols_node =
@@ -33,8 +33,8 @@ std::vector<nst::Node> ic::GeometryBase::rectangular_nodes(
 		double x = (is_it_even_row ? 0 : displacement_step);
 		for(int j = 0; j < n_cols_node ; ++ j)
 		{
-			auto& node = nodes[node_id];
-			++ node_id;
+			auto& node = nodes[id_node];
+			++ id_node;
 			node.x = x;
 			node.y = y;
 			x += 2.0 * displacement_step;

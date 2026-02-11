@@ -1,13 +1,22 @@
 #ifndef IO_FILE_WRITE_H
 #define IO_FILE_WRITE_H
 
-#include "global/decl.h"
-#include "global/dst.h"
-#include "visualize/latex.h"
+#include "visualize/menu.h"
 
-#include <iostream>
 #include <filesystem>
 #include <fstream>
+
+/*
+ * run/results/flow:
+ * 	figures/
+ * 		list-figures.tex
+ * 		figure-1001.tex
+ * 		figure-1002.tex
+ * 		...
+ * 	output/
+ * 	flow.tex (main.tex)
+ * 	Makefile
+ */
 
 namespace io
 {

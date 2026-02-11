@@ -22,12 +22,12 @@ simulate::Step1Pressure::generate_linear_equations(
 			continue;
 		}
 
-		const auto& tubes_connected_to_node = node.reference.connections_tube_id_v;
+		const auto& tubes_connected_to_node = node.calculated.connections_id_tube_v;
 		const int n_connections = tubes_connected_to_node.size();
 		for(int j = 0; j < n_connections; ++ j)
 		{
-			const int tube_id = tubes_connected_to_node[j];
-			const auto& tube = state.tubes[tube_id];
+			const int id_tube = tubes_connected_to_node[j];
+			const auto& tube = state.tubes[id_tube];
 			const int id_node_second = tube.id_other_node(i);
 
 			const double resistance = tube.calculated.resistance_coefficient;
@@ -62,7 +62,10 @@ void simulate::Step1Pressure::solve_and_assign_pressure_at_nodes(
 	nst::State& state
 )
 {
+	simulate::StepPreparation::assign_resistance_to_tubes(state);
+	simulate::StepPreparation::assign_capillary_pressure_magnitude_to_tubes(state);
+
 	const auto& [A, B] = generate_linear_equations(state);
-	const std::vector<double>& known_pressures = utility::Math::gaussian_elimination(A, B);
+	const auto& known_pressures = utility::Math::gaussian_elimination(A, B);
 	assign_pressures_to_each_node(state.nodes, known_pressures);
 }
