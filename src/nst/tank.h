@@ -23,6 +23,11 @@ namespace nst
 		void add_fluid(const Tank& other);
 		Tank return_sliced_tank(const double volume) const;
 		bool is_only_water() const;
+		bool is_contain_water() const;
+		bool is_contain_oil() const;
+		double  volume_water() const;
+		double  volime_oil() const;
+		void remove_fluid(const double volume, const int id_fluid);
 		double total_volume() const;
 
     };

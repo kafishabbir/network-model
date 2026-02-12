@@ -92,3 +92,29 @@ bool nst::Tank::is_only_water() const
 	return (fluid_v[0].is_used == true) && (fluid_v[1].is_used == false);
 }
 
+bool nst::Tank::is_contain_oil() const
+{
+	return fluid_v[1].is_used == true;
+}
+
+bool nst::Tank::is_contain_water() const
+{
+	return fluid_v[0].is_used;
+}
+
+double nst::Tank::volume_water() const
+{
+	return fluid_v[0].volume;
+}
+
+double nst::Tank::volime_oil() const
+{
+	return fluid_v[1].volume;
+}
+
+void nst::Tank::remove_fluid(const double volume, const int id_fluid)
+{
+	fluid_v[id_fluid].volume -= volume;
+}
+
+

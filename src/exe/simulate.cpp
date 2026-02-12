@@ -3,6 +3,6 @@
 
 int main()
 {
-	simulate::Menu::generate_and_plot();
+	simulate::Menu::test_generate_and_plot();
 	return 0;
 }

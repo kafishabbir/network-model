@@ -23,14 +23,13 @@ namespace nst
 			double flow_rate;
 			double velocity;
 			double time;
-			bool is_minimum_time;
+			bool is_time_min;
 			double length_displacement;
 			double length_displacement_p;
 			double volume_displacement;
-			int id_node_pour;
+			int id_node_sink;
 			nst::Tank tank_pour_into_node;
-			nst::Tank add_tank;
-			bool is_locked_from_further_addition;
+			double add_proportion;
 		};
 
 		nst::Tube original() const;
@@ -49,7 +48,7 @@ namespace nst
 		Calculated calculated;
 
 		Tube();
-
+		void update_with_add_proportion();
 		double area() const;
 		double volume() const;
 		std::vector<double> mpos_long() const;

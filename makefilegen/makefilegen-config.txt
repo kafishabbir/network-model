@@ -21,15 +21,15 @@ utility/measure
 utility/random
 
 simulate/menu
-simulate/physics
-simulate/algorithm
 simulate/step-preparation
-simulate/step0-initialization
-simulate/step1-pressure
-simulate/step2-flow-rate
+simulate/step1-tube-flow-coefficient
+simulate/step2-pressure
 simulate/step3-velocity
 simulate/step4-time-step
-simulate/step5-integration
+simulate/step5-displacement
+simulate/step6-pour-into-node
+simulate/step7-inject-evacuate
+simulate/step8-distribute
 
 visualize/draw
 visualize/flow

@@ -3,25 +3,25 @@
 
 #include "io/file-write.h"
 
+
 #include "simulate/step-preparation.h"
-#include "simulate/step0-initialization.h"
-#include "simulate/step1-pressure.h"
-#include "simulate/step2-flow-rate.h"
+#include "simulate/step1-tube-flow-coefficient.h"
+#include "simulate/step2-pressure.h"
 #include "simulate/step3-velocity.h"
 #include "simulate/step4-time-step.h"
-#include "simulate/step5-integration.h"
+#include "simulate/step5-displacement.h"
+#include "simulate/step6-pour-into-node.h"
+#include "simulate/step7-inject-evacuate.h"
+#include "simulate/step8-distribute.h"
 
 
 namespace simulate
 {
-
-	class Menu
-	{
-
-	public:
-
-		static void generate_and_plot();
-	};
+    class Menu
+    {
+        public:
+		static void test_generate_and_plot();
+    };
 }
 
 #endif

@@ -1,8 +1,18 @@
-#include "simulate/step1-pressure.h"
+#include "simulate/step2-pressure.h"
 
-std::pair<dst::Matrix, std::vector<double>>
-simulate::Step1Pressure::generate_linear_equations(
-	const nst::State& state
+double simulate::Step2Pressure::determine_capillary_pressure_sign(
+	const nst::Tube& tube,
+	const int id_node_relative_to
+)
+{
+	return (
+		tube.correct_direction(id_node_relative_to) ? 1 : -1
+	);
+}
+
+
+std::pair<dst::Matrix, std::vector<double>> simulate::Step2Pressure::generate_linear_equations(
+	nst::State& state
 )
 {
 	const int n_nodes = state.nodes.size();
@@ -32,7 +42,7 @@ simulate::Step1Pressure::generate_linear_equations(
 
 			const double resistance = tube.calculated.resistance_coefficient;
 			const double capillary_pressure_magnitude = tube.calculated.capillary_pressure_magnitude;
-			const double capillary_pressure_sign = simulate::Physics::determine_capillary_pressure_sign(tube, i);
+			const double capillary_pressure_sign = determine_capillary_pressure_sign(tube, i);
 			const double capillary_pressure = capillary_pressure_magnitude * capillary_pressure_sign;
 
 			row[i] += resistance;
@@ -45,27 +55,34 @@ simulate::Step1Pressure::generate_linear_equations(
 	return {A, B};
 }
 
-void simulate::Step1Pressure::assign_pressures_to_each_node(
-	dst::Nodes& nodes,
-	const std::vector<double>& pressures
+
+std::vector<double> simulate::Step2Pressure::choose_method_of_solving_linear_equations(
+	const dst::Matrix& A,
+	std::vector<double> B
 )
 {
-	const int n_nodes = nodes.size();
+	return utility::Math::gaussian_elimination(A, B);
+}
+
+
+void simulate::Step2Pressure::assign_pressure_v_to_each_node(
+	nst::State& state,
+	const std::vector<double>& pressure_v
+)
+{
+	const int n_nodes = state.nodes.size();
 	for(int i = 0; i < n_nodes; ++ i)
 	{
-		auto& node = nodes[i];
-		node.pressure = pressures[i];
+		state.nodes[i].pressure = pressure_v[i];
 	}
 }
 
-void simulate::Step1Pressure::solve_and_assign_pressure_at_nodes(
+
+void simulate::Step2Pressure::generate_linear_equations_and_assign_pressure_to_node(
 	nst::State& state
 )
 {
-	simulate::StepPreparation::assign_resistance_to_tubes(state);
-	simulate::StepPreparation::assign_capillary_pressure_magnitude_to_tubes(state);
-
 	const auto& [A, B] = generate_linear_equations(state);
-	const auto& known_pressures = utility::Math::gaussian_elimination(A, B);
-	assign_pressures_to_each_node(state.nodes, known_pressures);
+	const auto& pressure_v = choose_method_of_solving_linear_equations(A, B);
+	assign_pressure_v_to_each_node(state, pressure_v);
 }

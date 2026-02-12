@@ -10,11 +10,10 @@ namespace nst
 		struct Calculated
 		{
 			nst::Tank tank;
-			double volume_fluid_out;
+			double volume_fluid_flow_out;
 			std::vector<int> connections_id_tube_v;
-			std::vector<bool> is_flow_out_id_tube_v;
-			std::vector<int> flow_out_sorted_id_tube_v;
-			bool is_evacuate_fluid;
+			std::vector<int> flow_out_id_tube_v;
+			bool is_fluid_added_to_this_node ;
 		};
 
 

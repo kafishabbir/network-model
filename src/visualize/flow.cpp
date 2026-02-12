@@ -65,7 +65,7 @@ std::string visualize::Flow::label_tube_above(const nst::Tube& tube, const visua
 	if(visual_property.label_tube_time)
 	{
 		ss << "$t = " << Draw::num(tube.calculated.time) << "$, ";
-		if(tube.calculated.is_minimum_time)
+		if(tube.calculated.is_time_min)
 		{
 			ss << "MIN HERE,";
 		}

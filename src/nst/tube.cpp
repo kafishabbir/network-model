@@ -122,3 +122,10 @@ nst::Tank nst::Tube::slice() const
 
 	return tank;
 }
+
+void nst::Tube::update_with_add_proportion()
+{
+
+
+
+}

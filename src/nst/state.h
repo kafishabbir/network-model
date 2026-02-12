@@ -25,6 +25,7 @@ namespace nst
 		struct Calculated
 		{
 			double time_step;
+			int id_tube_time_min;
 			nst::Tank fluid_added;
 			nst::Tank fluid_evacuated;
 			nst::Tank total_fluid_added;
@@ -41,6 +42,8 @@ namespace nst
 		std::vector<nst::Tube> tubes;
 
 		Calculated calculated;
+
+		int id_step;
 
 		State();
 		double water_viscosity() const;

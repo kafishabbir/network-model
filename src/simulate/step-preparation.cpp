@@ -1,28 +1,68 @@
 #include "simulate/step-preparation.h"
 
-void simulate::StepPreparation::assign_resistance_to_tubes(
+
+void simulate::StepPreparation::choose_network_geometry(
 	nst::State& state
 )
 {
-	for(auto& tube: state.tubes)
-	{
-		tube.calculated.resistance_coefficient =
-			simulate::Physics::calculate_resistance(tube, state);
-	}
+	const auto& [nodes, tubes] = ic::Menu::network_geometry_flow();
+	state.nodes = nodes;
+	state.tubes = tubes;
 }
 
-void simulate::StepPreparation::assign_capillary_pressure_magnitude_to_tubes(
+
+void simulate::StepPreparation::modify_constants(
 	nst::State& state
 )
 {
-	for(auto& tube: state.tubes)
-	{
-		tube.calculated.capillary_pressure_magnitude =
-			simulate::Physics::calculate_capillary_pressure_magnitude(tube, state);
-	}
+	auto& fluid_water = state.physical_constant.fluid_v[0];
+	auto& fluid_oil = state.physical_constant.fluid_v[1];
+
+	state.physical_constant.sigma = 1;
+
+	fluid_water.viscosity = 1;
+	fluid_water.density = 1;
+	fluid_oil.viscosity = 1;
+	fluid_oil.density = 1;
+
+	state.simulation_constant.time_step_resolution = 0.1;
 }
 
-void simulate::StepPreparation::assign_connections_id_tube_to_nodes(nst::State& state)
+void simulate::StepPreparation::modify_boundary(
+	nst::State& state
+)
+{
+	auto& nodes = state.nodes;
+	auto& tubes = state.tubes;
+
+	nodes[0].is_open_boundary = true;
+	nodes[0].fluid_to_input = 0;
+
+	nodes[5].is_open_boundary = true;
+	nodes[5].fluid_to_input = 0;
+
+	nodes[2].is_open_boundary = true;
+	nodes[2].fluid_to_input = 1;
+
+	nodes[7].is_open_boundary = true;
+	nodes[7].fluid_to_input = 1;
+
+	nodes[0].pressure = 10;
+	nodes[5].pressure = 10;
+	nodes[2].pressure = 1;
+	nodes[7].pressure = 1;
+
+	tubes[3].radius = 1.25;
+	tubes[0].length = 4;
+	tubes[5].radius = 0.85;
+
+	tubes[5].fluid_first = 0;
+	tubes[5].mpos = {0.2};
+}
+
+void simulate::StepPreparation::create_connections_id_tube_v_for_node(
+	nst::State& state
+)
 {
 	const int n_tubes = state.tubes.size();
 	auto& nodes = state.nodes;
@@ -38,3 +78,14 @@ void simulate::StepPreparation::assign_connections_id_tube_to_nodes(nst::State& 
 }
 
 
+nst::State simulate::StepPreparation::generate_state()
+{
+	nst::State state;
+
+	choose_network_geometry(state);
+	modify_constants(state);
+	modify_boundary(state);
+	create_connections_id_tube_v_for_node(state);
+
+	return state;
+}

@@ -1,17 +1,32 @@
 #ifndef SIMULATE_STEP_PREPARATION_H
 #define SIMULATE_STEP_PREPARATION_H
 
-#include "simulate/physics.h"
+#include "ic/menu.h"
 
 namespace simulate
 {
-	class StepPreparation
-	{
-	public:
-		static void assign_resistance_to_tubes(nst::State& state);
-		static void assign_capillary_pressure_magnitude_to_tubes(nst::State& state);
-		static void assign_connections_id_tube_to_nodes(nst::State& state);
-	};
+    class StepPreparation
+    {
+		static void choose_network_geometry(
+			nst::State& state
+		);
+
+		static void modify_constants(
+			nst::State& state
+		);
+
+		static void modify_boundary(
+			nst::State& state
+		);
+
+		static void create_connections_id_tube_v_for_node(
+			nst::State& state
+		);
+
+        public:
+
+		static nst::State generate_state();
+    };
 }
 
 #endif

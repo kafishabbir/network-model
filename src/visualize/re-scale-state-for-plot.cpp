@@ -6,15 +6,15 @@ std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
 	val T::*member
 )
 {
-    val min_val = v.front().*member;
-    val max_val = v.front().*member;
+    val val_min = v.front().*member;
+    val val_max = v.front().*member;
     for(const auto& x : v)
     {
-        min_val = std::min(min_val, x.*member);
-        max_val = std::max(max_val, x.*member);
+        val_min = std::min(val_min, x.*member);
+        val_max = std::max(val_max, x.*member);
     }
 
-    return {min_val, max_val};
+    return {val_min, val_max};
 }
 
 template<class val, class T, class U>
@@ -24,15 +24,15 @@ std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
     val U::*submember  // Pointer to member val in U
 )
 {
-    val min_val = (v.front().*member).*submember;
-    val max_val = (v.front().*member).*submember;
+    val val_min = (v.front().*member).*submember;
+    val val_max = (v.front().*member).*submember;
     for(const auto& x : v)
     {
-        min_val = std::min(min_val, (x.*member).*submember);
-        max_val = std::max(max_val, (x.*member).*submember);
+        val_min = std::min(val_min, (x.*member).*submember);
+        val_max = std::max(val_max, (x.*member).*submember);
     }
 
-    return {min_val, max_val};
+    return {val_min, val_max};
 }
 
 void visualize::ReScaleStateForPlot::node_coordinates(nst::State& state, const visualize::Property& visual_property)

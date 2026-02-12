@@ -7,11 +7,20 @@ namespace simulate
 {
     class Step4TimeStep
     {
-		static void calculate_and_assign_time_to_tubes(
+		static void time_for_each_tube(
 			nst::State& state
 		);
-        public:
 
+		static void select_tube_with_minimum_time(
+			nst::State& state
+		);
+
+		static void mark_tube_with_minimum_time(
+			nst::State& state
+		);
+
+
+        public:
         static void assign_time_step_to_state(
 			nst::State& state
 		);
