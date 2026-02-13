@@ -24,14 +24,16 @@ namespace nst
 
 		struct Calculated
 		{
+			int id_step;
 			double time_step;
+			double time_elapsed;
 			nst::Tank fluid_added;
 			nst::Tank fluid_evacuated;
 			nst::Tank total_fluid_added;
 			nst::Tank total_fluid_evacuated;
+			std::string comment;
 			Calculated();
 		};
-
 
 	public:
 		PhysicalConstant physical_constant;
@@ -41,8 +43,6 @@ namespace nst
 		std::vector<nst::Tube> tubes;
 
 		Calculated calculated;
-
-		int id_step;
 
 		State();
 		double water_viscosity() const;

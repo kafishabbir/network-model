@@ -14,69 +14,6 @@ std::string visualize::Flow::code_node(const nst::Node& node, const int id_node,
 	return ss.str();
 }
 
-
-std::string visualize::Flow::code_node_label(const nst::Node& node, const int id_node, const visualize::Property& visual_property)
-{
-	const double x = node.visual.x;
-	const double y = node.visual.y;
-	//const double radius = node.visual.radius;
-	std::stringstream ss;
-
-	if(visual_property.label_id_node)
-	{
-		std::stringstream ss_node;
-		ss_node << "$\\nu_{" << id_node << "}$";
-		ss << visualize::Draw::node(x, y, ss_node.str()) << '\n';
-	}
-	if(visual_property.label_node_pressure)
-	{
-		std::stringstream ss_pressure;
-		ss_pressure << "$p=" << Draw::num(node.calculated.pressure) << "$";
-		ss << visualize::Draw::node(x, y + 0.01, ss_pressure.str()) << '\n';
-	}
-	return ss.str();
-}
-
-
-std::string visualize::Flow::label_tube_above(const nst::Tube& tube, const visualize::Property& visual_property)
-{
-	const double x_proportion_location = 0.3;
-	//const double rv = tube.visual.radius;
-	const double lv = tube.visual.length;
-
-	std::stringstream ss;
-
-	if(visual_property.label_tube_direction)
-	{
-		ss << "$p_{" << tube.id_node_first << tube.id_node_second << "} = " << Draw::num(tube.calculated.capillary_pressure_magnitude) << "$, \\\\ ";
-	}
-	if(visual_property.label_tube_radius)
-	{
-		ss << "$r=" << Draw::num(tube.radius) << "$, ";
-	}
-	if(visual_property.label_tube_length)
-	{
-		ss << "$l=" << Draw::num(tube.length) << "$, \\\\ ";
-	}
-	if(visual_property.label_tube_velocity)
-	{
-		ss << "$v = " << Draw::num(tube.calculated.velocity) << "$, ";
-	}
-	if(visual_property.label_tube_time)
-	{
-		ss << "$t = " << Draw::num(tube.calculated.time) << "$, ";
-		if(tube.calculated.is_time_min)
-		{
-			ss << "MIN HERE,";
-		}
-	}
-	return visualize::Draw::node_long(
-		lv * x_proportion_location,
-		0.03,
-		ss.str()
-	);
-}
-
 std::string visualize::Flow::label_tube_middle(const nst::Tube& tube, const int id_tube, const visualize::Property& visual_property)
 {
 	const double lv = tube.visual.length;
@@ -140,11 +77,8 @@ std::string visualize::Flow::code_tube(const nst::State& state, const int id_tub
 	std::stringstream ss;
 	ss << visualize::Draw::mpos_horizontal_rectangles(tube, visual_property.colors_str_v);
 
-	ss << label_tube_above(tube, visual_property) << '\n';
-
-	ss << label_tube_middle(tube, id_tube, visual_property) << '\n';
-
 	ss << label_tube_below(tube, visual_property) << '\n';
+	ss << label_tube_middle(tube, id_tube, visual_property) << '\n';
 
 	return visualize::Draw::scope_shift_and_rotate(
 		node_first.visual.x,
@@ -167,18 +101,7 @@ std::string visualize::Flow::code_nodes(const nst::State& state, const visualize
 	return ss.str();
 }
 
-std::string visualize::Flow::code_nodes_labels(const nst::State& state, const visualize::Property& visual_property)
-{
-	const auto& nodes = state.nodes;
-	const int n_nodes = nodes.size();
-	std::stringstream ss;
-	for(int i = 0; i < n_nodes; ++ i)
-	{
-		ss << code_node_label(nodes[i], i, visual_property) << '\n';
-	}
 
-	return ss.str();
-}
 
 std::string visualize::Flow::code_tubes(const nst::State& state, const visualize::Property& visual_property)
 {
@@ -202,33 +125,59 @@ std::string visualize::Flow::code_plot(nst::State& state, const visualize::Prope
 
 	ss << code_nodes(state, visual_property) << '\n';
 	ss << code_tubes(state, visual_property) << '\n';
-	ss << code_nodes_labels(state, visual_property) << '\n';
-	// ss << "\\draw (0, 0) rectangle (1, 0.5);" << '\n';
+
+	ss << FlowVerificationLabel::code_tubes_labels(state, visual_property) << '\n';
+	ss << FlowVerificationLabel::code_nodes_labels(state, visual_property) << '\n';
+
 	return visualize::Latex::scope_tikzpicture(ss.str());
 }
 
+
 std::string visualize::Flow::caption_plot(const nst::State& state, const visualize::Property& visual_property)
 {
+	const std::string comment = state.calculated.comment;
+	const int id_step = state.calculated.id_step;
+
+	const double time_elapsed = state.calculated.time_elapsed;
+	const auto total_fluid_added = state.calculated.total_fluid_added;
+	const auto total_fluid_evacuated = state.calculated.total_fluid_evacuated;
+
+	const double time_step = state.calculated.time_step;
+	const auto fluid_added = state.calculated.fluid_added;
+	const auto fluid_evacuated = state.calculated.fluid_evacuated;
+
+
 	const int n_nodes = state.nodes.size();
 	const int n_tubes = state.tubes.size();
-	const double mu_1 = state.physical_constant.fluid_v[0].viscosity;
-	const double mu_2 = state.physical_constant.fluid_v[1].viscosity;
 	const double sigma = state.physical_constant.sigma;
-	const double time_step = state.calculated.time_step;
+	const double mu_1 = state.water_viscosity();
+	const double mu_2 = state.oil_viscosity();
+
+	const double time_step_resolution = state.simulation_constant.time_step_resolution;
+
 
 	std::stringstream ss;
-	ss << "$n_{nodes}="	<< n_nodes	<< "$" << ", ";
-	ss << "$n_{tubes}="	<< n_tubes	<< "$" << ", ";
-	ss << "$\\mu_{1}="	<< Draw::num(mu_1)		<< "$" << ", ";
-	ss << "$\\mu_{2}="	<< Draw::num(mu_2)		<< "$" << ", ";
-	ss << "$\\sigma="	<< Draw::num(sigma)	<< "$" << ", ";
-	ss << "time step=$"	<< Draw::num(time_step)	<< "$" << ".";
+	ss << comment << ", ";
+	ss << "step-id=" << id_step << ", ";
+	ss << "time-elapsed=$" << Draw::num(time_elapsed) << "$" << ", ";
+	ss << "t-fluid-added=" << Draw::str(total_fluid_added) << ", ";
+	ss << "t-fluid-evacuated=" << Draw::str(total_fluid_evacuated) << ", ";
+	ss << "time-step=$" << Draw::num(time_step) << "$" << ", ";
+	ss << "fluid-added=" << Draw::str(fluid_added) << ", ";
+	ss << "fluid-evacuated=" << Draw::str(fluid_evacuated) << ", ";
+	ss << "$n_{nodes}=" << n_nodes << "$" << ", ";
+	ss << "$n_{tubes}=" << n_tubes << "$" << ", ";
+	ss << "$\\sigma=" << Draw::num(sigma) << "$" << ", ";
+	ss << "$\\mu_{1}=" << Draw::num(mu_1) << "$" << ", ";
+	ss << "$\\mu_{2}=" << Draw::num(mu_2) << "$" << ", ";
+	ss << "time step resolution=$" << Draw::num(time_step_resolution) << "$" << ".";
 
 	return ss.str();
 }
 
 std::vector<dst::str_pair> visualize::Flow::caption_and_code_multiple_plots(
-	dst::States& states, const visualize::Property& visual_property
+	dst::States& states,
+	const visualize::Property& visual_property
 )
 {
 	const int n_plots = states.size();

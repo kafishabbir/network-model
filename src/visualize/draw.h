@@ -61,6 +61,9 @@ namespace visualize
 			const double rotate_angle,
 			const std::string& draw_commands_to_scope
 		);
+
+
+		static std::string str(const nst::Tank& tank);
 	};
 
 }

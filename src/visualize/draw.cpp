@@ -1,5 +1,23 @@
 #include "visualize/draw.h"
 
+std::string visualize::Draw::str(const nst::Tank& tank)
+{
+	std::stringstream ss;
+	ss << "V(";
+	if(tank.is_contain_water())
+	{
+		ss << "$w=" << num(tank.volume_water()) << "$";
+	}
+	if(tank.is_contain_oil())
+	{
+		ss << ", ${nw}=" <<  num(tank.volume_oil()) << "$";
+	}
+	ss << ")";
+
+	return ss.str();
+}
+
+
 std::string visualize::Draw::d(const double val)
 {
 	std::stringstream ss;

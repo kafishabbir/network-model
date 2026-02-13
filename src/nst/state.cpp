@@ -32,7 +32,9 @@ nst::State::SimulationConstant::SimulationConstant():
 {}
 
 nst::State::Calculated::Calculated():
-	time_step(1),
+	id_step(-1),
+	time_step(-1),
+	time_elapsed(0),
 	fluid_added(),
 	fluid_evacuated(),
 	total_fluid_added(),
