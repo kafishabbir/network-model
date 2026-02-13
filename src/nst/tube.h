@@ -14,8 +14,8 @@ namespace nst
 			double length;
 			std::vector<double> mpos;
 		};
-	private:
 
+	private:
 		struct Calculated
 		{
 			double resistance_coefficient;
@@ -24,7 +24,6 @@ namespace nst
 			double velocity;
 			double time;
 			bool is_time_min;
-			double length_displacement;
 			double length_displacement_p;
 			double volume_displacement;
 			int id_node_sink;
@@ -32,41 +31,28 @@ namespace nst
 			double add_proportion;
 		};
 
-		nst::Tube original() const;
-		nst::Tube reversed() const;
-		std::vector<double> mpos_long_until(const double lp_limit) const;
-
 	public:
 		int id_node_first;
 		int id_node_second;
 		double radius;
 		double length;
 		std::vector<double> mpos; //meniscus positions
-		int fluid_first;
+		int id_fluid_first;
 
 		Visual visual;
 		Calculated calculated;
 
 		Tube();
-		void update_with_add_proportion();
 		double area() const;
 		double volume() const;
+
 		std::vector<double> mpos_long() const;
 
-		std::vector<double> mpos_long_displaced_scaled(
-			const double p1,
-			const double p2
-		) const;
-
-		bool correct_direction(const int id_node_relative_to) const;
-		int id_other_node(const int id_this_node) const;
-		double mu(const double mu1, const double mu2) const;
-
-		nst::Tank slice() const;
-
+		Tube original() const;
+		Tube reversed() const;
+		void reverse();
 	};
 
 }
-
 
 #endif

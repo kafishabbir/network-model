@@ -1,5 +1,23 @@
 #include "simulate/step1-tube-flow-coefficient.h"
 
+double simulate::Step1TubeFlowCoefficient::evaluate_mu(
+	const nst::Tube& tube,
+	const nst::State& state
+)
+{
+	std::vector<double> mu_v{state.water_viscosity(), state.oil_viscosity()};
+	const auto& mpos_long = tube.mpos_long();
+	const int n = mpos_long.size();
+	double sum = 0;
+	for(int i = 1; i < n; ++ i)
+	{
+		sum += (mpos_long[i] - mpos_long[i - 1]) * mu_v[(i + 1) % 2];
+	}
+
+	return sum;
+}
+
+
 double simulate::Step1TubeFlowCoefficient::resistance_coefficient(
 	const nst::Tube& tube,
 	const nst::State& state
@@ -7,7 +25,7 @@ double simulate::Step1TubeFlowCoefficient::resistance_coefficient(
 {
 	const double r = tube.radius;
 	const double l = tube.length;
-	const double mu = tube.mu(state.water_viscosity(), state.oil_viscosity());
+	const double mu = evaluate_mu(tube, state);
 	return decl::pi / 8 * std::pow(r, 4) / mu / l;
 }
 
@@ -16,15 +34,13 @@ double simulate::Step1TubeFlowCoefficient::capillary_pressure_magnitude(
 	const nst::State& state
 )
 {
-	const std::vector<int> sign_v{1, -1};
-	const double cntrb_fluid_first = sign_v[tube.fluid_first];
-	const double cntrb_n_meniscus = tube.mpos.size() % 2;
+	const double sign_id_fluid_first = ((tube.id_fluid_first == 0) ? 1 : -1);
+	const double sign_n_meniscus = (tube.mpos.size() % 2);
 
 	const double sigma = state.physical_constant.sigma;
-	const double radius = tube.radius;
-	const double value_single_meniscus = 2.0 * sigma / radius;
+	const double value_single_meniscus = 2.0 * sigma / tube.radius;
 
-	return cntrb_fluid_first * cntrb_n_meniscus * value_single_meniscus;
+	return sign_id_fluid_first * sign_n_meniscus * value_single_meniscus;
 }
 
 

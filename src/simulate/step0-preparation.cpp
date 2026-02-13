@@ -1,7 +1,7 @@
-#include "simulate/step-preparation.h"
+#include "simulate/step0-preparation.h"
 
 
-void simulate::StepPreparation::choose_network_geometry(
+void simulate::Step0Preparation::choose_network_geometry(
 	nst::State& state
 )
 {
@@ -11,7 +11,7 @@ void simulate::StepPreparation::choose_network_geometry(
 }
 
 
-void simulate::StepPreparation::modify_constants(
+void simulate::Step0Preparation::modify_constants(
 	nst::State& state
 )
 {
@@ -28,39 +28,39 @@ void simulate::StepPreparation::modify_constants(
 	state.simulation_constant.time_step_resolution = 0.1;
 }
 
-void simulate::StepPreparation::modify_boundary(
+void simulate::Step0Preparation::modify_boundary(
 	nst::State& state
 )
 {
 	auto& nodes = state.nodes;
 	auto& tubes = state.tubes;
 
-	nodes[0].is_open_boundary = true;
-	nodes[0].fluid_to_input = 0;
-
-	nodes[5].is_open_boundary = true;
-	nodes[5].fluid_to_input = 0;
-
-	nodes[2].is_open_boundary = true;
-	nodes[2].fluid_to_input = 1;
-
-	nodes[7].is_open_boundary = true;
-	nodes[7].fluid_to_input = 1;
-
 	nodes[0].pressure = 10;
+	nodes[0].is_open_boundary = true;
+	nodes[0].id_fluid_inject = 0;
+
 	nodes[5].pressure = 10;
+	nodes[5].is_open_boundary = true;
+	nodes[5].id_fluid_inject = 0;
+
 	nodes[2].pressure = 1;
+	nodes[2].is_open_boundary = true;
+	nodes[2].id_fluid_inject = 1;
+
 	nodes[7].pressure = 1;
+	nodes[7].is_open_boundary = true;
+	nodes[7].id_fluid_inject = 1;
+
+	tubes[0].length = 4;
 
 	tubes[3].radius = 1.25;
-	tubes[0].length = 4;
-	tubes[5].radius = 0.85;
 
-	tubes[5].fluid_first = 0;
+	tubes[5].radius = 0.85;
+	tubes[5].id_fluid_first = 0;
 	tubes[5].mpos = {0.2};
 }
 
-void simulate::StepPreparation::create_connections_id_tube_v_for_node(
+void simulate::Step0Preparation::create_connections_id_tube_v_for_node(
 	nst::State& state
 )
 {
@@ -78,7 +78,7 @@ void simulate::StepPreparation::create_connections_id_tube_v_for_node(
 }
 
 
-nst::State simulate::StepPreparation::generate_state()
+nst::State simulate::Step0Preparation::generate_state()
 {
 	nst::State state;
 

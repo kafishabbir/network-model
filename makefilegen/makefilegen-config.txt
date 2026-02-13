@@ -21,7 +21,7 @@ utility/measure
 utility/random
 
 simulate/menu
-simulate/step-preparation
+simulate/step0-preparation
 simulate/step1-tube-flow-coefficient
 simulate/step2-pressure
 simulate/step3-velocity
@@ -30,6 +30,7 @@ simulate/step5-displacement
 simulate/step6-pour-into-node
 simulate/step7-inject-evacuate
 simulate/step8-distribute
+simulate/step9-update-tube-mpos
 
 visualize/draw
 visualize/flow

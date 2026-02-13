@@ -1,18 +1,8 @@
 #include "simulate/step2-pressure.h"
 
-double simulate::Step2Pressure::determine_capillary_pressure_sign(
-	const nst::Tube& tube,
-	const int id_node_relative_to
-)
-{
-	return (
-		tube.correct_direction(id_node_relative_to) ? 1 : -1
-	);
-}
-
 
 std::pair<dst::Matrix, std::vector<double>> simulate::Step2Pressure::generate_linear_equations(
-	nst::State& state
+	const nst::State& state
 )
 {
 	const int n_nodes = state.nodes.size();
@@ -27,26 +17,28 @@ std::pair<dst::Matrix, std::vector<double>> simulate::Step2Pressure::generate_li
 
 		if(node.is_open_boundary)
 		{
-			row[i] = 1;
+			row[i] = 1.0;
 			b = node.pressure;
 			continue;
 		}
 
-		const auto& tubes_connected_to_node = node.calculated.connections_id_tube_v;
-		const int n_connections = tubes_connected_to_node.size();
+		const auto& connections_id_tube_v = node.calculated.connections_id_tube_v;
+		const int n_connections = connections_id_tube_v.size();
 		for(int j = 0; j < n_connections; ++ j)
 		{
-			const int id_tube = tubes_connected_to_node[j];
+			const int id_tube = connections_id_tube_v[j];
 			const auto& tube = state.tubes[id_tube];
-			const int id_node_second = tube.id_other_node(i);
+
+			const double sign = ((tube.id_node_first == i) ? 1 : -1);
+
+			const int id_node_b = ((sign < 0) ? tube.id_node_first: tube.id_node_second);
 
 			const double resistance = tube.calculated.resistance_coefficient;
-			const double capillary_pressure_magnitude = tube.calculated.capillary_pressure_magnitude;
-			const double capillary_pressure_sign = determine_capillary_pressure_sign(tube, i);
-			const double capillary_pressure = capillary_pressure_magnitude * capillary_pressure_sign;
+			const double capillary_pressure =
+				sign * tube.calculated.capillary_pressure_magnitude;
 
 			row[i] += resistance;
-			row[id_node_second] = -resistance;
+			row[id_node_b] = -resistance;
 
 			b -= resistance * capillary_pressure;
 		}
@@ -58,7 +50,7 @@ std::pair<dst::Matrix, std::vector<double>> simulate::Step2Pressure::generate_li
 
 std::vector<double> simulate::Step2Pressure::choose_method_of_solving_linear_equations(
 	const dst::Matrix& A,
-	std::vector<double> B
+	const std::vector<double>& B
 )
 {
 	return utility::Math::gaussian_elimination(A, B);
@@ -73,7 +65,7 @@ void simulate::Step2Pressure::assign_pressure_v_to_each_node(
 	const int n_nodes = state.nodes.size();
 	for(int i = 0; i < n_nodes; ++ i)
 	{
-		state.nodes[i].pressure = pressure_v[i];
+		state.nodes[i].calculated.pressure = pressure_v[i];
 	}
 }
 

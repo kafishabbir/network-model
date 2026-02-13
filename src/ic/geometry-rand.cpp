@@ -27,7 +27,7 @@ ic::type_pair_nodes_tubes ic::GeometryRand::network_geometry()
 	for(auto& tube: tubes)
 	{
 		tube.mpos = mpos_possible[utility::Random::integer_from_zero_until_n(mpos_possible.size())];
-		tube.fluid_first = utility::Random::integer_from_zero_until_n(2);
+		tube.id_fluid_first = utility::Random::integer_from_zero_until_n(2);
 	}
 	return {nodes, tubes};
 }

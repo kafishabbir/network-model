@@ -31,7 +31,7 @@ std::string visualize::Flow::code_node_label(const nst::Node& node, const int id
 	if(visual_property.label_node_pressure)
 	{
 		std::stringstream ss_pressure;
-		ss_pressure << "$p=" << Draw::num(node.pressure) << "$";
+		ss_pressure << "$p=" << Draw::num(node.calculated.pressure) << "$";
 		ss << visualize::Draw::node(x, y + 0.01, ss_pressure.str()) << '\n';
 	}
 	return ss.str();

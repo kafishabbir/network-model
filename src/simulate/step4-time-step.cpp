@@ -30,25 +30,14 @@ void simulate::Step4TimeStep::select_tube_with_minimum_time(
 		}
 	}
 
-	state.calculated.time_step = state.simulation_constant.time_step_resolution * val_min;
-
-	state.calculated.id_tube_time_min = id_tube_time_min;
-}
-
-
-void simulate::Step4TimeStep::mark_tube_with_minimum_time(
-	nst::State& state
-)
-{
-	const int n_tubes = state.tubes.size();
 	for(int i = 0; i < n_tubes; ++ i)
 	{
 		auto& tube = state.tubes[i];
-		tube.calculated.is_time_min = (i == state.calculated.id_tube_time_min);
+		tube.calculated.is_time_min = (i == id_tube_time_min);
 	}
+
+	state.calculated.time_step = state.simulation_constant.time_step_resolution * val_min;
 }
-
-
 
 void simulate::Step4TimeStep::assign_time_step_to_state(
 	nst::State& state
@@ -56,5 +45,4 @@ void simulate::Step4TimeStep::assign_time_step_to_state(
 {
 	time_for_each_tube(state);
 	select_tube_with_minimum_time(state);
-	mark_tube_with_minimum_time(state);
 }

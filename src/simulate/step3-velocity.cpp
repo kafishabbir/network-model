@@ -8,12 +8,12 @@ double simulate::Step3Velocity::flow_rate(
 	const auto& node_first = state.nodes[tube.id_node_first];
 	const auto& node_second = state.nodes[tube.id_node_second];
 
-	const double delta_pressure = node_first.pressure - node_second.pressure;
+	const double delta_pressure = node_first.calculated.pressure - node_second.calculated.pressure;
 
-	const double a = tube.calculated.resistance_coefficient;
-	const double b = tube.calculated.capillary_pressure_magnitude;
+	const double resistance = tube.calculated.resistance_coefficient;
+	const double capillary_pressure = tube.calculated.capillary_pressure_magnitude;
 
-	return a * (delta_pressure + b);
+	return resistance  * (delta_pressure + capillary_pressure);
 }
 
 void simulate::Step3Velocity::flow_rate(

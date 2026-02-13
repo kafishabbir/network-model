@@ -25,7 +25,6 @@ namespace nst
 		struct Calculated
 		{
 			double time_step;
-			int id_tube_time_min;
 			nst::Tank fluid_added;
 			nst::Tank fluid_evacuated;
 			nst::Tank total_fluid_added;

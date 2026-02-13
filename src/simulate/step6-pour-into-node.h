@@ -7,11 +7,25 @@ namespace simulate
 {
     class Step6PourIntoNode
     {
+
+		static nst::Tank produce_tank_with_fluids_flow_out_from_tube(
+			const nst::Tube& tube
+		);
+
+		static std::vector<double> mpos_long_until(
+			const nst::Tube& tube,
+			const double lp
+		);
+
 		static void assign_id_node_id_tube_flow_direction(
 			nst::State& state
 		);
 
 		static void clear_node_tank(
+			nst::State& state
+		);
+
+		static void assign_tank_to_tubes(
 			nst::State& state
 		);
 

@@ -9,11 +9,12 @@ namespace nst
 	{
 		struct Calculated
 		{
+			double pressure;
 			nst::Tank tank;
 			double volume_fluid_flow_out;
 			std::vector<int> connections_id_tube_v;
 			std::vector<int> flow_out_id_tube_v;
-			bool is_fluid_added_to_this_node ;
+			bool is_fluid_added_to_this_node;
 		};
 
 
@@ -32,7 +33,7 @@ namespace nst
 		double y;
 		double pressure;
 		bool is_open_boundary;
-		int fluid_to_input;
+		int id_fluid_inject;
 
 		Calculated calculated;
 		Visual visual;

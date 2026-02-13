@@ -1,11 +1,11 @@
-#ifndef SIMULATE_STEP_PREPARATION_H
-#define SIMULATE_STEP_PREPARATION_H
+#ifndef SIMULATE_STEP0_PREPARATION_H
+#define SIMULATE_STEP0_PREPARATION_H
 
 #include "ic/menu.h"
 
 namespace simulate
 {
-    class StepPreparation
+    class Step0Preparation
     {
 		static void choose_network_geometry(
 			nst::State& state

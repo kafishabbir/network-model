@@ -7,6 +7,11 @@ namespace simulate
 {
     class Step1TubeFlowCoefficient
     {
+		static double evaluate_mu(
+			const nst::Tube& tube,
+			const nst::State& state
+		);
+
 		static double resistance_coefficient(
 			const nst::Tube& tube,
 			const nst::State& state

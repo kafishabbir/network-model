@@ -37,14 +37,14 @@ std::string visualize::Draw::mpos_horizontal_rectangles(
 )
 {
 	const std::vector<double>& v = tube.visual.mpos;
-	const int fluid_first = tube.fluid_first;
+	const int id_fluid_first = tube.id_fluid_first;
 	const double radius = tube.visual.radius;
 
 	const int n = v.size();
 	std::stringstream ss;
 	for(int i = 1; i < n; ++ i)
 	{
-		const auto& color = colors[(i + fluid_first + 1) % 2];
+		const auto& color = colors[(i + id_fluid_first + 1) % 2];
 		const double x1 = v[i - 1];
 		const double y1 = radius;
 		const double x2 = v[i];

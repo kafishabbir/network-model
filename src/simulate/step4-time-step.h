@@ -15,11 +15,6 @@ namespace simulate
 			nst::State& state
 		);
 
-		static void mark_tube_with_minimum_time(
-			nst::State& state
-		);
-
-
         public:
         static void assign_time_step_to_state(
 			nst::State& state

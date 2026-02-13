@@ -22,7 +22,8 @@ namespace visualize
 
 		static double calculate_tube_visual_displacement_due_to_node(
 			const double r_node,
-			const double r_tube, const visualize::Property& visual_property
+			const double r_tube,
+			const visualize::Property& visual_property
 		);
 
 		//sets x_max - x_min = 1
@@ -39,6 +40,12 @@ namespace visualize
 
 		//makes mpos long format, if needed, displaces to make space for node
 		static void mpos(nst::State& state, const visualize::Property& visual_property);
+
+		static std::vector<double> mpos_long_displaced_scaled(
+			const nst::Tube& tube,
+			const double p1,
+			const double p2
+		);
 
         public:
 

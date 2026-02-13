@@ -2,6 +2,7 @@
 #define SIMULATE_STEP8_DISTRIBUTE_H
 
 #include "global/dst.h"
+#include <algorithm>
 
 namespace simulate
 {
@@ -15,7 +16,9 @@ namespace simulate
 			nst::State& state
 		);
 
-		static void update_tube_mpos_according_to_proportion(
+		static void assign_proportion_to_tube(
+			const std::vector<int>& flow_out_id_tube_v,
+			const nst::Tank& tank,
 			nst::State& state
 		);
 

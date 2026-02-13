@@ -7,6 +7,11 @@ namespace simulate
 {
     class Step7InjectEvacuate
     {
+		static nst::Tank produce_tank_with_oil_sliced_out(
+			const nst::Tank& tank,
+			const double volume
+		);
+
 		static void assign_volume_flow_out_to_node(
 			nst::State& state
 		);

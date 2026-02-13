@@ -8,17 +8,12 @@ namespace simulate
 {
     class Step2Pressure
     {
-		static double determine_capillary_pressure_sign(
-			const nst::Tube& tube,
-			const int id_node_relative_to
-		);
-
 		static std::pair<dst::Matrix, std::vector<double>> generate_linear_equations(
-			nst::State& state
+			const nst::State& state
 		);
 
 		static std::vector<double> choose_method_of_solving_linear_equations(
-			const dst::Matrix& A, std::vector<double> B
+			const dst::Matrix& A, const std::vector<double>& B
 		);
 
 		static void assign_pressure_v_to_each_node(

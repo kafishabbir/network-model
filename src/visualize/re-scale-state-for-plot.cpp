@@ -123,6 +123,21 @@ double visualize::ReScaleStateForPlot::calculate_tube_visual_displacement_due_to
 	return 0;
 }
 
+std::vector<double> visualize::ReScaleStateForPlot::mpos_long_displaced_scaled(
+	const nst::Tube& tube,
+	const double p1,
+	const double p2
+)
+{
+	auto v = tube.mpos_long();
+	const double length_effective = tube.visual.length - p1 - p2;
+	for(auto& x: v)
+	{
+		x = p1 + length_effective * x;
+	}
+	return v;
+
+}
 
 void visualize::ReScaleStateForPlot::mpos(nst::State& state, const visualize::Property& visual_property)
 {
@@ -135,13 +150,7 @@ void visualize::ReScaleStateForPlot::mpos(nst::State& state, const visualize::Pr
 		const double p1 = calculate_tube_visual_displacement_due_to_node(node_first.visual.radius, tube.visual.radius, visual_property);
 		const double p2 = calculate_tube_visual_displacement_due_to_node(node_second.visual.radius, tube.visual.radius, visual_property);
 
-		//std::cout << "id_tube=" << i++ << '\n';
-		//std::cout << "node_first.visual.radius=" << node_first.visual.radius << '\n';
-		//std::cout << "node_second.visual.radius=" << node_second.visual.radius << '\n';
-		//std::cout << "tube.visual.radius=" << tube.visual.radius << '\n';
-		//std::cout << "p1=" << p1 << ", p2=" << p2 << '\n';
-
-		tube.visual.mpos = tube.mpos_long_displaced_scaled(p1, p2);
+		tube.visual.mpos = mpos_long_displaced_scaled(tube, p1, p2);
 	}
 
 }

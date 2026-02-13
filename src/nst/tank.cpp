@@ -15,7 +15,6 @@ Tank()
 	add_fluid(volume, id_fluid);
 }
 
-
 void nst::Tank::add_fluid(const double volume, const int id_fluid)
 {
 	if(volume <= 0)
@@ -58,43 +57,14 @@ double nst::Tank::total_volume() const
 	return sum;
 }
 
-nst::Tank nst::Tank::return_sliced_tank(const double volume) const
-{
-	if(volume <= 0)
-	{
-        throw std::invalid_argument("Volume must be positive");
-    }
-    if(total_volume() < volume)
-    {
-        throw std::runtime_error("Insufficient volume in tank to slice");
-    }
-
-	nst::Tank tank = *this;
-	auto& water = tank.fluid_v[0];
-	auto& oil = tank.fluid_v[1];
-
-	if(oil.is_used && oil.volume > volume)
-	{
-		oil.volume -= volume;
-		return tank;
-	}
-	water.volume -= (volume - oil.volume);
-	oil.is_used = false;
-	oil.volume = 0;
-
-	return tank;
-}
-
-
-
 bool nst::Tank::is_only_water() const
 {
-	return (fluid_v[0].is_used == true) && (fluid_v[1].is_used == false);
+	return is_contain_water() && (!is_contain_oil());
 }
 
 bool nst::Tank::is_contain_oil() const
 {
-	return fluid_v[1].is_used == true;
+	return fluid_v[1].is_used;
 }
 
 bool nst::Tank::is_contain_water() const
@@ -107,14 +77,8 @@ double nst::Tank::volume_water() const
 	return fluid_v[0].volume;
 }
 
-double nst::Tank::volime_oil() const
+double nst::Tank::volume_oil() const
 {
 	return fluid_v[1].volume;
 }
-
-void nst::Tank::remove_fluid(const double volume, const int id_fluid)
-{
-	fluid_v[id_fluid].volume -= volume;
-}
-
 
