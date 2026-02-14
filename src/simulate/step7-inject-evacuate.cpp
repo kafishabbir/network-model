@@ -86,6 +86,7 @@ void simulate::Step7InjectEvacuate::balance_flow_at_open_nodes(
 			//evacualate
 			const auto& tank_with_oil_sliced_out =
 				produce_tank_with_oil_sliced_out(node_tank, delta_volume);
+
 			evacuation_tank.add_fluid(tank_with_oil_sliced_out);
 			node.calculated.is_fluid_added_to_this_node = false;
 		}

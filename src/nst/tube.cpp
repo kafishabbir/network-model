@@ -37,6 +37,7 @@ void nst::Tube::reverse()
 	{
 		x = 1.0 - x;
 	}
+	std::reverse(mpos.begin(), mpos.end());
 	id_fluid_first = (id_fluid_first + mpos.size()) % 2;
 }
 

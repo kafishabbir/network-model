@@ -9,12 +9,6 @@ nst::Tank::Tank():
 	fluid_v(decl::n_fluids)
 {}
 
-nst::Tank::Tank(const double volume, const int id_fluid):
-Tank()
-{
-	add_fluid(volume, id_fluid);
-}
-
 void nst::Tank::add_fluid(const double volume, const int id_fluid)
 {
 	if(volume <= 0)

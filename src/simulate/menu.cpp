@@ -5,7 +5,7 @@ void simulate::Menu::test_generate_and_plot()
 	auto state = Step0Preparation::generate_state();
 	dst::States states;
 	auto& comment = state.calculated.comment;
-	for(int i = 0; i < 2; ++ i)
+	for(int i = 0; i < 28; ++ i)
 	{
 		comment = "preparation";
 		state.calculated.id_step = i;
@@ -13,7 +13,7 @@ void simulate::Menu::test_generate_and_plot()
 
 		Step1TubeFlowCoefficient::assign_resistance_and_capillary_pressure_to_tubes(state);
 		comment = "assign-resistance-and-capillary-pressure-to-tubes";
-		states.push_back(state);
+		//states.push_back(state);
 
 		Step2Pressure::generate_linear_equations_and_assign_pressure_to_node(state);
 		comment = "generate-linear-equations-and-assign-pressure-to-node";
@@ -33,7 +33,7 @@ void simulate::Menu::test_generate_and_plot()
 
 		Step6PourIntoNode::pour_from_tubes_to_node_tank(state);
 		comment = "pour-from-tubes-to-node-tank";
-		states.push_back(state);
+		//states.push_back(state);
 
 		Step7InjectEvacuate::inject_and_evacuate_fluid_from_system(state);
 		comment = "inject-and-evacuate-fluid-from-system";

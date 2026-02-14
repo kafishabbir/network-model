@@ -2,6 +2,7 @@
 #define NST_TUBE_H
 
 #include "nst/tank.h"
+#include <algorithm>
 
 namespace nst
 {

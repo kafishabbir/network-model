@@ -18,7 +18,6 @@ namespace nst
 
 	public:
 		Tank();
-		explicit Tank(const double volume, const int id_fluid);
 
 		void add_fluid(const double volume, const int id_fluid);
 		void add_fluid(const Tank& other);

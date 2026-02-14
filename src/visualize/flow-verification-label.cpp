@@ -7,13 +7,13 @@ std::string visualize::FlowVerificationLabel::node_details(const nst::Node& node
 
     //ss << "  Position: (" << Draw::num(node.x) << ", " << Draw::num(node.y) << ")\n\\\\";
     //ss << "  Pressure: $" << Draw::num(node.pressure) << "$\n\\\\";
-    ss << "open boundary: " << (node.is_open_boundary ? "true" : "false") << "\n\\\\";
-    ss << "id-fluid-inj: " << node.id_fluid_inject << "\n\\\\";
-    ss << "Tank: " << Draw::str(node.calculated.tank) << "\n\\\\";
+    ss << "open boundary=" << (node.is_open_boundary ? "true" : "false") << "\n\\\\";
+    ss << "id-fluid-inj=" << node.id_fluid_inject << "\n\\\\";
+    ss << "tank-" << Draw::str(node.calculated.tank) << "\n\\\\";
     ss << "total-v-out=$" << Draw::num(node.calculated.volume_fluid_flow_out) << "$\n\\\\";
 
     // Connection tubes
-    ss << "connected-id-tubes:(";
+    ss << "connected-id-tubes=(";
     if (node.calculated.connections_id_tube_v.empty()) {
         ss << "none";
     } else {
@@ -25,7 +25,7 @@ std::string visualize::FlowVerificationLabel::node_details(const nst::Node& node
     ss << ")\n\\\\";
 
     // Flow out tubes
-    ss << "flow-id-tubes: ";
+    ss << "flow-id-tubes=(";
     if (node.calculated.flow_out_id_tube_v.empty()) {
         ss << "none";
     } else {
@@ -34,9 +34,9 @@ std::string visualize::FlowVerificationLabel::node_details(const nst::Node& node
             ss << node.calculated.flow_out_id_tube_v[i];
         }
     }
-    ss << "\n\\\\";
+    ss << ")\n\\\\";
 
-    ss << "fluid-injected:" << (node.calculated.is_fluid_added_to_this_node ? "true" : "false") << "\n\\\\";
+    ss << "fluid-injected=" << (node.calculated.is_fluid_added_to_this_node ? "true" : "false") << "\n\\\\";
 
     return ss.str();
 }
@@ -78,7 +78,7 @@ std::string visualize::FlowVerificationLabel::label_tube_above(const nst::Tube& 
 
 	if(visual_property.label_tube_direction)
 	{
-		ss << "$p_{" << tube.id_node_first << tube.id_node_second << "} = " << Draw::num(tube.calculated.capillary_pressure_magnitude) << "$, \\\\ ";
+		ss << "$P_c{(" << tube.id_node_first << tube.id_node_second << ")} = " << Draw::num(tube.calculated.capillary_pressure_magnitude) << "$, \\\\ ";
 	}
 	if(visual_property.label_tube_radius)
 	{
@@ -100,6 +100,25 @@ std::string visualize::FlowVerificationLabel::label_tube_above(const nst::Tube& 
 			ss << "\\\\ MIN HERE,";
 		}
 	}
+	if(visual_property.label_tube_details)
+	{
+		ss << "mpos=(";
+		if (tube.mpos.empty()) {
+			ss << "none";
+		} else {
+			for (size_t i = 0; i < tube.mpos.size(); ++i) {
+				if (i > 0) ss << ", ";
+				ss << "$" << Draw::num(tube.mpos[i]) << "$";
+			}
+		}
+		ss << ")\n\\\\";
+		ss << "length-disp-p=$" << Draw::num(tube.calculated.length_displacement_p) << "$\n\\\\";
+		ss << "vol-disp=$" << Draw::num(tube.calculated.volume_displacement) << "$\n\\\\";
+		ss << "id-sink=" << tube.calculated.id_node_sink << "\n\\\\";
+		ss << "tank-pour=" << Draw::str(tube.calculated.tank_pour_into_node) << "\n\\\\";
+		ss << "add-prop=$" << Draw::num(tube.calculated.add_proportion) << "$\n";
+	}
+
 	return visualize::Draw::node_long(
 		lv * x_proportion_location,
 		0.03,

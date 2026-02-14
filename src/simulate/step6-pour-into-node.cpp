@@ -29,6 +29,7 @@ void simulate::Step6PourIntoNode::clear_node_tank(
 	for(auto& node: state.nodes)
 	{
 		node.calculated.tank = nst::Tank();
+		node.calculated.flow_out_id_tube_v.clear();
 	}
 }
 
@@ -69,6 +70,7 @@ nst::Tank simulate::Step6PourIntoNode::produce_tank_with_fluids_flow_out_from_tu
 		const int current_id_fluid = (tube_new.id_fluid_first + 1 + i) % 2;
 		const double delta_lp = mpos_long_sliced[i] - mpos_long_sliced[i - 1];
 		const double volume_fluid = volume_tube * delta_lp;
+
 		tank.add_fluid(volume_fluid, current_id_fluid);
 	}
 
@@ -104,7 +106,8 @@ void simulate::Step6PourIntoNode::pour_from_tubes_to_node_tank(
 	nst::State& state
 )
 {
-	assign_id_node_id_tube_flow_direction(state);
 	clear_node_tank(state);
+	assign_id_node_id_tube_flow_direction(state);
+	assign_tank_to_tubes(state);
 	pour_from_tube_to_id_node_tank(state);
 }

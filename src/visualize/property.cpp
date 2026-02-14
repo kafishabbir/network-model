@@ -16,5 +16,6 @@ visualize::Property::Property():
 	label_capillary_pressure(true),
 	label_tube_velocity(true),
 	label_tube_time(true),
-	label_node_details(true)
+	label_node_details(true),
+	label_tube_details(true)
 {}

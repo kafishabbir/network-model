@@ -9,18 +9,20 @@ nst::Tube simulate::Step9UpdateTubeMpos::generate_tube_front(
 	nst::Tube tube_front(tube);
 	if(ap == 1.0)
 	{
-		tube_front.id_fluid_first = 1;
+		tube_front.id_fluid_first = 0;
 	}
 	else
 	{
-		tube_front.id_fluid_first = 0;
+		tube_front.id_fluid_first = 1;
 	}
 
-	if(ap > 0.0 && ap < 1.0)
+	tube_front.mpos.clear();
+
+	if((ap > 0.0) && (ap < 1.0))
 	{
-		const double val = (1.0 - ap) * lp;
-		tube_front.mpos = {val};
+		tube_front.mpos.push_back((1.0 - ap) * lp);
 	}
+
 	return tube_front;
 }
 
@@ -57,7 +59,7 @@ nst::Tube simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportio
 	const double ap = tube.calculated.add_proportion;
 
 	auto tube_front = generate_tube_front(tube, lp, ap);
-	auto tube_back = (is_reverse_needed ? tube.original(): tube.reversed());
+	auto tube_back = (is_reverse_needed ? tube.reversed() :tube.original());
 	join_tubes(tube_front, tube_back, lp);
 
 	if(is_reverse_needed)

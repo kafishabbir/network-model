@@ -32,6 +32,7 @@ namespace visualize
         bool label_tube_time;
 
 		bool label_node_details;
+		bool label_tube_details;
 		Property();
     };
 }
