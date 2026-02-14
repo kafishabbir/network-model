@@ -97,7 +97,7 @@ void visualize::ReScaleStateForPlot::node_radius(nst::State& state, const visual
 	for(int i = 0; i < n_nodes; ++ i)
 	{
 		auto& node = nodes[i];
-		const auto& id_tube_v = node.calculated.connections_id_tube_v;
+		const auto& id_tube_v = node.reference.connections_id_tube_v;
 
 		double radius_max = 0;
 		for(const int id_tube: id_tube_v)

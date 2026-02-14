@@ -11,7 +11,7 @@ nst::Tank::Tank():
 
 void nst::Tank::add_fluid(const double volume, const int id_fluid)
 {
-	if(volume <= 0)
+	if(volume < 0)
 	{
 		throw std::invalid_argument("Volume must be positive");
 	}

@@ -57,9 +57,7 @@ void simulate::Step7InjectEvacuate::balance_flow_at_open_nodes(
 )
 {
 	auto& addition_tank = state.calculated.fluid_added;
-	addition_tank = nst::Tank();
 	auto& evacuation_tank = state.calculated.fluid_evacuated;
-	evacuation_tank = nst::Tank();
 
 	for(auto& node: state.nodes)
 	{
@@ -79,21 +77,20 @@ void simulate::Step7InjectEvacuate::balance_flow_at_open_nodes(
 			const int id_fluid = node.id_fluid_inject;
 			node_tank.add_fluid(delta_volume, id_fluid);
 			addition_tank.add_fluid(delta_volume, id_fluid);
-			node.calculated.is_fluid_added_to_this_node = true;
+			node.calculated.is_fluid_injected_from_external_to_this_node = true;
 		}
 		else
 		{
 			//evacualate
 			const auto& tank_with_oil_sliced_out =
 				produce_tank_with_oil_sliced_out(node_tank, delta_volume);
-
 			evacuation_tank.add_fluid(tank_with_oil_sliced_out);
-			node.calculated.is_fluid_added_to_this_node = false;
+			node.calculated.is_fluid_injected_from_external_to_this_node = false;
 		}
 	}
 
-	state.calculated.total_fluid_added.add_fluid(addition_tank);
-	state.calculated.total_fluid_evacuated.add_fluid(evacuation_tank);
+	state.measured.total_fluid_added.add_fluid(addition_tank);
+	state.measured.total_fluid_evacuated.add_fluid(evacuation_tank);
 }
 
 

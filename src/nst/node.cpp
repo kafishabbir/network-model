@@ -1,5 +1,15 @@
 #include "nst/node.h"
 
+
+nst::Node::Calculated::Calculated():
+	pressure(0),
+	tank(),
+	flow_out_id_tube_v(),
+	volume_fluid_flow_out(0),
+	is_fluid_injected_from_external_to_this_node(false)
+{}
+
+
 double nst::Node::Visual::distance(const Node& node) const
 {
 	const double dx = node.visual.x - x;
@@ -27,5 +37,8 @@ nst::Node::Node():
 	x(-1),
 	y(-1),
 	pressure(-1),
-	is_open_boundary(false)
+	is_open_boundary(false),
+	id_fluid_inject(-1),
+	reference(),
+	calculated()
 {}

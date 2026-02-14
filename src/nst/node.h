@@ -7,16 +7,10 @@ namespace nst
 {
 	class Node
 	{
-		struct Calculated
+		struct Reference
 		{
-			double pressure;
-			nst::Tank tank;
-			double volume_fluid_flow_out;
 			std::vector<int> connections_id_tube_v;
-			std::vector<int> flow_out_id_tube_v;
-			bool is_fluid_added_to_this_node;
 		};
-
 
 		struct Visual
 		{
@@ -29,12 +23,25 @@ namespace nst
 		};
 
 	public:
+
+		struct Calculated
+		{
+			double pressure;
+			nst::Tank tank;
+			std::vector<int> flow_out_id_tube_v;
+			double volume_fluid_flow_out;
+			bool is_fluid_injected_from_external_to_this_node;
+			Calculated();
+		};
+
+	public:
 		double x;
 		double y;
 		double pressure;
 		bool is_open_boundary;
 		int id_fluid_inject;
 
+		Reference reference;
 		Calculated calculated;
 		Visual visual;
 

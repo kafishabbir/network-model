@@ -135,12 +135,17 @@ std::string visualize::Flow::code_plot(nst::State& state, const visualize::Prope
 
 std::string visualize::Flow::caption_plot(const nst::State& state, const visualize::Property& visual_property)
 {
-	const std::string comment = state.calculated.comment;
-	const int id_step = state.calculated.id_step;
+	const std::string comment = state.reference.comment;
+	const int id_step = state.reference.id_step;
 
-	const double time_elapsed = state.calculated.time_elapsed;
-	const auto total_fluid_added = state.calculated.total_fluid_added;
-	const auto total_fluid_evacuated = state.calculated.total_fluid_evacuated;
+	const double time_elapsed = state.measured.time_elapsed;
+	const auto total_fluid_added = state.measured.total_fluid_added;
+	const auto total_fluid_evacuated = state.measured.total_fluid_evacuated;
+	const auto saturation = state.calculated.saturation;
+
+	const auto total_volume_delta = state.calculated.total_volume_delta * 100;
+	const auto water_volume_delta  = state.calculated.water_volume_delta * 100;
+	const auto oil_volume_delta  = state.calculated.oil_volume_delta * 100;
 
 	const double time_step = state.calculated.time_step;
 	const auto fluid_added = state.calculated.fluid_added;
@@ -155,13 +160,17 @@ std::string visualize::Flow::caption_plot(const nst::State& state, const visuali
 
 	const double time_step_resolution = state.simulation_constant.time_step_resolution;
 
-
 	std::stringstream ss;
 	ss << comment << ", ";
 	ss << "step-id=" << id_step << ", ";
+	ss << "$S=" << Draw::num(saturation) << "$, ";
 	ss << "time-elapsed=$" << Draw::num(time_elapsed) << "$" << ", ";
 	ss << "t-fluid-added=" << Draw::str(total_fluid_added) << ", ";
 	ss << "t-fluid-evacuated=" << Draw::str(total_fluid_evacuated) << ", ";
+	ss << "$\\Delta V_{t}=" << Draw::num(total_volume_delta) << "\\%$, ";
+	ss << "$\\Delta V_{w}=" << Draw::num(water_volume_delta) << "\\%$, ";
+	ss << "$\\Delta V_{nw}=" << Draw::num(oil_volume_delta) << "\\%$, ";
+
 	ss << "time-step=$" << Draw::num(time_step) << "$" << ", ";
 	ss << "fluid-added=" << Draw::str(fluid_added) << ", ";
 	ss << "fluid-evacuated=" << Draw::str(fluid_evacuated) << ", ";

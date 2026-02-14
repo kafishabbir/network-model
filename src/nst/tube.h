@@ -9,14 +9,6 @@ namespace nst
 	class Tube
 	{
 	public:
-		struct Visual
-		{
-			double radius;
-			double length;
-			std::vector<double> mpos;
-		};
-
-	private:
 		struct Calculated
 		{
 			double resistance_coefficient;
@@ -30,6 +22,14 @@ namespace nst
 			int id_node_sink;
 			nst::Tank tank_pour_into_node;
 			double add_proportion;
+			Calculated();
+		};
+
+		struct Visual
+		{
+			double radius;
+			double length;
+			std::vector<double> mpos;
 		};
 
 	public:
@@ -40,8 +40,8 @@ namespace nst
 		std::vector<double> mpos; //meniscus positions
 		int id_fluid_first;
 
-		Visual visual;
 		Calculated calculated;
+		Visual visual;
 
 		Tube();
 		double area() const;

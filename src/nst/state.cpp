@@ -18,6 +18,8 @@ nst::State::State():
 	simulation_constant(),
 	nodes(),
 	tubes(),
+	measured(),
+	reference(),
 	calculated()
 {}
 
@@ -32,11 +34,23 @@ nst::State::SimulationConstant::SimulationConstant():
 {}
 
 nst::State::Calculated::Calculated():
-	id_step(-1),
 	time_step(-1),
-	time_elapsed(0),
 	fluid_added(),
 	fluid_evacuated(),
+	total_fluid_in_system(),
+	total_volume_delta(-1),
+	water_volume_delta(-1),
+	oil_volume_delta(-1)
+{}
+
+nst::State::Measured::Measured():
+	time_elapsed(0),
 	total_fluid_added(),
-	total_fluid_evacuated()
+	total_fluid_evacuated(),
+	initial_total_fluid()
+{}
+
+nst::State::Reference::Reference():
+	id_step(-1),
+	comment("comment=null")
 {}

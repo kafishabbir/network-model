@@ -31,6 +31,7 @@ simulate/step6-pour-into-node
 simulate/step7-inject-evacuate
 simulate/step8-distribute
 simulate/step9-update-tube-mpos
+simulate/step10-measure
 
 visualize/draw
 visualize/flow

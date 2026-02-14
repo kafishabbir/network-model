@@ -14,7 +14,7 @@
 #include "simulate/step7-inject-evacuate.h"
 #include "simulate/step8-distribute.h"
 #include "simulate/step9-update-tube-mpos.h"
-
+#include "simulate/step10-measure.h"
 
 namespace simulate
 {

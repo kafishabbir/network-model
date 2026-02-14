@@ -22,16 +22,33 @@ namespace nst
 			SimulationConstant();
 		};
 
-		struct Calculated
+		struct Measured
 		{
-			int id_step;
-			double time_step;
 			double time_elapsed;
-			nst::Tank fluid_added;
-			nst::Tank fluid_evacuated;
 			nst::Tank total_fluid_added;
 			nst::Tank total_fluid_evacuated;
+			nst::Tank initial_total_fluid;
+			Measured();
+		};
+
+		struct Reference
+		{
+			int id_step;
 			std::string comment;
+			Reference();
+		};
+
+	public:
+		struct Calculated
+		{
+			double time_step;
+			nst::Tank fluid_added;
+			nst::Tank fluid_evacuated;
+			nst::Tank total_fluid_in_system;
+			double saturation;
+			double total_volume_delta;
+			double water_volume_delta;
+			double oil_volume_delta;
 			Calculated();
 		};
 
@@ -42,6 +59,8 @@ namespace nst
 		std::vector<nst::Node> nodes;
 		std::vector<nst::Tube> tubes;
 
+		Measured measured;
+		Reference reference;
 		Calculated calculated;
 
 		State();

@@ -71,6 +71,45 @@ nst::Tube simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportio
 }
 
 
+std::vector<double> simulate::Step9UpdateTubeMpos::combine_swabs(
+	const nst::Tube& tube
+)
+{
+	const int n_mns = tube.mpos.size();
+	const int id = tube.id_fluid_first;
+	const int n_swabs = (n_mns - id) / 2;
+	if(n_swabs < 2)
+	{
+		return tube.mpos;
+	}
+
+	double MX = 0;
+	double M = 0;
+	for(int i_swab = 0; i_swab < n_swabs; ++ i_swab)
+	{
+		const int begin = i_swab * 2 + id;
+		const int end = begin + 1;
+		const double x = tube.mpos[begin];
+		const double y = tube.mpos[end];
+		//std::cout << "chose (" << x << "--" << y << ")\n";
+		const double m = y - x;
+		const double center = (y + x) / 2;
+		MX += (center * m);
+		M += m;
+	}
+	const double center = MX / M;
+	const double x = center - M / 2;
+	const double y = center + M / 2;
+	//std::cout << "M=" << M << ", center=" << center << "\n";
+	const int begin = id;
+	const int end = 2 * n_swabs + begin;
+
+	auto v = tube.mpos;
+	v.erase(v.begin() + begin, v.begin() + end);
+	v.insert(v.begin() + begin, {x, y});
+	return v;
+}
+
 void simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportion(
 	nst::State& state
 )
@@ -78,6 +117,7 @@ void simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportion(
 	for(auto& tube: state.tubes)
 	{
 		tube = update_tube_mpos_according_to_proportion(tube);
+		tube.mpos = combine_swabs(tube);
 	}
 
 }

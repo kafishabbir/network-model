@@ -22,7 +22,7 @@ std::pair<dst::Matrix, std::vector<double>> simulate::Step2Pressure::generate_li
 			continue;
 		}
 
-		const auto& connections_id_tube_v = node.calculated.connections_id_tube_v;
+		const auto& connections_id_tube_v = node.reference.connections_id_tube_v;
 		const int n_connections = connections_id_tube_v.size();
 		for(int j = 0; j < n_connections; ++ j)
 		{
@@ -43,7 +43,6 @@ std::pair<dst::Matrix, std::vector<double>> simulate::Step2Pressure::generate_li
 			b -= resistance * capillary_pressure;
 		}
 	}
-
 	return {A, B};
 }
 
@@ -53,6 +52,7 @@ std::vector<double> simulate::Step2Pressure::choose_method_of_solving_linear_equ
 	const std::vector<double>& B
 )
 {
+
 	return utility::Math::gaussian_elimination(A, B);
 }
 

@@ -3,14 +3,15 @@
 std::string visualize::Draw::str(const nst::Tank& tank)
 {
 	std::stringstream ss;
-	ss << "V(";
+	ss << "V";
+	ss << "$t" << num(tank.total_volume()) << "$(";
 	if(tank.is_contain_water())
 	{
-		ss << "$w=" << num(tank.volume_water()) << "$";
+		ss << ", $w" << num(tank.volume_water()) << "$";
 	}
 	if(tank.is_contain_oil())
 	{
-		ss << ", ${nw}=" <<  num(tank.volume_oil()) << "$";
+		ss << ", ${nw}" <<  num(tank.volume_oil()) << "$";
 	}
 	ss << ")";
 

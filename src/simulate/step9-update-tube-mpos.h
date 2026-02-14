@@ -23,10 +23,17 @@ namespace simulate
             const nst::Tube& tube
         );
 
+        static std::vector<double> combine_swabs(
+			const nst::Tube& tube
+		);
+
+
         public:
         static void update_tube_mpos_according_to_proportion(
             nst::State& state
         );
+
+
     };
 }
 

@@ -2,7 +2,7 @@
 
 double nst::Tube::area() const
 {
-	return std::pow(radius, 2) * length;
+	return decl::pi * std::pow(radius, 2);
 }
 
 double nst::Tube::volume() const
@@ -17,12 +17,28 @@ std::vector<double> nst::Tube::mpos_long() const
 	return v;
 }
 
+nst::Tube::Calculated::Calculated():
+	resistance_coefficient(-1),
+	capillary_pressure_magnitude(-1),
+	flow_rate(-1),
+	velocity(-1),
+	time(-1),
+	is_time_min(false),
+	length_displacement_p(-1),
+	volume_displacement(-1),
+	id_node_sink(-1),
+	tank_pour_into_node(),
+	add_proportion(-1)
+{}
+
+
 nst::Tube::Tube():
 	id_node_first(-1),
 	id_node_second(-1),
 	radius(1),
 	length(1),
-	id_fluid_first(0)
+	id_fluid_first(0),
+	calculated()
 {}
 
 

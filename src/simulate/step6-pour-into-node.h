@@ -21,10 +21,6 @@ namespace simulate
 			nst::State& state
 		);
 
-		static void clear_node_tank(
-			nst::State& state
-		);
-
 		static void assign_tank_to_tubes(
 			nst::State& state
 		);

@@ -6,12 +6,11 @@ std::vector<double> utility::Math::gaussian_elimination(
 )
 {
     const int n = A.size();
-
     for(int i = 0; i < n; ++i)
     {
         auto& row = A[i];
         const double val = row[i];
-        for(int j = 0; j <= n; ++j)
+        for(int j = 0; j < n; ++j)
         {
             row[j] /= val;
         }
@@ -35,6 +34,5 @@ std::vector<double> utility::Math::gaussian_elimination(
             B[j] -= coeff * B[i];
         }
     }
-
     return B;
 }

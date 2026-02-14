@@ -26,6 +26,7 @@ namespace simulate
         public:
 
 		static nst::State generate_state();
+		static void reset_calculated(nst::State& state);
     };
 }
 
