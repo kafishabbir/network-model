@@ -2,10 +2,13 @@
 #define GLOBAL_DECL_H
 
 #include <cmath>
+#include <chrono>
 #include <string>
 #include <vector>
+#include <tuple>
 #include <iostream>
 #include <stdexcept>
+
 
 namespace decl
 {

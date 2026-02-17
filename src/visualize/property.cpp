@@ -6,6 +6,7 @@ visualize::Property::Property():
 	tube_radius_max(0.10),
 	largest_angle_tube_project_on_node(decl::pi / 2.0),
 	draw_node_perimeter(true),
+
 	label_id_node(false),
 	label_node_pressure(false),
 	label_id_tube(false),

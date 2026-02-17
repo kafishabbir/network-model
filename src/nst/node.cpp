@@ -6,7 +6,8 @@ nst::Node::Calculated::Calculated():
 	tank(),
 	flow_out_id_tube_v(),
 	volume_fluid_flow_out(0),
-	is_fluid_injected_from_external_to_this_node(false)
+	is_fluid_injected_from_external_to_this_node(false),
+	id_symmetric_solver(-1)
 {}
 
 

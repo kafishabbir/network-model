@@ -40,24 +40,35 @@ void simulate::Step0Preparation::modify_boundary(
 		tube.id_fluid_first = 1;
 	}
 
-	for(int a = 0; a <= 168; a += 21)
+	for(int a = 0; a <= 45150; a += 301)
 	{
 		nodes[a].pressure = 1000;
 		nodes[a].is_open_boundary = true;
 		nodes[a].id_fluid_inject = 0;
 
-		nodes[a+10].pressure = 0;
-		nodes[a+10].is_open_boundary = true;
-		nodes[a+10].id_fluid_inject = 1;
+		nodes[a+150].pressure = 0;
+		nodes[a+150].is_open_boundary = true;
+		nodes[a+150].id_fluid_inject = 1;
 	}
+
+	//~ for(int a = 0; a <= 168; a += 21)
+	//~ {
+		//~ nodes[a].pressure = 1000;
+		//~ nodes[a].is_open_boundary = true;
+		//~ nodes[a].id_fluid_inject = 0;
+
+		//~ nodes[a+10].pressure = 0;
+		//~ nodes[a+10].is_open_boundary = true;
+		//~ nodes[a+10].id_fluid_inject = 1;
+	//~ }
 
 	//~ nodes[0].pressure = 10;
 	//~ nodes[0].is_open_boundary = true;
-	//~ nodes[0].id_fluid_inject = 1;
+	//~ nodes[0].id_fluid_inject = 0;
 
 	//~ nodes[5].pressure = 10;
 	//~ nodes[5].is_open_boundary = true;
-	//~ nodes[5].id_fluid_inject = 1;
+	//~ nodes[5].id_fluid_inject = 0;
 
 	//~ nodes[2].pressure = 1;
 	//~ nodes[2].is_open_boundary = true;

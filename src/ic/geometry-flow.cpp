@@ -2,5 +2,5 @@
 
 ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry()
 {
-	return ic::GeometryBase::rectangular(16, 20);
+	return ic::GeometryBase::rectangular(300, 300);
 }
