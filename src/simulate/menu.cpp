@@ -5,17 +5,6 @@ void simulate::Menu::test_generate_and_plot()
 	utility::Time time;
 
 	auto state = Step0Preparation::generate_state();
-
-	//~ for(int i = 0; i < state.nodes.size(); ++ i)
-	//~ {
-		//~ auto& node = state.nodes[i];
-		//~ if(node.reference.connections_id_tube_v.size() == 1)
-		//~ {
-			//~ std::cout << "i=" << i << "  ";
-		//~ }
-	//~ }
-
-	//~ return;
 	state.measured.initial_total_fluid = Step10Measure::total_fluid_in_system(state);
 	dst::States states;
 	auto& comment = state.reference.comment;
@@ -24,7 +13,7 @@ void simulate::Menu::test_generate_and_plot()
 	Eigen::SimplicialLLT<Eigen::SparseMatrix<double>> solver;
 
 	//int j = 0;
-	for(int i = 0; i < 1000; ++ i)
+	for(int i = 0; i < 100; ++ i)
 	{
 		comment = "preparation";
 		state.reference.id_step = i;
@@ -81,8 +70,7 @@ void simulate::Menu::test_generate_and_plot()
 		Step10Measure::measure(state);
 
 		comment = "all measurements done";
-		//if(i % 200 == 0)
-		//states.push_back(state);
+		if(i % 10 == 0) states.push_back(state);
 	}
 
 	visualize::Menu visualize_menu; // the plots are dumped in this class
@@ -92,8 +80,8 @@ void simulate::Menu::test_generate_and_plot()
 
 
     std::cout << "Program ran for: " << time.passed() << " ms" << std::endl;
-    std::cout << "Fraction of time=" << std::setprecision(2);
-    std::cout << state.measured.time_taken_by_solving_linear_equations / time.passed();
+    std::cout << "Fraction of time=" << std::setprecision(2)
+		<< state.measured.time_taken_by_solving_linear_equations / time.passed();
     std::cout <<  ", spent on linear equations." << std::endl;
 }
 

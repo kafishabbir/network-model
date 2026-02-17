@@ -89,21 +89,11 @@ void simulate::Step2Pressure::generate_symmetric_linear_equations_and_assign_pre
 )
 {
 	const auto& [A, B] = generate_symmetric_linear_equations(state);
-	//~ for(int i = 0; i < A.size(); ++ i)
-	//~ {
-		//~ auto [r, c, v] = A[i];
-		//~ std::cout << i << ". (" << r << ", " << c << "), v="  << v << std::endl;
-	//~ }
 
-	//~ for(int i = 0; i < B.size(); ++ i)
-	//~ {
-		//~ std::cout << i << ". " << B[i] <<  std::endl;
-	//~ }
 
 	utility::Time time;
 	const auto& pressure_v = choose_method_of_solving_linear_equations(A, B, is_solver_prepared, solver);
 	state.measured.time_taken_by_solving_linear_equations += time.passed();
-	std::cout << time.passed() << "\n";
 	assign_symmetric_pressure_v_to_each_node(state, pressure_v);
 }
 

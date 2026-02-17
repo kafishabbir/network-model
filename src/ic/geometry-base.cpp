@@ -2,7 +2,9 @@
 
 dst::Nodes ic::GeometryBase::rectangular_nodes(
 	const int n_tube_rows,
-	const int n_tube_cols
+	const int n_tube_cols,
+	const int id_fluid_inject,
+	const int id_fluid_evacuate
 )
 {
 	const int n_cols_node_at_even_rows = n_tube_cols / 2 + 1;
@@ -31,6 +33,14 @@ dst::Nodes ic::GeometryBase::rectangular_nodes(
 		const int n_cols_node =
 			(is_it_even_row ? n_cols_node_at_even_rows : n_cols_node_at_odd_rows);
 		double x = (is_it_even_row ? 0 : displacement_step);
+
+		if(is_it_even_row)
+		{
+			nodes[id_node].is_open_boundary = true;
+			nodes[id_node].is_inlet = true;
+			nodes[id_node].id_fluid_inject = id_fluid_inject;
+		}
+
 		for(int j = 0; j < n_cols_node ; ++ j)
 		{
 			auto& node = nodes[id_node];
@@ -39,6 +49,14 @@ dst::Nodes ic::GeometryBase::rectangular_nodes(
 			node.y = y;
 			x += 2.0 * displacement_step;
 		}
+
+		if(is_it_even_row)
+		{
+			nodes[id_node - 1].is_open_boundary = true;
+			nodes[id_node].is_inlet = false;
+			nodes[id_node - 1].id_fluid_inject = id_fluid_evacuate;
+		}
+
 		y -= displacement_step;
 	}
 
@@ -49,7 +67,8 @@ dst::Nodes ic::GeometryBase::rectangular_nodes(
 
 std::vector<nst::Tube> ic::GeometryBase::rectangular_tubes(
 	const int n_tube_rows,
-	const int n_tube_cols
+	const int n_tube_cols,
+	const int id_fluid_saturate
 )
 {
 	const int n_cols_node_at_even_rows = n_tube_cols / 2 + 1;
@@ -77,18 +96,33 @@ std::vector<nst::Tube> ic::GeometryBase::rectangular_tubes(
 		node_down += down_adder;
 	}
 
+	for(auto& tube: tubes)
+	{
+		tube.id_fluid_first = id_fluid_saturate;
+	}
+
 	return tubes;
 }
 
 ic::type_pair_nodes_tubes ic::GeometryBase::rectangular(
 	const int n_tube_rows,
-	const int n_tube_cols
+	const int n_tube_cols,
+	const int id_fluid_inject
 )
 {
-	const auto& nodes =
-		rectangular_nodes(n_tube_rows, n_tube_cols);
-	const auto& tubes =
-		rectangular_tubes(n_tube_rows, n_tube_cols);
+	const int id_fluid_saturate = (id_fluid_inject + 1) % 2;
+	const auto& nodes =	rectangular_nodes(
+		n_tube_rows,
+		n_tube_cols,
+		id_fluid_inject,
+		id_fluid_saturate
+	);
+
+	const auto& tubes = rectangular_tubes(
+		n_tube_rows,
+		n_tube_cols,
+		id_fluid_saturate
+	);
 
 	return {nodes, tubes};
 }

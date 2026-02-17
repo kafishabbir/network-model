@@ -3,7 +3,6 @@ exe/simulate
 global/dst
 global/decl
 
-ic/menu
 ic/geometry-base
 ic/geometry-flow
 ic/geometry-rand

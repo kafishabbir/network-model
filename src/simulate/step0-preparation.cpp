@@ -5,9 +5,10 @@ void simulate::Step0Preparation::choose_network_geometry(
 	nst::State& state
 )
 {
-	const auto& [nodes, tubes] = ic::Menu::network_geometry_flow();
-	state.nodes = nodes;
-	state.tubes = tubes;
+	//const auto& [nodes, tubes] = ic::Menu::network_geometry_flow();
+	//state.nodes = nodes;
+	//state.tubes = tubes;
+
 }
 
 
@@ -40,51 +41,26 @@ void simulate::Step0Preparation::modify_boundary(
 		tube.id_fluid_first = 1;
 	}
 
-	for(int a = 0; a <= 45150; a += 301)
+	int count = 0;
+	const double inlet_pressure = 1000;
+	const double outlet_pressure = 0;
+	for(auto& node: nodes)
 	{
-		nodes[a].pressure = 1000;
-		nodes[a].is_open_boundary = true;
-		nodes[a].id_fluid_inject = 0;
-
-		nodes[a+150].pressure = 0;
-		nodes[a+150].is_open_boundary = true;
-		nodes[a+150].id_fluid_inject = 1;
+		if(node.is_open_boundary)
+		{
+			if((count % 2) == 0)
+			{
+				node.pressure = inlet_pressure;
+				node.id_fluid_inject = 0;
+			}
+			else
+			{
+				node.pressure = outlet_pressure;
+				node.id_fluid_inject = 1;
+			}
+			++ count;
+		}
 	}
-
-	//~ for(int a = 0; a <= 168; a += 21)
-	//~ {
-		//~ nodes[a].pressure = 1000;
-		//~ nodes[a].is_open_boundary = true;
-		//~ nodes[a].id_fluid_inject = 0;
-
-		//~ nodes[a+10].pressure = 0;
-		//~ nodes[a+10].is_open_boundary = true;
-		//~ nodes[a+10].id_fluid_inject = 1;
-	//~ }
-
-	//~ nodes[0].pressure = 10;
-	//~ nodes[0].is_open_boundary = true;
-	//~ nodes[0].id_fluid_inject = 0;
-
-	//~ nodes[5].pressure = 10;
-	//~ nodes[5].is_open_boundary = true;
-	//~ nodes[5].id_fluid_inject = 0;
-
-	//~ nodes[2].pressure = 1;
-	//~ nodes[2].is_open_boundary = true;
-	//~ nodes[2].id_fluid_inject = 1;
-
-	//~ nodes[7].pressure = 1;
-	//~ nodes[7].is_open_boundary = true;
-	//~ nodes[7].id_fluid_inject = 1;
-
-	//~ tubes[0].length = 4;
-
-	//~ tubes[3].radius = 1.25;
-
-	//~ tubes[5].radius = 0.85;
-	//tubes[5].id_fluid_first = 0;
-	//tubes[5].mpos = {0.2};
 }
 
 void simulate::Step0Preparation::create_connections_id_tube_v_for_node(

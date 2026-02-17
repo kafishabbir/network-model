@@ -1,7 +1,6 @@
 #ifndef SIMULATE_STEP0_PREPARATION_H
 #define SIMULATE_STEP0_PREPARATION_H
-
-#include "ic/menu.h"
+#include "global/dst.h"
 
 namespace simulate
 {

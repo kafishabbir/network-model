@@ -39,6 +39,7 @@ nst::Node::Node():
 	y(-1),
 	pressure(-1),
 	is_open_boundary(false),
+	is_inlet(true),
 	id_fluid_inject(-1),
 	reference(),
 	calculated()

@@ -3,12 +3,18 @@
 
 ic::type_pair_nodes_tubes ic::GeometryRand::network_geometry()
 {
-	auto [nodes, tubes] = ic::GeometryBase::rectangular(2, 4);
+	auto [nodes, tubes] = ic::GeometryBase::rectangular(2, 4, 0);
 
 	const int n_node_a = nodes.size() - 1;
 	nst::Node node;
 	node.x = 1.2;
 	node.y = 0.4;
+	node.is_open_boundary = true;
+	node.is_inlet = false;
+	node.id_fluid_inject = nodes.back().id_fluid_inject;
+
+	nodes.back().is_open_boundary = false;
+
 	nodes.push_back(node);
 	const int n_node_b = nodes.size() - 1;
 	nst::Tube tube;
@@ -28,10 +34,10 @@ ic::type_pair_nodes_tubes ic::GeometryRand::network_geometry()
 	{
 		tube.mpos = mpos_possible[utility::Random::integer_from_zero_until_n(mpos_possible.size())];
 		tube.id_fluid_first = utility::Random::integer_from_zero_until_n(2);
-		double a = utility::Random::integer_from_zero_until_n(10);
-		double b = utility::Random::integer_from_zero_until_n(10);
-		tube.radius = a / 10;
-		tube.length = b / 10;
+		double a = utility::Random::integer_from_zero_until_n(8);
+		double b = utility::Random::integer_from_zero_until_n(8);
+		tube.radius = (a + 2) / 10;
+		tube.length = (b + 2) / 10;
 	}
 	return {nodes, tubes};
 }

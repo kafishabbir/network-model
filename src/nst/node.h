@@ -40,6 +40,7 @@ namespace nst
 		double y;
 		double pressure;
 		bool is_open_boundary;
+		bool is_inlet;
 		int id_fluid_inject;
 
 		Reference reference;
