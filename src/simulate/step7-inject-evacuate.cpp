@@ -9,7 +9,7 @@ nst::Tank simulate::Step7InjectEvacuate::produce_tank_with_oil_sliced_out(
 	{
         throw std::invalid_argument("Volume must be positive");
     }
-    if(tank.total_volume() < volume)
+    if(tank.volume_total() < volume)
     {
         throw std::runtime_error("Insufficient volume in tank to slice");
     }
@@ -27,7 +27,7 @@ nst::Tank simulate::Step7InjectEvacuate::produce_tank_with_oil_sliced_out(
 	}
 	if(tank.is_contain_water())
 	{
-		const double need_to_add = volume - tank_new.total_volume();
+		const double need_to_add = volume - tank_new.volume_total();
 		tank_new.add_fluid(need_to_add, 0);
 	}
 
@@ -67,7 +67,7 @@ void simulate::Step7InjectEvacuate::balance_flow_at_open_nodes(
 		}
 		auto& node_tank = node.calculated.tank;
 
-		const double flow_in_total = node_tank.total_volume();
+		const double flow_in_total = node_tank.volume_total();
 		const double flow_out_total = node.calculated.volume_fluid_flow_out;
 		const double delta_volume = std::abs(flow_in_total - flow_out_total);
 

@@ -3,7 +3,7 @@
 
 #include "io/file-write.h"
 
-
+#include "simulate/property.h"
 #include "simulate/step0-preparation.h"
 #include "simulate/step1-tube-flow-coefficient.h"
 #include "simulate/step2-pressure.h"
@@ -20,8 +20,16 @@ namespace simulate
 {
     class Menu
     {
+		void perform_single_time_step(
+			dst::State& state,
+			bool& is_solver_prepared,
+			Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
+		);
+
+		dst::States steps(dst::State& state);
+
         public:
-		static void test_generate_and_plot();
+		static dst::States run(const simulate::Property& simulate_property);
     };
 }
 

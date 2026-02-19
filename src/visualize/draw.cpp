@@ -4,7 +4,7 @@ std::string visualize::Draw::str(const nst::Tank& tank)
 {
 	std::stringstream ss;
 	ss << "V";
-	ss << "$t" << num(tank.total_volume()) << "$(";
+	ss << "$t" << num(tank.volume_total()) << "$(";
 	if(tank.is_contain_water())
 	{
 		ss << ", $w" << num(tank.volume_water()) << "$";

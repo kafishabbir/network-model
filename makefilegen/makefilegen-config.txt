@@ -1,7 +1,7 @@
 exe/simulate
 
-global/dst
 global/decl
+global/dst
 
 ic/geometry-base
 ic/geometry-flow
@@ -9,18 +9,18 @@ ic/geometry-rand
 
 io/file-write
 
+nst/fluid
 nst/node
-nst/tube
 nst/state
 nst/tank
-nst/fluid
+nst/tube
 
-utility/math
-utility/measure
-utility/random
-utility/time
+program/debug-flow
+program/flow-in-periodic-medium
+program/function-trial
 
 simulate/menu
+simulate/property
 simulate/step0-preparation
 simulate/step1-tube-flow-coefficient
 simulate/step2-pressure
@@ -32,12 +32,17 @@ simulate/step7-inject-evacuate
 simulate/step8-distribute
 simulate/step9-update-tube-mpos
 simulate/step10-measure
+simulate/utility
+
+utility/math
+utility/measure
+utility/random
+utility/time
 
 visualize/draw
 visualize/flow
 visualize/flow-verification-label
-visualize/re-scale-state-for-plot
-visualize/menu
 visualize/latex
+visualize/menu
 visualize/property
-
+visualize/re-scale-state-for-plot

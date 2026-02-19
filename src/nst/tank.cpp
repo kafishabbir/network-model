@@ -37,7 +37,7 @@ void nst::Tank::add_fluid(const nst::Tank& other)
 	}
 }
 
-double nst::Tank::total_volume() const
+double nst::Tank::volume_total() const
 {
 	double sum = 0;
 	for(const auto& fluid: fluid_v)

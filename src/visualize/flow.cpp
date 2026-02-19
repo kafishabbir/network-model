@@ -143,7 +143,7 @@ std::string visualize::Flow::caption_plot(const nst::State& state, const visuali
 	const auto total_fluid_evacuated = state.measured.total_fluid_evacuated;
 	const auto saturation = state.calculated.saturation;
 
-	const auto total_volume_delta = state.calculated.total_volume_delta * 100;
+	const auto volume_total_delta = state.calculated.volume_total_delta * 100;
 	const auto water_volume_delta  = state.calculated.water_volume_delta * 100;
 	const auto oil_volume_delta  = state.calculated.oil_volume_delta * 100;
 
@@ -167,7 +167,7 @@ std::string visualize::Flow::caption_plot(const nst::State& state, const visuali
 	ss << "time-elapsed=$" << Draw::num(time_elapsed) << "$" << ", ";
 	ss << "t-fluid-added=" << Draw::str(total_fluid_added) << ", ";
 	ss << "t-fluid-evacuated=" << Draw::str(total_fluid_evacuated) << ", ";
-	ss << "$\\Delta V_{t}=" << Draw::num(total_volume_delta) << "\\%$, ";
+	ss << "$\\Delta V_{t}=" << Draw::num(volume_total_delta) << "\\%$, ";
 	ss << "$\\Delta V_{w}=" << Draw::num(water_volume_delta) << "\\%$, ";
 	ss << "$\\Delta V_{nw}=" << Draw::num(oil_volume_delta) << "\\%$, ";
 

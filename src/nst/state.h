@@ -19,6 +19,8 @@ namespace nst
 		struct SimulationConstant
 		{
 			double time_step_resolution;
+			double capture_frequency_in_volume_fraction;
+			double volume_max_to_inject;
 			SimulationConstant();
 		};
 
@@ -47,7 +49,7 @@ namespace nst
 			nst::Tank fluid_evacuated;
 			nst::Tank total_fluid_in_system;
 			double saturation;
-			double total_volume_delta;
+			double volume_total_delta;
 			double water_volume_delta;
 			double oil_volume_delta;
 			Calculated();

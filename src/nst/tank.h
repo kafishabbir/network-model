@@ -28,7 +28,7 @@ namespace nst
 
 		double volume_water() const;
 		double volume_oil() const;
-		double total_volume() const;
+		double volume_total() const;
 
     };
 }

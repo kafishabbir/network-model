@@ -30,7 +30,9 @@ nst::State::PhysicalConstant::PhysicalConstant():
 {}
 
 nst::State::SimulationConstant::SimulationConstant():
-	time_step_resolution(0.1)
+	time_step_resolution(0.1),
+	capture_frequency_in_volume_fraction(0.1),
+	volume_max_to_inject(0.8)
 {}
 
 nst::State::Calculated::Calculated():
@@ -38,7 +40,7 @@ nst::State::Calculated::Calculated():
 	fluid_added(),
 	fluid_evacuated(),
 	total_fluid_in_system(),
-	total_volume_delta(-1),
+	volume_total_delta(-1),
 	water_volume_delta(-1),
 	oil_volume_delta(-1)
 {}
