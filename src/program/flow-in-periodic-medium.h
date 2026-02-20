@@ -7,6 +7,9 @@ namespace program
 {
     class FlowInPeriodicMedium
     {
+		static visualize::Property generate_visual_property();
+		static simulate::Property generate_property();
+
         public:
 		static void run();
     };

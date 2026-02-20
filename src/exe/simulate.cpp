@@ -1,10 +1,13 @@
-#include "simulate/menu.h"
-#include "ic/geometry-flow.h"
-#include <iostream>
+#include "program/flow-in-periodic-medium.h"
+#include "program/debug-flow.h"
+#include "program/function-trial.h"
 
 int main()
 {
-	simulate::Menu::test_generate_and_plot();
+	program::FlowInPeriodicMedium::run();
+	//program::DebugFlow::run();
 
+	//program::FunctionTrial trial;
+    //trial.flow();
 	return 0;
 }

@@ -20,6 +20,8 @@ void simulate::Utility::assign_pressure(
 			}
 		}
 	}
+
+
 }
 
 nst::Tank simulate::Utility::tube_inventory(const nst::Tube& tube)
@@ -68,16 +70,23 @@ void simulate::Utility::reset_calculated(nst::State& state)
 bool simulate::Utility::decide_if_more_fluid_still_needs_to_be_injected(const nst::State& state)
 {
 	const double volume_system = state.measured.initial_total_fluid.volume_total();
-	const double volume_injected = state.measured.total_fluid_added();
+	const double volume_injected = state.measured.total_fluid_added.volume_total();
 	const double frac = state.simulation_constant.volume_max_to_inject;
 
 	return volume_injected <= (volume_system * frac);
 }
 
 
-bool simulate::Utility::decide_if_capture_state_for_plot(const nst::State& state)
+bool simulate::Utility::decide_if_capture_state_for_plot(nst::State& state)
 {
+	const double volume_system = state.measured.initial_total_fluid.volume_total();
+	const double volume_injected = state.measured.total_fluid_added.volume_total();
+	const double frac = volume_injected / volume_system;
 
-
-
+	if(frac >= state.simulation_constant.capture_frequency_in_volume_fraction * state.measured.count_captured)
+	{
+		++ state.measured.count_captured;
+		return true;
+	}
+	return false;
 }

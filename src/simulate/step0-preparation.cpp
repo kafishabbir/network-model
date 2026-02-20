@@ -1,5 +1,14 @@
 #include "simulate/step0-preparation.h"
 
+
+void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
+	nst::State& state,
+	const simulate::Property& simulate_property
+)
+{
+	state.reference.comment = simulate_property.str();
+}
+
 std::pair<dst::Nodes, dst::Tubes> simulate::Step0Preparation::choose_network_geometry(
 	const simulate::Property& simulate_property
 )
@@ -69,7 +78,7 @@ void simulate::Step0Preparation::modify_constants(
 	fluid_water.viscosity = simulate_property.constant_mu1_by_mu2 * simulate_property.constant_mu_scale;
 	fluid_water.density = 1;
 
-	fluid_oil.viscosity = (1.0 - simulate_property.constant_mu1_by_mu2) * simulate_property.constant_mu_scale;
+	fluid_oil.viscosity = simulate_property.constant_mu_scale;
 	fluid_oil.density = 1;
 
 	state.simulation_constant.time_step_resolution = 0.1;
@@ -85,6 +94,7 @@ void simulate::Step0Preparation::modify_boundary(
 )
 {
 	Utility::assign_pressure(
+		state,
 		simulate_property.inlet_pressure,
 		0
 	);
@@ -107,20 +117,31 @@ void simulate::Step0Preparation::create_connections_id_tube_v_for_node(
 	}
 }
 
+void simulate::Step0Preparation::assign_initial_total_fluid_to_state(
+	nst::State& state
+)
+{
+	state.measured.initial_total_fluid = Utility::total_fluid_in_system(state);
+
+}
+
+
 
 nst::State simulate::Step0Preparation::generate_state(const simulate::Property& simulate_property)
 {
 	nst::State state;
 
-	choose_network_geometry(state);
+	assign_str_of_simulate_property_to_state(state, simulate_property);
 
-	modify_constants(state);
+	choose_network_geometry(state, simulate_property);
 
-	modify_boundary(state);
+	modify_constants(state, simulate_property);
+
+	modify_boundary(state, simulate_property);
 
 	create_connections_id_tube_v_for_node(state);
 
-	state.measured.initial_total_fluid = utility::Measure::total_fluid_in_system(state);
+	assign_initial_total_fluid_to_state(state);
 
 	return state;
 }

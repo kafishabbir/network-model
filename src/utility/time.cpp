@@ -13,3 +13,9 @@ double utility::Time::passed() const
 	return duration.count();
 }
 
+
+void utility::Time::reset()
+{
+	start= std::chrono::steady_clock::now();
+}
+

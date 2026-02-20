@@ -3,10 +3,11 @@
 
 double simulate::Step10Measure::total_delta(const nst::State& state)
 {
+	const double vol = state.measured.initial_total_fluid.volume_total();
 	const double volume_total_injected = state.measured.total_fluid_added.volume_total();
 	const double volume_total_evacuated = state.measured.total_fluid_evacuated.volume_total();
 
-	return std::abs(volume_total_injected - volume_total_evacuated) / volume_total_evacuated;
+	return std::abs(volume_total_injected - volume_total_evacuated) / vol;
 }
 
 double simulate::Step10Measure::water_delta(const nst::State& state)
@@ -35,7 +36,7 @@ double simulate::Step10Measure::oil_delta(const nst::State& state)
 
 void simulate::Step10Measure::measure(nst::State& state)
 {
-	state.calculated.total_fluid_in_system = utility::Measure::total_fluid_in_system(state);
+	state.calculated.total_fluid_in_system = simulate::Utility::total_fluid_in_system(state);
 	state.calculated.saturation = state.calculated.total_fluid_in_system.volume_water() / state.calculated.total_fluid_in_system.volume_total();
 	state.calculated.volume_total_delta = total_delta(state);
 	state.calculated.water_volume_delta = water_delta(state);

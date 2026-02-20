@@ -11,6 +11,7 @@ namespace utility
         public:
 
 		Time();
+		void reset();
 		double passed() const;
     };
 }

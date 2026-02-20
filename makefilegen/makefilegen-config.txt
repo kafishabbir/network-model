@@ -37,12 +37,15 @@ simulate/utility
 utility/math
 utility/measure
 utility/random
+utility/str
 utility/time
 
+visualize/cairo
 visualize/draw
 visualize/flow
 visualize/flow-verification-label
 visualize/latex
 visualize/menu
 visualize/property
+visualize/raster
 visualize/re-scale-state-for-plot

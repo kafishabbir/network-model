@@ -50,7 +50,9 @@ nst::State::Measured::Measured():
 	total_fluid_added(),
 	total_fluid_evacuated(),
 	initial_total_fluid(),
-	time_taken_by_solving_linear_equations(0)
+	time_taken_by_solving_linear_equations(0),
+	count_captured(0),
+	time_taken_by_each_step(11)
 {}
 
 nst::State::Reference::Reference():

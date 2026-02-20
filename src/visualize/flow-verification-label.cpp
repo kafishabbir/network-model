@@ -8,6 +8,7 @@ std::string visualize::FlowVerificationLabel::node_details(const nst::Node& node
     //ss << "  Position: (" << Draw::num(node.x) << ", " << Draw::num(node.y) << ")\n\\\\";
     //ss << "  Pressure: $" << Draw::num(node.pressure) << "$\n\\\\";
     ss << "open boundary=" << (node.is_open_boundary ? "true" : "false") << "\n\\\\";
+    ss << "is-inlet=" << (node.is_inlet ? "true" : "false") << "\n\\\\";
     ss << "id-fluid-inj=" << node.id_fluid_inject << "\n\\\\";
     ss << "tank-" << Draw::str(node.calculated.tank) << "\n\\\\";
     ss << "total-v-out=$" << Draw::num(node.calculated.volume_fluid_flow_out) << "$\n\\\\";

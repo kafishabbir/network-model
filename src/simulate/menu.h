@@ -20,13 +20,13 @@ namespace simulate
 {
     class Menu
     {
-		void perform_single_time_step(
-			dst::State& state,
+		static void perform_single_time_step(
+			nst::State& state,
 			bool& is_solver_prepared,
 			Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
 		);
 
-		dst::States steps(dst::State& state);
+		static dst::States steps(nst::State& state);
 
         public:
 		static dst::States run(const simulate::Property& simulate_property);

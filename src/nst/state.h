@@ -31,6 +31,8 @@ namespace nst
 			nst::Tank total_fluid_evacuated;
 			nst::Tank initial_total_fluid;
 			double time_taken_by_solving_linear_equations;
+			int count_captured;
+			std::vector<double> time_taken_by_each_step;
 			Measured();
 		};
 

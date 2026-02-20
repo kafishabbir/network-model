@@ -53,7 +53,7 @@ dst::Nodes ic::GeometryBase::rectangular_nodes(
 		if(is_it_even_row)
 		{
 			nodes[id_node - 1].is_open_boundary = true;
-			nodes[id_node].is_inlet = false;
+			nodes[id_node - 1].is_inlet = false;
 			nodes[id_node - 1].id_fluid_inject = id_fluid_evacuate;
 		}
 

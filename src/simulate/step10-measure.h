@@ -1,7 +1,8 @@
 #ifndef SIMULATE_STEP10_MEASURE_H
 #define SIMULATE_STEP10_MEASURE_H
 
-#include "utility/measure.h"
+#include "simulate/utility.h"
+
 namespace simulate
 {
     class Step10Measure

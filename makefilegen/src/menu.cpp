@@ -232,7 +232,7 @@ void Menu::exe(std::ofstream& fout, const std::vector<std::string>& file_vec)
 		std::vector<std::string> deps(lib_vec);
 		deps.insert(deps.begin(), Menu::convert_to_object(file_exe));
 		Print::cmd(fout, Menu::convert_to_exe(file_exe), deps);
-		Print::script(fout, decl::compile_command_exe + Menu::convert_to_str(deps) + " -o " + Menu::convert_to_exe(file_exe));
+		Print::script(fout, decl::compile_command_exe + Menu::convert_to_str(deps) + " -o " + Menu::convert_to_exe(file_exe) + " -lcairo");
 		Print::echo(fout, Menu::convert_to_exe(file_exe) + " created.");
 	}
 }

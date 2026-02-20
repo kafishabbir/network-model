@@ -68,6 +68,7 @@ std::string visualize::Flow::label_tube_below(const nst::Tube& tube, const visua
 }
 
 
+
 std::string visualize::Flow::code_tube(const nst::State& state, const int id_tube, const visualize::Property& visual_property)
 {
 	const auto& tube = state.tubes[id_tube];
@@ -87,6 +88,7 @@ std::string visualize::Flow::code_tube(const nst::State& state, const int id_tub
 		ss.str()
 	);
 }
+
 
 std::string visualize::Flow::code_nodes(const nst::State& state, const visualize::Property& visual_property)
 {
@@ -117,19 +119,34 @@ std::string visualize::Flow::code_tubes(const nst::State& state, const visualize
 }
 
 
-std::string visualize::Flow::code_plot(nst::State& state, const visualize::Property& visual_property)
+std::string visualize::Flow::code_plot(nst::State& state, const visualize::Property& visual_property, const int id_image)
 {
 	visualize::ReScaleStateForPlot::add_state_visual(state, visual_property);
 
+
+
+	const int n_nodes = state.nodes.size();
+	if(n_nodes < visual_property.n_nodes_max_for_vector)
+	{
+		std::stringstream ss;
+
+		ss << code_nodes(state, visual_property) << '\n';
+		ss << code_tubes(state, visual_property) << '\n';
+
+		ss << FlowVerificationLabel::code_tubes_labels(state, visual_property) << '\n';
+		ss << FlowVerificationLabel::code_nodes_labels(state, visual_property) << '\n';
+
+		return visualize::Latex::scope_tikzpicture(ss.str());
+	}
+	std::stringstream ss_file_name_image;
+	ss_file_name_image << "image-" << 1001 + id_image;
+
+	const std::string& file_name_image = ss_file_name_image.str();
+
 	std::stringstream ss;
-
-	ss << code_nodes(state, visual_property) << '\n';
-	ss << code_tubes(state, visual_property) << '\n';
-
-	ss << FlowVerificationLabel::code_tubes_labels(state, visual_property) << '\n';
-	ss << FlowVerificationLabel::code_nodes_labels(state, visual_property) << '\n';
-
-	return visualize::Latex::scope_tikzpicture(ss.str());
+	ss << "\\includegraphics[width=0.5\\textwidth]{" << "images/" << file_name_image << "}";
+	Raster::flow(state, file_name_image, visual_property);
+	return ss.str();
 }
 
 
@@ -194,7 +211,7 @@ std::vector<dst::str_pair> visualize::Flow::caption_and_code_multiple_plots(
 	for(int i = 0; i < n_plots; ++ i)
 	{
 		auto& state = states[i];
-		caption_and_code_v[i] = {caption_plot(state, visual_property), code_plot(state, visual_property)};
+		caption_and_code_v[i] = {caption_plot(state, visual_property), code_plot(state, visual_property, i)};
 	}
 	return caption_and_code_v;
 }

@@ -80,8 +80,6 @@ void io::FileWrite::create_makefile_and_main_tex(
 	fout_main << main_tex_text(file_name_list_figures);
 }
 
-
-
 void io::FileWrite::write_to_particular_folder_in_run(
 	const std::vector<dst::str_pair>& file_name_and_content_v,
 	const std::string& folder_or_result_name

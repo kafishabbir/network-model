@@ -33,6 +33,8 @@ namespace visualize
 
 		bool label_node_details;
 		bool label_tube_details;
+
+		int n_nodes_max_for_vector;
 		Property();
     };
 }

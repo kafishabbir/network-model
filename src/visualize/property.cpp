@@ -18,5 +18,7 @@ visualize::Property::Property():
 	label_tube_velocity(false),
 	label_tube_time(false),
 	label_node_details(false),
-	label_tube_details(false)
+	label_tube_details(false),
+
+	n_nodes_max_for_vector(20)
 {}

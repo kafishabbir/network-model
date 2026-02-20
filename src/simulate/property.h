@@ -1,6 +1,8 @@
 #ifndef SIMULATE_PROPERTY_H
 #define SIMULATE_PROPERTY_H
 
+#include "utility/str.h"
+
 namespace simulate
 {
     class Property
@@ -15,7 +17,7 @@ namespace simulate
 			periodic_const_volume_injection_variable_porosity,
 			periodic_const_pressure_const_porosity,
 			periodic_const_volume_injection_const_porosity
-		}
+		};
 		// choose the type of simulation
 		TypeSimulation type_simulation;
 
@@ -36,6 +38,8 @@ namespace simulate
 		double inlet_pressure;
 
 		Property();
+
+		std::string str() const;
     };
 }
 
