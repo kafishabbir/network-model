@@ -21,6 +21,12 @@ double nst::Node::Visual::distance(const Node& node) const
 
 double nst::Node::Visual::relative_angle(const Node& node) const
 {
+	return relative_angle_radians(node) * 180 / std::acos(-1);
+}
+
+
+double nst::Node::Visual::relative_angle_radians(const Node& node) const
+{
 	const double x1 = x;
 	const double y1 = y;
 
@@ -30,7 +36,7 @@ double nst::Node::Visual::relative_angle(const Node& node) const
 	const double delta_x = x2 - x1;
 	const double delta_y = y2 - y1;
 
-	return std::atan2(delta_y, delta_x) * 180 / std::acos(-1);
+	return std::atan2(delta_y, delta_x);
 }
 
 

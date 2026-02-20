@@ -3,19 +3,7 @@
 
 #include "global/dst.h"
 #include "visualize/property.h"
-
-#include <cairo/cairo.h>
-#include <sstream>
-#include <functional>
-#include <cmath>
-
-
-namespace nst
-{
-    struct State;
-    struct Tube;
-    struct Node;
-}
+#include "visualize/cairo.h"
 
 namespace visualize
 {
@@ -23,28 +11,7 @@ namespace visualize
 
     class Raster
     {
-        static void circle(
-            cairo_t* cr,
-            double x,
-            double y,
-            double radius
-        );
-
-        static void rectangle(
-            cairo_t* cr,
-            double x1,
-            double y1,
-            double x2,
-            double y2
-        );
-
-        static void scope_shift_and_rotate(
-            cairo_t* cr,
-            double shift_to_x,
-            double shift_to_y,
-            double rotate_angle,
-            std::function<void(cairo_t*)> draw_function
-        );
+		static const std::vector<Cairo::Color> colors_v;
 
         static std::string mpos_horizontal_rectangles(
             const nst::Tube& tube,
@@ -52,29 +19,33 @@ namespace visualize
         );
 
         static void code_node(
-            cairo_t* cr,
+            Cairo& cairo,
             const nst::Node& node,
             const visualize::Property& visual_property
         );
 
         static void code_tube(
-            cairo_t* cr,
+            Cairo& cairo,
             const nst::State& state,
             int id_tube,
             const visualize::Property& visual_property
         );
 
         static void code_nodes(
-            cairo_t* cr,
+            Cairo& cairo,
             const nst::State& state,
             const visualize::Property& visual_property
         );
 
         static void code_tubes(
-            cairo_t* cr,
+            Cairo& cairo,
             const nst::State& state,
             const visualize::Property& visual_property
         );
+
+		static std::pair<double, double> xy_max_nodes(
+			const dst::Nodes& nodes
+		);
 
         public:
         static void flow(

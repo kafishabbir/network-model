@@ -1,6 +1,9 @@
 #ifndef VISUALIZE_CAIRO_H
 #define VISUALIZE_CAIRO_H
 
+#include <cairo/cairo.h>
+#include <string>
+
 namespace visualize
 {
     class Cairo
@@ -11,9 +14,10 @@ namespace visualize
 		static const std::string png_extension;
 		static const std::string folder_name;
 
-		static int find_width(const double width, const double height);
-		static int find_height(const double width, const double height);
 		static double find_scale(const double width, const double height);
+		int find_width(const double width, const double height);
+		int find_height(const double width, const double height);
+
 
 	public:
 		class Color
@@ -42,25 +46,23 @@ namespace visualize
 
 			Color(const double red, const double green, const double blue);
 			Color();
-			bool is_invalid() const;
 		};
 
 	private:
+		const double scale;
 		const int width;
 		const int height;
-		const double scale;
+
 		cairo_surface_t* surface;
 		cairo_t* cr;
 		const std::string file_name;
 
-		std::pair<int, int> transform(
+		std::pair<double, double> transform(
 			const double x,
 			const double y
 		);
 
-		int transform(
-			const double x
-		);
+
 
 	public:
 		Cairo(
@@ -75,11 +77,38 @@ namespace visualize
 			const double x,
 			const double y,
 			const double width,
+			const double height
+		);
+
+		void circle(
+			const double x,
+			const double y,
+			const double radius
+		);
+
+		void rectangle(
+			const double x,
+			const double y,
+			const double width,
 			const double height,
 			const Color& color
 		);
-		//void circle();
-		//void shift_rotate();
+
+		void circle(
+			const double x,
+			const double y,
+			const double radius,
+			const Color& color
+		);
+
+		void begin_shift_rotate(
+			const double x,
+			const double y,
+			const double angle
+		);
+
+		void end_shift_rotate();
+		void set_text_mode();
 		//void mpos_horizontal_rectangles();
 
 	};

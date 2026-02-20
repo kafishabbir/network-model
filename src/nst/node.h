@@ -20,6 +20,7 @@ namespace nst
 
 			double distance(const Node& node) const;
 			double relative_angle(const Node& node) const;
+			double relative_angle_radians(const Node& node) const;
 		};
 
 	public:

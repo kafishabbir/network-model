@@ -8,11 +8,11 @@ simulate::Property program::FlowInPeriodicMedium::generate_property()
 	simulate::Property property;
 
 	property.type_simulation = simulate::Property::TypeSimulation::periodic_const_pressure_variable_porosity;
-	property.n_tube_rows = 10;
-	property.n_tube_cols = 10;
+	property.n_tube_rows = 100;
+	property.n_tube_cols = 100;
 	property.id_fluid_inject = 0;
 	property.constant_sigma = 0.0;
-	property.constant_radius_contrast = 0.5;
+	property.constant_radius_contrast = 0.8;
 	property.constant_mu1_by_mu2 = 1.0;
 	property.constant_mu_scale = 1.0;
 	property.constant_length_scale = 10.0;
