@@ -24,7 +24,7 @@ std::string output_vector::LabelNode::label_node_details(const nst::Node& node)
 	ss << "volume-fluid-flow-out=" << s(node.calculated.volume_fluid_flow_out) << "\n\\\\";
 	ss << "flow-out-id-tubes=" << v(node.calculated.flow_out_id_tube_v);
 
-	return Tikz::node_long(node.visual.x + 0.03, node.visual.y - 0.03, ss.str());
+	return Tikz::node_long(node.visual.x + 0.03, node.visual.y + 0.01, ss.str());
 }
 
 
@@ -46,10 +46,13 @@ std::string output_vector::LabelNode::label_node_basic(
 	const int id_node
 )
 {
-	std::stringstream ss;
-	ss << "$p_{" << id_node << "}=" << s(node.calculated.pressure) << "$";
-
-	return Tikz::node(node.visual.x, node.visual.y, ss.str());
+	std::stringstream ss1, ss2, ss_final;
+	ss1 << "$p_{" << id_node << "}$";
+	ss2 << "$" << s(node.calculated.pressure) << "$";
+	
+	ss_final << Tikz::node(node.visual.x, node.visual.y+0.01, ss1.str()) << '\n';
+	ss_final << Tikz::node(node.visual.x, node.visual.y-0.003, ss2.str()) << '\n';
+	return ss_final.str();
 }
 
 

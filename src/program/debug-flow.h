@@ -2,6 +2,7 @@
 #define PROGRAM_DEBUG_FLOW_H
 
 #include "simulate/menu.h"
+#include "output/property.h"
 
 namespace program
 {

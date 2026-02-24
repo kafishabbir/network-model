@@ -1,44 +1,49 @@
 #ifndef OUTPUT_VECTOR_LABEL_TUBE_H
 #define OUTPUT_VECTOR_LABEL_TUBE_H
 
+#include "global/dst.h"
+#include "utility/str.h"
+
 namespace output_vector
 {
-    class LabelTube
-    {
-        public:
-
-    };
-}
-
-#endif
-
-
-
-
-
-
-
-
-
-#ifndef VISUALIZE_FLOW_VERIFICATION_LABEL_H
-#define VISUALIZE_FLOW_VERIFICATION_LABEL_H
-
-#include "visualize/draw.h"
-
-namespace visualize
-{
-	class FlowVerificationLabel
+	class LabelTube
 	{
-		static std::string node_details(const nst::Node& node);
+		static inline constexpr auto s = utility::Str::scientific;
+		static inline constexpr auto v = utility::Str::vector_double;
+		
+		static std::pair<int, int> id_node_flow_direction(
+			const int id_node_first, 
+			const int id_node_second, 
+			const double flow_rate
+		);
+		
+		static std::pair<double, double> pos_arrow_flow_direction(
+			const double visual_length, 
+			const double flow_rate
+		);
+		
+		static std::string label_id_tube(const int id_tube);
+		
+		static std::string label_ij_flow_rate(
+			const int i, 
+			const int j, 
+			const double flow_rate
+		);
+		
+		static std::string label_tube_basic(
+			const nst::Tube& tube, 
+			const int id_tube,
+			const nst::State& state
+		);
+		
+		static std::string label_tube_details(
+			const nst::Tube& tube,
+			const nst::State& state
+		);
 
-		static std::string label_tube_above(const nst::Tube& tube, const output::Property& visual_property);
-		static std::string code_node_label(const nst::Node& node, const int id_node, const output::Property& visual_property);
-		static std::string code_tube(const nst::State& state, const int id_tube, const output::Property& visual_property);
-
-		public:
-
-		static std::string code_nodes_labels(const nst::State& state, const output::Property& visual_property);
-		static std::string code_tubes_labels(const nst::State& state, const output::Property& visual_property);
+	public:
+		static std::string basic(const nst::State& state);
+		static std::string details(const nst::State& state);
 	};
 }
 

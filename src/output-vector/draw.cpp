@@ -27,7 +27,7 @@ std::string output_vector::Draw::draw_tube(
 	const nst::Tube& tube,
 	const nst::State& state,
 	const output::Property& visual_property,
-	std::vector<std::string>& colors
+	const std::vector<std::string>& colors
 )
 {
 	const auto& node_first = state.nodes[tube.id_node_first];
@@ -44,7 +44,7 @@ std::string output_vector::Draw::draw_tube(
 std::string output_vector::Draw::draw_tubes(
 	const nst::State& state,
 	const output::Property& visual_property,
-	std::vector<std::string>& colors
+	const std::vector<std::string>& colors
 )
 {
 	std::stringstream ss;
@@ -59,7 +59,7 @@ std::string output_vector::Draw::draw_tubes(
 std::string output_vector::Draw::draw_node(
 	const nst::Node& node,
 	const output::Property& visual_property,
-	std::vector<std::string>& colors
+	const std::vector<std::string>& colors
 )
 {
 	return Tikz::circle(
@@ -72,7 +72,7 @@ std::string output_vector::Draw::draw_node(
 std::string output_vector::Draw::draw_nodes(
 	const nst::State& state,
 	const output::Property& visual_property,
-	std::vector<std::string>& colors
+	const std::vector<std::string>& colors
 )
 {
 	std::stringstream ss;

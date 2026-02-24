@@ -1,4 +1,5 @@
 #include "simulate/property.h"
+#include <sstream>
 
 simulate::Property::Property():
 	type_simulation(TypeSimulation::test_simple),
@@ -50,15 +51,15 @@ std::string simulate::Property::str() const
 	ss << "n-tube-rows=" << n_tube_rows << ", \n";
 	ss << "n-tube-cols=" << n_tube_cols << ", \n";
 	ss << "id-fluid-inject=" << id_fluid_inject << ", \n";
-	ss << "constant-sigma=" << utility::Str::d(constant_sigma) << ", \n";
-	ss << "constant-radius-contrast=" << utility::Str::d(constant_radius_contrast) << ", \n";
-	ss << "constant-mu1-by-mu2=" << utility::Str::d(constant_mu1_by_mu2) << ", \n";
-	ss << "constant-mu-scale=" << utility::Str::d(constant_mu_scale) << ", \n";
-	ss << "constant-length-scale=" << utility::Str::d(constant_length_scale) << ", \n";
-	ss << "capture-frequency-in-volume-fraction=" << utility::Str::d(capture_frequency_in_volume_fraction) << ", \n";
-	ss << "volume-max-to-inject=" << utility::Str::d(volume_max_to_inject) << ", \n";
+	ss << "constant-sigma=" << d(constant_sigma) << ", \n";
+	ss << "constant-radius-contrast=" << d(constant_radius_contrast) << ", \n";
+	ss << "constant-mu1-by-mu2=" << d(constant_mu1_by_mu2) << ", \n";
+	ss << "constant-mu-scale=" << d(constant_mu_scale) << ", \n";
+	ss << "constant-length-scale=" << d(constant_length_scale) << ", \n";
+	ss << "capture-frequency-in-volume-fraction=" << d(capture_frequency_in_volume_fraction) << ", \n";
+	ss << "volume-max-to-inject=" << d(volume_max_to_inject) << ", \n";
 	ss << "n-periods=" << n_periods << ", \n";
-	ss << "inlet-pressure=" << utility::Str::d(inlet_pressure) << ".";
+	ss << "inlet-pressure=" << d(inlet_pressure) << ".";
 
 	return ss.str();
 }

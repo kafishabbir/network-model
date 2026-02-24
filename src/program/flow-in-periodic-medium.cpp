@@ -1,6 +1,5 @@
 #include "program/flow-in-periodic-medium.h"
-
-
+#include "output/result.h"
 
 
 simulate::Property program::FlowInPeriodicMedium::generate_property()
@@ -32,32 +31,14 @@ output::Property program::FlowInPeriodicMedium::generate_visual_property()
 	property.tube_radius_max = 0.10;
 	property.largest_angle_tube_project_on_node = decl::pi / 2.0;
 
-	// Node visualization properties
-	property.draw_node_perimeter = true;
-
-	// Label visibility properties (all set to false by default)
-	property.label_id_node = false;
-	property.label_node_pressure = false;
-	property.label_id_tube = false;
-	property.label_tube_radius = false;
-	property.label_tube_length = false;
-	property.label_tube_flow_rate = false;
-	property.label_tube_direction = false;
-	property.label_capillary_pressure = false;
-	property.label_tube_velocity = false;
-	property.label_tube_time = false;
-	property.label_node_details = false;
-	property.label_tube_details = false;
-
 	return property;
 }
 
 void program::FlowInPeriodicMedium::run()
 {
-	auto states = simulate::Menu::run(generate_property());
-
-	visualize::Menu visualize_menu;
-	visualize_menu.flow(states, generate_visual_property());
-
-	io::FileWrite::flow(visualize_menu.out());
+	const auto simulate_property = generate_property();
+	auto solution_states = simulate::Menu::run(simulate_property );
+	
+	output::Result output_result;
+	output_result.add(solution_states, simulate_property, generate_visual_property());
 }

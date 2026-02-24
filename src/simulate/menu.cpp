@@ -1,4 +1,6 @@
 #include "simulate/menu.h"
+#include <cmath>
+#include <iomanip>
 
 dst::States simulate::Menu::run(const simulate::Property& simulate_property)
 {
@@ -6,21 +8,21 @@ dst::States simulate::Menu::run(const simulate::Property& simulate_property)
 
 	auto state = Step0Preparation::generate_state(simulate_property);
 
-	std::cout << "TIMe to generate initial conditions = " <<  time.passed() << " ms" << std::endl;
+	std::cout << "TiMe to generate initial conditions = " <<  d(time.passed()) << " ms" << std::endl;
 
 	std::cout << "\n\n\nSimulation started for: " << state.reference.comment << std::endl;
 	auto states = steps(state);
 
 	const auto time_program = time.passed();
-	std::cout << "Program ran for: " << time_program << " ms" << std::endl;
-	std::cout << "Fraction of time=" << std::setprecision(2)
-		<< state.measured.time_taken_by_solving_linear_equations / time_program;
+	std::cout << "Program ran for: " << d(time_program) << " ms" << std::endl;
+	std::cout << "Fraction of time="
+		<< d(state.measured.time_taken_by_solving_linear_equations / time_program);
 	std::cout <<  ", spent on linear equations." << std::endl;
 
 	int count = 0;
 	for(auto t_step: state.measured.time_taken_by_each_step)
 	{
-		std::cout << "step-" << count++ << " t=" << t_step << "ms, tf=" << utility::Str::d(t_step / time_program) << '\n';
+		std::cout << "step-" << count++ << " t=" << std::setw(5) << std::round(t_step) << "ms, tf=" << std::round(t_step / time_program * 100) << "%" << '\n';
 	}
 	return states;
 }

@@ -7,6 +7,8 @@ namespace output
 {
 	class Property
 	{
+		
+		
 		public:
 		// Tube visualization properties
 		double tube_radius_min;

@@ -1,8 +1,6 @@
 #ifndef SIMULATE_MENU_H
 #define SIMULATE_MENU_H
 
-#include "io/file-write.h"
-
 #include "simulate/property.h"
 #include "simulate/step0-preparation.h"
 #include "simulate/step1-tube-flow-coefficient.h"
@@ -20,6 +18,8 @@ namespace simulate
 {
 	class Menu
 	{
+		static inline constexpr auto d = utility::Str::general;
+		
 		static void perform_single_time_step(
 			nst::State& state,
 			bool& is_solver_prepared,

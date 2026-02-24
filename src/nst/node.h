@@ -33,6 +33,7 @@ namespace nst
 			double volume_fluid_flow_out;
 			bool is_fluid_injected_from_external_to_this_node;
 			int id_symmetric_solver;
+			int type_fluid_contact; // 0 - water, 1 - oil, 2 - both
 			Calculated();
 		};
 

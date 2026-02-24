@@ -2,6 +2,7 @@
 #define PROGRAM_FLOW_IN_PERIODIC_MEDIUM_H
 
 #include "simulate/menu.h"
+#include "output/property.h"
 
 namespace program
 {

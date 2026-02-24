@@ -1,4 +1,5 @@
 #include "program/debug-flow.h"
+#include "output/result.h"
 
 simulate::Property program::DebugFlow::generate_property()
 {
@@ -29,32 +30,14 @@ output::Property program::DebugFlow::generate_visual_property()
 	property.tube_radius_max = 0.10;
 	property.largest_angle_tube_project_on_node = decl::pi / 2.0;
 
-	// Node visualization properties
-	property.draw_node_perimeter = true;
-
-	// Label visibility properties (all set to false by default)
-	property.label_id_node = true;
-	property.label_node_pressure = true;
-	property.label_id_tube = true;
-	property.label_tube_radius = true;
-	property.label_tube_length = true;
-	property.label_tube_flow_rate = true;
-	property.label_tube_direction = true;
-	property.label_capillary_pressure = true;
-	property.label_tube_velocity = true;
-	property.label_tube_time = true;
-	property.label_node_details = true;
-	property.label_tube_details = true;
-
 	return property;
 }
 
 void program::DebugFlow::run()
 {
-	auto states = simulate::Menu::run(generate_property());
-
-	visualize::Menu visualize_menu;
-	visualize_menu.flow(states, generate_visual_property());
-
-	io::FileWrite::flow(visualize_menu.out());
+	const auto simulate_property = generate_property();
+	auto solution_states = simulate::Menu::run(simulate_property );
+	
+	output::Result output_result;
+	output_result.add(solution_states, simulate_property, generate_visual_property());
 }

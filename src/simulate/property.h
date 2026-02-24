@@ -7,6 +7,7 @@ namespace simulate
 {
 	class Property
 	{
+		static inline constexpr auto d = utility::Str::general;
 		public:
 
 		enum class TypeSimulation

@@ -1,152 +1,170 @@
 #include "output-vector/label-tube.h"
+#include "output-vector/tikz.h"
+#include "output-vector/draw.h"
 
 
-
-
-std::string visualize::Flow::label_tube_middle(const nst::Tube& tube, const int id_tube, const output::Property& visual_property)
+std::pair<int, int> output_vector::LabelTube::id_node_flow_direction(
+	const int id_node_first, 
+	const int id_node_second, 
+	const double flow_rate
+)
 {
-	const double lv = tube.visual.length;
-	std::stringstream ss;
-
-	if(visual_property.label_id_tube)
+	if(flow_rate < 0)
 	{
-		ss << "$b_{" << id_tube << "}$";
+		return {id_node_second, id_node_first};
 	}
-
-	return visualize::Draw::node(
-		lv / 2,
-		0,
-		ss.str()
-	);
+	return {id_node_first, id_node_second};
 }
 
-std::string visualize::Flow::label_tube_below(const nst::Tube& tube, const output::Property& visual_property)
+std::pair<double, double> output_vector::LabelTube::pos_arrow_flow_direction(
+	const double visual_length, 
+	const double flow_rate
+)
 {
-	const double rv = tube.visual.radius;
-	const double lv = tube.visual.length;
+	if(flow_rate < 0)
+	{
+		return {visual_length * 7/8, visual_length * 5/8};
+	}
+	return {visual_length/8, visual_length * 3/8};
+}
 
+std::string output_vector::LabelTube::label_id_tube(const int id_tube)
+{
 	std::stringstream ss;
+	ss << "$b_{" << id_tube << "}$";
+	return ss.str();
+}
 
-	int i = tube.id_node_first;
-	int j = tube.id_node_second;
-
-	double q = tube.calculated.flow_rate;
-	double arrow_begin = lv/8;
-	double arrow_end = lv*3/8;
-	double q_pos = lv*3/8;
-	if(q < 0)
-	{
-		std::swap(i, j);
-		arrow_begin = lv*7/8;
-		arrow_end = lv*5/8;
-		q = std::abs(q);
-		q_pos = lv*5/8;
-	}
-
-	if(visual_property.label_tube_flow_rate)
-	{
-		ss << visualize::Draw::arrow(arrow_begin, arrow_end, -1.75 * rv) << '\n';
-
-		std::stringstream ss_node;
-		ss_node << "$" << "q_{" << i << j << "}=" << Draw::num(q) << "$";
-
-		ss << visualize::Draw::node(q_pos, - 2 * rv, ss_node.str());
-	}
-
+std::string output_vector::LabelTube::label_ij_flow_rate(
+	const int i, 
+	const int j, 
+	const double flow_rate
+)
+{
+	std::stringstream ss;
+	ss << "$q_{" << i << j << "}=" << output_vector::LabelTube::s(flow_rate) << "$";
 	return ss.str();
 }
 
 
-
-std::string visualize::FlowVerificationLabel::label_tube_above(const nst::Tube& tube, const output::Property& visual_property)
-{
-	const double x_proportion_location = 0.5;
-	//const double rv = tube.visual.radius;
-	const double lv = tube.visual.length;
+std::string output_vector::LabelTube::label_tube_basic(
+	const nst::Tube& tube, 
+	const int id_tube,
+	const nst::State& state
+)
+{	
+	// Get flow direction node IDs
+	auto [i, j] = id_node_flow_direction(
+		tube.id_node_first, 
+		tube.id_node_second,  
+		tube.calculated.flow_rate
+	);
+	
+	// Get arrow positions
+	auto [arrow_begin, arrow_end] = pos_arrow_flow_direction(
+		tube.visual.length, 
+		tube.calculated.flow_rate
+	);
+	
+	const double q_pos = (arrow_begin + arrow_end) / 2;
+	const double q = std::abs(tube.calculated.flow_rate);
+	const double radius = tube.visual.radius;
 
 	std::stringstream ss;
+	
+	// Tube number in the middle
+	ss << Tikz::node(tube.visual.length / 2, 0, label_id_tube(id_tube)) << '\n';
+	
+	// Arrow
+	ss << Tikz::arrow(arrow_begin, arrow_end, -1.75 * radius) << '\n';
+	
+	// Flow rate label
+	ss << Tikz::node(q_pos, -2 * radius, label_ij_flow_rate(i, j, q)) << '\n';
+	
+	const auto& node_first = state.nodes[tube.id_node_first];
+	const auto& node_second = state.nodes[tube.id_node_second];
+	
+	return Tikz::scope_shift_and_rotate(
+		node_first.visual.x,
+		node_first.visual.y,
+		node_first.visual.relative_angle(node_second),
+		ss.str()
+	);
+}
 
-	if(visual_property.label_tube_direction)
-	{
-		ss << "$tube_{" << tube.id_node_first << ", " << tube.id_node_second << "}$, ";
-
-		ss << "$a=" << Draw::num(tube.calculated.resistance_coefficient) << "$, ";
-
-		ss << "$P_c=" << Draw::num(tube.calculated.capillary_pressure_magnitude) << "$, \\\\ ";
-	}
-
-	if(visual_property.label_tube_velocity)
-	{
-		ss << "$v = " << Draw::num(tube.calculated.velocity) << "$, ";
-	}
-	if(visual_property.label_tube_time)
-	{
-		ss << "$t = " << Draw::num(tube.calculated.time) << "$, \\\\";
-		if(tube.calculated.is_time_min)
-		{
-			ss << " MIN HERE,\\\\";
-		}
-	}
-	if(visual_property.label_tube_details)
-	{
-		ss << "mpos=(";
-		if (tube.mpos.empty()) {
-			ss << "none";
-		} else {
-			for (size_t i = 0; i < tube.mpos.size(); ++i) {
-				if (i > 0) ss << ", ";
-				ss << "$" << Draw::num(tube.mpos[i]) << "$";
-			}
-		}
-		ss << ")\n\\\\";
-		ss << "length-disp-p=$" << Draw::num(tube.calculated.length_displacement_p) << "$\n\\\\";
-		ss << "vol-disp=$" << Draw::num(tube.calculated.volume_displacement) << "$\n\\\\";
-		ss << "id-sink=" << tube.calculated.id_node_sink << "\n\\\\";
-		ss << "tank-pour=" << Draw::str(tube.calculated.tank_pour_into_node) << "\n\\\\";
-		ss << "add-prop=$" << Draw::num(tube.calculated.add_proportion) << "$\n";
-	}
-	if(visual_property.label_tube_radius)
-	{
-		ss << "$r=" << Draw::num(tube.radius) << "$, ";
-	}
-	if(visual_property.label_tube_length)
-	{
-		ss << "$l=" << Draw::num(tube.length) << "$, \\\\ ";
-	}
-
-	return visualize::Draw::node_long(
-		lv * x_proportion_location,
+std::string output_vector::LabelTube::label_tube_details(
+	const nst::Tube& tube,
+	const nst::State& state
+)
+{
+	std::stringstream ss;
+	
+	ss << "r=$" << s(tube.radius) << "$, ";
+	ss << "l=$" << s(tube.length) << "$, ";
+	ss << "id-1st-fluid=" << tube.id_fluid_first << ", ";
+	ss << "\n\\\\";
+	
+	ss << "mpos=" << v(tube.mpos) << ", "; 
+	ss << "\n\\\\";
+	
+	ss << "area=$" << s(tube.area()) << "$, ";
+	ss << "vol=$" << s(tube.volume()) << "$, ";
+	ss << "resis=$" << s(tube.calculated.resistance_coefficient) << "$, ";
+	ss << "\n\\\\";
+	
+	ss << "$p_c=" << s(tube.calculated.capillary_pressure_magnitude) << "$, ";
+	ss << "v=$" << s(tube.calculated.velocity) << "$, ";
+	ss << "t=$" << s(tube.calculated.time) << "$" << (tube.calculated.is_time_min ? "-MIN" : "") << ", ";
+	ss << "\n\\\\";
+	
+	ss << "prop-l-disp=$" << s(tube.calculated.length_displacement_p) << "$, ";
+	ss << "vol-disp=$" << s(tube.calculated.volume_displacement) << "$, ";
+	ss << "\n\\\\";
+	
+	ss << "add-prop=$" << s(tube.calculated.add_proportion) << "$, ";
+	ss << "id-sink=" << tube.calculated.id_node_sink << ", ";
+	ss << "\n\\\\";
+	
+	ss << "tank-pour=" << tube.calculated.tank_pour_into_node.str() << ".";
+	
+	// Create the text node
+	std::string text_node = Tikz::node_long(
+		tube.visual.length * 0.5,
 		0.03,
 		ss.str()
 	);
+	
+	const auto& node_first = state.nodes[tube.id_node_first];
+	const auto& node_second = state.nodes[tube.id_node_second];
+	
+	return Tikz::scope_shift_and_rotate(
+		node_first.visual.x,
+		node_first.visual.y,
+		node_first.visual.relative_angle(node_second),
+		text_node
+	);
 }
 
-
-std::string visualize::FlowVerificationLabel::code_tubes_labels(const nst::State& state, const output::Property& visual_property)
+std::string output_vector::LabelTube::basic(const nst::State& state)
 {
-	const auto& tubes = state.tubes;
-	const int n_tubes = tubes.size();
+	const int n_tubes = state.tubes.size();
+	
 	std::stringstream ss;
-	for(int i = 0; i < n_tubes; ++ i)
+	for(int i = 0; i < n_tubes; ++i)
 	{
-		ss << code_tube(state, i, visual_property) << '\n';
+		ss << label_tube_basic(state.tubes[i], i, state) << '\n';
 	}
-
+	
 	return ss.str();
 }
 
-
-std::string visualize::FlowVerificationLabel::code_nodes_labels(const nst::State& state, const output::Property& visual_property)
+std::string output_vector::LabelTube::details(const nst::State& state)
 {
-	const auto& nodes = state.nodes;
-	const int n_nodes = nodes.size();
 	std::stringstream ss;
-	for(int i = 0; i < n_nodes; ++ i)
+	for(const auto& tube : state.tubes)
 	{
-		ss << code_node_label(nodes[i], i, visual_property) << '\n';
+		ss << label_tube_details(tube, state) << '\n';
 	}
-
+	
 	return ss.str();
 }
-
-
