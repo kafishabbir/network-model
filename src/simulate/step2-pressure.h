@@ -11,8 +11,8 @@
 
 namespace simulate
 {
-    class Step2Pressure
-    {
+	class Step2Pressure
+	{
 		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations(
 			nst::State& state
 		);
@@ -31,13 +31,13 @@ namespace simulate
 			const std::vector<double>& pressure_v
 		);
 
-        public:
+		public:
 		static void generate_symmetric_linear_equations_and_assign_pressure_to_node(
 			nst::State& state,
 			bool& is_solver_prepared,
 			Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
 		);
-    };
+	};
 }
 
 #endif

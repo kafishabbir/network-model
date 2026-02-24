@@ -5,8 +5,8 @@
 
 namespace nst
 {
-    class Tank
-    {
+	class Tank
+	{
 		struct Fluid
 		{
 			double volume;
@@ -30,7 +30,9 @@ namespace nst
 		double volume_oil() const;
 		double volume_total() const;
 
-    };
+		std::string str() const;
+
+	};
 }
 
 #endif

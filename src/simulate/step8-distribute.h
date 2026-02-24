@@ -6,8 +6,8 @@
 
 namespace simulate
 {
-    class Step8Distribute
-    {
+	class Step8Distribute
+	{
 		static void sort_id_tube_v_flow_out_at_node(
 			nst::State& state
 		);
@@ -22,11 +22,11 @@ namespace simulate
 			nst::State& state
 		);
 
-        public:
-        static void distribute_fluids_from_node_to_tube(
+		public:
+		static void distribute_fluids_from_node_to_tube(
 			nst::State& state
 		);
-    };
+	};
 }
 
 #endif

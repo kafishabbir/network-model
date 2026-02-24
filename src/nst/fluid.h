@@ -3,14 +3,14 @@
 
 namespace nst
 {
-    class Fluid
-    {
-        public:
-        double viscosity;
-        double density;
+	class Fluid
+	{
+		public:
+		double viscosity;
+		double density;
 
 		Fluid();
-    };
+	};
 }
 
 #endif

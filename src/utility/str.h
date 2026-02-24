@@ -2,16 +2,18 @@
 #define UTILITY_STR_H
 
 #include <string>
-#include <iomanip>
+#include <vector>
 
 namespace utility
 {
-    class Str
-    {
-        public:
+	class Str
+	{
+		public:
 
-		static std::string d(const double value);
-    };
+		static std::string general(const double value);
+		static std::string scientific(const double value);
+		static std::string vector(const std::vector<int>& v);
+	};
 }
 
 #endif

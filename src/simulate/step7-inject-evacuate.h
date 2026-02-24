@@ -5,8 +5,8 @@
 
 namespace simulate
 {
-    class Step7InjectEvacuate
-    {
+	class Step7InjectEvacuate
+	{
 		static nst::Tank produce_tank_with_oil_sliced_out(
 			const nst::Tank& tank,
 			const double volume
@@ -20,11 +20,11 @@ namespace simulate
 			nst::State& state
 		);
 
-        public:
-        static void inject_and_evacuate_fluid_from_system(
+		public:
+		static void inject_and_evacuate_fluid_from_system(
 			nst::State& state
 		);
-    };
+	};
 }
 
 #endif

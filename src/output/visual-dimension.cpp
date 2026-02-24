@@ -1,41 +1,41 @@
-#include "visualize/re-scale-state-for-plot.h"
+#include "output/visual-dimension.h"
 
 template<class val, class T>
-std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
+std::pair<val, val> output::VisualDimension::min_max(
 	const std::vector<T>& v,
 	val T::*member
 )
 {
-    val val_min = v.front().*member;
-    val val_max = v.front().*member;
-    for(const auto& x : v)
-    {
-        val_min = std::min(val_min, x.*member);
-        val_max = std::max(val_max, x.*member);
-    }
+	val val_min = v.front().*member;
+	val val_max = v.front().*member;
+	for(const auto& x : v)
+	{
+		val_min = std::min(val_min, x.*member);
+		val_max = std::max(val_max, x.*member);
+	}
 
-    return {val_min, val_max};
+	return {val_min, val_max};
 }
 
 template<class val, class T, class U>
-std::pair<val, val> visualize::ReScaleStateForPlot::min_max(
-    const std::vector<T>& v,
-    U T::*member,  // Pointer to member U in T
-    val U::*submember  // Pointer to member val in U
+std::pair<val, val> output::VisualDimension::min_max(
+	const std::vector<T>& v,
+	U T::*member,  // Pointer to member U in T
+	val U::*submember  // Pointer to member val in U
 )
 {
-    val val_min = (v.front().*member).*submember;
-    val val_max = (v.front().*member).*submember;
-    for(const auto& x : v)
-    {
-        val_min = std::min(val_min, (x.*member).*submember);
-        val_max = std::max(val_max, (x.*member).*submember);
-    }
+	val val_min = (v.front().*member).*submember;
+	val val_max = (v.front().*member).*submember;
+	for(const auto& x : v)
+	{
+		val_min = std::min(val_min, (x.*member).*submember);
+		val_max = std::max(val_max, (x.*member).*submember);
+	}
 
-    return {val_min, val_max};
+	return {val_min, val_max};
 }
 
-void visualize::ReScaleStateForPlot::node_coordinates(nst::State& state, const visualize::Property& visual_property)
+void output::VisualDimension::node_coordinates(nst::State& state, const output::Property& visual_property)
 {
 	const auto& [min_x, max_x] = min_max(state.nodes, &nst::Node::x);
 
@@ -49,7 +49,7 @@ void visualize::ReScaleStateForPlot::node_coordinates(nst::State& state, const v
 }
 
 
-void visualize::ReScaleStateForPlot::tube_lengths(nst::State& state, const visualize::Property& visual_property)
+void output::VisualDimension::tube_lengths(nst::State& state, const output::Property& visual_property)
 {
 	auto& tubes = state.tubes;
 	auto& nodes = state.nodes;
@@ -62,7 +62,7 @@ void visualize::ReScaleStateForPlot::tube_lengths(nst::State& state, const visua
 	}
 }
 
-void visualize::ReScaleStateForPlot::tube_radius(nst::State& state, const visualize::Property& visual_property)
+void output::VisualDimension::tube_radius(nst::State& state, const output::Property& visual_property)
 {
 	auto& tubes = state.tubes;
 	const auto& [r_min, r_max] = min_max(tubes, &nst::Tube::radius);
@@ -89,7 +89,7 @@ void visualize::ReScaleStateForPlot::tube_radius(nst::State& state, const visual
 	}
 }
 
-void visualize::ReScaleStateForPlot::node_radius(nst::State& state, const visualize::Property& visual_property)
+void output::VisualDimension::node_radius(nst::State& state, const output::Property& visual_property)
 {
 	auto& nodes = state.nodes;
 	const int n_nodes = nodes.size();
@@ -110,20 +110,15 @@ void visualize::ReScaleStateForPlot::node_radius(nst::State& state, const visual
 	}
 }
 
-double visualize::ReScaleStateForPlot::calculate_tube_visual_displacement_due_to_node(
+double output::VisualDimension::calculate_tube_visual_displacement_due_to_node(
 	const double r_node,
-	const double r_tube, const visualize::Property& visual_property
+	const double r_tube, const output::Property& visual_property
 )
 {
-	if(visual_property.draw_node_perimeter)
-	{
-		return std::sqrt(r_node * r_node - r_tube * r_tube);
-	}
-
-	return 0;
+	return std::sqrt(r_node * r_node - r_tube * r_tube);
 }
 
-std::vector<double> visualize::ReScaleStateForPlot::mpos_long_displaced_scaled(
+std::vector<double> output::VisualDimension::mpos_long_displaced_scaled(
 	const nst::Tube& tube,
 	const double p1,
 	const double p2
@@ -139,7 +134,7 @@ std::vector<double> visualize::ReScaleStateForPlot::mpos_long_displaced_scaled(
 
 }
 
-void visualize::ReScaleStateForPlot::mpos(nst::State& state, const visualize::Property& visual_property)
+void output::VisualDimension::mpos(nst::State& state, const output::Property& visual_property)
 {
 	//int i = 0;
 	const auto& nodes = state.nodes;
@@ -155,8 +150,8 @@ void visualize::ReScaleStateForPlot::mpos(nst::State& state, const visualize::Pr
 
 }
 
-void visualize::ReScaleStateForPlot::add_state_visual(
-	nst::State& state, const visualize::Property& visual_property
+void output::VisualDimension::add_state_visual(
+	nst::State& state, const output::Property& visual_property
 )
 {
 	node_coordinates(state, visual_property);

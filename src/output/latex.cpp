@@ -1,6 +1,6 @@
-#include "visualize/latex.h"
+#include "output/latex.h"
 
-std::string visualize::Latex::command(
+std::string output::Latex::command(
 	const std::string& command_name,
 	const std::string& command_body
 )
@@ -15,7 +15,7 @@ std::string visualize::Latex::command(
 	return ss.str();
 }
 
-std::string visualize::Latex::scope_base(
+std::string output::Latex::scope_base(
 	const std::string& scope_name,
 	const std::string& commands,
 	const std::string& scope_arguments
@@ -35,29 +35,29 @@ std::string visualize::Latex::scope_base(
 	return ss.str();
 }
 
-std::string visualize::Latex::begin_end_figure_scope(
-	const std::string& file_name,
-	const std::string& caption
+std::string output::Latex::begin_end_figure_scope(
+	const std::string& command_code,
+	const std::string& caption,
+	const std::string& file_name
 )
 {
 	std::stringstream ss;
 	ss << command("centering") << '\n';
-	ss << command("input", file_name) << '\n';
+	ss << command_code << '\n';
 	ss << command("caption", caption) << '\n';
-	ss << command("label", file_name);
+	ss << command("label", "fig:" + file_name);
 	return scope_base("figure", ss.str(), "H");
 }
 
 
-std::string visualize::Latex::begin_end_document_scope(
-	const std::string& file_name_of_tex_code_for_input
+std::string output::Latex::begin_end_document_scope(
+	const std::string& s
 )
 {
-	const auto& command_input_list_figures = command("input", file_name_of_tex_code_for_input);
-	return scope_base("document", command_input_list_figures);
+	return scope_base("document", s);
 }
 
-std::string visualize::Latex::scope_tikzpicture(
+std::string output::Latex::scope_tikzpicture(
 	const std::string& tex_code_drawing_shapes
 )
 {

@@ -5,12 +5,12 @@
 
 namespace simulate
 {
-    class Property
-    {
-        public:
+	class Property
+	{
+		public:
 
-        enum class TypeSimulation
-        {
+		enum class TypeSimulation
+		{
 			test_simple,
 			test_random,
 			periodic_const_pressure_variable_porosity,
@@ -40,7 +40,7 @@ namespace simulate
 		Property();
 
 		std::string str() const;
-    };
+	};
 }
 
 #endif

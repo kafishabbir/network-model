@@ -1,15 +1,17 @@
-#ifndef VISUALIZE_DRAW_H
-#define VISUALIZE_DRAW_H
+#ifndef OUTPUT_VECTOR_TIKZ_H
+#define OUTPUT_VECTOR_TIKZ_H
 
-#include "visualize/latex.h"
-#include <iomanip>
-
-namespace visualize
+#include <string>
+#include "utility/str.h"
+namespace output_vector
 {
-	class Draw
-	{
-		static std::string d(const double val);
+    class Tikz
+    {
 
+		static inline constexpr auto d = utility::Str::general;
+		static inline constexpr auto s = utility::Str::scientific;
+		
+	public:
 		static std::string rectangle(
 			const std::string& color,
 			const double x1,
@@ -18,11 +20,6 @@ namespace visualize
 			const double y2
 		);
 
-	public:
-		static std::string mpos_horizontal_rectangles(
-			const nst::Tube& tube,
-			const std::vector<std::string>& colors
-		);
 
 		static std::string circle(
 			const double x,
@@ -42,8 +39,6 @@ namespace visualize
 			const std::string& node_text
 		);
 
-		static std::string num(const double val);
-
 		static std::string arrow(
 			const double x_begin,
 			const double x_end,
@@ -61,11 +56,7 @@ namespace visualize
 			const double rotate_angle,
 			const std::string& draw_commands_to_scope
 		);
-
-
-		static std::string str(const nst::Tank& tank);
-	};
-
+    };
 }
 
 #endif

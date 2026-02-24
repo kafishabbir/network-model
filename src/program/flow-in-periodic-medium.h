@@ -5,14 +5,14 @@
 
 namespace program
 {
-    class FlowInPeriodicMedium
-    {
-		static visualize::Property generate_visual_property();
+	class FlowInPeriodicMedium
+	{
+		static output::Property generate_visual_property();
 		static simulate::Property generate_property();
 
-        public:
+		public:
 		static void run();
-    };
+	};
 }
 
 #endif

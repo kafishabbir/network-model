@@ -1,0 +1,31 @@
+#include "output-vector/flow.h"
+
+const std::vector<std::string> output_vector::Flow::colors_str_v{"cw", "cnw"};
+
+
+void output_vector::Flow::save_latex_code_of_figure(
+	const nst::State& state,
+	const std::string& file_name,
+	const output::Property& visual_property
+)
+{
+	std::stringstream ss;
+
+	ss << Draw::draw_tubes(state, visual_property, colors_str_v) << '\n';
+	ss << Draw::draw_nodes(state, visual_property, colors_str_v) << '\n';
+
+	ss << LabelNode::basic(state) << '\n';
+	if(visual_property.vector_image_label_node_detail)
+	{
+		ss << LabelNode::details(state) << '\n';
+	}
+
+	ss << LabelTube::flow_direction(state) << '\n';
+	if(visual_property.vector_image_label_tube_detail)
+	{
+		ss << LabelTube::details(state) << '\n';
+	}
+
+	std::ofstream fout(file_name + ".tex");
+	fout << visualize::Latex::scope_tikzpicture(ss.str());
+}

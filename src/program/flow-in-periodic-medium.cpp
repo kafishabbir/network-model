@@ -24,9 +24,9 @@ simulate::Property program::FlowInPeriodicMedium::generate_property()
 	return property;
 }
 
-visualize::Property program::FlowInPeriodicMedium::generate_visual_property()
+output::Property program::FlowInPeriodicMedium::generate_visual_property()
 {
-	visualize::Property property;
+	output::Property property;
 
 	property.tube_radius_min = 0.02;
 	property.tube_radius_max = 0.10;

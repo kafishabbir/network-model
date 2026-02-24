@@ -7,8 +7,8 @@ namespace ic
 {
 	typedef std::pair<dst::Nodes, std::vector<nst::Tube>>type_pair_nodes_tubes;
 
-    class GeometryBase
-    {
+	class GeometryBase
+	{
 		static dst::Nodes rectangular_nodes(
 			const int n_tube_rows,
 			const int n_tube_cols,
@@ -22,13 +22,13 @@ namespace ic
 			const int id_fluid_saturate
 		);
 
-        public:
-        static type_pair_nodes_tubes rectangular(
+		public:
+		static type_pair_nodes_tubes rectangular(
 			const int n_tube_rows,
 			const int n_tube_cols,
 			const int id_fluid_inject
 		);
-    };
+	};
 }
 
 #endif

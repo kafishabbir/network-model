@@ -1,10 +1,9 @@
 #ifndef VISUALIZE_LATEX_H
 #define VISUALIZE_LATEX_H
 
-#include "visualize/property.h"
 #include <sstream>
 
-namespace visualize
+namespace output
 {
 	class Latex
 	{
@@ -37,8 +36,10 @@ namespace visualize
 		end{figure}
 		*/
 		static std::string begin_end_figure_scope(
-			const std::string& file_name_of_tikz_code_for_input,
-			const std::string& caption
+			const std::string& command,
+			const std::string& caption,
+			const std::string& file_name
+
 		);
 
 		/*
@@ -48,7 +49,7 @@ namespace visualize
 		*/
 
 		static std::string begin_end_document_scope(
-			const std::string& file_name_of_tex_code_for_input
+			const std::string& s
 		);
 
 		/*

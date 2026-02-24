@@ -6,12 +6,12 @@
 
 namespace ic
 {
-    class GeometryRand
-    {
-        public:
+	class GeometryRand
+	{
+		public:
 
-        static type_pair_nodes_tubes network_geometry();
-    };
+		static type_pair_nodes_tubes network_geometry();
+	};
 }
 
 #endif

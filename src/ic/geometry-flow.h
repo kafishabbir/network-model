@@ -5,14 +5,14 @@
 
 namespace ic
 {
-    class GeometryFlow
-    {
+	class GeometryFlow
+	{
 		static std::tuple<double, double, double, double> find_min_max_coordinates(
 			const dst::Nodes& nodes
 		);
 
-        public:
-        static type_pair_nodes_tubes network_geometry(
+		public:
+		static type_pair_nodes_tubes network_geometry(
 			const int n_tube_rows,
 			const int n_tube_cols,
 			const int id_fluid_inject,
@@ -20,7 +20,7 @@ namespace ic
 			const double constant_length_scale,
 			const double n_periods
 		);
-    };
+	};
 }
 
 #endif

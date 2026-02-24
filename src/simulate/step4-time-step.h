@@ -5,8 +5,8 @@
 
 namespace simulate
 {
-    class Step4TimeStep
-    {
+	class Step4TimeStep
+	{
 		static void time_for_each_tube(
 			nst::State& state
 		);
@@ -15,11 +15,11 @@ namespace simulate
 			nst::State& state
 		);
 
-        public:
-        static void assign_time_step_to_state(
+		public:
+		static void assign_time_step_to_state(
 			nst::State& state
 		);
-    };
+	};
 }
 
 #endif

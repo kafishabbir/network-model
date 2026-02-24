@@ -13,9 +13,9 @@ dst::States simulate::Menu::run(const simulate::Property& simulate_property)
 
 	const auto time_program = time.passed();
 	std::cout << "Program ran for: " << time_program << " ms" << std::endl;
-    std::cout << "Fraction of time=" << std::setprecision(2)
+	std::cout << "Fraction of time=" << std::setprecision(2)
 		<< state.measured.time_taken_by_solving_linear_equations / time_program;
-    std::cout <<  ", spent on linear equations." << std::endl;
+	std::cout <<  ", spent on linear equations." << std::endl;
 
 	int count = 0;
 	for(auto t_step: state.measured.time_taken_by_each_step)

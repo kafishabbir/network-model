@@ -20,8 +20,8 @@
 
 namespace io
 {
-    class FileWrite
-    {
+	class FileWrite
+	{
 		static std::string generate_folder_path_figures(
 			const std::string& folder_or_result_name
 		);
@@ -52,12 +52,12 @@ namespace io
 			const std::string& folder_or_result_name
 		);
 
-        public:
+		public:
 
-        static void flow(
+		static void flow(
 			const std::vector<dst::str_pair>& file_name_and_content_v
 		);
-    };
+	};
 }
 
 #endif

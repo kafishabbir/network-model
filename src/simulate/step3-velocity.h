@@ -5,8 +5,8 @@
 
 namespace simulate
 {
-    class Step3Velocity
-    {
+	class Step3Velocity
+	{
 		static double flow_rate(
 			const nst::Tube& tube,
 			const nst::State& state
@@ -20,12 +20,12 @@ namespace simulate
 			nst::State& state
 		);
 
-        public:
+		public:
 
-        static void calculate_and_assign_flow_rate_and_velocity_to_tube(
+		static void calculate_and_assign_flow_rate_and_velocity_to_tube(
 			nst::State& state
 		);
-    };
+	};
 }
 
 #endif

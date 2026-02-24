@@ -18,8 +18,8 @@
 
 namespace simulate
 {
-    class Menu
-    {
+	class Menu
+	{
 		static void perform_single_time_step(
 			nst::State& state,
 			bool& is_solver_prepared,
@@ -28,9 +28,9 @@ namespace simulate
 
 		static dst::States steps(nst::State& state);
 
-        public:
+		public:
 		static dst::States run(const simulate::Property& simulate_property);
-    };
+	};
 }
 
 #endif

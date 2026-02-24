@@ -41,9 +41,6 @@ std::string io::FileWrite::makefile_text(
 {
 	std::stringstream ss;
 
-	ss << "all:" << '\n';
-	ss << '\t' << "pdflatex -output-directory=" << decl::nps_latex_plot::nps_folder::output << " " << folder_or_result_name << '\n';
-	ss << '\t' << "mv " << decl::nps_latex_plot::nps_folder::output << "/" << folder_or_result_name << ".pdf " << folder_or_result_name << ".pdf" << '\n';
 
 	return ss.str();
 }
@@ -53,15 +50,7 @@ std::string io::FileWrite::main_tex_text(
 	const std::string& file_name_list_figures
 )
 {
-	const std::string& file_name = decl::nps_latex_plot::nps_folder::figures + file_name_list_figures;
-	std::ifstream fin(decl::nps_latex_plot::nps_file::template_main);
 
-	std::stringstream ss;
-
-	ss << fin.rdbuf() << '\n';
-	ss << visualize::Latex::begin_end_document_scope(file_name);
-
-	return ss.str();
 }
 
 void io::FileWrite::create_makefile_and_main_tex(

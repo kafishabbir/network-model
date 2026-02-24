@@ -5,12 +5,12 @@
 
 namespace utility
 {
-    class Random
-    {
-        public:
+	class Random
+	{
+		public:
 
-        static int integer_from_zero_until_n(const int n);
-    };
+		static int integer_from_zero_until_n(const int n);
+	};
 }
 
 #endif

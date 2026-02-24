@@ -5,8 +5,8 @@
 
 namespace simulate
 {
-    class Step6PourIntoNode
-    {
+	class Step6PourIntoNode
+	{
 
 		static nst::Tank produce_tank_with_fluids_flow_out_from_tube(
 			const nst::Tube& tube
@@ -29,11 +29,11 @@ namespace simulate
 			nst::State& state
 		);
 
-        public:
-        static void pour_from_tubes_to_node_tank(
+		public:
+		static void pour_from_tubes_to_node_tank(
 			nst::State& state
 		);
-    };
+	};
 }
 
 #endif

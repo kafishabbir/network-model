@@ -5,8 +5,8 @@
 
 namespace simulate
 {
-    class Step1TubeFlowCoefficient
-    {
+	class Step1TubeFlowCoefficient
+	{
 		static double evaluate_mu(
 			const nst::Tube& tube,
 			const nst::State& state
@@ -31,8 +31,8 @@ namespace simulate
 		);
 
 	public:
-        static void assign_resistance_and_capillary_pressure_to_tubes(nst::State& state);
-    };
+		static void assign_resistance_and_capillary_pressure_to_tubes(nst::State& state);
+	};
 }
 
 #endif

@@ -4,16 +4,16 @@
 #include <chrono>
 namespace utility
 {
-    class Time
-    {
-		std::chrono::time_point<std::chrono::steady_clock> start;
+	class Time
+	{
+		std::chrono::time_point<std::chrono::high_resolution_clock> start;
 
-        public:
+		public:
 
 		Time();
 		void reset();
 		double passed() const;
-    };
+	};
 }
 
 #endif

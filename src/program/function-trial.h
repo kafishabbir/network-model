@@ -5,12 +5,12 @@
 
 namespace program
 {
-    class FunctionTrial
-    {
-        public:
-            // Saves 10 PNG files in the current execution directory
-            void flow();
-    };
+	class FunctionTrial
+	{
+		public:
+			// Saves 10 PNG files in the current execution directory
+			void flow();
+	};
 }
 
 #endif

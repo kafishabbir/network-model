@@ -7,12 +7,12 @@ nst::Tank simulate::Step7InjectEvacuate::produce_tank_with_oil_sliced_out(
 {
 	if(volume < 0)
 	{
-        throw std::invalid_argument("Volume must be positive");
-    }
-    if(tank.volume_total() < volume)
-    {
-        throw std::runtime_error("Insufficient volume in tank to slice");
-    }
+		throw std::invalid_argument("Volume must be positive");
+	}
+	if(tank.volume_total() < volume)
+	{
+		throw std::runtime_error("Insufficient volume in tank to slice");
+	}
 
 	nst::Tank tank_new;
 

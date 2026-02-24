@@ -22,12 +22,12 @@ namespace decl
 
 	const std::vector<std::string> folder_exist_check
 	{
-		path_src_folder,
-		path_src_folder + "exe/",
-		path_src_folder + "global/",
-		path_template_folder,
+		//path_src_folder,
+		//path_src_folder + "exe/",
+		//path_src_folder + "global/",
+		//path_template_folder,
 		path_run_folder,
-		path_build_folder,
+		path_build_folder
 	};
 }
 

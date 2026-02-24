@@ -5,17 +5,17 @@
 
 namespace simulate
 {
-    class Step10Measure
-    {
+	class Step10Measure
+	{
 
 		static double total_delta(const nst::State& state);
 		static double water_delta(const nst::State& state);
 		static double oil_delta(const nst::State& state);
 
-       public:
+	   public:
 
-        static void measure(nst::State& state);
-    };
+		static void measure(nst::State& state);
+	};
 }
 
 #endif

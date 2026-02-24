@@ -1,4 +1,5 @@
 #include "nst/tank.h"
+#include "utility/str.h"
 
 nst::Tank::Fluid::Fluid():
 	volume(0),
@@ -76,3 +77,16 @@ double nst::Tank::volume_oil() const
 	return fluid_v[1].volume;
 }
 
+std::string nst::Tank::str() const
+{
+	std::stringstream ss;
+	auto str_n = utility::Str::scientific;
+	//auto str_d = utility::Str::general;
+	ss << "$V_{total}=" << str_n(volume_total()) << "(";
+
+	ss << (is_contain_water() ? str_n(volume_water()) : "null") << "_{w}";
+	ss << "+";
+	ss << (is_contain_oil() ? str_n(volume_oil()) : "null") << "_{nw}"<< ")$";
+
+	return ss.str();
+}

@@ -5,15 +5,15 @@
 
 namespace program
 {
-    class DebugFlow
-    {
-		static visualize::Property generate_visual_property();
+	class DebugFlow
+	{
+		static output::Property generate_visual_property();
 		static simulate::Property generate_property();
 
-        public:
+		public:
 		static void run();
 
-    };
+	};
 }
 
 #endif

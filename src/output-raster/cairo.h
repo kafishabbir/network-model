@@ -1,18 +1,19 @@
 #ifndef VISUALIZE_CAIRO_H
 #define VISUALIZE_CAIRO_H
 
-#include <cairo/cairo.h>
+
 #include <string>
 
-namespace visualize
+namespace output_raster
 {
-    class Cairo
+	#include <cairo/cairo.h>
+
+	class Cairo
 	{
 	private:
 		static const int length_shortest_side;
 		static const int margin;
-		static const std::string png_extension;
-		static const std::string folder_name;
+
 
 		static double find_scale(const double width, const double height);
 		int find_width(const double width, const double height);
@@ -42,7 +43,7 @@ namespace visualize
 			static const Color cyan;
 			static const Color blue;
 			static const Color violet;
-			static const Color puple;
+			static const Color purple;
 
 			Color(const double red, const double green, const double blue);
 			Color();

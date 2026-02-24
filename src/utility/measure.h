@@ -5,13 +5,13 @@
 
 namespace utility
 {
-    class Measure
-    {
+	class Measure
+	{
 
 
-        public:
+		public:
 
-    };
+	};
 }
 
 #endif
