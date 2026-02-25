@@ -20,6 +20,15 @@ namespace ic
 			const double constant_length_scale,
 			const double n_periods
 		);
+		
+		static type_pair_nodes_tubes network_geometry_const_porosity(
+			const int n_tube_rows,
+			const int n_tube_cols,
+			const int id_fluid_inject,
+			const double constant_radius_contrast,
+			const double constant_length_scale,
+			const double n_periods
+		);
 	};
 }
 

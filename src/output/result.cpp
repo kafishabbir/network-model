@@ -85,8 +85,8 @@ std::pair<std::string, std::string> output::Result::generate_flow_caption(
     // NETWORK CHARACTERISTICS
     ss2 << "\\item " << "NETWORK CHARACTERISTICS:" << "\n";
     ss2 << "\\begin{enumerate}\n";
-    ss2 << "\\item $R_{min} / R_{max} =" << -1 << "$ (add-later),\n";
-    ss2 << "\\item $l_{min} / l_{max} =" << -1 << "$ (add-later),\n";
+    ss2 << "\\item $R_{min} / R_{max} =" << s(state.simulation_constant.r_min_by_r_max) << "$,\n";
+    ss2 << "\\item $l_{min} / l_{max} =" << s(state.simulation_constant.l_min_by_l_max)  << "$,\n";
     ss2 << "\\item $n_{nodes}=" << state.nodes.size() << "$,\n";
     ss2 << "\\item $n_{tubes}=" << state.tubes.size() << "$\n";
     ss2 << "\\end{enumerate}\n";

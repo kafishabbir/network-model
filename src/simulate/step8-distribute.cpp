@@ -82,6 +82,7 @@ void simulate::Step8Distribute::distribute_fluids_from_node_to_tube(
 {
 	sort_id_tube_v_flow_out_at_node(state);
 	assign_proportion_to_tube(state);
+	// NUMERICAL-ERROR
 	for(auto& tube: state.tubes)
 	{
 		auto& x = tube.calculated.add_proportion;
@@ -90,11 +91,11 @@ void simulate::Step8Distribute::distribute_fluids_from_node_to_tube(
 		{
 			throw std::invalid_argument("length_proportion seriously incorrect");
 		}
-		if(1.0 - y < 1e-15)
+		if(1.0 - y < 1e-6)
 		{
 			x = 1.0;
 		}
-		else if(y < 1e-15)
+		else if(y < 1e-6)
 		{
 			x = 0.0;
 		}

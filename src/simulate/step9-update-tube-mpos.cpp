@@ -39,11 +39,11 @@ void simulate::Step9UpdateTubeMpos::join_tubes(
 	{
 		tube_front.mpos.push_back(lp);
 	}
-
+	// NUMERICAL-ERROR
 	for(const double x: tube_back.mpos)
 	{
 		const double x_add = x + lp;
-		if(x_add < 1.0)
+		if(x_add < (1.0 - 1e-6))
 		{
 			tube_front.mpos.push_back(x_add);
 		}
@@ -110,6 +110,7 @@ std::vector<double> simulate::Step9UpdateTubeMpos::combine_swabs(
 	return v;
 }
 
+
 void simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportion(
 	nst::State& state
 )
@@ -119,5 +120,4 @@ void simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportion(
 		tube = update_tube_mpos_according_to_proportion(tube);
 		tube.mpos = combine_swabs(tube);
 	}
-
 }

@@ -6,17 +6,19 @@ simulate::Property program::FlowInPeriodicMedium::generate_property()
 {
 	simulate::Property property;
 
-	property.type_simulation = simulate::Property::TypeSimulation::periodic_const_pressure_variable_porosity;
-	property.n_tube_rows = 14;
-	property.n_tube_cols = 12;
+	//property.type_simulation = simulate::Property::TypeSimulation::periodic_const_pressure_variable_porosity;
+	//property.type_simulation = simulate::Property::TypeSimulation::periodic_const_volume_injection_variable_porosity;
+	property.type_simulation = simulate::Property::TypeSimulation::periodic_const_volume_injection_const_porosity;
+	property.n_tube_rows = 20;
+	property.n_tube_cols = 20;
 	property.id_fluid_inject = 0;
 	property.constant_sigma = 0.0;
-	property.constant_radius_contrast = 0.8;
+	property.constant_radius_contrast = 0.5;
 	property.constant_mu1_by_mu2 = 1.0;
 	property.constant_mu_scale = 1.0;
 	property.constant_length_scale = 10.0;
 	property.capture_frequency_in_volume_fraction = 0.1;
-	property.volume_max_to_inject = 2;
+	property.volume_max_to_inject = 0.8;
 	property.n_periods = 2;
 	property.inlet_pressure = 100;
 

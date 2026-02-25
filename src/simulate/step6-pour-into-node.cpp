@@ -97,4 +97,18 @@ void simulate::Step6PourIntoNode::pour_from_tubes_to_node_tank(
 	assign_id_node_id_tube_flow_direction(state);
 	assign_tank_to_tubes(state);
 	pour_from_tube_to_id_node_tank(state);
+	// NUMERICAL-ERROR
+	for(auto& node: state.nodes)
+	{
+		nst::Tank tmp;
+		if(node.calculated.tank.volume_water() / node.calculated.tank.volume_total() >= 1e-6)
+		{
+			tmp.add_fluid(node.calculated.tank.volume_water(), 0);
+		}
+		if(node.calculated.tank.volume_oil() / node.calculated.tank.volume_total() >= 1e-6)
+		{
+			tmp.add_fluid(node.calculated.tank.volume_oil(), 1);
+		}
+		node.calculated.tank = tmp;
+	}
 }

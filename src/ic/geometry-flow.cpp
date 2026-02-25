@@ -75,3 +75,44 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry(
 }
 
 
+ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_const_porosity(
+	const int n_tube_rows,
+	const int n_tube_cols,
+	const int id_fluid_inject,
+	const double constant_radius_contrast,
+	const double constant_length_scale,
+	const double n_periods
+)
+{
+	auto [nodes, tubes] = GeometryBase::rectangular(
+		n_tube_rows,
+		n_tube_cols,
+		id_fluid_inject
+	);
+
+	const auto& [x_min, y_min, x_max, y_max] = find_min_max_coordinates(nodes);
+	const double length_system = x_max - x_min;
+	const double omega = 2.0 * decl::pi * n_periods / length_system;
+	const double x_center = (x_min + x_max) / 2;
+	const double y_center = (y_min + y_max) / 2;
+	
+	const double k = 1.0 / decl::pi / tubes.size();
+	const double A = std::pow(k / constant_length_scale, 1.0 / 3);
+	
+	for(auto& tube: tubes)
+	{
+		const double x1 = nodes[tube.id_node_first].x;
+		const double y1 = nodes[tube.id_node_first].y;
+		const double x2 = nodes[tube.id_node_second].x;
+		const double y2 = nodes[tube.id_node_second].y;
+		const double x = (x1 + x2) / 2 - x_center;
+		const double y = (y1 + y2) / 2 - y_center;
+
+		tube.radius = A * (1.0 - constant_radius_contrast * std::cos(omega * x) * std::cos(omega * y));
+		tube.length = k / std::pow(tube.radius, 2);
+	}
+
+	return {nodes, tubes};
+}
+
+

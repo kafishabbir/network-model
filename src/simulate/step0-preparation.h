@@ -11,6 +11,9 @@ namespace simulate
 {
 	class Step0Preparation
 	{
+		static double find_l_ratio(const nst::State& state);
+		static double find_r_ratio(const nst::State& state);
+		
 		static void assign_str_of_simulate_property_to_state(
 			nst::State& state,
 			const simulate::Property& simulate_property

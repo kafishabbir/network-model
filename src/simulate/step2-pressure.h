@@ -13,6 +13,14 @@ namespace simulate
 {
 	class Step2Pressure
 	{
+		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations_const_flow_rate_forced(
+			nst::State& state
+		);
+
+		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations_dual_pressure(
+			nst::State& state
+		);
+
 		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations(
 			nst::State& state
 		);
@@ -30,6 +38,8 @@ namespace simulate
 			nst::State& state,
 			const std::vector<double>& pressure_v
 		);
+		
+
 
 		public:
 		static void generate_symmetric_linear_equations_and_assign_pressure_to_node(

@@ -1,6 +1,6 @@
 #include "simulate/step2-pressure.h"
 
-std::pair<dst::RowColVals, std::vector<double>> simulate::Step2Pressure::generate_symmetric_linear_equations(
+std::pair<dst::RowColVals, std::vector<double>> simulate::Step2Pressure::generate_symmetric_linear_equations_dual_pressure(
 	nst::State& state
 )
 {
@@ -60,6 +60,89 @@ std::pair<dst::RowColVals, std::vector<double>> simulate::Step2Pressure::generat
 	return {A, B};
 }
 
+std::pair<dst::RowColVals, std::vector<double>> simulate::Step2Pressure::generate_symmetric_linear_equations(
+	nst::State& state
+)
+{
+	if(state.simulation_constant.is_const_volume_injection_simple)
+	{
+		return generate_symmetric_linear_equations_const_flow_rate_forced(state);
+	}
+	return generate_symmetric_linear_equations_dual_pressure(state);
+	
+}
+
+std::pair<dst::RowColVals, std::vector<double>> simulate::Step2Pressure::generate_symmetric_linear_equations_const_flow_rate_forced(
+	nst::State& state
+)
+{
+	const int n_nodes = state.nodes.size();
+
+	int count = 0;
+	int count_inlet = 0;
+	for(int i = 0; i < n_nodes; ++ i)
+	{
+		auto& node = state.nodes[i];
+		if(node.is_open_boundary)
+		{
+			if(node.is_inlet)
+			{
+				++ count_inlet;
+			}
+			else
+			{
+				continue;
+			}
+		}
+
+		node.calculated.id_symmetric_solver = (count ++);
+	}
+
+	dst::RowColVals A;
+	std::vector<double> B;
+	const double flow_rate_injection_single_node = 1.0 / count_inlet;
+	for(int i = 0; i < n_nodes; ++ i)
+	{
+		const auto& node = state.nodes[i];
+		if(node.calculated.id_symmetric_solver == -1)
+		{
+			continue;
+		}
+
+		double val = 0;
+		double b = 0;
+		for(const int id_tube: node.reference.connections_id_tube_v)
+		{
+			const auto& tube = state.tubes[id_tube];
+
+			const double sign = ((tube.id_node_first == i) ? 1 : -1);
+			const int id_node_b = ((sign < 0) ? tube.id_node_first: tube.id_node_second);
+
+			const double resistance = tube.calculated.resistance_coefficient;
+			const double capillary_pressure =
+				sign * tube.calculated.capillary_pressure_magnitude;
+
+			val += resistance;
+			if(state.nodes[id_node_b].calculated.id_symmetric_solver == -1)
+			{
+				b += resistance * state.nodes[id_node_b].pressure;
+			}
+			else
+			{
+				A.push_back({node.calculated.id_symmetric_solver, state.nodes[id_node_b].calculated.id_symmetric_solver, -resistance});
+			}
+			b -= resistance * capillary_pressure;
+		}
+		if(node.is_open_boundary)
+		{
+			b += flow_rate_injection_single_node;
+		}
+		B.push_back(b);
+		A.push_back({node.calculated.id_symmetric_solver, node.calculated.id_symmetric_solver, val});
+	}
+	return {A, B};
+}
+
 
 void simulate::Step2Pressure::assign_symmetric_pressure_v_to_each_node(
 	nst::State& state,
@@ -72,7 +155,7 @@ void simulate::Step2Pressure::assign_symmetric_pressure_v_to_each_node(
 	for(int i = 0; i < n_nodes; ++ i)
 	{
 		auto& node = state.nodes[i];
-		if(node.is_open_boundary)
+		if(node.calculated.id_symmetric_solver == -1)
 		{
 			node.calculated.pressure = node.pressure;
 			continue;

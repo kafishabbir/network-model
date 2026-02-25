@@ -21,6 +21,9 @@ namespace nst
 			double time_step_resolution;
 			double capture_frequency_in_volume_fraction;
 			double volume_max_to_inject;
+			bool is_const_volume_injection_simple;
+			double l_min_by_l_max;
+			double r_min_by_r_max;
 			SimulationConstant();
 		};
 

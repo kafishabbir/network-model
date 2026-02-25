@@ -1,13 +1,6 @@
 #include "simulate/step0-preparation.h"
 
 
-void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
-	nst::State& state,
-	const simulate::Property& simulate_property
-)
-{
-	state.reference.comment = simulate_property.str();
-}
 
 std::pair<dst::Nodes, dst::Tubes> simulate::Step0Preparation::choose_network_geometry(
 	const simulate::Property& simulate_property
@@ -39,15 +32,36 @@ std::pair<dst::Nodes, dst::Tubes> simulate::Step0Preparation::choose_network_geo
 	}
 	if(simulation == Property::TypeSimulation::periodic_const_pressure_const_porosity)
 	{
-		std::cout << "This case has not been dealt with yet" << std::endl;
+		return ic::GeometryFlow::network_geometry_const_porosity(
+			simulate_property.n_tube_rows,
+			simulate_property.n_tube_cols,
+			simulate_property.id_fluid_inject,
+			simulate_property.constant_radius_contrast,
+			simulate_property.constant_length_scale,
+			simulate_property.n_periods
+		);
 	}
 	if(simulation == Property::TypeSimulation::periodic_const_volume_injection_variable_porosity)
 	{
-		std::cout << "This case has not been dealt with yet" << std::endl;
+		return ic::GeometryFlow::network_geometry(
+			simulate_property.n_tube_rows,
+			simulate_property.n_tube_cols,
+			simulate_property.id_fluid_inject,
+			simulate_property.constant_radius_contrast,
+			simulate_property.constant_length_scale,
+			simulate_property.n_periods
+		);
 	}
 	if(simulation == Property::TypeSimulation::periodic_const_volume_injection_const_porosity)
 	{
-		std::cout << "This case has not been dealt with yet" << std::endl;
+		return ic::GeometryFlow::network_geometry_const_porosity(
+			simulate_property.n_tube_rows,
+			simulate_property.n_tube_cols,
+			simulate_property.id_fluid_inject,
+			simulate_property.constant_radius_contrast,
+			simulate_property.constant_length_scale,
+			simulate_property.n_periods
+		);
 	}
 
 	throw std::invalid_argument("Unknown case of  simulate_property.type_simulation.");
@@ -63,7 +77,6 @@ void simulate::Step0Preparation::choose_network_geometry(
 	state.nodes = nodes;
 	state.tubes = tubes;
 }
-
 
 void simulate::Step0Preparation::modify_constants(
 	nst::State& state,
@@ -85,14 +98,22 @@ void simulate::Step0Preparation::modify_constants(
 
 	state.simulation_constant.capture_frequency_in_volume_fraction = simulate_property.capture_frequency_in_volume_fraction;
 	state.simulation_constant.volume_max_to_inject = simulate_property.volume_max_to_inject;
-
+	state.simulation_constant.is_const_volume_injection_simple = 
+		(
+			(simulate_property.type_simulation == Property::TypeSimulation::periodic_const_volume_injection_variable_porosity)
+			||
+			(simulate_property.type_simulation == Property::TypeSimulation::periodic_const_volume_injection_const_porosity)
+		);
+		
+	state.simulation_constant.l_min_by_l_max = find_l_ratio(state);
+	state.simulation_constant.r_min_by_r_max = find_r_ratio(state);
 }
 
 void simulate::Step0Preparation::modify_boundary(
 	nst::State& state,
 	const simulate::Property& simulate_property
 )
-{
+{		
 	Utility::assign_pressure(
 		state,
 		simulate_property.inlet_pressure,
@@ -144,6 +165,43 @@ nst::State simulate::Step0Preparation::generate_state(const simulate::Property& 
 	assign_initial_total_fluid_to_state(state);
 
 	return state;
+}
+
+
+void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
+	nst::State& state,
+	const simulate::Property& simulate_property
+)
+{
+	state.reference.comment = simulate_property.str();
+}
+
+double simulate::Step0Preparation::find_l_ratio(const nst::State& state)
+{
+	double l_min = state.tubes.front().length;
+	double l_max = state.tubes.front().length;
+	
+	for(const auto& tube: state.tubes)
+	{
+		l_min = std::min(l_min, tube.length);
+		l_max = std::max(l_max, tube.length);
+	}
+	
+	return l_min / l_max;
+}
+
+double simulate::Step0Preparation::find_r_ratio(const nst::State& state)
+{
+	double r_min = state.tubes.front().radius;
+	double r_max = state.tubes.front().radius;
+	
+	for(const auto& tube: state.tubes)
+	{
+		r_min = std::min(r_min, tube.radius);
+		r_max = std::max(r_max, tube.radius);
+	}
+	
+	return r_min / r_max;
 }
 
 

@@ -22,7 +22,7 @@ std::string utility::Str::compressed(const double value)
 {
 	std::stringstream ss;
 	ss << "\\num{";
-	ss << std::setprecision(2) << std::fixed << value;
+	ss << std::setprecision(2) << value;
 	ss << "}";
 	return ss.str();
 }

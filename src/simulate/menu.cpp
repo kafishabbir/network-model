@@ -8,9 +8,9 @@ dst::States simulate::Menu::run(const simulate::Property& simulate_property)
 
 	auto state = Step0Preparation::generate_state(simulate_property);
 
-	std::cout << "TiMe to generate initial conditions = " <<  d(time.passed()) << " ms" << std::endl;
+	std::cout << "Time to generate initial conditions = " <<  d(time.passed()) << " ms" << std::endl;
 
-	std::cout << "\n\n\nSimulation started for: " << state.reference.comment << std::endl;
+	std::cout << "\n\nSimulation started for: " << state.reference.comment << std::endl;
 	auto states = steps(state);
 
 	const auto time_program = time.passed();
@@ -136,9 +136,35 @@ void simulate::Menu::perform_single_time_step(
 		//std::cout << "here" << j++ << std::endl;
 
 		time.reset();
+	
+	//~ int count_tube = 0;
+	//~ for(const auto& tube: state.tubes)
+	//~ {
+		//~ double his = 0;
+		//~ for(const auto x: tube.mpos)
+		//~ {
+			//~ if(x > 1.0 || x < 0)
+			//~ {
+				//~ std::cerr << "WARNing - non-prop value";
+			//~ }
+			//~ if(x <= his)
+			//~ {
+				//~ std::cerr << "Meniscus not in proper order, at tube: " << count_tube << " step-id=" << state.reference.id_step << std::endl;
+				//~ for(auto x: tube.mpos)
+				//~ {
+					//~ std::cout << x << ", ";
+				//~ }
+			//~ }
+			//~ his = x;
+		//~ }
+		
+		//~ ++ count_tube;
+	//~ }
+	
 	Step10Measure::measure(state);
 		state.measured.time_taken_by_each_step[10] += time.passed();
 		//comment = "measure";
 		//states.push_back(state);
 		//std::cout << "here" << j++ << std::endl;
+	
 }
