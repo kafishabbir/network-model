@@ -3,12 +3,12 @@
 #include <filesystem>
 
 const int output_raster::Cairo::length_shortest_side = 2000;
-const int output_raster::Cairo::margin = 100;
+const int output_raster::Cairo::margin = 30;
 
 const output_raster::Cairo::Color output_raster::Cairo::Color::white = output_raster::Cairo::Color(1.00, 1.00, 1.00);
-const output_raster::Cairo::Color output_raster::Cairo::Color::grey_light = output_raster::Cairo::Color(0.83, 0.83, 0.83);
-const output_raster::Cairo::Color output_raster::Cairo::Color::grey = output_raster::Cairo::Color(0.50, 0.50, 0.50);
-const output_raster::Cairo::Color output_raster::Cairo::Color::grey_dark = output_raster::Cairo::Color(0.25, 0.25, 0.25);
+const output_raster::Cairo::Color output_raster::Cairo::Color::grey_light = output_raster::Cairo::Color(0.8, 0.8, 0.8);
+const output_raster::Cairo::Color output_raster::Cairo::Color::grey = output_raster::Cairo::Color(0.55, 0.55, 0.55);
+const output_raster::Cairo::Color output_raster::Cairo::Color::grey_dark = output_raster::Cairo::Color(0.3, 0.3, 0.3);
 const output_raster::Cairo::Color output_raster::Cairo::Color::black = output_raster::Cairo::Color(0.00, 0.00, 0.00);
 const output_raster::Cairo::Color output_raster::Cairo::Color::brown = output_raster::Cairo::Color(0.55, 0.34, 0.29);
 const output_raster::Cairo::Color output_raster::Cairo::Color::red = output_raster::Cairo::Color(0.84, 0.15, 0.16);

@@ -65,7 +65,8 @@ std::string output_vector::Draw::draw_node(
 	return Tikz::circle(
 		node.visual.x, 
 		node.visual.y,
-		node.visual.radius
+		node.visual.radius, 
+		colors[node.calculated.type_fluid_contact]
 	);
 }
 

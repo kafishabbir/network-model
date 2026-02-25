@@ -90,3 +90,62 @@ bool simulate::Utility::decide_if_capture_state_for_plot(nst::State& state)
 	}
 	return false;
 }
+
+
+
+int simulate::Utility::find_type_fluid_contact(
+	const int existing,
+	const int addition
+)
+{
+	if(existing == 2)
+	{
+		return 2;
+	}
+	if(existing == 0 && addition == 0)
+	{
+		return 0;
+	}
+	if(existing == 0 && addition == 1)
+	{
+		return 2;
+	}
+	if(existing == 1 && addition == 0)
+	{
+		return 2;
+	}
+	if(existing == 1 && addition == 1)
+	{
+		return 1;
+	}
+	if(existing == -1)
+	{
+		return addition;
+	}
+	
+	throw std::invalid_argument("existing fluid in node not correct simulate::Step1TubeFlowCoefficient::find_type_fluid_contact()");
+	return -1;
+}
+
+void simulate::Utility::assign_type_fluid_contact(
+	nst::State& state
+)
+{
+	for(auto& node: state.nodes)
+	{
+		node.calculated.type_fluid_contact = -1;
+	}
+	
+	for(const auto& tube: state.tubes)
+	{
+		const int id_fluid_begin = tube.id_fluid_first;
+		const int id_fluid_end = (tube.id_fluid_first + tube.mpos.size()) % 2;
+		
+		auto& contact_begin = state.nodes[tube.id_node_first].calculated.type_fluid_contact;
+		auto& contact_end = state.nodes[tube.id_node_second].calculated.type_fluid_contact;
+		
+		contact_begin = find_type_fluid_contact(contact_begin, id_fluid_begin);
+		contact_end = find_type_fluid_contact(contact_end, id_fluid_end);
+	}
+}
+	

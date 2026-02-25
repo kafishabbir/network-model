@@ -122,7 +122,7 @@ std::string output::Result::plot_flow(
 	const auto& file_full_path = path_folder_figures + file_name;
 
 	std::stringstream ss, ss_final;
-	if(state.nodes.size() >= 10)
+	if(state.nodes.size() >= 20)
 	{ 
 		output_raster::Flow::print_figure(state, file_full_path, visual_property);
 		ss << "\\includegraphics[width=0.6\\textwidth]{" << "figures/" << file_name << "}" << '\n';

@@ -3,7 +3,8 @@
 const std::vector<output_raster::Cairo::Color> output_raster::Flow::colors_v =
 {
 	output_raster::Cairo::Color::grey_dark,
-	output_raster::Cairo::Color::grey_light
+	output_raster::Cairo::Color::grey_light,
+	output_raster::Cairo::Color::grey
 };
 
 void output_raster::Flow::code_node(
@@ -15,8 +16,8 @@ void output_raster::Flow::code_node(
 	double x = node.visual.x;
 	double y = node.visual.y;
 	double radius = node.visual.radius;
-
-	cairo.circle(x, y, radius, Cairo::Color::grey);
+	const auto& color = colors_v[node.calculated.type_fluid_contact];
+	cairo.circle(x, y, radius, color);
 }
 
 

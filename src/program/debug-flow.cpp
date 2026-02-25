@@ -6,7 +6,7 @@ simulate::Property program::DebugFlow::generate_property()
 	simulate::Property property;
 
 	property.type_simulation = simulate::Property::TypeSimulation::test_simple;
-	property.n_tube_rows = 2;
+	property.n_tube_rows = 4;
 	property.n_tube_cols = 4;
 	property.id_fluid_inject = 0;
 	property.constant_sigma = 0.0;
@@ -14,8 +14,8 @@ simulate::Property program::DebugFlow::generate_property()
 	property.constant_mu1_by_mu2 = 1.0;
 	property.constant_mu_scale = 1.0;
 	property.constant_length_scale = 10.0;
-	property.capture_frequency_in_volume_fraction = 0.1;
-	property.volume_max_to_inject = 0.8;
+	property.capture_frequency_in_volume_fraction = 0.025;
+	property.volume_max_to_inject = 0.6;
 	property.n_periods = 2;
 	property.inlet_pressure = 1000;
 

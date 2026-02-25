@@ -1,4 +1,5 @@
 #include "simulate/step1-tube-flow-coefficient.h"
+#include "simulate/utility.h"
 
 double simulate::Step1TubeFlowCoefficient::evaluate_mu(
 	const nst::Tube& tube,
@@ -74,4 +75,6 @@ void simulate::Step1TubeFlowCoefficient::assign_resistance_and_capillary_pressur
 {
 	resistance_coefficient(state);
 	capillary_pressure_magnitude(state);
+	Utility::assign_type_fluid_contact(state);
 }
+

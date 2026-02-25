@@ -99,28 +99,29 @@ std::string output_vector::LabelTube::label_tube_details(
 {
 	std::stringstream ss;
 	
+	ss << "$(" << tube.id_node_first << "-" << tube.id_node_second << ")$, ";
 	ss << "r=$" << s(tube.radius) << "$, ";
-	ss << "l=$" << s(tube.length) << "$, ";
-	ss << "id-1st-fluid=" << tube.id_fluid_first << ", ";
 	ss << "\n\\\\";
 	
 	ss << "mpos=" << v(tube.mpos) << ", "; 
 	ss << "\n\\\\";
 	
+	ss << "l=$" << s(tube.length) << "$, ";
+	ss << "id-1st-fluid=" << tube.id_fluid_first << ", ";
 	ss << "area=$" << s(tube.area()) << "$, ";
+	ss << "\n\\\\";
+	
 	ss << "vol=$" << s(tube.volume()) << "$, ";
 	ss << "resis=$" << s(tube.calculated.resistance_coefficient) << "$, ";
-	ss << "\n\\\\";
-	
 	ss << "$p_c=" << s(tube.calculated.capillary_pressure_magnitude) << "$, ";
+	ss << "\n\\\\";
+		
 	ss << "v=$" << s(tube.calculated.velocity) << "$, ";
 	ss << "t=$" << s(tube.calculated.time) << "$" << (tube.calculated.is_time_min ? "-MIN" : "") << ", ";
-	ss << "\n\\\\";
-	
 	ss << "prop-l-disp=$" << s(tube.calculated.length_displacement_p) << "$, ";
-	ss << "vol-disp=$" << s(tube.calculated.volume_displacement) << "$, ";
 	ss << "\n\\\\";
 	
+	ss << "vol-disp=$" << s(tube.calculated.volume_displacement) << "$, ";
 	ss << "add-prop=$" << s(tube.calculated.add_proportion) << "$, ";
 	ss << "id-sink=" << tube.calculated.id_node_sink << ", ";
 	ss << "\n\\\\";

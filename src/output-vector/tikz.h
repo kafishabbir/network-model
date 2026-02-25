@@ -20,7 +20,13 @@ namespace output_vector
 			const double y2
 		);
 
-
+		static std::string circle(
+			const double x,
+			const double y,
+			const double radius, 
+			const std::string& color
+		);
+		
 		static std::string circle(
 			const double x,
 			const double y,

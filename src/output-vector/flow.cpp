@@ -5,7 +5,7 @@
 #include "output/latex.h"
 #include <fstream>
 
-const std::vector<std::string> output_vector::Flow::colors_str_v{"cw", "cnw"};
+const std::vector<std::string> output_vector::Flow::colors_str_v{"cw", "cnw", "cmx"};
 
 
 void output_vector::Flow::save_latex_code_of_figure(

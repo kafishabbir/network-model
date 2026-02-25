@@ -8,7 +8,11 @@ namespace simulate
 	class Utility
 	{
 		static nst::Tank tube_inventory(const nst::Tube& tube);
-
+		
+		static int find_type_fluid_contact(
+			const int existing,
+			const int addition
+		);
 
 		public:
 
@@ -20,7 +24,14 @@ namespace simulate
 			const double pressure_left_boundary,
 			const double pressure_right_boundary
 		);
+		
+		
 
+		static void assign_type_fluid_contact(
+			nst::State& state
+		);
+		
+		
 		static bool decide_if_more_fluid_still_needs_to_be_injected(const nst::State& state);
 		static bool decide_if_capture_state_for_plot(nst::State& state);
 	};

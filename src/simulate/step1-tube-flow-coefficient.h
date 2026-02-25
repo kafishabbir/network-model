@@ -30,9 +30,6 @@ namespace simulate
 			nst::State& state
 		);
 		
-		static void assign_type_fluid_contact(
-			nst::State& state
-		);
 		
 	public:
 		static void assign_resistance_and_capillary_pressure_to_tubes(nst::State& state);

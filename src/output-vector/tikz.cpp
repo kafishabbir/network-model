@@ -25,6 +25,18 @@ std::string output_vector::Tikz::circle(
 	return ss.str();
 }
 
+std::string output_vector::Tikz::circle(
+	const double x,
+	const double y,
+	const double radius,
+	const std::string& color
+)
+{
+	std::stringstream ss;
+	ss << "\\draw [" << "fill=" << color << "]" << "(" << d(x) << ", " << d(y) << ") " << "circle" << "(" << d(radius) << ")" << ";";
+	return ss.str();
+}
+
 std::string output_vector::Tikz::node(
 	const double x,
 	const double y,

@@ -36,6 +36,7 @@ double simulate::Step10Measure::oil_delta(const nst::State& state)
 
 void simulate::Step10Measure::measure(nst::State& state)
 {
+	Utility::assign_type_fluid_contact(state);
 	state.calculated.total_fluid_in_system = simulate::Utility::total_fluid_in_system(state);
 	state.calculated.saturation = state.calculated.total_fluid_in_system.volume_water() / state.calculated.total_fluid_in_system.volume_total();
 	state.calculated.volume_total_delta = total_delta(state);

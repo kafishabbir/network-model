@@ -6,23 +6,23 @@ std::string output_vector::LabelNode::label_node_details(const nst::Node& node)
 	std::stringstream ss;
 	
 	ss << "coordinate=$(" << s(node.x) << ", " << s(node.y) << ")$" << "\n\\\\";
-	ss << "id-node-for-symmetry=" << node.calculated.id_symmetric_solver << "\n\\\\";
-	ss << "is-open-boundary=" << (node.is_open_boundary ? "true" : "false") << "\n\\\\";
+	ss << "id-symm=" << node.calculated.id_symmetric_solver << "\n\\\\";
+	ss << "open-bound=" << (node.is_open_boundary ? "true" : "false") << "\n\\\\";
+	ss << "contact=" << node.calculated.type_fluid_contact << "\n\\\\";
 	
 	if(node.is_open_boundary)
 	{
 		ss << "is-inlet=" << (node.is_inlet ? "true" : "false") << "\n\\\\";
-		ss << "is-fluid-injected=" 
-	   << (node.calculated.is_fluid_injected_from_external_to_this_node ? "true" : "false") << "\n\\\\";
-		ss << "boundary-pressure=" << s(node.pressure) << "\n\\\\";
+		ss << "is-fluid-injected=" << (node.calculated.is_fluid_injected_from_external_to_this_node ? "true" : "false") << "\n\\\\";
+		ss << "bound-pressure=" << s(node.pressure) << "\n\\\\";
 		ss << "id-fluid-inject=" << node.id_fluid_inject << "\n\\\\";
 	}
 	
 	ss << "connected-tubes=" << v(node.reference.connections_id_tube_v) << "\n\\\\";
 	ss << "tank=" << node.calculated.tank.str() << "\n\\\\";
 	// ss << "calc-pressure=" << s(node.calculated.pressure) << "\n\\\\";
-	ss << "volume-fluid-flow-out=" << s(node.calculated.volume_fluid_flow_out) << "\n\\\\";
-	ss << "flow-out-id-tubes=" << v(node.calculated.flow_out_id_tube_v);
+	ss << "flow-out=" << s(node.calculated.volume_fluid_flow_out) << "\n\\\\";
+	ss << "flow-out=" << v(node.calculated.flow_out_id_tube_v);
 
 	return Tikz::node_long(node.visual.x + 0.03, node.visual.y + 0.01, ss.str());
 }
