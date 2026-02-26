@@ -47,6 +47,14 @@ dst::States simulate::Menu::steps(nst::State& state)
 
 		if(Utility::decide_if_capture_state_for_plot(state))
 		{
+			Step10Measure::assign_saturation_and_pressure_vs_coordinate(state);
+			
+			//~ for(const auto& [t, p]: state.measured.pressure_vs_time)
+			//~ {
+				//~ std::cout << "t=" << t << ", p" << p << '\n';
+			//~ }
+			//~ std::cout << "\n\n\n";
+			
 			states.push_back(state);
 			state.reference.comment = "";
 		}

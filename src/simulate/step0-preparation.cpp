@@ -88,10 +88,10 @@ void simulate::Step0Preparation::modify_constants(
 
 	state.physical_constant.sigma = simulate_property.constant_sigma;
 
-	fluid_water.viscosity = simulate_property.constant_mu1_by_mu2 * simulate_property.constant_mu_scale;
+	fluid_water.viscosity = std::sqrt(simulate_property.constant_mu1_by_mu2) * simulate_property.constant_mu_scale;
 	fluid_water.density = 1;
 
-	fluid_oil.viscosity = simulate_property.constant_mu_scale;
+	fluid_oil.viscosity = simulate_property.constant_mu_scale / std::sqrt(simulate_property.constant_mu1_by_mu2);
 	fluid_oil.density = 1;
 
 	state.simulation_constant.time_step_resolution = 0.1;
@@ -105,8 +105,54 @@ void simulate::Step0Preparation::modify_constants(
 			(simulate_property.type_simulation == Property::TypeSimulation::periodic_const_volume_injection_const_porosity)
 		);
 		
-	state.simulation_constant.l_min_by_l_max = find_l_ratio(state);
-	state.simulation_constant.r_min_by_r_max = find_r_ratio(state);
+	
+}
+
+void simulate::Step0Preparation::calculate_and_set_lr_min_max(nst::State& state)
+{
+    // Initialize with first tube values
+    double r_min = state.tubes.front().radius;
+    double r_max = state.tubes.front().radius;
+    double l_min = state.tubes.front().length;
+    double l_max = state.tubes.front().length;
+    
+    double radius_sum = 0.0;
+    double length_sum = 0.0;
+    
+    // Iterate through all tubes to find min, max, and calculate sum for average
+    for (const auto& tube : state.tubes)
+    {
+        // Update radius min/max
+        r_min = std::min(r_min, tube.radius);
+        r_max = std::max(r_max, tube.radius);
+        
+        // Update length min/max
+        l_min = std::min(l_min, tube.length);
+        l_max = std::max(l_max, tube.length);
+        
+        // Add to sums for averages
+        radius_sum += tube.radius;
+        length_sum += tube.length;
+    }
+    
+    // Calculate averages
+    double tube_count = state.tubes.size();
+    double radius_average = radius_sum / tube_count;
+    double length_average = length_sum / tube_count;
+    
+    double radius_ratio = r_min / r_max;
+    double length_ratio = l_min / l_max;
+    
+    // Assign all values to state.reference
+    state.reference.radius_min = r_min;
+    state.reference.radius_max = r_max;
+    state.reference.radius_average = radius_average;
+    state.reference.radius_ratio = radius_ratio;
+    
+    state.reference.length_min = l_min;
+    state.reference.length_max = l_max;
+    state.reference.length_average = length_average;
+    state.reference.length_ratio = length_ratio;
 }
 
 void simulate::Step0Preparation::modify_boundary(
@@ -146,18 +192,59 @@ void simulate::Step0Preparation::assign_initial_total_fluid_to_state(
 
 }
 
+void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
+	nst::State& state,
+	const simulate::Property& simulate_property
+)
+{
+	state.reference.comment = simulate_property.str();
+}
 
+
+int simulate::Step0Preparation::count_inlet_nodes(
+	const nst::State& state
+)
+{
+	int count = 0;
+	for(const auto& node: state.nodes)
+	{
+		if(node.is_open_boundary && node.is_inlet)
+		{
+			++ count;
+		}
+	}
+	
+	return count;	
+}
+		
+void simulate::Step0Preparation::set_other_references(
+	nst::State& state,
+	const simulate::Property& simulate_property
+)
+{		
+	state.reference.id_fluid_inject = simulate_property.id_fluid_inject;
+	state.reference.viscosity_ratio = simulate_property.constant_mu1_by_mu2;
+	state.reference.radius_contrast = simulate_property.constant_radius_contrast;
+	state.reference.n_tube_rows = simulate_property.n_tube_rows;
+	state.reference.n_tube_cols = simulate_property.n_tube_cols;
+	state.reference.n_periods = simulate_property.n_periods;
+	state.reference.n_inject_boundaries = count_inlet_nodes(state);
+}
 
 nst::State simulate::Step0Preparation::generate_state(const simulate::Property& simulate_property)
 {
 	nst::State state;
-
+	
+	
 	assign_str_of_simulate_property_to_state(state, simulate_property);
 
 	choose_network_geometry(state, simulate_property);
 
 	modify_constants(state, simulate_property);
-
+	
+	calculate_and_set_lr_min_max(state);
+	set_other_references(state, simulate_property);
+	
 	modify_boundary(state, simulate_property);
 
 	create_connections_id_tube_v_for_node(state);
@@ -168,40 +255,8 @@ nst::State simulate::Step0Preparation::generate_state(const simulate::Property& 
 }
 
 
-void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
-	nst::State& state,
-	const simulate::Property& simulate_property
-)
-{
-	state.reference.comment = simulate_property.str();
-}
 
-double simulate::Step0Preparation::find_l_ratio(const nst::State& state)
-{
-	double l_min = state.tubes.front().length;
-	double l_max = state.tubes.front().length;
-	
-	for(const auto& tube: state.tubes)
-	{
-		l_min = std::min(l_min, tube.length);
-		l_max = std::max(l_max, tube.length);
-	}
-	
-	return l_min / l_max;
-}
 
-double simulate::Step0Preparation::find_r_ratio(const nst::State& state)
-{
-	double r_min = state.tubes.front().radius;
-	double r_max = state.tubes.front().radius;
-	
-	for(const auto& tube: state.tubes)
-	{
-		r_min = std::min(r_min, tube.radius);
-		r_max = std::max(r_max, tube.radius);
-	}
-	
-	return r_min / r_max;
-}
+
 
 

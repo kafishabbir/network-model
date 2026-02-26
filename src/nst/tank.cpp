@@ -92,3 +92,8 @@ std::string nst::Tank::str() const
 
 	return ss.str();
 }
+
+double nst::Tank::saturation() const
+{
+	return volume_water() / volume_total();
+}

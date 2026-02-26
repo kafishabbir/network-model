@@ -7,7 +7,7 @@ namespace simulate
 {
 	class Utility
 	{
-		static nst::Tank tube_inventory(const nst::Tube& tube);
+		
 		
 		static int find_type_fluid_contact(
 			const int existing,
@@ -25,7 +25,7 @@ namespace simulate
 			const double pressure_right_boundary
 		);
 		
-		
+		static nst::Tank tube_inventory(const nst::Tube& tube);
 
 		static void assign_type_fluid_contact(
 			nst::State& state

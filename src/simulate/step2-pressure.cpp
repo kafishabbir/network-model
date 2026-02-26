@@ -79,20 +79,13 @@ std::pair<dst::RowColVals, std::vector<double>> simulate::Step2Pressure::generat
 	const int n_nodes = state.nodes.size();
 
 	int count = 0;
-	int count_inlet = 0;
+	//int count_inlet = 0;
 	for(int i = 0; i < n_nodes; ++ i)
 	{
 		auto& node = state.nodes[i];
-		if(node.is_open_boundary)
+		if(node.is_open_boundary && (!node.is_inlet))
 		{
-			if(node.is_inlet)
-			{
-				++ count_inlet;
-			}
-			else
-			{
-				continue;
-			}
+			continue;
 		}
 
 		node.calculated.id_symmetric_solver = (count ++);
@@ -100,7 +93,7 @@ std::pair<dst::RowColVals, std::vector<double>> simulate::Step2Pressure::generat
 
 	dst::RowColVals A;
 	std::vector<double> B;
-	const double flow_rate_injection_single_node = 1.0 / count_inlet;
+	const double flow_rate_injection_single_node = 1.0 / state.reference.n_inject_boundaries;
 	for(int i = 0; i < n_nodes; ++ i)
 	{
 		const auto& node = state.nodes[i];

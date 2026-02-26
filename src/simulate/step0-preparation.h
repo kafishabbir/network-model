@@ -11,9 +11,7 @@ namespace simulate
 {
 	class Step0Preparation
 	{
-		static double find_l_ratio(const nst::State& state);
-		static double find_r_ratio(const nst::State& state);
-		
+	
 		static void assign_str_of_simulate_property_to_state(
 			nst::State& state,
 			const simulate::Property& simulate_property
@@ -34,6 +32,17 @@ namespace simulate
 		);
 
 		static void modify_boundary(
+			nst::State& state,
+			const simulate::Property& simulate_property
+		);
+		
+		static void calculate_and_set_lr_min_max(nst::State& state);
+		
+		static int count_inlet_nodes(
+			const nst::State& state
+		);
+		
+		static void set_other_references(
 			nst::State& state,
 			const simulate::Property& simulate_property
 		);

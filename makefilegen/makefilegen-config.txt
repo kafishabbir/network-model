@@ -46,6 +46,7 @@ output/visual-dimension
 
 output-raster/cairo
 output-raster/flow
+output/json
 
 output-vector/draw
 output-vector/tikz

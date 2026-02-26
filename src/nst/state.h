@@ -22,8 +22,6 @@ namespace nst
 			double capture_frequency_in_volume_fraction;
 			double volume_max_to_inject;
 			bool is_const_volume_injection_simple;
-			double l_min_by_l_max;
-			double r_min_by_r_max;
 			SimulationConstant();
 		};
 
@@ -36,6 +34,7 @@ namespace nst
 			double time_taken_by_solving_linear_equations;
 			int count_captured;
 			std::vector<double> time_taken_by_each_step;
+			std::vector<std::pair<double, double>> pressure_vs_time;
 			Measured();
 		};
 
@@ -43,6 +42,21 @@ namespace nst
 		{
 			int id_step;
 			std::string comment;
+			int id_fluid_inject;
+			double viscosity_ratio;
+			double radius_contrast;
+			int n_tube_rows;
+			int n_tube_cols;
+			double n_periods;
+			double radius_average;
+			double radius_min;
+			double radius_max;
+			double radius_ratio;
+			double length_average;
+			double length_min;
+			double length_max;
+			double length_ratio;
+			int n_inject_boundaries;
 			Reference();
 		};
 
@@ -57,6 +71,9 @@ namespace nst
 			double volume_total_delta;
 			double water_volume_delta;
 			double oil_volume_delta;
+			double average_pressure;
+			std::vector<std::pair<double, double>> pressure_vs_y;
+			std::vector<std::pair<double, double>> saturation_vs_x;
 			Calculated();
 		};
 

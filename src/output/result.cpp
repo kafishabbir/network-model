@@ -10,6 +10,11 @@ const std::string output::Result::path_flow = "run/results/flow/";
 const std::string output::Result::path_folder_figures =
 	output::Result::path_flow + "figures/";
 
+const std::string output::Result::path_raw = "run/results/plots/";
+
+const std::string output::Result::file_name_full_raw =
+	output::Result::path_raw + "data.json";
+
 
 std::string output::Result::generate_file_name_from_index(const int i)
 {
@@ -26,6 +31,7 @@ output::Result::Result():
 {
 	std::filesystem::remove_all(path_folder_figures);
 	std::filesystem::create_directories(path_folder_figures);
+	std::filesystem::create_directories(path_raw);
 	std::filesystem::create_directories(path_flow + "output/");
 	
 	const auto& file_name = path_flow + "Makefile";
@@ -49,6 +55,8 @@ output::Result::~Result()
 	fout << fin.rdbuf() << '\n';
 
 	fout << Latex::begin_end_document_scope(ss_flow.str());
+	
+	json.write_to_file(file_name_full_raw);
 }
 
 std::pair<std::string, std::string> output::Result::generate_flow_caption(
@@ -85,8 +93,8 @@ std::pair<std::string, std::string> output::Result::generate_flow_caption(
     // NETWORK CHARACTERISTICS
     ss2 << "\\item " << "NETWORK CHARACTERISTICS:" << "\n";
     ss2 << "\\begin{enumerate}\n";
-    ss2 << "\\item $R_{min} / R_{max} =" << s(state.simulation_constant.r_min_by_r_max) << "$,\n";
-    ss2 << "\\item $l_{min} / l_{max} =" << s(state.simulation_constant.l_min_by_l_max)  << "$,\n";
+    ss2 << "\\item $R_{min} / R_{max} =" << s(state.reference.radius_ratio) << "$,\n";
+    ss2 << "\\item $l_{min} / l_{max} =" << s(state.reference.length_ratio)  << "$,\n";
     ss2 << "\\item $n_{nodes}=" << state.nodes.size() << "$,\n";
     ss2 << "\\item $n_{tubes}=" << state.tubes.size() << "$\n";
     ss2 << "\\end{enumerate}\n";
@@ -141,6 +149,54 @@ std::string output::Result::plot_flow(
 	return ss_final.str();
 }
 
+output::Json::Simulation output::Result::convert_to_json_simulation(const dst::States& states, const int id)
+{
+    const auto& state = states.back();
+    
+    output::Json::Simulation simulation;
+    
+    // InitialParameter assignments
+    simulation.initial_parameter.id_fluid_inject = state.reference.id_fluid_inject;
+    simulation.initial_parameter.sigma = state.physical_constant.sigma;
+    simulation.initial_parameter.viscosity_ratio = state.reference.viscosity_ratio;
+    simulation.initial_parameter.radius_contrast = state.reference.radius_contrast;
+    simulation.initial_parameter.n_tube_rows = state.reference.n_tube_rows;
+    simulation.initial_parameter.n_tube_cols = state.reference.n_tube_cols;
+    simulation.initial_parameter.n_periods = state.reference.n_periods;
+    
+    // NetworkProperty assignments
+    simulation.network_property.n_tubes = state.tubes.size();  // Need to fill - from tubes vector size
+    simulation.network_property.n_nodes = state.nodes.size();  // Need to fill - from nodes vector size
+    simulation.network_property.radius_average = state.reference.radius_average;
+    simulation.network_property.radius_min = state.reference.radius_min;
+    simulation.network_property.radius_max = state.reference.radius_max;
+    simulation.network_property.radius_ratio = state.reference.radius_ratio;
+    simulation.network_property.length_average = state.reference.length_average;
+    simulation.network_property.length_min = state.reference.length_min;
+    simulation.network_property.length_max = state.reference.length_max;
+    simulation.network_property.length_ratio = state.reference.length_ratio;
+    
+    // Capture assignments - this will need to be populated from multiple states
+    // For each capture state in states (except first which is initial state)
+    for(const auto& capture_state: states)
+    {
+        output::Json::Simulation::Capture capture;
+        
+        capture.time = capture_state.measured.time_elapsed;  // or calculated.time_step?
+        capture.pressure_vs_y = capture_state.calculated.pressure_vs_y;
+        capture.saturation_vs_x = capture_state.calculated.saturation_vs_x;
+        
+        simulation.captures.push_back(capture);
+    }
+    
+    // pressure_vs_time assignments
+    simulation.pressure_vs_time = state.measured.pressure_vs_time;
+    
+    //std::cout << "size=" << simulation.pressure_vs_time.size() << '\n';
+	simulation.id = id;
+    return simulation;
+}
+
 
 void output::Result::add(
 	dst::States& states,
@@ -166,6 +222,7 @@ void output::Result::add(
 		++ count_figures;
 		ss_flow << plot_flow(state, visual_property, count_figures) << '\n';
 	}
-
+	
+	json.simulations.push_back(convert_to_json_simulation(states, count_simulations));
 }
 
