@@ -7,10 +7,10 @@ simulate::Property program::FlowInPeriodicMedium::generate_property()
 	simulate::Property property;
 
 	//property.type_simulation = simulate::Property::TypeSimulation::periodic_const_pressure_variable_porosity;
-	//property.type_simulation = simulate::Property::TypeSimulation::periodic_const_volume_injection_variable_porosity;
-	property.type_simulation = simulate::Property::TypeSimulation::periodic_const_volume_injection_const_porosity;
-	property.n_tube_rows = 20;
-	property.n_tube_cols = 20;
+	property.type_simulation = simulate::Property::TypeSimulation::periodic_const_volume_injection_variable_porosity;
+	//property.type_simulation = simulate::Property::TypeSimulation::periodic_const_volume_injection_const_porosity;
+	property.n_tube_rows = 40;
+	property.n_tube_cols = 40;
 	property.id_fluid_inject = 0;
 	property.constant_sigma = 0.0;
 	property.constant_radius_contrast = 0.5;
@@ -38,9 +38,18 @@ output::Property program::FlowInPeriodicMedium::generate_visual_property()
 
 void program::FlowInPeriodicMedium::run()
 {
-	const auto simulate_property = generate_property();
-	auto solution_states = simulate::Menu::run(simulate_property );
-	
+	std::vector<double> sigma_v{0, 10, 1e2, 1e3, 1e4};
+	std::vector<double> radius_contrast_v{0.8};
 	output::Result output_result;
-	output_result.add(solution_states, simulate_property, generate_visual_property());
+	for(auto sigma: sigma_v)
+	{
+		for(auto radius_contrast: radius_contrast_v)
+		{
+			auto simulate_property = generate_property();
+			simulate_property.constant_sigma = sigma;
+			simulate_property.constant_radius_contrast = radius_contrast;
+			auto solution_states = simulate::Menu::run(simulate_property );
+			output_result.add(solution_states, simulate_property, generate_visual_property());
+		}
+	}
 }
