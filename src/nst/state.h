@@ -34,7 +34,6 @@ namespace nst
 			double time_taken_by_solving_linear_equations;
 			int count_captured;
 			std::vector<double> time_taken_by_each_step;
-			std::vector<std::pair<double, double>> pressure_vs_time;
 			Measured();
 		};
 
@@ -76,7 +75,15 @@ namespace nst
 			std::vector<std::pair<double, double>> saturation_vs_x;
 			Calculated();
 		};
-
+		
+		struct HighFrequencyData
+		{
+			double time;
+			double pressure;
+			double saturation;
+			double flow_rate;
+		};
+		
 	public:
 		PhysicalConstant physical_constant;
 		SimulationConstant simulation_constant;
@@ -87,7 +94,9 @@ namespace nst
 		Measured measured;
 		Reference reference;
 		Calculated calculated;
-
+	
+		std::vector<HighFrequencyData> high_frequency_data_v;
+		
 		State();
 		double water_viscosity() const;
 		double oil_viscosity() const;

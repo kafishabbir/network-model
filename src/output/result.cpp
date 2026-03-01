@@ -190,7 +190,7 @@ output::Json::Simulation output::Result::convert_to_json_simulation(const dst::S
     }
     
     // pressure_vs_time assignments
-    simulation.pressure_vs_time = state.measured.pressure_vs_time;
+    simulation.high_frequency_data_v = state.high_frequency_data_v;
     
     //std::cout << "size=" << simulation.pressure_vs_time.size() << '\n';
 	simulation.id = id;

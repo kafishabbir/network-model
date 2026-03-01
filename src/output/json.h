@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-
+#include "global/dst.h"
 namespace output
 {
 	struct Json
@@ -47,7 +47,7 @@ namespace output
 			InitialParameter initial_parameter;
 			NetworkProperty network_property;
 			std::vector<Capture> captures;
-			std::vector<std::pair<double, double>> pressure_vs_time;
+			std::vector<nst::State::HighFrequencyData> high_frequency_data_v;
 				
 		};
     

@@ -17,7 +17,7 @@ nst/tube
 program/debug-flow
 program/flow-in-periodic-medium
 program/function-trial
-
+program/permeability
 simulate/menu
 simulate/property
 simulate/step0-preparation

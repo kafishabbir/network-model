@@ -62,9 +62,10 @@ void output::Json::write_to_file(const std::string& filename) const
         }
         
         // Pressure vs time
-        sim_json["pressure_vs_time"] = nlohmann::json::array();
-        for (const auto& pt : sim.pressure_vs_time) {
-            sim_json["pressure_vs_time"].push_back({pt.first, pt.second});
+        sim_json["time-pressure-saturation-flow-rate"] = nlohmann::json::array();
+        for (const auto& pt : sim.high_frequency_data_v) {
+            sim_json["time-pressure-saturation-flow-rate"].push_back(
+				{pt.time, pt.pressure, pt.saturation, pt.flow_rate});
         }
         
         j["simulations"].push_back(sim_json);

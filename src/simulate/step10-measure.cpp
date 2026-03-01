@@ -60,7 +60,14 @@ void simulate::Step10Measure::measure(nst::State& state)
 	if(state.reference.id_step % 20 == 0)
 	{
 		state.calculated.average_pressure = find_average_pressure(state);
-		state.measured.pressure_vs_time.push_back({state.measured.time_elapsed, state.calculated.average_pressure});
+		
+		nst::State::HighFrequencyData high_frequency_data;
+		high_frequency_data.time = state.measured.time_elapsed;
+		high_frequency_data.pressure = state.calculated.average_pressure;
+		high_frequency_data.saturation = state.calculated.saturation;
+		high_frequency_data.flow_rate = state.calculated.fluid_added.volume_total() / state.calculated.time_step;
+		
+		state.high_frequency_data_v.push_back(high_frequency_data);
 	}
 }
 
