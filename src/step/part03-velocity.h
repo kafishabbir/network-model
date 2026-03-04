@@ -1,29 +1,29 @@
 #ifndef SIMULATE_STEP3_VELOCITY_H
 #define SIMULATE_STEP3_VELOCITY_H
 
-#include "global/dst.h"
+#include "dst/system.h"
 
-namespace simulate
+namespace step
 {
-	class Step3Velocity
+	class Part03Velocity
 	{
 		static double flow_rate(
 			const nst::Tube& tube,
-			const nst::State& state
+			const dst::System& state
 		);
 
 		static void flow_rate(
-			nst::State& state
+			dst::System& state
 		);
 
 		static void velocity(
-			nst::State& state
+			dst::System& state
 		);
 
 		public:
 
 		static void calculate_and_assign_flow_rate_and_velocity_to_tube(
-			nst::State& state
+			dst::System& state
 		);
 	};
 }

@@ -53,6 +53,8 @@ namespace nst
 		Tube reversed() const;
 		void reverse();
 	};
+	
+	typedef std::vector<nst::Tube> Tubes;
 
 }
 

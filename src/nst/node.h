@@ -51,6 +51,8 @@ namespace nst
 
 		Node();
 	};
+	
+	typedef std::vector<Node> Nodes;
 }
 
 

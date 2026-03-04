@@ -1,8 +1,8 @@
-#include "simulate/step4-time-step.h"
+#include "step/part04-time.h"
 
 
-void simulate::Step4TimeStep::time_for_each_tube(
-	nst::State& state
+void step::Part04Time::time_for_each_tube(
+	dst::System& state
 )
 {
 	for(auto& tube: state.tubes)
@@ -12,8 +12,8 @@ void simulate::Step4TimeStep::time_for_each_tube(
 }
 
 
-void simulate::Step4TimeStep::select_tube_with_minimum_time(
-	nst::State& state
+void step::Part04Time::select_tube_with_minimum_time(
+	dst::System& state
 )
 {
 	double val_min = state.tubes.front().calculated.time;
@@ -40,8 +40,8 @@ void simulate::Step4TimeStep::select_tube_with_minimum_time(
 	state.measured.time_elapsed += state.calculated.time_step;
 }
 
-void simulate::Step4TimeStep::assign_time_step_to_state(
-	nst::State& state
+void step::Part04Time::assign_time_step_to_state(
+	dst::System& state
 )
 {
 	time_for_each_tube(state);

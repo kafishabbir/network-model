@@ -65,6 +65,8 @@ namespace nst
 			double time_step;
 			nst::Tank fluid_added;
 			nst::Tank fluid_evacuated;
+			
+			// Fill these ones if I am saving a snap only
 			nst::Tank total_fluid_in_system;
 			double saturation;
 			double volume_total_delta;
@@ -87,14 +89,15 @@ namespace nst
 	public:
 		PhysicalConstant physical_constant;
 		SimulationConstant simulation_constant;
-
+		
+		Measured measured;
+		
 		std::vector<nst::Node> nodes;
 		std::vector<nst::Tube> tubes;
-
-		Measured measured;
+		
 		Reference reference;
 		Calculated calculated;
-	
+					
 		std::vector<HighFrequencyData> high_frequency_data_v;
 		
 		State();

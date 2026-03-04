@@ -2,7 +2,7 @@
 
 double nst::Tube::area() const
 {
-	return decl::pi * std::pow(radius, 2);
+	return std::acos(-1) * std::pow(radius, 2);
 }
 
 double nst::Tube::volume() const

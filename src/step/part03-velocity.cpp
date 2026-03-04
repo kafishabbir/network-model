@@ -1,8 +1,8 @@
-#include "simulate/step3-velocity.h"
+#include "step/part03-velocity.h"
 
-double simulate::Step3Velocity::flow_rate(
+double step::Part03Velocity::flow_rate(
 	const nst::Tube& tube,
-	const nst::State& state
+	const dst::System& state
 )
 {
 	const auto& node_first = state.nodes[tube.id_node_first];
@@ -16,8 +16,8 @@ double simulate::Step3Velocity::flow_rate(
 	return resistance  * (delta_pressure + capillary_pressure);
 }
 
-void simulate::Step3Velocity::flow_rate(
-	nst::State& state
+void step::Part03Velocity::flow_rate(
+	dst::System& state
 )
 {
 	for(auto& tube: state.tubes)
@@ -27,8 +27,8 @@ void simulate::Step3Velocity::flow_rate(
 }
 
 
-void simulate::Step3Velocity::velocity(
-	nst::State& state
+void step::Part03Velocity::velocity(
+	dst::System& state
 )
 {
 	for(auto& tube: state.tubes)
@@ -38,8 +38,8 @@ void simulate::Step3Velocity::velocity(
 }
 
 
-void simulate::Step3Velocity::calculate_and_assign_flow_rate_and_velocity_to_tube(
-	nst::State& state
+void step::Part03Velocity::calculate_and_assign_flow_rate_and_velocity_to_tube(
+	dst::System& state
 )
 {
 	flow_rate(state);

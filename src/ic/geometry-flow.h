@@ -8,7 +8,7 @@ namespace ic
 	class GeometryFlow
 	{
 		static std::tuple<double, double, double, double> find_min_max_coordinates(
-			const dst::Nodes& nodes
+			const nst::Nodes& nodes
 		);
 
 		public:

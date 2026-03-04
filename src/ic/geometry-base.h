@@ -1,15 +1,16 @@
 #ifndef IC_GEOMETRY_BASE_H
 #define IC_GEOMETRY_BASE_H
 
-#include "global/dst.h"
+#include "nst/node.h"
+#include "nst/tube.h"
 
 namespace ic
 {
-	typedef std::pair<dst::Nodes, std::vector<nst::Tube>>type_pair_nodes_tubes;
+	typedef std::pair<nst::Nodes, std::vector<nst::Tube>>type_pair_nodes_tubes;
 
 	class GeometryBase
 	{
-		static dst::Nodes rectangular_nodes(
+		static nst::Nodes rectangular_nodes(
 			const int n_tube_rows,
 			const int n_tube_cols,
 			const int id_fluid_inject,

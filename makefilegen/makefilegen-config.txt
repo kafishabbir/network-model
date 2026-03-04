@@ -1,12 +1,16 @@
 exe/simulate
 
 global/decl
-global/dst
 
 ic/geometry-base
 ic/geometry-flow
 ic/geometry-rand
+ic/menu
 
+dst/system
+dst/state
+dst/parameter
+dst/measured
 
 nst/fluid
 nst/node
@@ -18,20 +22,23 @@ program/debug-flow
 program/flow-in-periodic-medium
 program/function-trial
 program/permeability
+
 simulate/menu
 simulate/property
-simulate/step0-preparation
-simulate/step1-tube-flow-coefficient
-simulate/step2-pressure
-simulate/step3-velocity
-simulate/step4-time-step
-simulate/step5-displacement
-simulate/step6-pour-into-node
-simulate/step7-inject-evacuate
-simulate/step8-distribute
-simulate/step9-update-tube-mpos
-simulate/step10-measure
 simulate/utility
+simulate/step0-preparation
+
+step/all-parts
+step/part01-reference
+step/part02-pressure
+step/part03-velocity
+step/part04-time
+step/part05-displacement
+step/part06-pour
+step/part07-inject
+step/part08-distribute
+step/part09-displace
+step/part10-measure
 
 utility/math
 utility/measure

@@ -2,7 +2,7 @@
 
 
 std::tuple<double, double, double, double> ic::GeometryFlow::find_min_max_coordinates(
-	const dst::Nodes& nodes
+	const nst::Nodes& nodes
 )
 {
 	double x_min = nodes.front().x;
@@ -40,7 +40,7 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry(
 
 	const auto& [x_min, y_min, x_max, y_max] = find_min_max_coordinates(nodes);
 	const double length_system = x_max - x_min;
-	const double omega = 2.0 * decl::pi * n_periods / length_system;
+	const double omega = 2.0 * std::acos(-1) * n_periods / length_system;
 	const double x_center = (x_min + x_max) / 2;
 	const double y_center = (y_min + y_max) / 2;
 
@@ -62,7 +62,7 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry(
 		sum_radius_square += std::pow(tube.radius, 2);
 	}
 
-	const double temp_radius_term = 1.0 / decl::pi / constant_length_scale / sum_radius_square;
+	const double temp_radius_term = 1.0 / std::acos(-1) / constant_length_scale / sum_radius_square;
 	const double coefficient_radius_scale = std::pow(temp_radius_term, 1.0 / 3);
 
 	for(auto& tube: tubes)
@@ -92,11 +92,11 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_const_porosity(
 
 	const auto& [x_min, y_min, x_max, y_max] = find_min_max_coordinates(nodes);
 	const double length_system = x_max - x_min;
-	const double omega = 2.0 * decl::pi * n_periods / length_system;
+	const double omega = 2.0 * std::acos(-1) * n_periods / length_system;
 	const double x_center = (x_min + x_max) / 2;
 	const double y_center = (y_min + y_max) / 2;
 	
-	const double k = 1.0 / decl::pi / tubes.size();
+	const double k = 1.0 / std::acos(-1) / tubes.size();
 	const double A = std::pow(k / constant_length_scale, 1.0 / 3);
 	
 	for(auto& tube: tubes)

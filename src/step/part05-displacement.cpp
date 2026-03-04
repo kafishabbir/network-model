@@ -1,8 +1,8 @@
-#include "simulate/step5-displacement.h"
+#include "step/part05-displacement.h"
 
 
-void simulate::Step5Displacement::assign_volume_length_displacement(
-	nst::State& state
+void step::Part05Displacement::assign_volume_length_displacement(
+	dst::System& state
 )
 {
 	const double time_step = state.calculated.time_step;

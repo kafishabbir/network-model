@@ -1,7 +1,7 @@
 #ifndef VISUALIZE_MENU_H
 #define VISUALIZE_MENU_H
 
-#include "global/dst.h"
+#include "dst/system.h"
 #include "simulate/property.h"
 #include "output/property.h"
 #include "output-raster/flow.h"
@@ -30,12 +30,12 @@ namespace output
 		std::stringstream ss_flow;
 		Json json;
 		std::pair<std::string, std::string>generate_flow_caption(
-			const nst::State& state,
+			const dst::System& state,
 			const int count_simulations
 		);
 		
 		std::string plot_flow(
-			const nst::State& state,
+			const dst::System& state,
 			const output::Property& visual_property,
 			const int count_figures
 		);
@@ -51,7 +51,7 @@ namespace output
 
 		void add(
 			dst::States& states,
-			const simulate::Property& simulate_property,
+			const dst::Parameter& simulate_property,
 			const output::Property& visual_property
 		);
 	};

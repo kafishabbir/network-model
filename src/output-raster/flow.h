@@ -1,7 +1,7 @@
 #ifndef VISUALIZE_RASTER_H
 #define VISUALIZE_RASTER_H
 
-#include "global/dst.h"
+#include "dst/system.h"
 #include "output/property.h"
 #include "output-raster/cairo.h"
 
@@ -24,30 +24,30 @@ namespace output_raster
 
 		static void code_tube(
 			Cairo& cairo,
-			const nst::State& state,
+			const dst::System& state,
 			int id_tube,
 			const output::Property& visual_property
 		);
 
 		static void code_nodes(
 			Cairo& cairo,
-			const nst::State& state,
+			const dst::System& state,
 			const output::Property& visual_property
 		);
 
 		static void code_tubes(
 			Cairo& cairo,
-			const nst::State& state,
+			const dst::System& state,
 			const output::Property& visual_property
 		);
 
 		static std::pair<double, double> xy_max_nodes(
-			const dst::Nodes& nodes
+			const nst::Nodes& nodes
 		);
 
 		public:
 		static void print_figure(
-			const nst::State& state,
+			const dst::System& state,
 			const std::string& file_name,
 			const output::Property& visual_property
 		);

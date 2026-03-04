@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "global/dst.h"
+#include "dst/system.h"
 namespace output
 {
 	struct Json

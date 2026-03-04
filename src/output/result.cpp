@@ -60,7 +60,7 @@ output::Result::~Result()
 }
 
 std::pair<std::string, std::string> output::Result::generate_flow_caption(
-	const nst::State& state,
+	const dst::System& state,
 	const int count_simulations
 )
 {
@@ -121,7 +121,7 @@ ss2 << "\\end{enumerate}\n";
 }
 
 std::string output::Result::plot_flow(
-	const nst::State& state,
+	const dst::System& state,
 	const output::Property& visual_property,
 	const int count_figures
 )
@@ -200,7 +200,7 @@ output::Json::Simulation output::Result::convert_to_json_simulation(const dst::S
 
 void output::Result::add(
 	dst::States& states,
-	const simulate::Property& simulate_property,
+	const dst::Parameter& simulate_property,
 	const output::Property& visual_property
 )
 {

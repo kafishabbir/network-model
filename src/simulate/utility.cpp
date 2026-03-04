@@ -1,7 +1,7 @@
 #include "simulate/utility.h"
 
 void simulate::Utility::assign_pressure(
-	nst::State& state,
+	dst::System& state,
 	const double pressure_left_boundary,
 	const double pressure_right_boundary
 )
@@ -40,7 +40,7 @@ nst::Tank simulate::Utility::tube_inventory(const nst::Tube& tube)
 	return tank;
 }
 
-nst::Tank simulate::Utility::total_fluid_in_system(const nst::State& state)
+nst::Tank simulate::Utility::total_fluid_in_system(const dst::System& state)
 {
 	nst::Tank tank;
 	for(const auto& tube: state.tubes)
@@ -53,21 +53,10 @@ nst::Tank simulate::Utility::total_fluid_in_system(const nst::State& state)
 
 
 
-void simulate::Utility::reset_calculated(nst::State& state)
-{
-	state.calculated = nst::State::Calculated();
-	for(auto& node: state.nodes)
-	{
-		node.calculated = nst::Node::Calculated();
-	}
-	for(auto& tube: state.tubes)
-	{
-		tube.calculated = nst::Tube::Calculated();
-	}
-}
 
 
-bool simulate::Utility::decide_if_more_fluid_still_needs_to_be_injected(const nst::State& state)
+
+bool simulate::Utility::decide_if_more_fluid_still_needs_to_be_injected(const dst::System& state)
 {
 	const double volume_system = state.measured.initial_total_fluid.volume_total();
 	const double volume_injected = state.measured.total_fluid_added.volume_total();
@@ -77,7 +66,7 @@ bool simulate::Utility::decide_if_more_fluid_still_needs_to_be_injected(const ns
 }
 
 
-bool simulate::Utility::decide_if_capture_state_for_plot(nst::State& state)
+bool simulate::Utility::decide_if_capture_state_for_plot(dst::System& state)
 {
 	const double volume_system = state.measured.initial_total_fluid.volume_total();
 	const double volume_injected = state.measured.total_fluid_added.volume_total();
@@ -123,12 +112,12 @@ int simulate::Utility::find_type_fluid_contact(
 		return addition;
 	}
 	
-	throw std::invalid_argument("existing fluid in node not correct simulate::Step1TubeFlowCoefficient::find_type_fluid_contact()");
+	throw std::invalid_argument("existing fluid in node not correct simulate::step::Part01Reference::find_type_fluid_contact()");
 	return -1;
 }
 
 void simulate::Utility::assign_type_fluid_contact(
-	nst::State& state
+	dst::System& state
 )
 {
 	for(auto& node: state.nodes)

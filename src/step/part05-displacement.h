@@ -1,15 +1,15 @@
 #ifndef SIMULATE_STEP5_DISPLACEMENT_H
 #define SIMULATE_STEP5_DISPLACEMENT_H
 
-#include "global/dst.h"
+#include "dst/system.h"
 
-namespace simulate
+namespace step
 {
-	class Step5Displacement
+	class Part05Displacement
 	{
 		public:
 		static void assign_volume_length_displacement(
-			nst::State& state
+			dst::System& state
 		);
 	};
 }

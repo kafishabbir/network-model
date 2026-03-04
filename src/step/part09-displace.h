@@ -1,11 +1,11 @@
 #ifndef SIMULATE_STEP9_UPDATE_TUBE_MPOS_H
 #define SIMULATE_STEP9_UPDATE_TUBE_MPOS_H
 
-#include "global/dst.h"
+#include "dst/system.h"
 
-namespace simulate
+namespace step
 {
-	class Step9UpdateTubeMpos
+	class Part09Displace
 	{
 		static nst::Tube generate_tube_front(
 			const nst::Tube& tube,
@@ -30,7 +30,7 @@ namespace simulate
 
 		public:
 		static void update_tube_mpos_according_to_proportion(
-			nst::State& state
+			dst::System& state
 		);
 
 

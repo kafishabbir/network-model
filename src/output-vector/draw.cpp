@@ -25,7 +25,7 @@ std::string output_vector::Draw::mpos_horizontal_rectangles(
 
 std::string output_vector::Draw::draw_tube(
 	const nst::Tube& tube,
-	const nst::State& state,
+	const dst::System& state,
 	const output::Property& visual_property,
 	const std::vector<std::string>& colors
 )
@@ -42,7 +42,7 @@ std::string output_vector::Draw::draw_tube(
 }
 
 std::string output_vector::Draw::draw_tubes(
-	const nst::State& state,
+	const dst::System& state,
 	const output::Property& visual_property,
 	const std::vector<std::string>& colors
 )
@@ -71,7 +71,7 @@ std::string output_vector::Draw::draw_node(
 }
 
 std::string output_vector::Draw::draw_nodes(
-	const nst::State& state,
+	const dst::System& state,
 	const output::Property& visual_property,
 	const std::vector<std::string>& colors
 )

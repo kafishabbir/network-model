@@ -35,7 +35,7 @@ std::pair<val, val> output::VisualDimension::min_max(
 	return {val_min, val_max};
 }
 
-void output::VisualDimension::node_coordinates(nst::State& state, const output::Property& visual_property)
+void output::VisualDimension::node_coordinates(dst::System& state, const output::Property& visual_property)
 {
 	const auto& [min_x, max_x] = min_max(state.nodes, &nst::Node::x);
 
@@ -49,7 +49,7 @@ void output::VisualDimension::node_coordinates(nst::State& state, const output::
 }
 
 
-void output::VisualDimension::tube_lengths(nst::State& state, const output::Property& visual_property)
+void output::VisualDimension::tube_lengths(dst::System& state, const output::Property& visual_property)
 {
 	auto& tubes = state.tubes;
 	auto& nodes = state.nodes;
@@ -62,7 +62,7 @@ void output::VisualDimension::tube_lengths(nst::State& state, const output::Prop
 	}
 }
 
-void output::VisualDimension::tube_radius(nst::State& state, const output::Property& visual_property)
+void output::VisualDimension::tube_radius(dst::System& state, const output::Property& visual_property)
 {
 	auto& tubes = state.tubes;
 	const auto& [r_min, r_max] = min_max(tubes, &nst::Tube::radius);
@@ -89,7 +89,7 @@ void output::VisualDimension::tube_radius(nst::State& state, const output::Prope
 	}
 }
 
-void output::VisualDimension::node_radius(nst::State& state, const output::Property& visual_property)
+void output::VisualDimension::node_radius(dst::System& state, const output::Property& visual_property)
 {
 	auto& nodes = state.nodes;
 	const int n_nodes = nodes.size();
@@ -134,7 +134,7 @@ std::vector<double> output::VisualDimension::mpos_long_displaced_scaled(
 
 }
 
-void output::VisualDimension::mpos(nst::State& state, const output::Property& visual_property)
+void output::VisualDimension::mpos(dst::System& state, const output::Property& visual_property)
 {
 	//int i = 0;
 	const auto& nodes = state.nodes;
@@ -151,7 +151,7 @@ void output::VisualDimension::mpos(nst::State& state, const output::Property& vi
 }
 
 void output::VisualDimension::add_state_visual(
-	nst::State& state, const output::Property& visual_property
+	dst::System& state, const output::Property& visual_property
 )
 {
 	node_coordinates(state, visual_property);

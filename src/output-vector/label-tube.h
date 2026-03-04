@@ -1,7 +1,7 @@
 #ifndef OUTPUT_VECTOR_LABEL_TUBE_H
 #define OUTPUT_VECTOR_LABEL_TUBE_H
 
-#include "global/dst.h"
+#include "dst/system.h"
 #include "utility/str.h"
 
 namespace output_vector
@@ -33,17 +33,17 @@ namespace output_vector
 		static std::string label_tube_basic(
 			const nst::Tube& tube, 
 			const int id_tube,
-			const nst::State& state
+			const dst::System& state
 		);
 		
 		static std::string label_tube_details(
 			const nst::Tube& tube,
-			const nst::State& state
+			const dst::System& state
 		);
 
 	public:
-		static std::string basic(const nst::State& state);
-		static std::string details(const nst::State& state);
+		static std::string basic(const dst::System& state);
+		static std::string details(const dst::System& state);
 	};
 }
 

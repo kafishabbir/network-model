@@ -1,28 +1,40 @@
 #include "program/flow-in-periodic-medium.h"
+#include "simulate/menu.h"
 #include "output/result.h"
 
-
-simulate::Property program::FlowInPeriodicMedium::generate_property()
+dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed from generate_property
 {
-	simulate::Property property;
+	dst::Parameter parameter;
 
-	//property.type_simulation = simulate::Property::TypeSimulation::periodic_const_pressure_variable_porosity;
-	//property.type_simulation = simulate::Property::TypeSimulation::periodic_const_volume_injection_variable_porosity;
-	property.type_simulation = simulate::Property::TypeSimulation::periodic_const_volume_injection_const_porosity;
-	property.n_tube_rows = 30;
-	property.n_tube_cols = 90;
-	property.id_fluid_inject = 0;
-	property.constant_sigma = 0.0;
-	property.constant_radius_contrast = 0.5;
-	property.constant_mu1_by_mu2 = 1.0;
-	property.constant_mu_scale = 1.0;
-	property.constant_length_scale = 10.0;
-	property.capture_frequency_in_volume_fraction = 0.2;
-	property.volume_max_to_inject = 0.65;
-	property.n_periods = 6;
-	property.inlet_pressure = 100;
+	// Set simulation type based on the enum selection
+	// Using periodic_const_volume_injection_const_porosity as the default
+	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
+	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
+	parameter.simulation.is_const_porosity = true;              // true = constant porosity
+	parameter.simulation.id_fluid_inject = 0;
+	//parameter.simulation.inlet_pressure = 100;  // Ignored for constant volume injection
 
-	return property;
+	// Geometry
+	parameter.geometry.n_tube_rows = 40;
+	parameter.geometry.n_tube_cols = 40;
+	parameter.geometry.radius_contrast = 0.5;
+	parameter.geometry.length_scale = 10.0;
+	parameter.geometry.n_periods = 5.5;
+	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
+
+	// Physical constants
+	parameter.constant_physical.sigma = 0.0;
+	parameter.constant_physical.viscosity_water = 1.0;  // viscosity_ratio = 1.0, mu_scale = 1.0
+	parameter.constant_physical.viscosity_oil = 1.0;     // mu_scale / sqrt(viscosity_ratio)
+
+	// Computational constants
+	parameter.constant_computational.time_step_resolution = 0.1;  // Default
+
+	// Plot parameters
+	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
+	parameter.plot.volume_max_to_inject = 0.65;
+
+	return parameter;
 }
 
 output::Property program::FlowInPeriodicMedium::generate_visual_property()
@@ -31,36 +43,48 @@ output::Property program::FlowInPeriodicMedium::generate_visual_property()
 
 	property.tube_radius_min = 0.02;
 	property.tube_radius_max = 0.10;
-	property.largest_angle_tube_project_on_node = decl::pi / 2.0;
+	property.largest_angle_tube_project_on_node = std::acos(-1) / 2.0;
 
 	return property;
 }
 
 void program::FlowInPeriodicMedium::run()
 {
-	std::vector<double> id_fluid_inject_v{0, 1};
+	std::vector<int> id_fluid_inject_v{0, 1};  // Changed from double to int
 	std::vector<double> sigma_v{0, 10, 1000};
 	std::vector<double> radius_contrast_v{0.5};
 	std::vector<double> viscosity_ratio_v{10, 1, 0.1};
+	
 	output::Result output_result;
-	for(int id_fluid_inject: id_fluid_inject_v)
+	
+	for(int id_fluid_inject : id_fluid_inject_v)
 	{
-		for(auto radius_contrast: radius_contrast_v)
+		for(auto radius_contrast : radius_contrast_v)
 		{
-			for(auto sigma: sigma_v)
+			for(auto sigma : sigma_v)
 			{
-				for(auto viscosity_ratio: viscosity_ratio_v)
+				for(auto viscosity_ratio : viscosity_ratio_v)
 				{
-					auto simulate_property = generate_property();
-					simulate_property.id_fluid_inject = id_fluid_inject;
-					simulate_property.constant_sigma = sigma;
-					simulate_property.constant_radius_contrast = radius_contrast;
-					simulate_property.constant_mu1_by_mu2 = viscosity_ratio;
+					// Generate base parameter
+					auto parameter = generate_parameter();
 					
-					auto solution_states = simulate::Menu::run(simulate_property);
-					output_result.add(solution_states, simulate_property, generate_visual_property());
+					// Override with loop values
+					parameter.simulation.id_fluid_inject = id_fluid_inject;
+					parameter.constant_physical.sigma = sigma;
+					parameter.geometry.radius_contrast = radius_contrast;
+					
+
+					parameter.constant_physical.viscosity_water = viscosity_ratio;
+					parameter.constant_physical.viscosity_oil = 1.0;
+					
+					// Run simulation
+					auto system = simulate::Menu::run(parameter);
+					
+					// Add to results
+					output_result.add(system, generate_visual_property());
 				}
 			}
 		}
 	}
+	
 }

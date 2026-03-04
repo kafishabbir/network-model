@@ -1,7 +1,7 @@
-#include "simulate/step6-pour-into-node.h"
+#include "step/part06-pour.h"
 
-void simulate::Step6PourIntoNode::assign_id_node_id_tube_flow_direction(
-	nst::State& state
+void step::Part06Pour::assign_id_node_id_tube_flow_direction(
+	dst::System& state
 )
 {
 	const int n_tubes = state.tubes.size();
@@ -23,7 +23,7 @@ void simulate::Step6PourIntoNode::assign_id_node_id_tube_flow_direction(
 
 
 
-std::vector<double> simulate::Step6PourIntoNode::mpos_long_until(
+std::vector<double> step::Part06Pour::mpos_long_until(
 	const nst::Tube& tube,
 	const double lp
 )
@@ -42,7 +42,7 @@ std::vector<double> simulate::Step6PourIntoNode::mpos_long_until(
 }
 
 
-nst::Tank simulate::Step6PourIntoNode::produce_tank_with_fluids_flow_out_from_tube(
+nst::Tank step::Part06Pour::produce_tank_with_fluids_flow_out_from_tube(
 	const nst::Tube& tube
 )
 {
@@ -66,8 +66,8 @@ nst::Tank simulate::Step6PourIntoNode::produce_tank_with_fluids_flow_out_from_tu
 }
 
 
-void simulate::Step6PourIntoNode::assign_tank_to_tubes(
-	nst::State& state
+void step::Part06Pour::assign_tank_to_tubes(
+	dst::System& state
 )
 {
 	for(auto& tube: state.tubes)
@@ -77,8 +77,8 @@ void simulate::Step6PourIntoNode::assign_tank_to_tubes(
 }
 
 
-void simulate::Step6PourIntoNode::pour_from_tube_to_id_node_tank(
-	nst::State& state
+void step::Part06Pour::pour_from_tube_to_id_node_tank(
+	dst::System& state
 )
 {
 	for(auto& tube: state.tubes)
@@ -90,8 +90,8 @@ void simulate::Step6PourIntoNode::pour_from_tube_to_id_node_tank(
 }
 
 
-void simulate::Step6PourIntoNode::pour_from_tubes_to_node_tank(
-	nst::State& state
+void step::Part06Pour::pour_from_tubes_to_node_tank(
+	dst::System& state
 )
 {
 	assign_id_node_id_tube_flow_direction(state);

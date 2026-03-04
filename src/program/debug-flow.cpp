@@ -1,25 +1,39 @@
 #include "program/debug-flow.h"
+#include "simulate/menu.h"
 #include "output/result.h"
 
-simulate::Property program::DebugFlow::generate_property()
+dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generate_property
 {
-	simulate::Property property;
+	dst::Parameter parameter;
 
-	property.type_simulation = simulate::Property::TypeSimulation::test_simple;
-	property.n_tube_rows = 4;
-	property.n_tube_cols = 4;
-	property.id_fluid_inject = 0;
-	property.constant_sigma = 0.0;
-	property.constant_radius_contrast = 0.5;
-	property.constant_mu1_by_mu2 = 1.0;
-	property.constant_mu_scale = 1.0;
-	property.constant_length_scale = 10.0;
-	property.capture_frequency_in_volume_fraction = 0.025;
-	property.volume_max_to_inject = 0.6;
-	property.n_periods = 2;
-	property.inlet_pressure = 1000;
+	// Set simulation type using the flags
+	parameter.simulation.is_flow_as_opposed_to_test = false;  // false = test simulation
+	parameter.simulation.is_flow_const_flow_rate = false;     // false = constant pressure
+	parameter.simulation.is_const_porosity = false;           // variable porosity
+	parameter.simulation.id_fluid_inject = 0;
+	parameter.simulation.inlet_pressure = 1000;
 
-	return property;
+	// Geometry
+	parameter.geometry.n_tube_rows = 4;
+	parameter.geometry.n_tube_cols = 4;
+	parameter.geometry.radius_contrast = 0.5;
+	parameter.geometry.length_scale = 10.0;
+	parameter.geometry.n_periods = 2;
+	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
+
+	// Physical constants
+	parameter.constant_physical.sigma = 100;
+	parameter.constant_physical.viscosity_water = 1.0;  // viscosity_ratio = 1.0, mu_scale = 1.0
+	parameter.constant_physical.viscosity_oil = 1.0;     // mu_scale / sqrt(viscosity_ratio)
+
+	// Computational constants
+	parameter.constant_computational.time_step_resolution = 0.1;  // Default
+
+	// Plot parameters
+	parameter.plot.capture_frequency_in_volume_fraction = 0.025;
+	parameter.plot.volume_max_to_inject = 0.6;
+
+	return parameter;
 }
 
 output::Property program::DebugFlow::generate_visual_property()
@@ -28,16 +42,17 @@ output::Property program::DebugFlow::generate_visual_property()
 
 	property.tube_radius_min = 0.02;
 	property.tube_radius_max = 0.10;
-	property.largest_angle_tube_project_on_node = decl::pi / 2.0;
+	property.largest_angle_tube_project_on_node = std::acos(-1) / 2.0;
 
 	return property;
 }
 
 void program::DebugFlow::run()
 {
-	const auto simulate_property = generate_property();
-	auto solution_states = simulate::Menu::run(simulate_property );
+	const auto parameter = generate_parameter();
+	auto system = simulate::Menu::run(parameter);
 	
 	output::Result output_result;
-	output_result.add(solution_states, simulate_property, generate_visual_property());
+	output_result.add(system, generate_visual_property());
+	
 }

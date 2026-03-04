@@ -1,6 +1,6 @@
-#include "simulate/step9-update-tube-mpos.h"
+#include "step/part09-displace.h"
 
-nst::Tube simulate::Step9UpdateTubeMpos::generate_tube_front(
+nst::Tube step::Part09Displace::generate_tube_front(
 	const nst::Tube& tube,
 	const double lp,
 	const double ap
@@ -26,7 +26,7 @@ nst::Tube simulate::Step9UpdateTubeMpos::generate_tube_front(
 	return tube_front;
 }
 
-void simulate::Step9UpdateTubeMpos::join_tubes(
+void step::Part09Displace::join_tubes(
 	nst::Tube& tube_front,
 	const nst::Tube& tube_back,
 	const double lp
@@ -50,7 +50,7 @@ void simulate::Step9UpdateTubeMpos::join_tubes(
 	}
 }
 
-nst::Tube simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportion(
+nst::Tube step::Part09Displace::update_tube_mpos_according_to_proportion(
 	const nst::Tube& tube
 )
 {
@@ -71,7 +71,7 @@ nst::Tube simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportio
 }
 
 
-std::vector<double> simulate::Step9UpdateTubeMpos::combine_swabs(
+std::vector<double> step::Part09Displace::combine_swabs(
 	const nst::Tube& tube
 )
 {
@@ -111,8 +111,8 @@ std::vector<double> simulate::Step9UpdateTubeMpos::combine_swabs(
 }
 
 
-void simulate::Step9UpdateTubeMpos::update_tube_mpos_according_to_proportion(
-	nst::State& state
+void step::Part09Displace::update_tube_mpos_according_to_proportion(
+	dst::System& state
 )
 {
 	for(auto& tube: state.tubes)

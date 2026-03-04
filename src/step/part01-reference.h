@@ -1,38 +1,40 @@
 #ifndef SIMULATE_STEP1_TUBE_FLOW_COEFFICIENT_H
 #define SIMULATE_STEP1_TUBE_FLOW_COEFFICIENT_H
 
-#include "global/dst.h"
+#include "dst/system.h"
 
-namespace simulate
+namespace step
 {
-	class Step1TubeFlowCoefficient
+	class Part01Reference
 	{
 		static double evaluate_mu(
 			const nst::Tube& tube,
-			const nst::State& state
+			const dst::System& state
 		);
-
+		
+		static void reset_calculated(dst::System& state);
+		
 		static double resistance_coefficient(
 			const nst::Tube& tube,
-			const nst::State& state
+			const dst::System& state
 		);
 
 		static double capillary_pressure_magnitude(
 			const nst::Tube& tube,
-			const nst::State& state
+			const dst::System& state
 		);
 
 		static void capillary_pressure_magnitude(
-			nst::State& state
+			dst::System& state
 		);
 
 		static void resistance_coefficient(
-			nst::State& state
+			dst::System& state
 		);
 		
 		
 	public:
-		static void assign_resistance_and_capillary_pressure_to_tubes(nst::State& state);
+		static void assign_resistance_and_capillary_pressure_to_tubes(dst::System& state);
 	};
 }
 

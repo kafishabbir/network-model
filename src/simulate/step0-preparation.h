@@ -13,51 +13,51 @@ namespace simulate
 	{
 	
 		static void assign_str_of_simulate_property_to_state(
-			nst::State& state,
-			const simulate::Property& simulate_property
+			dst::System& state,
+			const dst::Parameter& simulate_property
 		);
 
 		static std::pair<dst::Nodes, dst::Tubes> choose_network_geometry(
-			const simulate::Property& simulate_property
+			const dst::Parameter& simulate_property
 		);
 
 		static void choose_network_geometry(
-			nst::State& state,
-			const simulate::Property& simulate_property
+			dst::System& state,
+			const dst::Parameter& simulate_property
 		);
 
 		static void modify_constants(
-			nst::State& state,
-			const simulate::Property& simulate_property
+			dst::System& state,
+			const dst::Parameter& simulate_property
 		);
 
 		static void modify_boundary(
-			nst::State& state,
-			const simulate::Property& simulate_property
+			dst::System& state,
+			const dst::Parameter& simulate_property
 		);
 		
-		static void calculate_and_set_lr_min_max(nst::State& state);
+		static void calculate_and_set_lr_min_max(dst::System& state);
 		
 		static int count_inlet_nodes(
-			const nst::State& state
+			const dst::System& state
 		);
 		
 		static void set_other_references(
-			nst::State& state,
-			const simulate::Property& simulate_property
+			dst::System& state,
+			const dst::Parameter& simulate_property
 		);
 
 		static void create_connections_id_tube_v_for_node(
-			nst::State& state
+			dst::System& state
 		);
 
 		static void assign_initial_total_fluid_to_state(
-			nst::State& state
+			dst::System& state
 		);
 
 		public:
 		static nst::State generate_state(
-			const simulate::Property& simulate_property
+			const dst::Parameter& simulate_property
 		);
 	};
 }

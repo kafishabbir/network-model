@@ -1,7 +1,7 @@
-#include "simulate/step8-distribute.h"
+#include "step/part08-distribute.h"
 
-void simulate::Step8Distribute::sort_id_tube_v_flow_out_at_node(
-	nst::State& state
+void step::Part08Distribute::sort_id_tube_v_flow_out_at_node(
+	dst::System& state
 )
 {
 	for(auto& node: state.nodes)
@@ -26,10 +26,10 @@ void simulate::Step8Distribute::sort_id_tube_v_flow_out_at_node(
 	}
 }
 
-void simulate::Step8Distribute::assign_proportion_to_tube(
+void step::Part08Distribute::assign_proportion_to_tube(
 	const std::vector<int>& flow_out_id_tube_v,
 	const nst::Tank& tank,
-	nst::State& state
+	dst::System& state
 )
 {
 	bool is_contain_water = tank.is_contain_water();
@@ -62,8 +62,8 @@ void simulate::Step8Distribute::assign_proportion_to_tube(
 	}
 }
 
-void simulate::Step8Distribute::assign_proportion_to_tube(
-	nst::State& state
+void step::Part08Distribute::assign_proportion_to_tube(
+	dst::System& state
 )
 {
 	for(auto& node: state.nodes)
@@ -76,8 +76,8 @@ void simulate::Step8Distribute::assign_proportion_to_tube(
 
 
 
-void simulate::Step8Distribute::distribute_fluids_from_node_to_tube(
-	nst::State& state
+void step::Part08Distribute::distribute_fluids_from_node_to_tube(
+	dst::System& state
 )
 {
 	sort_id_tube_v_flow_out_at_node(state);

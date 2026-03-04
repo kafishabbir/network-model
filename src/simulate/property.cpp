@@ -1,7 +1,7 @@
 #include "simulate/property.h"
 #include <sstream>
 
-simulate::Property::Property():
+dst::Parameter::Property():
 	type_simulation(TypeSimulation::test_simple),
 	n_tube_rows(2),
 	n_tube_cols(4),
@@ -18,7 +18,7 @@ simulate::Property::Property():
 {}
 
 
-std::string simulate::Property::str() const
+std::string dst::Parameter::str() const
 {
 	std::stringstream ss;
 

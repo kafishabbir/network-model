@@ -1,7 +1,7 @@
 #ifndef SIMULATE_STEP2_PRESSURE_H
 #define SIMULATE_STEP2_PRESSURE_H
 
-#include "global/dst.h"
+#include "dst/system.h"
 #include "utility/math.h"
 #include "utility/time.h"
 
@@ -9,20 +9,20 @@
 #include <utility>
 
 
-namespace simulate
+namespace step
 {
-	class Step2Pressure
+	class Part02Pressure
 	{
 		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations_const_flow_rate_forced(
-			nst::State& state
+			dst::System& state
 		);
 
 		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations_dual_pressure(
-			nst::State& state
+			dst::System& state
 		);
 
 		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations(
-			nst::State& state
+			dst::System& state
 		);
 
 
@@ -35,7 +35,7 @@ namespace simulate
 
 
 		static void assign_symmetric_pressure_v_to_each_node(
-			nst::State& state,
+			dst::System& state,
 			const std::vector<double>& pressure_v
 		);
 		
@@ -43,7 +43,7 @@ namespace simulate
 
 		public:
 		static void generate_symmetric_linear_equations_and_assign_pressure_to_node(
-			nst::State& state,
+			dst::System& state,
 			bool& is_solver_prepared,
 			Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
 		);

@@ -23,7 +23,7 @@ void output_raster::Flow::code_node(
 
 void output_raster::Flow::code_tube(
 	Cairo& cairo,
-	const nst::State& state,
+	const dst::System& state,
 	int id_tube,
 	const output::Property& visual_property
 )
@@ -61,7 +61,7 @@ void output_raster::Flow::code_tube(
 
 void output_raster::Flow::code_nodes(
 	Cairo& cairo,
-	const nst::State& state,
+	const dst::System& state,
 	const output::Property& visual_property
 )
 {
@@ -75,7 +75,7 @@ void output_raster::Flow::code_nodes(
 
 void output_raster::Flow::code_tubes(
 	Cairo& cairo,
-	const nst::State& state,
+	const dst::System& state,
 	const output::Property& visual_property
 )
 {
@@ -88,7 +88,7 @@ void output_raster::Flow::code_tubes(
 }
 
 std::pair<double, double> output_raster::Flow::xy_max_nodes(
-	const dst::Nodes& nodes
+	const nst::Nodes& nodes
 )
 {
 	double x_max = nodes.front().visual.x;
@@ -105,7 +105,7 @@ std::pair<double, double> output_raster::Flow::xy_max_nodes(
 
 
 void output_raster::Flow::print_figure(
-	const nst::State& state,
+	const dst::System& state,
 	const std::string& file_name,
 	const output::Property& visual_property
 )

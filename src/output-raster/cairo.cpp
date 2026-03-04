@@ -93,7 +93,7 @@ void output_raster::Cairo::circle(
 	const double radius
 )
 {
-	cairo_arc(cr, x, y, radius, 0, 2.0 * decl::pi);
+	cairo_arc(cr, x, y, radius, 0, 2.0 * std::acos(-1));
 	cairo_fill(cr);
 }
 

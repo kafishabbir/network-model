@@ -3,7 +3,7 @@
 
 
 std::pair<dst::Nodes, dst::Tubes> simulate::Step0Preparation::choose_network_geometry(
-	const simulate::Property& simulate_property
+	const dst::Parameter& simulate_property
 )
 {
 	const auto& simulation = simulate_property.type_simulation;
@@ -69,8 +69,8 @@ std::pair<dst::Nodes, dst::Tubes> simulate::Step0Preparation::choose_network_geo
 }
 
 void simulate::Step0Preparation::choose_network_geometry(
-	nst::State& state,
-	const simulate::Property& simulate_property
+	dst::System& state,
+	const dst::Parameter& simulate_property
 )
 {
 	const auto& [nodes, tubes] = choose_network_geometry(simulate_property);
@@ -79,8 +79,8 @@ void simulate::Step0Preparation::choose_network_geometry(
 }
 
 void simulate::Step0Preparation::modify_constants(
-	nst::State& state,
-	const simulate::Property& simulate_property
+	dst::System& state,
+	const dst::Parameter& simulate_property
 )
 {
 	auto& fluid_water = state.physical_constant.fluid_v[0];
@@ -108,7 +108,7 @@ void simulate::Step0Preparation::modify_constants(
 	
 }
 
-void simulate::Step0Preparation::calculate_and_set_lr_min_max(nst::State& state)
+void simulate::Step0Preparation::calculate_and_set_lr_min_max(dst::System& state)
 {
     // Initialize with first tube values
     double r_min = state.tubes.front().radius;
@@ -156,8 +156,8 @@ void simulate::Step0Preparation::calculate_and_set_lr_min_max(nst::State& state)
 }
 
 void simulate::Step0Preparation::modify_boundary(
-	nst::State& state,
-	const simulate::Property& simulate_property
+	dst::System& state,
+	const dst::Parameter& simulate_property
 )
 {		
 	Utility::assign_pressure(
@@ -168,7 +168,7 @@ void simulate::Step0Preparation::modify_boundary(
 }
 
 void simulate::Step0Preparation::create_connections_id_tube_v_for_node(
-	nst::State& state
+	dst::System& state
 )
 {
 	const int n_tubes = state.tubes.size();
@@ -185,7 +185,7 @@ void simulate::Step0Preparation::create_connections_id_tube_v_for_node(
 }
 
 void simulate::Step0Preparation::assign_initial_total_fluid_to_state(
-	nst::State& state
+	dst::System& state
 )
 {
 	state.measured.initial_total_fluid = Utility::total_fluid_in_system(state);
@@ -193,8 +193,8 @@ void simulate::Step0Preparation::assign_initial_total_fluid_to_state(
 }
 
 void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
-	nst::State& state,
-	const simulate::Property& simulate_property
+	dst::System& state,
+	const dst::Parameter& simulate_property
 )
 {
 	state.reference.comment = simulate_property.str();
@@ -202,7 +202,7 @@ void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
 
 
 int simulate::Step0Preparation::count_inlet_nodes(
-	const nst::State& state
+	const dst::System& state
 )
 {
 	int count = 0;
@@ -218,8 +218,8 @@ int simulate::Step0Preparation::count_inlet_nodes(
 }
 		
 void simulate::Step0Preparation::set_other_references(
-	nst::State& state,
-	const simulate::Property& simulate_property
+	dst::System& state,
+	const dst::Parameter& simulate_property
 )
 {		
 	state.reference.id_fluid_inject = simulate_property.id_fluid_inject;
@@ -231,7 +231,7 @@ void simulate::Step0Preparation::set_other_references(
 	state.reference.n_inject_boundaries = count_inlet_nodes(state);
 }
 
-nst::State simulate::Step0Preparation::generate_state(const simulate::Property& simulate_property)
+nst::State simulate::Step0Preparation::generate_state(const dst::Parameter& simulate_property)
 {
 	nst::State state;
 	
