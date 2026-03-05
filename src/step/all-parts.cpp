@@ -1,7 +1,7 @@
 #include "step/all-parts.h"
 
 void step::AllParts::run_single_time_step(
-	dst::System& state
+	dst::System& system
 )
 {
 	//auto& comment = state.reference.comment;

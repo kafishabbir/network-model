@@ -1,7 +1,6 @@
 #ifndef VISUALIZE_PROPERTY_H
 #define VISUALIZE_PROPERTY_H
 
-#include "dst/system.h"
 
 namespace output
 {

@@ -16,8 +16,8 @@ namespace output_vector
 		static std::string label_node_basic(const nst::Node& node, const int id_node);
 
 	public:
-		static std::string basic(const dst::System& state);
-		static std::string details(const dst::System& state);
+		static std::string basic(const dst::State& state);
+		static std::string details(const dst::State& state);
 	};
 }
 

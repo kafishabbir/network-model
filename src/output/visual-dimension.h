@@ -2,6 +2,7 @@
 #define VISUALIZE_RE_SCALE_STATE_FOR_PLOT_H
 
 #include "output/property.h"
+#include "dst/state.h"
 
 namespace output
 {
@@ -27,19 +28,19 @@ namespace output
 		);
 
 		//sets x_max - x_min = 1
-		static void node_coordinates(dst::System& state, const output::Property& visual_property);
+		static void node_coordinates(dst::State& state, const output::Property& visual_property);
 
 		//length from node positions
-		static void tube_lengths(dst::System& state, const output::Property& visual_property);
+		static void tube_lengths(dst::State& state, const output::Property& visual_property);
 
 		//radius scaled to visual_property.tube_radius_min visual_property.tube_radius_max
-		static void tube_radius(dst::System& state, const output::Property& visual_property);
+		static void tube_radius(dst::State& state, const output::Property& visual_property);
 
 		//a circular node sets the tubes radially further
-		static void node_radius(dst::System& state, const output::Property& visual_property);
+		static void node_radius(dst::State& state, const output::Property& visual_property);
 
 		//makes mpos long format, if needed, displaces to make space for node
-		static void mpos(dst::System& state, const output::Property& visual_property);
+		static void mpos(dst::State& state, const output::Property& visual_property);
 
 		static std::vector<double> mpos_long_displaced_scaled(
 			const nst::Tube& tube,
@@ -49,7 +50,7 @@ namespace output
 
 		public:
 
-		static void add_state_visual(dst::System& state, const output::Property& visual_property);
+		static void add_state_visual(dst::State& state, const output::Property& visual_property);
 	};
 }
 

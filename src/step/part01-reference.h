@@ -9,32 +9,32 @@ namespace step
 	{
 		static double evaluate_mu(
 			const nst::Tube& tube,
-			const dst::System& state
+			const dst::System& system
 		);
 		
-		static void reset_calculated(dst::System& state);
+		static void reset_calculated(dst::System& system);
 		
 		static double resistance_coefficient(
 			const nst::Tube& tube,
-			const dst::System& state
+			const dst::System& system
 		);
 
 		static double capillary_pressure_magnitude(
 			const nst::Tube& tube,
-			const dst::System& state
+			const dst::System& system
 		);
 
 		static void capillary_pressure_magnitude(
-			dst::System& state
+			dst::System& system
 		);
 
 		static void resistance_coefficient(
-			dst::System& state
+			dst::System& system
 		);
 		
 		
 	public:
-		static void assign_resistance_and_capillary_pressure_to_tubes(dst::System& state);
+		static void assign_resistance_and_capillary_pressure_to_tubes(dst::System& system);
 	};
 }
 

@@ -3,7 +3,7 @@
 
 double step::Part01Reference::evaluate_mu(
 	const nst::Tube& tube,
-	const dst::System& state
+	const dst::System& system
 )
 {
 	std::vector<double> mu_v{state.water_viscosity(), state.oil_viscosity()};
@@ -21,7 +21,7 @@ double step::Part01Reference::evaluate_mu(
 
 double step::Part01Reference::resistance_coefficient(
 	const nst::Tube& tube,
-	const dst::System& state
+	const dst::System& system
 )
 {
 	const double r = tube.radius;
@@ -32,7 +32,7 @@ double step::Part01Reference::resistance_coefficient(
 
 double step::Part01Reference::capillary_pressure_magnitude(
 	const nst::Tube& tube,
-	const dst::System& state
+	const dst::System& system
 )
 {
 	const double sign_id_fluid_first = ((tube.id_fluid_first == 0) ? 1 : -1);
@@ -46,7 +46,7 @@ double step::Part01Reference::capillary_pressure_magnitude(
 
 
 void step::Part01Reference::capillary_pressure_magnitude(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& tube: state.tubes)
@@ -58,7 +58,7 @@ void step::Part01Reference::capillary_pressure_magnitude(
 
 
 void step::Part01Reference::resistance_coefficient(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& tube: state.tubes)
@@ -68,7 +68,7 @@ void step::Part01Reference::resistance_coefficient(
 	}
 }
 
-void step::Part01Reference::reset_calculated(dst::System& state)
+void step::Part01Reference::reset_calculated(dst::System& system)
 {
 	state.calculated = nst::State::Calculated();
 	for(auto& node: state.nodes)
@@ -83,7 +83,7 @@ void step::Part01Reference::reset_calculated(dst::System& state)
 
 
 void step::Part01Reference::assign_resistance_and_capillary_pressure_to_tubes(
-	dst::System& state
+	dst::System& system
 )
 {
 	reset_calculated(state);

@@ -69,7 +69,7 @@ std::pair<dst::Nodes, dst::Tubes> simulate::Step0Preparation::choose_network_geo
 }
 
 void simulate::Step0Preparation::choose_network_geometry(
-	dst::System& state,
+	dst::System& system,
 	const dst::Parameter& simulate_property
 )
 {
@@ -79,7 +79,7 @@ void simulate::Step0Preparation::choose_network_geometry(
 }
 
 void simulate::Step0Preparation::modify_constants(
-	dst::System& state,
+	dst::System& system,
 	const dst::Parameter& simulate_property
 )
 {
@@ -108,7 +108,7 @@ void simulate::Step0Preparation::modify_constants(
 	
 }
 
-void simulate::Step0Preparation::calculate_and_set_lr_min_max(dst::System& state)
+void simulate::Step0Preparation::calculate_and_set_lr_min_max(dst::System& system)
 {
     // Initialize with first tube values
     double r_min = state.tubes.front().radius;
@@ -156,7 +156,7 @@ void simulate::Step0Preparation::calculate_and_set_lr_min_max(dst::System& state
 }
 
 void simulate::Step0Preparation::modify_boundary(
-	dst::System& state,
+	dst::System& system,
 	const dst::Parameter& simulate_property
 )
 {		
@@ -168,7 +168,7 @@ void simulate::Step0Preparation::modify_boundary(
 }
 
 void simulate::Step0Preparation::create_connections_id_tube_v_for_node(
-	dst::System& state
+	dst::System& system
 )
 {
 	const int n_tubes = state.tubes.size();
@@ -185,7 +185,7 @@ void simulate::Step0Preparation::create_connections_id_tube_v_for_node(
 }
 
 void simulate::Step0Preparation::assign_initial_total_fluid_to_state(
-	dst::System& state
+	dst::System& system
 )
 {
 	state.measured.initial_total_fluid = Utility::total_fluid_in_system(state);
@@ -193,7 +193,7 @@ void simulate::Step0Preparation::assign_initial_total_fluid_to_state(
 }
 
 void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
-	dst::System& state,
+	dst::System& system,
 	const dst::Parameter& simulate_property
 )
 {
@@ -202,7 +202,7 @@ void simulate::Step0Preparation::assign_str_of_simulate_property_to_state(
 
 
 int simulate::Step0Preparation::count_inlet_nodes(
-	const dst::System& state
+	const dst::System& system
 )
 {
 	int count = 0;
@@ -218,7 +218,7 @@ int simulate::Step0Preparation::count_inlet_nodes(
 }
 		
 void simulate::Step0Preparation::set_other_references(
-	dst::System& state,
+	dst::System& system,
 	const dst::Parameter& simulate_property
 )
 {		

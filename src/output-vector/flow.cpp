@@ -9,7 +9,7 @@ const std::vector<std::string> output_vector::Flow::colors_str_v{"cw", "cnw", "c
 
 
 void output_vector::Flow::save_latex_code_of_figure(
-	const dst::System& state,
+	const dst::State& state,
 	const std::string& file_name,
 	const output::Property& visual_property
 )

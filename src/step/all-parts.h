@@ -19,7 +19,7 @@ namespace step
 	public:
 	
 		static void run_single_time_step(
-			dst::System& state,
+			dst::System& system,
 			bool& is_solver_prepared,
 			Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
 		);

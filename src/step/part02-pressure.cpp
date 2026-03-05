@@ -1,7 +1,7 @@
 #include "step/part02-pressure.h"
 
 std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_symmetric_linear_equations_dual_pressure(
-	dst::System& state
+	dst::System& system
 )
 {
 	const int n_nodes = state.nodes.size();
@@ -61,7 +61,7 @@ std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_s
 }
 
 std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_symmetric_linear_equations(
-	dst::System& state
+	dst::System& system
 )
 {
 	if(state.simulation_constant.is_const_volume_injection_simple)
@@ -73,7 +73,7 @@ std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_s
 }
 
 std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_symmetric_linear_equations_const_flow_rate_forced(
-	dst::System& state
+	dst::System& system
 )
 {
 	const int n_nodes = state.nodes.size();
@@ -138,7 +138,7 @@ std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_s
 
 
 void step::Part02Pressure::assign_symmetric_pressure_v_to_each_node(
-	dst::System& state,
+	dst::System& system,
 	const std::vector<double>& pressure_v
 )
 {
@@ -159,7 +159,7 @@ void step::Part02Pressure::assign_symmetric_pressure_v_to_each_node(
 }
 
 void step::Part02Pressure::generate_symmetric_linear_equations_and_assign_pressure_to_node(
-	dst::System& state,
+	dst::System& system,
 	bool& is_solver_prepared,
 	Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
 )

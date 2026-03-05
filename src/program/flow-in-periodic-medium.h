@@ -9,7 +9,7 @@ namespace program
 	class FlowInPeriodicMedium
 	{
 		static output::Property generate_visual_property();
-		static dst::Parameter generate_property();
+		static dst::Parameter generate_parameter();
 
 		public:
 		static void run();

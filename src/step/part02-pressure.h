@@ -14,15 +14,15 @@ namespace step
 	class Part02Pressure
 	{
 		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations_const_flow_rate_forced(
-			dst::System& state
+			dst::System& system
 		);
 
 		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations_dual_pressure(
-			dst::System& state
+			dst::System& system
 		);
 
 		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations(
-			dst::System& state
+			dst::System& system
 		);
 
 
@@ -35,7 +35,7 @@ namespace step
 
 
 		static void assign_symmetric_pressure_v_to_each_node(
-			dst::System& state,
+			dst::System& system,
 			const std::vector<double>& pressure_v
 		);
 		
@@ -43,7 +43,7 @@ namespace step
 
 		public:
 		static void generate_symmetric_linear_equations_and_assign_pressure_to_node(
-			dst::System& state,
+			dst::System& system,
 			bool& is_solver_prepared,
 			Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
 		);

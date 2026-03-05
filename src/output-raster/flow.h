@@ -24,20 +24,20 @@ namespace output_raster
 
 		static void code_tube(
 			Cairo& cairo,
-			const dst::System& state,
+			const dst::State& state,
 			int id_tube,
 			const output::Property& visual_property
 		);
 
 		static void code_nodes(
 			Cairo& cairo,
-			const dst::System& state,
+			const dst::State& state,
 			const output::Property& visual_property
 		);
 
 		static void code_tubes(
 			Cairo& cairo,
-			const dst::System& state,
+			const dst::State& state,
 			const output::Property& visual_property
 		);
 
@@ -47,7 +47,7 @@ namespace output_raster
 
 		public:
 		static void print_figure(
-			const dst::System& state,
+			const dst::State& state,
 			const std::string& file_name,
 			const output::Property& visual_property
 		);

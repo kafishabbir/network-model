@@ -50,7 +50,7 @@ std::string output_vector::LabelTube::label_ij_flow_rate(
 std::string output_vector::LabelTube::label_tube_basic(
 	const nst::Tube& tube, 
 	const int id_tube,
-	const dst::System& state
+	const dst::State& state
 )
 {	
 	// Get flow direction node IDs
@@ -94,7 +94,7 @@ std::string output_vector::LabelTube::label_tube_basic(
 
 std::string output_vector::LabelTube::label_tube_details(
 	const nst::Tube& tube,
-	const dst::System& state
+	const dst::State& state
 )
 {
 	std::stringstream ss;
@@ -146,7 +146,7 @@ std::string output_vector::LabelTube::label_tube_details(
 	);
 }
 
-std::string output_vector::LabelTube::basic(const dst::System& state)
+std::string output_vector::LabelTube::basic(const dst::State& state)
 {
 	const int n_tubes = state.tubes.size();
 	
@@ -159,7 +159,7 @@ std::string output_vector::LabelTube::basic(const dst::System& state)
 	return ss.str();
 }
 
-std::string output_vector::LabelTube::details(const dst::System& state)
+std::string output_vector::LabelTube::details(const dst::State& state)
 {
 	std::stringstream ss;
 	for(const auto& tube : state.tubes)

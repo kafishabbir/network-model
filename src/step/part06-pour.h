@@ -18,20 +18,20 @@ namespace step
 		);
 
 		static void assign_id_node_id_tube_flow_direction(
-			dst::System& state
+			dst::System& system
 		);
 
 		static void assign_tank_to_tubes(
-			dst::System& state
+			dst::System& system
 		);
 
 		static void pour_from_tube_to_id_node_tank(
-			dst::System& state
+			dst::System& system
 		);
 
 		public:
 		static void pour_from_tubes_to_node_tank(
-			dst::System& state
+			dst::System& system
 		);
 	};
 }

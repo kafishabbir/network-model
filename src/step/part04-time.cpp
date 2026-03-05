@@ -2,7 +2,7 @@
 
 
 void step::Part04Time::time_for_each_tube(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& tube: state.tubes)
@@ -13,7 +13,7 @@ void step::Part04Time::time_for_each_tube(
 
 
 void step::Part04Time::select_tube_with_minimum_time(
-	dst::System& state
+	dst::System& system
 )
 {
 	double val_min = state.tubes.front().calculated.time;
@@ -41,7 +41,7 @@ void step::Part04Time::select_tube_with_minimum_time(
 }
 
 void step::Part04Time::assign_time_step_to_state(
-	dst::System& state
+	dst::System& system
 )
 {
 	time_for_each_tube(state);

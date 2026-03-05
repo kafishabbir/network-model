@@ -2,7 +2,7 @@
 
 double step::Part03Velocity::flow_rate(
 	const nst::Tube& tube,
-	const dst::System& state
+	const dst::System& system
 )
 {
 	const auto& node_first = state.nodes[tube.id_node_first];
@@ -17,7 +17,7 @@ double step::Part03Velocity::flow_rate(
 }
 
 void step::Part03Velocity::flow_rate(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& tube: state.tubes)
@@ -28,7 +28,7 @@ void step::Part03Velocity::flow_rate(
 
 
 void step::Part03Velocity::velocity(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& tube: state.tubes)
@@ -39,7 +39,7 @@ void step::Part03Velocity::velocity(
 
 
 void step::Part03Velocity::calculate_and_assign_flow_rate_and_velocity_to_tube(
-	dst::System& state
+	dst::System& system
 )
 {
 	flow_rate(state);

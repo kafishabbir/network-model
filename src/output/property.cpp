@@ -1,4 +1,5 @@
 #include "output/property.h"
+#include <cmath>
 
 output::Property::Property():
 	tube_radius_min(0.02),

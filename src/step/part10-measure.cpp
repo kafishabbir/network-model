@@ -1,7 +1,7 @@
 #include "step/part10-measure.h"
 
 
-double step::Part10Measure::total_delta(const dst::System& state)
+double step::Part10Measure::total_delta(const dst::System& system)
 {
 	const double vol = state.measured.initial_total_fluid.volume_total();
 	const double volume_total_injected = state.measured.total_fluid_added.volume_total();
@@ -10,7 +10,7 @@ double step::Part10Measure::total_delta(const dst::System& state)
 	return std::abs(volume_total_injected - volume_total_evacuated) / vol;
 }
 
-double step::Part10Measure::water_delta(const dst::System& state)
+double step::Part10Measure::water_delta(const dst::System& system)
 {
 	const double vol = state.measured.initial_total_fluid.volume_total();
 
@@ -22,7 +22,7 @@ double step::Part10Measure::water_delta(const dst::System& state)
 	return std::abs((water_injected + water_initial) - (water_evacuated + water_current)) / vol;
 }
 
-double step::Part10Measure::oil_delta(const dst::System& state)
+double step::Part10Measure::oil_delta(const dst::System& system)
 {
 	const double vol = state.measured.initial_total_fluid.volume_total();
 
@@ -34,7 +34,7 @@ double step::Part10Measure::oil_delta(const dst::System& state)
 	return std::abs((oil_injected + oil_initial) - (oil_evacuated + oil_current)) / vol;
 }
 
-double step::Part10Measure::find_average_pressure(const dst::System& state)
+double step::Part10Measure::find_average_pressure(const dst::System& system)
 {
 	double sum = 0;
 	for(const auto& node: state.nodes)
@@ -48,7 +48,7 @@ double step::Part10Measure::find_average_pressure(const dst::System& state)
 	return sum / state.reference.n_inject_boundaries;
 }
 
-void step::Part10Measure::measure(dst::System& state)
+void step::Part10Measure::measure(dst::System& system)
 {
 	simulate::Utility::assign_type_fluid_contact(state);
 	state.calculated.total_fluid_in_system = simulate::Utility::total_fluid_in_system(state);
@@ -72,7 +72,7 @@ void step::Part10Measure::measure(dst::System& state)
 }
 
 std::vector<std::pair<double, double>> step::Part10Measure::generate_saturation_vs_x(
-	const dst::System& state
+	const dst::System& system
 )
 {
 	std::vector<nst::Tank> tanks(state.reference.n_tube_cols);
@@ -104,7 +104,7 @@ std::vector<std::pair<double, double>> step::Part10Measure::generate_saturation_
 
 
 std::vector<std::pair<double, double>> step::Part10Measure::generate_pressure_vs_y(
-	const dst::System& state
+	const dst::System& system
 )
 {
 	std::vector<nst::Tank> tanks(state.reference.n_tube_rows);
@@ -124,7 +124,7 @@ std::vector<std::pair<double, double>> step::Part10Measure::generate_pressure_vs
 	return v;
 }
 
-void step::Part10Measure::assign_saturation_and_pressure_vs_coordinate(dst::System& state)
+void step::Part10Measure::assign_saturation_and_pressure_vs_coordinate(dst::System& system)
 {
 	state.calculated.saturation_vs_x = generate_saturation_vs_x(state);
 	state.calculated.pressure_vs_y = generate_pressure_vs_y(state);

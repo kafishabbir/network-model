@@ -8,16 +8,16 @@ namespace step
 	class Part04Time
 	{
 		static void time_for_each_tube(
-			dst::System& state
+			dst::System& system
 		);
 
 		static void select_tube_with_minimum_time(
-			dst::System& state
+			dst::System& system
 		);
 
 		public:
 		static void assign_time_step_to_state(
-			dst::System& state
+			dst::System& system
 		);
 	};
 }

@@ -29,7 +29,7 @@ std::string output_vector::LabelNode::label_node_details(const nst::Node& node)
 
 
 
-std::string output_vector::LabelNode::details(const dst::System& state)
+std::string output_vector::LabelNode::details(const dst::State& state)
 {
 	std::stringstream ss;
 
@@ -56,7 +56,7 @@ std::string output_vector::LabelNode::label_node_basic(
 }
 
 
-std::string output_vector::LabelNode::basic(const dst::System& state)
+std::string output_vector::LabelNode::basic(const dst::State& state)
 {
 	const int n_nodes = state.nodes.size();
 	

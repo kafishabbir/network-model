@@ -33,17 +33,17 @@ namespace output_vector
 		static std::string label_tube_basic(
 			const nst::Tube& tube, 
 			const int id_tube,
-			const dst::System& state
+			const dst::State& state
 		);
 		
 		static std::string label_tube_details(
 			const nst::Tube& tube,
-			const dst::System& state
+			const dst::State& state
 		);
 
 	public:
-		static std::string basic(const dst::System& state);
-		static std::string details(const dst::System& state);
+		static std::string basic(const dst::State& state);
+		static std::string details(const dst::State& state);
 	};
 }
 

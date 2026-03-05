@@ -9,7 +9,7 @@ namespace step
 	{
 		public:
 		static void assign_volume_length_displacement(
-			dst::System& state
+			dst::System& system
 		);
 	};
 }

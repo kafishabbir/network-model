@@ -19,7 +19,7 @@ namespace dst
 	
 		nst::Tank initial_fluid;
 		std::vector<HighFrequencyData> high_frequency_data_v;
-		std::vector<dst::State> state_v;
+		std::vector<dst::State> states;
 
 	};
 }

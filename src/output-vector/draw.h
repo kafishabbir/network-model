@@ -23,21 +23,21 @@ namespace output_vector
 		
 		static std::string draw_tube(
 			const nst::Tube& tube,
-			const dst::System& state,
+			const dst::State& state,
 			const output::Property& visual_property,
 			const std::vector<std::string>& colors
 		);
 
 	public:
 		static std::string draw_tubes(
-			const dst::System& state,
+			const dst::State& state,
 			const output::Property& visual_property,
 			const std::vector<std::string>& colors
 		);
 
 
 		static std::string draw_nodes(
-			const dst::System& state,
+			const dst::State& state,
 			const output::Property& visual_property,
 			const std::vector<std::string>& colors
 		);

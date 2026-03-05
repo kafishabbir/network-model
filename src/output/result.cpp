@@ -2,6 +2,8 @@
 
 #include "output/latex.h"
 #include "output/visual-dimension.h"
+#include "output-raster/flow.h"
+#include "output-vector/flow.h"
 #include <filesystem>
 #include <fstream>
 
@@ -27,7 +29,8 @@ std::string output::Result::generate_file_name_from_index(const int i)
 
 output::Result::Result():
 	count_simulations(0),
-	count_figures(0)
+	count_figures(0),
+	json(file_name_full_raw)
 {
 	std::filesystem::remove_all(path_folder_figures);
 	std::filesystem::create_directories(path_folder_figures);
@@ -55,73 +58,87 @@ output::Result::~Result()
 	fout << fin.rdbuf() << '\n';
 
 	fout << Latex::begin_end_document_scope(ss_flow.str());
-	
-	json.write_to_file(file_name_full_raw);
 }
 
-std::pair<std::string, std::string> output::Result::generate_flow_caption(
-	const dst::System& state,
-	const int count_simulations
+
+
+
+// First part: Generate the caption
+std::string output::Result::generate_flow_caption(
+    const dst::State& state,
+    const int count_simulations
 )
 {
-    std::stringstream ss1, ss2;
-    ss1 << "simulation-id=" << count_simulations << ", ";
-    ss1 << state.reference.comment << ", ";
-    ss1 << "step-id=" << state.reference.id_step << ".";
-	
-	ss2 << "\\begin{enumerate}\n";
+    std::stringstream ss;
+    ss << "simulation-id=" << count_simulations << ", ";
+    ss << state.reference.comment << ", ";
+    ss << "step-id=" << state.reference.id_step << ".";
+    
+    return ss.str();
+}
+
+std::string output::Result::generate_flow_page_text(
+    const dst::State& state,
+    const int count_simulations
+)
+{
+    std::stringstream ss;
+    ss << "\\begin{enumerate}\n";
     
     // MEASUREMENTS
-    ss2 << "\\item " << "MEASUREMENTS:" << "\n";
-    ss2 << "\\begin{enumerate}\n";
-    ss2 << "\\item $S=" << s(state.calculated.saturation) << "$,\n";
-    ss2 << "\\item time-elapsed=$" << s(state.measured.time_elapsed) << "$,\n";
-    ss2 << "\\item t-fluid-in-system=" << state.calculated.total_fluid_in_system.str() << ",\n";
-    ss2 << "\\item t-fluid-added=" << state.measured.total_fluid_added.str() << ",\n";
-    ss2 << "\\item t-fluid-evacuated=" << state.measured.total_fluid_evacuated.str() << "\n";
-    ss2 << "\\end{enumerate}\n";
-    
-    // SIMULATION PARAMETERS
-    ss2 << "\\item " << "SIMULATION PARAMETERS:" << "\n";
-    ss2 << "\\begin{enumerate}\n";
-    ss2 << "\\item $\\sigma=" << s(state.physical_constant.sigma) << "$,\n";
-    ss2 << "\\item $\\mu_{w}=" << s(state.water_viscosity()) << "$,\n";
-    ss2 << "\\item $\\mu_{nw}=" << s(state.oil_viscosity()) << "$,\n";
-    ss2 << "\\item time step resolution=$" << s(state.simulation_constant.time_step_resolution) << "$,\n";
-    ss2 << "\\end{enumerate}\n";
-    
-    // NETWORK CHARACTERISTICS
-    ss2 << "\\item " << "NETWORK CHARACTERISTICS:" << "\n";
-    ss2 << "\\begin{enumerate}\n";
-    ss2 << "\\item $R_{min} / R_{max} =" << s(state.reference.radius_ratio) << "$,\n";
-    ss2 << "\\item $l_{min} / l_{max} =" << s(state.reference.length_ratio)  << "$,\n";
-    ss2 << "\\item $n_{nodes}=" << state.nodes.size() << "$,\n";
-    ss2 << "\\item $n_{tubes}=" << state.tubes.size() << "$\n";
-    ss2 << "\\end{enumerate}\n";
+    ss << "\\item " << "MEASUREMENTS:" << "\n";
+    ss << "\\begin{enumerate}\n";
+    ss << "\\item time-elapsed=$" << s(state.measured.time_elapsed) << "$,\n";
+    ss << "\\item $S=" << s(state.calculated.saturation) << "$,\n";
+    ss << "\\item total-fluid-in-system=" << state.calculated.total_fluid_in_system.str() << ",\n";
+    ss << "\\item fluid-added=" << state.measured.fluid_added.str() << ",\n";
+    ss << "\\item fluid-evacuated=" << state.measured.fluid_evacuated.str() << ",\n";
+    ss << "\\item average-pressure=$" << s(state.calculated.average_pressure) << "$\n";
+    ss << "\\end{enumerate}\n";
     
     // TEMPORARY VALUES OF CURRENT STEP
-    ss2 << "\\item " << "TEMPORARY VALUES OF CURRENT STEP:" << "\n";
-    ss2 << "\\begin{enumerate}\n";
-    ss2 << "\\item time-step=$" << s(state.calculated.time_step) << "$,\n";
-    ss2 << "\\item fluid-added=" << state.calculated.fluid_added.str() << ",\n";
-    ss2 << "\\item fluid-evacuated=" << state.calculated.fluid_evacuated.str() << ",\n";
-    ss2 << "\\end{enumerate}\n";
+    ss << "\\item " << "TEMPORARY VALUES OF CURRENT STEP:" << "\n";
+    ss << "\\begin{enumerate}\n";
+    ss << "\\item time-step=$" << s(state.calculated.time_step) << "$,\n";
+    ss << "\\item fluid-added=" << state.calculated.fluid_added.str() << ",\n";
+    ss << "\\item fluid-evacuated=" << state.calculated.fluid_evacuated.str() << ",\n";
+    ss << "\\item $\\Delta V_{t}=" << s(state.calculated.volume_total_delta) << "$,\n";
+    ss << "\\item $\\Delta V_{w}=" << s(state.calculated.water_volume_delta) << "$,\n";
+    ss << "\\item $\\Delta V_{nw}=" << s(state.calculated.oil_volume_delta) << "$\n";
+    ss << "\\end{enumerate}\n";
+
+    ss << "\\end{enumerate}\n";
+
+    return ss.str();
+}
+
+
+
+std::string output::Result::save_figure_and_generate_inclusion_code(
+    const dst::State& state,
+    const output::Property& visual_property,
+    const std::string& file_name
+)
+{
+    std::stringstream ss;
+    const auto& file_full_path = path_folder_figures + file_name;
     
-    // ACCURACY
-    ss2 << "\\item " << "ACCURACY:" << "\n";
-    ss2 << "\\begin{enumerate}\n";
-    ss2 << "\\item $\\Delta V_{t}=" << s(state.calculated.volume_total_delta) << "$,\n";
-    ss2 << "\\item $\\Delta V_{w}=" << s(state.calculated.water_volume_delta) << "$,\n";
-    ss2 << "\\item $\\Delta V_{nw}=" << s(state.calculated.oil_volume_delta) << "$.\n";
-    ss2 << "\\end{enumerate}\n";
-
-ss2 << "\\end{enumerate}\n";
-
-    return {ss1.str(), ss2.str()};
+    if(state.nodes.size() >= 20)
+    { 
+        output_raster::Flow::print_figure(state, file_full_path, visual_property);
+        ss << "\\includegraphics[width=0.6\\textwidth]{" << "figures/" << file_name << "}" << '\n';
+    }
+    else
+    {
+        output_vector::Flow::save_latex_code_of_figure(state, file_full_path, visual_property);
+        ss << "\\input{" << "figures/" << file_name << "}" << '\n';
+    }
+    
+    return ss.str();
 }
 
 std::string output::Result::plot_flow(
-	const dst::System& state,
+	const dst::State& state,
 	const output::Property& visual_property,
 	const int count_figures
 )
@@ -129,100 +146,45 @@ std::string output::Result::plot_flow(
 	const auto& file_name = generate_file_name_from_index(count_figures);
 	const auto& file_full_path = path_folder_figures + file_name;
 
-	std::stringstream ss, ss_final;
-	if(state.nodes.size() >= 20)
-	{ 
-		output_raster::Flow::print_figure(state, file_full_path, visual_property);
-		ss << "\\includegraphics[width=0.6\\textwidth]{" << "figures/" << file_name << "}" << '\n';
-	}
-	else
-	{
-		output_vector::Flow::save_latex_code_of_figure(state, file_full_path, visual_property);
-		ss << "\\input{" << "figures/" << file_name << "}" << '\n';
-	}
-
-	const auto& [caption_text, page_text] = generate_flow_caption(state, count_simulations);
+	const auto& inclusion_code = save_figure_and_generate_inclusion_code(
+		state, 
+		visual_property, 
+		file_name
+	);
+	const auto& caption_text = generate_flow_caption(state, count_simulations);
+	const auto& page_text = generate_flow_page_text(state, count_simulations);
 	
-	ss_final << "\n\\clearpage" << '\n';
-	ss_final << Latex::begin_end_figure_scope(ss.str(), caption_text, file_name) << '\n';
-	ss_final << page_text << '\n';
-	return ss_final.str();
-}
-
-output::Json::Simulation output::Result::convert_to_json_simulation(const dst::States& states, const int id)
-{
-    const auto& state = states.back();
-    
-    output::Json::Simulation simulation;
-    
-    // InitialParameter assignments
-    simulation.initial_parameter.id_fluid_inject = state.reference.id_fluid_inject;
-    simulation.initial_parameter.sigma = state.physical_constant.sigma;
-    simulation.initial_parameter.viscosity_ratio = state.reference.viscosity_ratio;
-    simulation.initial_parameter.radius_contrast = state.reference.radius_contrast;
-    simulation.initial_parameter.n_tube_rows = state.reference.n_tube_rows;
-    simulation.initial_parameter.n_tube_cols = state.reference.n_tube_cols;
-    simulation.initial_parameter.n_periods = state.reference.n_periods;
-    
-    // NetworkProperty assignments
-    simulation.network_property.n_tubes = state.tubes.size();  // Need to fill - from tubes vector size
-    simulation.network_property.n_nodes = state.nodes.size();  // Need to fill - from nodes vector size
-    simulation.network_property.radius_average = state.reference.radius_average;
-    simulation.network_property.radius_min = state.reference.radius_min;
-    simulation.network_property.radius_max = state.reference.radius_max;
-    simulation.network_property.radius_ratio = state.reference.radius_ratio;
-    simulation.network_property.length_average = state.reference.length_average;
-    simulation.network_property.length_min = state.reference.length_min;
-    simulation.network_property.length_max = state.reference.length_max;
-    simulation.network_property.length_ratio = state.reference.length_ratio;
-    
-    // Capture assignments - this will need to be populated from multiple states
-    // For each capture state in states (except first which is initial state)
-    for(const auto& capture_state: states)
-    {
-        output::Json::Simulation::Capture capture;
-        
-        capture.time = capture_state.measured.time_elapsed;  // or calculated.time_step?
-        capture.pressure_vs_y = capture_state.calculated.pressure_vs_y;
-        capture.saturation_vs_x = capture_state.calculated.saturation_vs_x;
-        
-        simulation.captures.push_back(capture);
-    }
-    
-    // pressure_vs_time assignments
-    simulation.high_frequency_data_v = state.high_frequency_data_v;
-    
-    //std::cout << "size=" << simulation.pressure_vs_time.size() << '\n';
-	simulation.id = id;
-    return simulation;
+	std::stringstream ss;
+	
+	ss << "\n\\clearpage" << '\n';
+	ss << Latex::begin_end_figure_scope(inclusion_code, caption_text, file_name) << '\n';
+	ss << page_text << '\n';
+	
+	return ss.str();
 }
 
 
 void output::Result::add(
-	dst::States& states,
-	const dst::Parameter& simulate_property,
+	dst::System& system,
 	const output::Property& visual_property
 )
 {
 	++ count_simulations;
 
+	// Clear page and write the parameters
 	ss_flow << "\n\\clearpage" << '\n';
 	ss_flow << "Simulation-" << count_simulations << '\n';
-	ss_flow << simulate_property.str();
+	ss_flow << system.parameter.str() << '\n';
 	ss_flow << "\\clearpage" << '\n';
 
-	for(auto& state: states)
-	{
-		output::VisualDimension::add_state_visual(state, visual_property);
-	}
-
-	// Generate the visualizations of the flows
-	for(const auto& state: states)
+	// Add visual-dimentions to the system
+	for(auto& state: system.measured.states)
 	{
 		++ count_figures;
+		output::VisualDimension::add_state_visual(state, visual_property);
 		ss_flow << plot_flow(state, visual_property, count_figures) << '\n';
 	}
 	
-	json.simulations.push_back(convert_to_json_simulation(states, count_simulations));
+	json.add(system, count_simulations);
 }
 

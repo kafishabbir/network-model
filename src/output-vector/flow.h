@@ -12,7 +12,7 @@ namespace output_vector
 		static const std::vector<std::string> colors_str_v;
 	public:
         static void save_latex_code_of_figure(
-			const dst::System& state,
+			const dst::State& state,
 			const std::string& file_name,
 			const output::Property& visual_property
 		);

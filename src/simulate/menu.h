@@ -13,7 +13,7 @@ namespace simulate
 		
 
 	public:
-		static std::vector<dst::State> run(const dst::Parameter& parameter);
+		static dst::System run(const dst::Parameter& parameter);
 	};
 }
 

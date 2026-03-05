@@ -36,7 +36,7 @@ nst::Tank step::Part07Inject::produce_tank_with_oil_sliced_out(
 
 
 void step::Part07Inject::assign_volume_flow_out_to_node(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& node: state.nodes)
@@ -53,7 +53,7 @@ void step::Part07Inject::assign_volume_flow_out_to_node(
 
 
 void step::Part07Inject::balance_flow_at_open_nodes(
-	dst::System& state
+	dst::System& system
 )
 {
 	auto& addition_tank = state.calculated.fluid_added;
@@ -95,7 +95,7 @@ void step::Part07Inject::balance_flow_at_open_nodes(
 
 
 void step::Part07Inject::inject_and_evacuate_fluid_from_system(
-	dst::System& state
+	dst::System& system
 )
 {
 	assign_volume_flow_out_to_node(state);

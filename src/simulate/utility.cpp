@@ -1,7 +1,7 @@
 #include "simulate/utility.h"
 
 void simulate::Utility::assign_pressure(
-	dst::System& state,
+	dst::System& system,
 	const double pressure_left_boundary,
 	const double pressure_right_boundary
 )
@@ -40,7 +40,7 @@ nst::Tank simulate::Utility::tube_inventory(const nst::Tube& tube)
 	return tank;
 }
 
-nst::Tank simulate::Utility::total_fluid_in_system(const dst::System& state)
+nst::Tank simulate::Utility::total_fluid_in_system(const dst::System& system)
 {
 	nst::Tank tank;
 	for(const auto& tube: state.tubes)
@@ -56,7 +56,7 @@ nst::Tank simulate::Utility::total_fluid_in_system(const dst::System& state)
 
 
 
-bool simulate::Utility::decide_if_more_fluid_still_needs_to_be_injected(const dst::System& state)
+bool simulate::Utility::decide_if_more_fluid_still_needs_to_be_injected(const dst::System& system)
 {
 	const double volume_system = state.measured.initial_total_fluid.volume_total();
 	const double volume_injected = state.measured.total_fluid_added.volume_total();
@@ -66,7 +66,7 @@ bool simulate::Utility::decide_if_more_fluid_still_needs_to_be_injected(const ds
 }
 
 
-bool simulate::Utility::decide_if_capture_state_for_plot(dst::System& state)
+bool simulate::Utility::decide_if_capture_state_for_plot(dst::System& system)
 {
 	const double volume_system = state.measured.initial_total_fluid.volume_total();
 	const double volume_injected = state.measured.total_fluid_added.volume_total();
@@ -117,7 +117,7 @@ int simulate::Utility::find_type_fluid_contact(
 }
 
 void simulate::Utility::assign_type_fluid_contact(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& node: state.nodes)

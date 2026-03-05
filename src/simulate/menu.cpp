@@ -40,7 +40,7 @@ dst::States simulate::Menu::run(
 }
 
 
-void simulate::Menu::print_time_spent(const double time_program, dst::System& state)
+void simulate::Menu::print_time_spent(const double time_program, dst::System& system)
 {
 	std::cout << "Time simulation=" << d(time_program/1000) << "s" << std::endl;
 	std::cout << "Time per step=" << d(time_program/state.reference.id_step) << "ms" << std::endl;

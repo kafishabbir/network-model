@@ -1,7 +1,7 @@
 #include "step/part06-pour.h"
 
 void step::Part06Pour::assign_id_node_id_tube_flow_direction(
-	dst::System& state
+	dst::System& system
 )
 {
 	const int n_tubes = state.tubes.size();
@@ -67,7 +67,7 @@ nst::Tank step::Part06Pour::produce_tank_with_fluids_flow_out_from_tube(
 
 
 void step::Part06Pour::assign_tank_to_tubes(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& tube: state.tubes)
@@ -78,7 +78,7 @@ void step::Part06Pour::assign_tank_to_tubes(
 
 
 void step::Part06Pour::pour_from_tube_to_id_node_tank(
-	dst::System& state
+	dst::System& system
 )
 {
 	for(auto& tube: state.tubes)
@@ -91,7 +91,7 @@ void step::Part06Pour::pour_from_tube_to_id_node_tank(
 
 
 void step::Part06Pour::pour_from_tubes_to_node_tank(
-	dst::System& state
+	dst::System& system
 )
 {
 	assign_id_node_id_tube_flow_direction(state);

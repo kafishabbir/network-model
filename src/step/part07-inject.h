@@ -13,16 +13,16 @@ namespace step
 		);
 
 		static void assign_volume_flow_out_to_node(
-			dst::System& state
+			dst::System& system
 		);
 
 		static void balance_flow_at_open_nodes(
-			dst::System& state
+			dst::System& system
 		);
 
 		public:
 		static void inject_and_evacuate_fluid_from_system(
-			dst::System& state
+			dst::System& system
 		);
 	};
 }

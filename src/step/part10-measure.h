@@ -8,23 +8,23 @@ namespace step
 	class Part10Measure
 	{
 
-		static double total_delta(const dst::System& state);
-		static double water_delta(const dst::System& state);
-		static double oil_delta(const dst::System& state);
-		static double find_average_pressure(const dst::System& state);
+		static double total_delta(const dst::System& system);
+		static double water_delta(const dst::System& system);
+		static double oil_delta(const dst::System& system);
+		static double find_average_pressure(const dst::System& system);
 
 		
 		static std::vector<std::pair<double, double>> generate_pressure_vs_y(
-			const dst::System& state
+			const dst::System& system
 		);
 		static std::vector<std::pair<double, double>> generate_saturation_vs_x(
-			const dst::System& state
+			const dst::System& system
 		);
 
 	   public:
 
-		static void measure(dst::System& state);
-		static void assign_saturation_and_pressure_vs_coordinate(dst::System& state);
+		static void measure(dst::System& system);
+		static void assign_saturation_and_pressure_vs_coordinate(dst::System& system);
 	};
 }
 

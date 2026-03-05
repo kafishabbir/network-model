@@ -2,10 +2,7 @@
 #define VISUALIZE_MENU_H
 
 #include "dst/system.h"
-#include "simulate/property.h"
 #include "output/property.h"
-#include "output-raster/flow.h"
-#include "output-vector/flow.h"
 #include "utility/str.h"
 #include "output/json.h"
 
@@ -15,7 +12,6 @@ namespace output
 	{
 	
 		static inline constexpr auto s = utility::Str::scientific;
-		//static inline constexpr auto d = utility::Str::general
 		
 		static const std::string path_flow;
 		static const std::string path_folder_figures;
@@ -27,22 +23,33 @@ namespace output
 	private:
 		int count_simulations;
 		int count_figures;
-		std::stringstream ss_flow;
 		Json json;
-		std::pair<std::string, std::string>generate_flow_caption(
-			const dst::System& state,
+		std::stringstream ss_flow;
+		
+		
+		std::string generate_flow_caption(
+			const dst::State& state,
 			const int count_simulations
 		);
 		
-		std::string plot_flow(
-			const dst::System& state,
-			const output::Property& visual_property,
-			const int count_figures
+		
+		std::string generate_flow_page_text(
+			const dst::State& state,
+			const int count_simulations
 		);
 		
-		Json::Simulation convert_to_json_simulation(
-			const dst::States& states,
-			const int id
+		
+		std::string save_figure_and_generate_inclusion_code(
+			const dst::State& state,
+			const output::Property& visual_property,
+			const std::string& file_name
+		);
+		
+		
+		std::string plot_flow(
+			const dst::State& state,
+			const output::Property& visual_property,
+			const int count_figures
 		);
 		
 	public:
@@ -50,12 +57,10 @@ namespace output
 		~Result();
 
 		void add(
-			dst::States& states,
-			const dst::Parameter& simulate_property,
+			dst::System& system,
 			const output::Property& visual_property
 		);
 	};
 }
-
 
 #endif

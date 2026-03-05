@@ -2,11 +2,14 @@
 #define DST_PARAMETER_H
 
 #include <string>
+#include "utility/str.h"
 
 namespace dst
 {
 	class Parameter
 	{
+		static inline constexpr auto s = utility::Str::scientific;
+		
 		struct Simulation
 		{
 			bool is_flow_as_opposed_to_test;
@@ -72,6 +75,7 @@ namespace dst
 		Plot plot;
 		
 		std::string str_cmd() const;
+		std::string str() const;
 	};
 }
 

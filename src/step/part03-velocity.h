@@ -9,21 +9,21 @@ namespace step
 	{
 		static double flow_rate(
 			const nst::Tube& tube,
-			const dst::System& state
+			const dst::System& system
 		);
 
 		static void flow_rate(
-			dst::System& state
+			dst::System& system
 		);
 
 		static void velocity(
-			dst::System& state
+			dst::System& system
 		);
 
 		public:
 
 		static void calculate_and_assign_flow_rate_and_velocity_to_tube(
-			dst::System& state
+			dst::System& system
 		);
 	};
 }
