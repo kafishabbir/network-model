@@ -2,7 +2,7 @@
 #define OUTPUT_VECTOR_DRAW_H
 
 #include "output/property.h"
-#include "dst/system.h"
+#include "dst/system-output.h"
 
 namespace output_vector
 {

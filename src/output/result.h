@@ -1,7 +1,7 @@
 #ifndef VISUALIZE_MENU_H
 #define VISUALIZE_MENU_H
 
-#include "dst/system.h"
+#include "dst/system-output.h"
 #include "output/property.h"
 #include "utility/str.h"
 #include "output/json.h"
@@ -57,7 +57,7 @@ namespace output
 		~Result();
 
 		void add(
-			dst::System& system,
+			dst::SystemOutput& system,
 			const output::Property& visual_property
 		);
 	};

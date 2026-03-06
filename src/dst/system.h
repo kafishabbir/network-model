@@ -13,10 +13,12 @@ namespace dst
 	class System
 	{
 	public:
-		Parameter parameter;
+		const Parameter parameter;
 		State state;
 		Measured measured;
 		Eigen::SimplicialLLT<Eigen::SparseMatrix<double>> solver;
+		
+		System(const std::pair<Parameter, State>&);
 	};
 }
 

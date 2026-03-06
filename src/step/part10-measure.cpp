@@ -61,7 +61,7 @@ void step::Part10Measure::measure(dst::System& system)
 	{
 		state.calculated.average_pressure = find_average_pressure(state);
 		
-		nst::State::HighFrequencyData high_frequency_data;
+		dst::State::HighFrequencyData high_frequency_data;
 		high_frequency_data.time = state.measured.time_elapsed;
 		high_frequency_data.pressure = state.calculated.average_pressure;
 		high_frequency_data.saturation = state.calculated.saturation;

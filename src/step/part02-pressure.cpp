@@ -169,7 +169,7 @@ void step::Part02Pressure::generate_symmetric_linear_equations_and_assign_pressu
 
 	utility::Time time;
 	const auto& pressure_v = choose_method_of_solving_linear_equations(A, B, is_solver_prepared, solver);
-	state.measured.time_taken_by_solving_linear_equations += time.passed();
+	system.measured.time_taken_by_solving_linear_equations += time.passed();
 	assign_symmetric_pressure_v_to_each_node(state, pressure_v);
 }
 

@@ -28,23 +28,9 @@ namespace dst
 			double length_scale;
 			double n_periods;
 			
-			int n_inject_boundaries;
+			int n_inject_boundaries; // to be filled by SystemGenerator
 		};
 		
-		struct GeometryDistributions
-		{
-			struct Distribution
-			{
-				double average;
-				double min;
-				double max;
-				double variance;
-			};
-			
-			Distribution radius;
-			Distribution length;
-			Distribution volume;
-		};
 		
 		struct ConstantPhysical
 		{
@@ -64,15 +50,32 @@ namespace dst
 			double volume_max_to_inject;
 			double capture_frequency_in_volume_fraction;			
 		};
+	public:
+	
+		struct GeometryDistributions
+		{
+			struct Distribution
+			{
+				double ratio;
+				double average;
+				double max;
+				double min;
+				double variance;
+			};
+			
+			Distribution radius;
+			Distribution length;
+			Distribution volume;
+		};
 		
 	public:
 		
 		Simulation simulation;
 		Geometry geometry;
-		GeometryDistributions geometry_distributions;
 		ConstantPhysical constant_physical;
 		ConstantComputational constant_computational;
 		Plot plot;
+		GeometryDistributions geometry_distributions; // to be filled by SystemGenerator
 		
 		std::string str_cmd() const;
 		std::string str() const;

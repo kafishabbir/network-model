@@ -1,7 +1,7 @@
 #ifndef OUTPUT_VECTOR_FLOW_H
 #define OUTPUT_VECTOR_FLOW_H
 
-#include "dst/system.h"
+#include "dst/system-output.h"
 #include "output/property.h"
 
 namespace output_vector

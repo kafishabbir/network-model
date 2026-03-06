@@ -33,11 +33,11 @@ clear_build:
 
 
 edit:
-	geany -i  src/dst/measured.cpp src/dst/measured.h src/dst/parameter.cpp src/dst/parameter.h src/dst/state.cpp src/dst/state.h src/dst/system.cpp src/dst/system.h src/exe/simulate.cpp src/global/decl.h src/ic/geometry-base.cpp src/ic/geometry-base.h src/ic/geometry-flow.cpp src/ic/geometry-flow.h src/ic/geometry-rand.cpp src/ic/geometry-rand.h src/ic/menu.cpp src/ic/menu.h src/nst/fluid.cpp src/nst/fluid.h src/nst/node.cpp src/nst/node.h src/nst/state.cpp src/nst/state.h src/nst/tank.cpp src/nst/tank.h src/nst/tube.cpp src/nst/tube.h src/output-raster/cairo.cpp src/output-raster/cairo.h src/output-raster/flow.cpp src/output-raster/flow.h src/output-vector/draw.cpp src/output-vector/draw.h src/output-vector/flow.cpp src/output-vector/flow.h src/output-vector/label-node.cpp src/output-vector/label-node.h src/output-vector/label-tube.cpp src/output-vector/label-tube.h src/output-vector/tikz.cpp src/output-vector/tikz.h src/output/json.cpp src/output/json.h src/output/latex.cpp src/output/latex.h src/output/property.cpp src/output/property.h src/output/result.cpp src/output/result.h src/output/visual-dimension.cpp src/output/visual-dimension.h src/program/debug-flow.cpp src/program/debug-flow.h src/program/flow-in-periodic-medium.cpp src/program/flow-in-periodic-medium.h src/program/function-trial.cpp src/program/function-trial.h src/program/permeability.cpp src/program/permeability.h src/simulate/menu.cpp src/simulate/menu.h src/simulate/property.cpp src/simulate/property.h src/simulate/step0-preparation.cpp src/simulate/step0-preparation.h src/simulate/utility.cpp src/simulate/utility.h src/step/all-parts.cpp src/step/all-parts.h src/step/part01-reference.cpp src/step/part01-reference.h src/step/part02-pressure.cpp src/step/part02-pressure.h src/step/part03-velocity.cpp src/step/part03-velocity.h src/step/part04-time.cpp src/step/part04-time.h src/step/part05-displacement.cpp src/step/part05-displacement.h src/step/part06-pour.cpp src/step/part06-pour.h src/step/part07-inject.cpp src/step/part07-inject.h src/step/part08-distribute.cpp src/step/part08-distribute.h src/step/part09-displace.cpp src/step/part09-displace.h src/step/part10-measure.cpp src/step/part10-measure.h src/utility/math.cpp src/utility/math.h src/utility/measure.cpp src/utility/measure.h src/utility/random.cpp src/utility/random.h src/utility/str.cpp src/utility/str.h src/utility/time.cpp src/utility/time.h
+	geany -i  src/dst/measured.cpp src/dst/measured.h src/dst/parameter.cpp src/dst/parameter.h src/dst/state.cpp src/dst/state.h src/dst/system.cpp src/dst/system.h src/dst/system-output.cpp src/dst/system-output.h src/exe/simulate.cpp src/global/decl.h src/ic/geometry-base.cpp src/ic/geometry-base.h src/ic/geometry-flow.cpp src/ic/geometry-flow.h src/ic/geometry-rand.cpp src/ic/geometry-rand.h src/nst/node.cpp src/nst/node.h src/nst/state.cpp src/nst/state.h src/nst/tank.cpp src/nst/tank.h src/nst/tube.cpp src/nst/tube.h src/output-raster/cairo.cpp src/output-raster/cairo.h src/output-raster/flow.cpp src/output-raster/flow.h src/output-vector/draw.cpp src/output-vector/draw.h src/output-vector/flow.cpp src/output-vector/flow.h src/output-vector/label-node.cpp src/output-vector/label-node.h src/output-vector/label-tube.cpp src/output-vector/label-tube.h src/output-vector/tikz.cpp src/output-vector/tikz.h src/output/json.cpp src/output/json.h src/output/latex.cpp src/output/latex.h src/output/property.cpp src/output/property.h src/output/result.cpp src/output/result.h src/output/visual-dimension.cpp src/output/visual-dimension.h src/program/debug-flow.cpp src/program/debug-flow.h src/program/flow-in-periodic-medium.cpp src/program/flow-in-periodic-medium.h src/program/function-trial.cpp src/program/function-trial.h src/program/permeability.cpp src/program/permeability.h src/simulate/assign.cpp src/simulate/assign.h src/simulate/measure.cpp src/simulate/measure.h src/simulate/menu.cpp src/simulate/menu.h src/simulate/preparation.cpp src/simulate/preparation.h src/simulate/system-generator.cpp src/simulate/system-generator.h src/step/all-parts.cpp src/step/all-parts.h src/step/part01-reference.cpp src/step/part01-reference.h src/step/part02-pressure.cpp src/step/part02-pressure.h src/step/part03-velocity.cpp src/step/part03-velocity.h src/step/part04-time.cpp src/step/part04-time.h src/step/part05-displacement.cpp src/step/part05-displacement.h src/step/part06-pour.cpp src/step/part06-pour.h src/step/part07-inject.cpp src/step/part07-inject.h src/step/part08-distribute.cpp src/step/part08-distribute.h src/step/part09-displace.cpp src/step/part09-displace.h src/step/part10-measure.cpp src/step/part10-measure.h src/utility/math.cpp src/utility/math.h src/utility/measure.cpp src/utility/measure.h src/utility/random.cpp src/utility/random.h src/utility/str.cpp src/utility/str.h src/utility/time.cpp src/utility/time.h
 
 
-run/simulate.exe: run/build/exe_simulate.o run/build/dst_measured.o run/build/dst_parameter.o run/build/dst_state.o run/build/dst_system.o run/build/ic_geometry-base.o run/build/ic_geometry-flow.o run/build/ic_geometry-rand.o run/build/ic_menu.o run/build/nst_fluid.o run/build/nst_node.o run/build/nst_state.o run/build/nst_tank.o run/build/nst_tube.o run/build/output-raster_cairo.o run/build/output-raster_flow.o run/build/output-vector_draw.o run/build/output-vector_flow.o run/build/output-vector_label-node.o run/build/output-vector_label-tube.o run/build/output-vector_tikz.o run/build/output_json.o run/build/output_latex.o run/build/output_property.o run/build/output_result.o run/build/output_visual-dimension.o run/build/program_debug-flow.o run/build/program_flow-in-periodic-medium.o run/build/program_function-trial.o run/build/program_permeability.o run/build/simulate_menu.o run/build/simulate_property.o run/build/simulate_step0-preparation.o run/build/simulate_utility.o run/build/step_all-parts.o run/build/step_part01-reference.o run/build/step_part02-pressure.o run/build/step_part03-velocity.o run/build/step_part04-time.o run/build/step_part05-displacement.o run/build/step_part06-pour.o run/build/step_part07-inject.o run/build/step_part08-distribute.o run/build/step_part09-displace.o run/build/step_part10-measure.o run/build/utility_math.o run/build/utility_measure.o run/build/utility_random.o run/build/utility_str.o run/build/utility_time.o
-	g++  run/build/exe_simulate.o run/build/dst_measured.o run/build/dst_parameter.o run/build/dst_state.o run/build/dst_system.o run/build/ic_geometry-base.o run/build/ic_geometry-flow.o run/build/ic_geometry-rand.o run/build/ic_menu.o run/build/nst_fluid.o run/build/nst_node.o run/build/nst_state.o run/build/nst_tank.o run/build/nst_tube.o run/build/output-raster_cairo.o run/build/output-raster_flow.o run/build/output-vector_draw.o run/build/output-vector_flow.o run/build/output-vector_label-node.o run/build/output-vector_label-tube.o run/build/output-vector_tikz.o run/build/output_json.o run/build/output_latex.o run/build/output_property.o run/build/output_result.o run/build/output_visual-dimension.o run/build/program_debug-flow.o run/build/program_flow-in-periodic-medium.o run/build/program_function-trial.o run/build/program_permeability.o run/build/simulate_menu.o run/build/simulate_property.o run/build/simulate_step0-preparation.o run/build/simulate_utility.o run/build/step_all-parts.o run/build/step_part01-reference.o run/build/step_part02-pressure.o run/build/step_part03-velocity.o run/build/step_part04-time.o run/build/step_part05-displacement.o run/build/step_part06-pour.o run/build/step_part07-inject.o run/build/step_part08-distribute.o run/build/step_part09-displace.o run/build/step_part10-measure.o run/build/utility_math.o run/build/utility_measure.o run/build/utility_random.o run/build/utility_str.o run/build/utility_time.o -o run/simulate.exe -lcairo
+run/simulate.exe: run/build/exe_simulate.o run/build/dst_measured.o run/build/dst_parameter.o run/build/dst_state.o run/build/dst_system.o run/build/dst_system-output.o run/build/ic_geometry-base.o run/build/ic_geometry-flow.o run/build/ic_geometry-rand.o run/build/nst_node.o run/build/nst_state.o run/build/nst_tank.o run/build/nst_tube.o run/build/output-raster_cairo.o run/build/output-raster_flow.o run/build/output-vector_draw.o run/build/output-vector_flow.o run/build/output-vector_label-node.o run/build/output-vector_label-tube.o run/build/output-vector_tikz.o run/build/output_json.o run/build/output_latex.o run/build/output_property.o run/build/output_result.o run/build/output_visual-dimension.o run/build/program_debug-flow.o run/build/program_flow-in-periodic-medium.o run/build/program_function-trial.o run/build/program_permeability.o run/build/simulate_assign.o run/build/simulate_measure.o run/build/simulate_menu.o run/build/simulate_preparation.o run/build/simulate_system-generator.o run/build/step_all-parts.o run/build/step_part01-reference.o run/build/step_part02-pressure.o run/build/step_part03-velocity.o run/build/step_part04-time.o run/build/step_part05-displacement.o run/build/step_part06-pour.o run/build/step_part07-inject.o run/build/step_part08-distribute.o run/build/step_part09-displace.o run/build/step_part10-measure.o run/build/utility_math.o run/build/utility_measure.o run/build/utility_random.o run/build/utility_str.o run/build/utility_time.o
+	g++  run/build/exe_simulate.o run/build/dst_measured.o run/build/dst_parameter.o run/build/dst_state.o run/build/dst_system.o run/build/dst_system-output.o run/build/ic_geometry-base.o run/build/ic_geometry-flow.o run/build/ic_geometry-rand.o run/build/nst_node.o run/build/nst_state.o run/build/nst_tank.o run/build/nst_tube.o run/build/output-raster_cairo.o run/build/output-raster_flow.o run/build/output-vector_draw.o run/build/output-vector_flow.o run/build/output-vector_label-node.o run/build/output-vector_label-tube.o run/build/output-vector_tikz.o run/build/output_json.o run/build/output_latex.o run/build/output_property.o run/build/output_result.o run/build/output_visual-dimension.o run/build/program_debug-flow.o run/build/program_flow-in-periodic-medium.o run/build/program_function-trial.o run/build/program_permeability.o run/build/simulate_assign.o run/build/simulate_measure.o run/build/simulate_menu.o run/build/simulate_preparation.o run/build/simulate_system-generator.o run/build/step_all-parts.o run/build/step_part01-reference.o run/build/step_part02-pressure.o run/build/step_part03-velocity.o run/build/step_part04-time.o run/build/step_part05-displacement.o run/build/step_part06-pour.o run/build/step_part07-inject.o run/build/step_part08-distribute.o run/build/step_part09-displace.o run/build/step_part10-measure.o run/build/utility_math.o run/build/utility_measure.o run/build/utility_random.o run/build/utility_str.o run/build/utility_time.o -o run/simulate.exe -lcairo
 	@echo "run/simulate.exe created."
 	@echo " "
 
@@ -66,6 +66,12 @@ run/build/dst_system.o: src/dst/system.cpp src/dst/system.h src/global/decl.h
 	@echo " "
 
 
+run/build/dst_system-output.o: src/dst/system-output.cpp src/dst/system-output.h src/global/decl.h
+	g++ -c -Wall -std=c++17 -Isrc/ src/dst/system-output.cpp -o run/build/dst_system-output.o
+	@echo "run/build/dst_system-output.o created."
+	@echo " "
+
+
 run/build/exe_simulate.o: src/exe/simulate.cpp src/global/decl.h
 	g++ -c -Wall -std=c++17 -Isrc/ src/exe/simulate.cpp -o run/build/exe_simulate.o
 	@echo "run/build/exe_simulate.o created."
@@ -87,18 +93,6 @@ run/build/ic_geometry-flow.o: src/ic/geometry-flow.cpp src/ic/geometry-flow.h sr
 run/build/ic_geometry-rand.o: src/ic/geometry-rand.cpp src/ic/geometry-rand.h src/global/decl.h
 	g++ -c -Wall -std=c++17 -Isrc/ src/ic/geometry-rand.cpp -o run/build/ic_geometry-rand.o
 	@echo "run/build/ic_geometry-rand.o created."
-	@echo " "
-
-
-run/build/ic_menu.o: src/ic/menu.cpp src/ic/menu.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/ic/menu.cpp -o run/build/ic_menu.o
-	@echo "run/build/ic_menu.o created."
-	@echo " "
-
-
-run/build/nst_fluid.o: src/nst/fluid.cpp src/nst/fluid.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/nst/fluid.cpp -o run/build/nst_fluid.o
-	@echo "run/build/nst_fluid.o created."
 	@echo " "
 
 
@@ -222,27 +216,33 @@ run/build/program_permeability.o: src/program/permeability.cpp src/program/perme
 	@echo " "
 
 
+run/build/simulate_assign.o: src/simulate/assign.cpp src/simulate/assign.h src/global/decl.h
+	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/assign.cpp -o run/build/simulate_assign.o
+	@echo "run/build/simulate_assign.o created."
+	@echo " "
+
+
+run/build/simulate_measure.o: src/simulate/measure.cpp src/simulate/measure.h src/global/decl.h
+	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/measure.cpp -o run/build/simulate_measure.o
+	@echo "run/build/simulate_measure.o created."
+	@echo " "
+
+
 run/build/simulate_menu.o: src/simulate/menu.cpp src/simulate/menu.h src/global/decl.h
 	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/menu.cpp -o run/build/simulate_menu.o
 	@echo "run/build/simulate_menu.o created."
 	@echo " "
 
 
-run/build/simulate_property.o: src/simulate/property.cpp src/simulate/property.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/property.cpp -o run/build/simulate_property.o
-	@echo "run/build/simulate_property.o created."
+run/build/simulate_preparation.o: src/simulate/preparation.cpp src/simulate/preparation.h src/global/decl.h
+	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/preparation.cpp -o run/build/simulate_preparation.o
+	@echo "run/build/simulate_preparation.o created."
 	@echo " "
 
 
-run/build/simulate_step0-preparation.o: src/simulate/step0-preparation.cpp src/simulate/step0-preparation.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/step0-preparation.cpp -o run/build/simulate_step0-preparation.o
-	@echo "run/build/simulate_step0-preparation.o created."
-	@echo " "
-
-
-run/build/simulate_utility.o: src/simulate/utility.cpp src/simulate/utility.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/utility.cpp -o run/build/simulate_utility.o
-	@echo "run/build/simulate_utility.o created."
+run/build/simulate_system-generator.o: src/simulate/system-generator.cpp src/simulate/system-generator.h src/global/decl.h
+	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/system-generator.cpp -o run/build/simulate_system-generator.o
+	@echo "run/build/simulate_system-generator.o created."
 	@echo " "
 
 

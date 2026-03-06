@@ -5,14 +5,13 @@ global/decl
 ic/geometry-base
 ic/geometry-flow
 ic/geometry-rand
-ic/menu
 
+dst/system-output
 dst/system
 dst/state
 dst/parameter
 dst/measured
 
-nst/fluid
 nst/node
 nst/state
 nst/tank
@@ -24,9 +23,10 @@ program/function-trial
 program/permeability
 
 simulate/menu
-simulate/property
-simulate/utility
-simulate/step0-preparation
+simulate/measure
+simulate/assign
+simulate/system-generator
+simulate/preparation
 
 step/all-parts
 step/part01-reference

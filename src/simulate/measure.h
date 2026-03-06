@@ -1,13 +1,21 @@
-#ifndef SIMULATE_UTILITY_H
-#define SIMULATE_UTILITY_H
+#ifndef SIMULATE_MEASURE_H
+#define SIMULATE_MEASURE_H
 
-#include "dst/system.h"
+namespace simulate
+{
+	class Measure
+	{
+	public:
+		static void blank();
+	};
+}
+
+#endif
 
 namespace simulate
 {
 	class Utility
 	{
-		
 		
 		static int find_type_fluid_contact(
 			const int existing,
@@ -30,11 +38,5 @@ namespace simulate
 		static void assign_type_fluid_contact(
 			dst::System& system
 		);
-		
-		
-		static bool decide_if_more_fluid_still_needs_to_be_injected(const dst::System& system);
-		static bool decide_if_capture_state_for_plot(dst::System& system);
 	};
 }
-
-#endif

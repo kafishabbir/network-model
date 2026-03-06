@@ -1,9 +1,14 @@
 #include "dst/state.h"
 
+
+dst::State::State(const std::pair<nst::Nodes, nst::Tubes>& p):
+	nodes(p.first),
+	tubes(p.second)
+{}
+
+
 dst::State::Measured::Measured():
 	time_elapsed(0),
-	time_taken_by_solving_linear_equations(0),
-	time_taken_by_each_step(11),
 	
 	fluid_added(),
 	fluid_evacuated()

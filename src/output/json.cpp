@@ -14,7 +14,7 @@ output::Json::~Json()
 	fout <<  j.dump(2);
 }
 
-void output::Json::add(const dst::System& system, int id_simulation)
+void output::Json::add(const dst::SystemOutput& system, int id_simulation)
 {
 	nlohmann::json sim_json;
 	
@@ -115,7 +115,7 @@ void output::Json::add(const dst::System& system, int id_simulation)
 }
 
 /*
-void output::Json::add(const dst::System& system, int id_simulation)
+void output::Json::add(const dst::SystemOutput& system, int id_simulation)
 {
 	nlohmann::json sim_json;
 	
@@ -195,8 +195,8 @@ void output::Json::add(const dst::System& system, int id_simulation)
 		
 		// Measured
 		state_json["measured"]["time_elapsed"] = state.measured.time_elapsed;
-		//~ state_json["measured"]["time_taken_by_solving_linear_equations"] = state.measured.time_taken_by_solving_linear_equations;
-		//~ state_json["measured"]["time_taken_by_each_step"] = state.measured.time_taken_by_each_step;
+		//~ state_json["measured"]["time_taken_by_solving_linear_equations"] = system.measured.time_taken_by_solving_linear_equations;
+		//~ state_json["measured"]["time_taken_by_each_step"] = system.measured.time_taken_by_each_step;
 		//state_json["measured"]["fluid_added"] = state.measured.fluid_added.str();
 		//state_json["measured"]["fluid_evacuated"] = state.measured.fluid_evacuated.str();
 		

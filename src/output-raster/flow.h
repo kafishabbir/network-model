@@ -1,7 +1,7 @@
 #ifndef VISUALIZE_RASTER_H
 #define VISUALIZE_RASTER_H
 
-#include "dst/system.h"
+#include "dst/system-output.h"
 #include "output/property.h"
 #include "output-raster/cairo.h"
 

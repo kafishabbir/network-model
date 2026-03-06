@@ -1,7 +1,7 @@
 #ifndef OUTPUT_VECTOR_LABEL_TUBE_H
 #define OUTPUT_VECTOR_LABEL_TUBE_H
 
-#include "dst/system.h"
+#include "dst/system-output.h"
 #include "utility/str.h"
 
 namespace output_vector

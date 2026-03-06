@@ -165,7 +165,7 @@ std::string output::Result::plot_flow(
 
 
 void output::Result::add(
-	dst::System& system,
+	dst::SystemOutput& system,
 	const output::Property& visual_property
 )
 {

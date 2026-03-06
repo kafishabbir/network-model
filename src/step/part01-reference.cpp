@@ -70,7 +70,7 @@ void step::Part01Reference::resistance_coefficient(
 
 void step::Part01Reference::reset_calculated(dst::System& system)
 {
-	state.calculated = nst::State::Calculated();
+	state.calculated = dst::State::Calculated();
 	for(auto& node: state.nodes)
 	{
 		node.calculated = nst::Node::Calculated();

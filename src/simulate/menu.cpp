@@ -1,12 +1,48 @@
 #include "simulate/menu.h"
+#include "utility/time.h"
 #include "step/all-parts.h"
-#include "simulate/step0-preparation.h"
+#include "simulate/system-generator.h"
 
-#include <cmath>
+//#include <cmath>
 #include <iomanip>
 
 
-dst::States simulate::Menu::run(
+bool simulate::Menu::inject_more_fluid(const dst::System& system)
+{
+	return system.state.measured.fluid_added.volume_total() < system.parameter.plot.volume_max_to_inject;
+}
+
+void simulate::Menu::capture_this_state(dst::System& system)
+{
+	const double vol = system.state.measured.fluid_added.volume_total();
+	const double target =
+		system.parameter.plot.capture_frequency_in_volume_fraction *
+		system.measured.states.size();
+	
+	if(vol >= target)
+	{
+		system.measured.states.push_back(system.state);
+	}
+}
+
+void simulate::Menu::print_time_spent(const double time_program, const dst::System& system)
+{
+	const auto& state = system.state;
+	std::cout << "Time simulation=" << d(time_program/1000) << "s" << std::endl;
+	std::cout << "Time per step=" << d(time_program/state.reference.id_step) << "ms, " << "n_steps=" << state.reference.id_step << std::endl;
+	std::cout << "Fraction of time="
+		<< d(system.measured.time_taken_by_solving_linear_equations / time_program);
+	std::cout <<  ", spent on linear equations." << std::endl;
+
+	int count = 0;
+	for(auto t_step: system.measured.time_taken_by_each_step)
+	{
+		std::cout << "step-" << count++ << " t=" << std::setw(5) << std::setprecision(2) << std::fixed << t_step / 1000 << "ms, tf=" << std::round(t_step / time_program * 100) << "%" << '\n';
+	}
+}
+
+
+dst::SystemOutput simulate::Menu::run(
 	const dst::Parameter& parameter
 )
 {
@@ -15,46 +51,20 @@ dst::States simulate::Menu::run(
 	
 	utility::Time time;
 
-	auto system = Step0Preparation::generate_state(parameter);
+	dst::System system(SystemGenerator::generate_parameter_processed_and_basic_state(parameter));
 
-	dst::States states;
-	state.reference.id_step = 0;
-	while(Utility::decide_if_more_fluid_still_needs_to_be_injected(system))
+	system.state.reference.id_step = 0;
+	while(inject_more_fluid(system))
 	{
-		step::AllParts::run_single_time_step(system);
-
-		if(Utility::decide_if_capture_state_for_plot(system))
-		{
-			// ADD generalize
-			step::Part10Measure::assign_saturation_and_pressure_vs_coordinate(state);
-			
-			states.push_back(system.state);
-		}
+		++ system.state.reference.id_step;
 		
-		++ state.reference.id_step;
+		step::AllParts::run_single_time_step(system);
+		capture_this_state(system);		
 	}
 
-	print_time_spent(time.passed(), system.state);
+	print_time_spent(time.passed(), system);
 	
-	return states;
-}
-
-
-void simulate::Menu::print_time_spent(const double time_program, dst::System& system)
-{
-	std::cout << "Time simulation=" << d(time_program/1000) << "s" << std::endl;
-	std::cout << "Time per step=" << d(time_program/state.reference.id_step) << "ms" << std::endl;
-	std::cout << "Fraction of time="
-		<< d(state.measured.time_taken_by_solving_linear_equations / time_program);
-	std::cout <<  ", spent on linear equations." << std::endl;
-
-	int count = 0;
-	for(auto t_step: state.measured.time_taken_by_each_step)
-	{
-		std::cout << "step-" << count++ << " t=" << std::setw(5) << std::round(t_step) << "ms, tf=" << std::round(t_step / time_program * 100) << "%" << '\n';
-	}
-
-	return states;
+	return dst::SystemOutput(system.parameter, system.measured);
 }
 
 

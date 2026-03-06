@@ -1,7 +1,7 @@
 #ifndef OUTPUT_VECTOR_LABEL_NODE_H
 #define OUTPUT_VECTOR_LABEL_NODE_H
 
-#include "dst/system.h"
+#include "dst/system-output.h"
 #include "output/property.h"
 #include "utility/str.h"
 

@@ -11,8 +11,6 @@ namespace dst
 		struct Measured
 		{
 			double time_elapsed;
-			double time_taken_by_solving_linear_equations;
-			std::vector<double> time_taken_by_each_step;
 			
 			nst::Tank fluid_added;
 			nst::Tank fluid_evacuated;
@@ -47,14 +45,16 @@ namespace dst
 		};
 		
 	public:
-		
-		Measured measured;
-		
+	
 		nst::Nodes nodes;
 		nst::Tubes tubes;
 		
+		Measured measured;
+		
 		Reference reference;
 		Calculated calculated;
+		
+		State(const std::pair<nst::Nodes, nst::Tubes>&);
 		
 	};
 	
