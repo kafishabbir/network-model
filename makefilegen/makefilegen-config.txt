@@ -27,6 +27,7 @@ simulate/measure
 simulate/assign
 simulate/system-generator
 simulate/preparation
+simulate/set-solver
 
 step/all-parts
 step/part01-reference
@@ -40,7 +41,6 @@ step/part08-distribute
 step/part09-displace
 step/part10-measure
 
-utility/math
 utility/measure
 utility/random
 utility/str

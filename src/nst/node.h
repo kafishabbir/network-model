@@ -10,6 +10,7 @@ namespace nst
 		struct Reference
 		{
 			std::vector<int> connections_id_tube_v;
+			int id_for_symmetric_matrix;
 		};
 
 		struct Visual
@@ -43,6 +44,7 @@ namespace nst
 		double pressure;
 		bool is_open_boundary;
 		bool is_inlet;
+		bool is_pressure_known;
 		int id_fluid_inject;
 
 		Reference reference;

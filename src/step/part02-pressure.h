@@ -1,51 +1,26 @@
-#ifndef SIMULATE_STEP2_PRESSURE_H
-#define SIMULATE_STEP2_PRESSURE_H
+#ifndef STEP_PART02_PRESSURE_H
+#define STEP_PART02_PRESSURE_H
 
 #include "dst/system.h"
-#include "utility/math.h"
-#include "utility/time.h"
-
-#include <vector>
-#include <utility>
-
 
 namespace step
 {
 	class Part02Pressure
 	{
-		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations_const_flow_rate_forced(
-			dst::System& system
-		);
-
-		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations_dual_pressure(
-			dst::System& system
-		);
-
-		static std::pair<dst::RowColVals, std::vector<double>> generate_symmetric_linear_equations(
-			dst::System& system
-		);
-
-
-		static std::vector<double> choose_method_of_solving_linear_equations(
-			const dst::RowColVals& A,
-			const std::vector<double>& B,
-			bool& is_solver_prepared,
-			Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
-		);
-
-
-		static void assign_symmetric_pressure_v_to_each_node(
-			dst::System& system,
-			const std::vector<double>& pressure_v
+		struct Equation
+		{
+			std::vector<std::pair<int, double>> entry_v;
+			double b;
+		};
+		
+		static Equation generate_equation_for_node(
+			const int id_node,
+			const dst::System& system
 		);
 		
-
-
-		public:
-		static void generate_symmetric_linear_equations_and_assign_pressure_to_node(
-			dst::System& system,
-			bool& is_solver_prepared,
-			Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
+	public:
+		static void run(
+			dst::System& system
 		);
 	};
 }

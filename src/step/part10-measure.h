@@ -1,7 +1,7 @@
 #ifndef SIMULATE_STEP10_MEASURE_H
 #define SIMULATE_STEP10_MEASURE_H
 
-#include "simulate/utility.h"
+#include "simulate/measure.h"
 
 namespace step
 {

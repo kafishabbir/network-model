@@ -6,7 +6,7 @@
 #include "dst/measured.h"
 
 //#include <eigen3/Eigen/Sparse>           // For SparseMatrix
-#include <eigen3/Eigen/SparseCholesky>   // For SimplicialLLT
+#include <eigen3/Eigen/SparseCholesky>   // For SimplicialLLT 
 
 namespace dst
 {
@@ -16,7 +16,10 @@ namespace dst
 		const Parameter parameter;
 		State state;
 		Measured measured;
+		
 		Eigen::SimplicialLLT<Eigen::SparseMatrix<double>> solver;
+		Eigen::SparseMatrix<double> sparse_matrix;
+		std::vector<int> id_nodes_unknown_pressure_v;
 		
 		System(const std::pair<Parameter, State>&);
 	};

@@ -1,7 +1,8 @@
 #include "simulate/menu.h"
-#include "utility/time.h"
-#include "step/all-parts.h"
+
 #include "simulate/system-generator.h"
+#include "simulate/preparation.h"
+#include "step/all-parts.h"
 
 //#include <cmath>
 #include <iomanip>
@@ -21,6 +22,7 @@ void simulate::Menu::capture_this_state(dst::System& system)
 	
 	if(vol >= target)
 	{
+		// Conduct measurements
 		system.measured.states.push_back(system.state);
 	}
 }
@@ -52,7 +54,10 @@ dst::SystemOutput simulate::Menu::run(
 	utility::Time time;
 
 	dst::System system(SystemGenerator::generate_parameter_processed_and_basic_state(parameter));
-
+	
+	Preparation::run(system);
+	SetSolver::run(system);
+	
 	system.state.reference.id_step = 0;
 	while(inject_more_fluid(system))
 	{

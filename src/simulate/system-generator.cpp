@@ -1,5 +1,8 @@
 #include "simulate/system-generator.h"
 
+#include "ic/geometry-rand.h"
+#include "ic/geometry-flow.h"
+
 std::pair<nst::Nodes, nst::Tubes>
 simulate::SystemGenerator::choose_network_geometry(
 	const dst::Parameter& parameter

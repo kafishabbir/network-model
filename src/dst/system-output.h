@@ -14,7 +14,7 @@ namespace dst
 		
 		SystemOutput(const Parameter&, const Measured&);
 		static void blank();
-	};
+	}; 
 }
 
 #endif

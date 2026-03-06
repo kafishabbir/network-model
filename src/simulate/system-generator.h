@@ -1,10 +1,7 @@
-#ifndef SIMULATE_STEP0_PREPARATION_H
-#define SIMULATE_STEP0_PREPARATION_H
+#ifndef SIMULATE_SYSTEM_GENERATOR_H
+#define SIMULATE_SYSTEM_GENERATOR_H
 
-#include "ic/geometry-rand.h"
-#include "ic/geometry-flow.h"
-#include "utility/str.h"
-#include "simulate/utility.h"
+#include "dst/system.h"
 
 namespace simulate
 {

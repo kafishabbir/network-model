@@ -1,188 +1,87 @@
 #include "step/part02-pressure.h"
 
-std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_symmetric_linear_equations_dual_pressure(
-	dst::System& system
+step::Part02Pressure::Equation step::Part02Pressure::generate_equation_for_node(
+	const int id_node,
+	const dst::System& system
 )
 {
-	const int n_nodes = state.nodes.size();
-
-	int count = 0;
-	for(int i = 0; i < n_nodes; ++ i)
-	{
-		auto& node = state.nodes[i];
-		if(node.is_open_boundary)
-		{
-			continue;
-		}
-
-		node.calculated.id_symmetric_solver = (count ++);
-	}
-
-	dst::RowColVals A;
-	std::vector<double> B;
-
-	for(int i = 0; i < n_nodes; ++ i)
-	{
-		const auto& node = state.nodes[i];
-		if(node.is_open_boundary)
-		{
-			continue;
-		}
-
-		double val = 0;
-		double b = 0;
-		for(const int id_tube: node.reference.connections_id_tube_v)
-		{
-			const auto& tube = state.tubes[id_tube];
-
-			const double sign = ((tube.id_node_first == i) ? 1 : -1);
-			const int id_node_b = ((sign < 0) ? tube.id_node_first: tube.id_node_second);
-
-			const double resistance = tube.calculated.resistance_coefficient;
-			const double capillary_pressure =
-				sign * tube.calculated.capillary_pressure_magnitude;
-
-			val += resistance;
-			if(state.nodes[id_node_b].is_open_boundary)
-			{
-				b += resistance * state.nodes[id_node_b].pressure;
-			}
-			else
-			{
-				A.push_back({node.calculated.id_symmetric_solver, state.nodes[id_node_b].calculated.id_symmetric_solver, -resistance});
-			}
-
-			b -= resistance * capillary_pressure;
-		}
-		B.push_back(b);
-		A.push_back({node.calculated.id_symmetric_solver, node.calculated.id_symmetric_solver, val});
-	}
-	return {A, B};
-}
-
-std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_symmetric_linear_equations(
-	dst::System& system
-)
-{
-	if(state.simulation_constant.is_const_volume_injection_simple)
-	{
-		return generate_symmetric_linear_equations_const_flow_rate_forced(state);
-	}
-	return generate_symmetric_linear_equations_dual_pressure(state);
+	Equation equation;
+	equation.b = 0;
 	
+	const auto& node = system.state.nodes[id_node];
+	double diag_val = 0;
+	
+	for(const int id_tube: node.reference.connections_id_tube_v)
+	{
+		const auto& tube = system.state.tubes[id_tube];
+		
+		const double sign = (tube.id_node_first == id_node) ? 1.0 : -1.0;
+		const int id_node_b = (sign < 0) ? tube.id_node_first : tube.id_node_second;
+		const auto& node_b = system.state.nodes[id_node_b];
+		
+		const double resistance = tube.calculated.resistance_coefficient;
+		const double capillary_pressure =
+			sign * tube.calculated.capillary_pressure_magnitude;
+		
+		diag_val += resistance;
+		
+		if(node_b.is_pressure_known)
+		{
+			equation.b += resistance * node_b.pressure;
+		}
+		else
+		{
+			equation.entry_v.push_back({node_b.reference.id_for_symmetric_matrix, -resistance});
+		}
+		
+		equation.b -= resistance * capillary_pressure;
+	}
+	
+	// It is obvious that the only open bounday is where there is const flow rate injection
+	if(node.is_open_boundary)
+	{
+		equation.b += 1.0 / system.parameter.geometry.n_inject_boundaries;
+	}
+	
+	equation.entry_v.push_back({node.reference.id_for_symmetric_matrix, diag_val});
+	
+	return equation;
 }
 
-std::pair<dst::RowColVals, std::vector<double>> step::Part02Pressure::generate_symmetric_linear_equations_const_flow_rate_forced(
+void step::Part02Pressure::run(
 	dst::System& system
 )
 {
-	const int n_nodes = state.nodes.size();
-
-	int count = 0;
-	//int count_inlet = 0;
-	for(int i = 0; i < n_nodes; ++ i)
+	const int n_variables = system.id_nodes_unknown_pressure_v.size();
+	Eigen::VectorXd b(n_variables);
+	
+	
+	for(int i = 0; i < n_variables; ++ i)
 	{
-		auto& node = state.nodes[i];
-		if(node.is_open_boundary && (!node.is_inlet))
+		const int id_node = system.id_nodes_unknown_pressure_v[i];
+		const auto equation = generate_equation_for_node(id_node, system);
+		
+		for(const auto& [id_col, val] : equation.entry_v)
 		{
-			continue;
+			system.sparse_matrix.coeffRef(i, id_col) = val;
 		}
-
-		node.calculated.id_symmetric_solver = (count ++);
+		
+		b(i) = equation.b;
+	}
+	
+	// Factorize and solve
+	system.solver.factorize(system.sparse_matrix);
+	Eigen::VectorXd solution = system.solver.solve(b);
+	
+	if(system.solver.info() != Eigen::Success)
+	{
+		throw std::runtime_error("Part02Pressure: solving failed");
 	}
 
-	dst::RowColVals A;
-	std::vector<double> B;
-	const double flow_rate_injection_single_node = 1.0 / state.reference.n_inject_boundaries;
-	for(int i = 0; i < n_nodes; ++ i)
+	// Assign pressures back to nodes
+	for(int i = 0; i < n_variables; ++ i)
 	{
-		const auto& node = state.nodes[i];
-		if(node.calculated.id_symmetric_solver == -1)
-		{
-			continue;
-		}
-
-		double val = 0;
-		double b = 0;
-		for(const int id_tube: node.reference.connections_id_tube_v)
-		{
-			const auto& tube = state.tubes[id_tube];
-
-			const double sign = ((tube.id_node_first == i) ? 1 : -1);
-			const int id_node_b = ((sign < 0) ? tube.id_node_first: tube.id_node_second);
-
-			const double resistance = tube.calculated.resistance_coefficient;
-			const double capillary_pressure =
-				sign * tube.calculated.capillary_pressure_magnitude;
-
-			val += resistance;
-			if(state.nodes[id_node_b].calculated.id_symmetric_solver == -1)
-			{
-				b += resistance * state.nodes[id_node_b].pressure;
-			}
-			else
-			{
-				A.push_back({node.calculated.id_symmetric_solver, state.nodes[id_node_b].calculated.id_symmetric_solver, -resistance});
-			}
-			b -= resistance * capillary_pressure;
-		}
-		if(node.is_open_boundary)
-		{
-			b += flow_rate_injection_single_node;
-		}
-		B.push_back(b);
-		A.push_back({node.calculated.id_symmetric_solver, node.calculated.id_symmetric_solver, val});
+		const int id_node = system.id_nodes_unknown_pressure_v[i];
+		system.state.nodes[id_node].calculated.pressure = solution(i);
 	}
-	return {A, B};
-}
-
-
-void step::Part02Pressure::assign_symmetric_pressure_v_to_each_node(
-	dst::System& system,
-	const std::vector<double>& pressure_v
-)
-{
-
-	const int n_nodes = state.nodes.size();
-	int count = 0;
-	for(int i = 0; i < n_nodes; ++ i)
-	{
-		auto& node = state.nodes[i];
-		if(node.calculated.id_symmetric_solver == -1)
-		{
-			node.calculated.pressure = node.pressure;
-			continue;
-		}
-		node.calculated.pressure = pressure_v[count];
-		++ count;
-	}
-}
-
-void step::Part02Pressure::generate_symmetric_linear_equations_and_assign_pressure_to_node(
-	dst::System& system,
-	bool& is_solver_prepared,
-	Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
-)
-{
-	const auto& [A, B] = generate_symmetric_linear_equations(state);
-
-
-	utility::Time time;
-	const auto& pressure_v = choose_method_of_solving_linear_equations(A, B, is_solver_prepared, solver);
-	system.measured.time_taken_by_solving_linear_equations += time.passed();
-	assign_symmetric_pressure_v_to_each_node(state, pressure_v);
-}
-
-
-
-std::vector<double> step::Part02Pressure::choose_method_of_solving_linear_equations(
-	const dst::RowColVals& A,
-	const std::vector<double>& B,
-	bool& is_solver_prepared,
-	Eigen::SimplicialLLT<Eigen::SparseMatrix<double>>& solver
-)
-{
-	// return utility::Math::gaussian_elimination(A, B);
-	// return utility::Math::eigen_no_symmetry_sparse_lu(A, B, B.size());
-	return utility::Math::eigen_symmetry_cholesky(A, B, is_solver_prepared, solver);
 }
