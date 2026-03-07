@@ -21,13 +21,13 @@ program/flow-in-periodic-medium
 program/function-trial
 program/permeability
 
+simulate/accuracy
 simulate/menu
 simulate/measure
 simulate/assign
 simulate/system-generator
 simulate/preparation
 simulate/set-solver
-simulate/capture
 
 step/all-parts
 step/part01-reference

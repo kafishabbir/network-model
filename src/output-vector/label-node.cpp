@@ -14,6 +14,7 @@ std::string output_vector::LabelNode::label_node_details(const nst::Node& node)
 	if(node.is_open_boundary)
 	{
 		ss << "is-inlet=" << (node.is_inlet ? "true" : "false") << "\n\\\\";
+		ss << "is-pressure-known=" << (node.is_pressure_known ? "true" : "false") << "\n\\\\";
 		ss << "is-fluid-injected=" << (node.calculated.is_fluid_injected_from_external_to_this_node ? "true" : "false") << "\n\\\\";
 		ss << "bound-pressure=" << s(node.pressure) << "\n\\\\";
 		ss << "id-fluid-inject=" << node.id_fluid_inject << "\n\\\\";

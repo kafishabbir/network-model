@@ -19,8 +19,6 @@ namespace simulate
 			dst::System& system
 		);
 		
-		// Deepseek -- do not write the whole code, just give me this fucntion in a seperate copyable text
-		// prepare_linear_equations_solver(system);
 	public:
 		static void run(
 			dst::System& system

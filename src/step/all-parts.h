@@ -13,6 +13,11 @@ namespace step
 		static void run_single_time_step(
 			dst::System& system
 		);
+		
+		static void run_single_time_step_debug(
+			dst::System& system
+		);
+
 
 	};
 }

@@ -84,4 +84,12 @@ void step::Part02Pressure::run(
 		const int id_node = system.id_nodes_unknown_pressure_v[i];
 		system.state.nodes[id_node].calculated.pressure = solution(i);
 	}
+	
+	for(auto& node: system.state.nodes)
+	{
+		if(node.is_pressure_known)
+		{
+			node.calculated.pressure = node.pressure;
+		}
+	}
 }

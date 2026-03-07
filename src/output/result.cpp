@@ -91,10 +91,10 @@ std::string output::Result::generate_flow_page_text(
 	// PARAMETER
 	ss << "\\item " << "PARAMETER:" << "\n";
 	ss << "\\begin{enumerate}\n";
-	ss << "\\item constant_physical.sigma=$" << s(system.parameter.constant_physical.sigma) << "$,\n";
-	ss << "\\item geometry.radius_contrast=$" << s(system.parameter.geometry.radius_contrast) << "$,\n";
-	ss << "\\item constant_physical.viscosity_water=$" << s(system.parameter.constant_physical.viscosity_water) << "$,\n";
-	ss << "\\item constant_physical.viscosity_oil=$" << s(system.parameter.constant_physical.viscosity_oil) << "$,\n";
+	ss << "\\item constant-physical.sigma=$" << s(system.parameter.constant_physical.sigma) << "$,\n";
+	ss << "\\item geometry.radius-contrast=$" << s(system.parameter.geometry.radius_contrast) << "$,\n";
+	ss << "\\item constant-physical.viscosity-water=$" << s(system.parameter.constant_physical.viscosity_water) << "$,\n";
+	ss << "\\item constant-physical.viscosity-oil=$" << s(system.parameter.constant_physical.viscosity_oil) << "$,\n";
 	ss << "\\end{enumerate}\n";
 
 	// TEMPORARY VALUES OF CURRENT STEP

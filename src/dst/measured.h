@@ -8,6 +8,7 @@ namespace dst
 {
 	class Measured
 	{
+	public:
 		struct HighFrequencyData
 		{
 			double time;

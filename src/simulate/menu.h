@@ -11,7 +11,7 @@ namespace simulate
 		static inline constexpr auto d = utility::Str::general;
 	
 	private:
-	
+		static void high_frequency_measurement(dst::System& system);
         static bool inject_more_fluid(const dst::System& system);
         static void capture_this_state(dst::System& system);
         static void print_time_spent(double time_program, const dst::System& system);

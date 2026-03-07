@@ -8,7 +8,7 @@ std::string dst::Parameter::str_cmd() const
 	std::stringstream ss;
 	
 	// Set precision for floating point values
-	ss << std::fixed << std::setprecision(3);
+	ss << std::setprecision(3);
 	
 	ss << "SIMULATION PARAMETERS:\n";
 	ss << "----------------------\n";
@@ -107,7 +107,8 @@ std::string dst::Parameter::str() const
     
     ss << "\\item RADIUS DISTRIBUTION:\n";
     ss << "\\begin{enumerate}\n";
-    ss << "\\item $\\bar{r} = " << s(geometry_distributions.radius.average) << "$\n";
+    ss << "\\item ratio = $" << s(geometry_distributions.radius.ratio) << "$\n";
+    ss << "\\item $r_{\\text{av}} = " << s(geometry_distributions.radius.average) << "$\n";
     ss << "\\item $r_{\\min} = " << s(geometry_distributions.radius.min) << "$\n";
     ss << "\\item $r_{\\max} = " << s(geometry_distributions.radius.max) << "$\n";
     ss << "\\item $\\sigma_r^2 = " << s(geometry_distributions.radius.variance) << "$\n";
@@ -115,7 +116,8 @@ std::string dst::Parameter::str() const
     
     ss << "\\item LENGTH DISTRIBUTION:\n";
     ss << "\\begin{enumerate}\n";
-    ss << "\\item $\\bar{l} = " << s(geometry_distributions.length.average) << "$\n";
+    ss << "\\item ratio = $" << s(geometry_distributions.length.ratio) << "$\n";
+    ss << "\\item $l_{\\text{av}} = " << s(geometry_distributions.length.average) << "$\n";
     ss << "\\item $l_{\\min} = " << s(geometry_distributions.length.min) << "$\n";
     ss << "\\item $l_{\\max} = " << s(geometry_distributions.length.max) << "$\n";
     ss << "\\item $\\sigma_l^2 = " << s(geometry_distributions.length.variance) << "$\n";
@@ -123,7 +125,8 @@ std::string dst::Parameter::str() const
     
     ss << "\\item VOLUME DISTRIBUTION:\n";
     ss << "\\begin{enumerate}\n";
-    ss << "\\item $\\bar{V} = " << s(geometry_distributions.volume.average) << "$\n";
+    ss << "\\item ratio = $" << s(geometry_distributions.volume.ratio) << "$\n";
+    ss << "\\item $V_{\\text{av}} = " << s(geometry_distributions.volume.average) << "$\n";
     ss << "\\item $V_{\\min} = " << s(geometry_distributions.volume.min) << "$\n";
     ss << "\\item $V_{\\max} = " << s(geometry_distributions.volume.max) << "$\n";
     ss << "\\item $\\sigma_V^2 = " << s(geometry_distributions.volume.variance) << "$\n";
