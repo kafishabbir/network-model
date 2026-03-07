@@ -1,5 +1,6 @@
 #include "output-vector/label-node.h"
 #include "output-vector/tikz.h"
+#include <sstream>
 
 std::string output_vector::LabelNode::label_node_details(const nst::Node& node)
 {

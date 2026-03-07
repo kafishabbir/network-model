@@ -17,7 +17,7 @@ nst::Tank simulate::Measure::tube_inventory(const nst::Tube& tube)
 }
 
 
-nst::Tank simulate::Measure::total_fluid_in_system(const dst::System& system)
+nst::Tank simulate::Measure::fluid_in_system(const dst::System& system)
 {
 	nst::Tank tank;
 	for(const auto& tube: system.state.tubes)

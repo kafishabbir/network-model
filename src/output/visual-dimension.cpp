@@ -17,25 +17,10 @@ std::pair<val, val> output::VisualDimension::min_max(
 	return {val_min, val_max};
 }
 
-template<class val, class T, class U>
-std::pair<val, val> output::VisualDimension::min_max(
-	const std::vector<T>& v,
-	U T::*member,  // Pointer to member U in T
-	val U::*submember  // Pointer to member val in U
+void output::VisualDimension::node_coordinates(
+	dst::State& state,
+	const output::Property& visual_property
 )
-{
-	val val_min = (v.front().*member).*submember;
-	val val_max = (v.front().*member).*submember;
-	for(const auto& x : v)
-	{
-		val_min = std::min(val_min, (x.*member).*submember);
-		val_max = std::max(val_max, (x.*member).*submember);
-	}
-
-	return {val_min, val_max};
-}
-
-void output::VisualDimension::node_coordinates(dst::State& state, const output::Property& visual_property)
 {
 	const auto& [min_x, max_x] = min_max(state.nodes, &nst::Node::x);
 
@@ -48,8 +33,10 @@ void output::VisualDimension::node_coordinates(dst::State& state, const output::
 	}
 }
 
-
-void output::VisualDimension::tube_lengths(dst::State& state, const output::Property& visual_property)
+void output::VisualDimension::tube_lengths(
+	dst::State& state,
+	const output::Property& visual_property
+)
 {
 	auto& tubes = state.tubes;
 	auto& nodes = state.nodes;
@@ -62,14 +49,27 @@ void output::VisualDimension::tube_lengths(dst::State& state, const output::Prop
 	}
 }
 
-void output::VisualDimension::tube_radius(dst::State& state, const output::Property& visual_property)
+void output::VisualDimension::tube_radius(
+	dst::State& state,
+	const dst::SystemOutput& system,
+	const output::Property& visual_property
+)
 {
 	auto& tubes = state.tubes;
-	const auto& [r_min, r_max] = min_max(tubes, &nst::Tube::radius);
+	
+	// Use min/max from system parameter instead of calculating
+	const double r_min = system.parameter.geometry_distributions.radius.min;
+	const double r_max = system.parameter.geometry_distributions.radius.max;
 
 	const double delta_r = r_max - r_min;
 	const bool slope_not_possible = ((delta_r / r_max) <= 0.01);
-	const auto& [length_min, length_max] = min_max(tubes, &nst::Tube::visual, &nst::Tube::Visual::length);
+	
+	// Find min visual length for scaling
+	double length_min = tubes.front().visual.length;
+	for(const auto& tube: tubes)
+	{
+		length_min = std::min(length_min, tube.visual.length);
+	}
 
 	if(slope_not_possible)
 	{
@@ -79,6 +79,7 @@ void output::VisualDimension::tube_radius(dst::State& state, const output::Prope
 		}
 		return;
 	}
+	
 	const double DELTA_R = visual_property.tube_radius_max - visual_property.tube_radius_min;
 
 	for(auto& tube: tubes)
@@ -89,7 +90,10 @@ void output::VisualDimension::tube_radius(dst::State& state, const output::Prope
 	}
 }
 
-void output::VisualDimension::node_radius(dst::State& state, const output::Property& visual_property)
+void output::VisualDimension::node_radius(
+	dst::State& state,
+	const output::Property& visual_property
+)
 {
 	auto& nodes = state.nodes;
 	const int n_nodes = nodes.size();
@@ -112,7 +116,8 @@ void output::VisualDimension::node_radius(dst::State& state, const output::Prope
 
 double output::VisualDimension::calculate_tube_visual_displacement_due_to_node(
 	const double r_node,
-	const double r_tube, const output::Property& visual_property
+	const double r_tube,
+	const output::Property& visual_property
 )
 {
 	return std::sqrt(r_node * r_node - r_tube * r_tube);
@@ -131,32 +136,42 @@ std::vector<double> output::VisualDimension::mpos_long_displaced_scaled(
 		x = p1 + length_effective * x;
 	}
 	return v;
-
 }
 
-void output::VisualDimension::mpos(dst::State& state, const output::Property& visual_property)
+void output::VisualDimension::mpos(
+	dst::State& state,
+	const output::Property& visual_property
+)
 {
-	//int i = 0;
 	const auto& nodes = state.nodes;
 	for(auto& tube: state.tubes)
 	{
 		const auto& node_first = nodes[tube.id_node_first];
 		const auto& node_second = nodes[tube.id_node_second];
-		const double p1 = calculate_tube_visual_displacement_due_to_node(node_first.visual.radius, tube.visual.radius, visual_property);
-		const double p2 = calculate_tube_visual_displacement_due_to_node(node_second.visual.radius, tube.visual.radius, visual_property);
+		const double p1 = calculate_tube_visual_displacement_due_to_node(
+			node_first.visual.radius,
+			tube.visual.radius,
+			visual_property
+		);
+		const double p2 = calculate_tube_visual_displacement_due_to_node(
+			node_second.visual.radius,
+			tube.visual.radius,
+			visual_property
+		);
 
 		tube.visual.mpos = mpos_long_displaced_scaled(tube, p1, p2);
 	}
-
 }
 
 void output::VisualDimension::add_state_visual(
-	dst::State& state, const output::Property& visual_property
+	dst::State& state,
+	const dst::SystemOutput& system,
+	const output::Property& visual_property
 )
 {
 	node_coordinates(state, visual_property);
 	tube_lengths(state, visual_property);
-	tube_radius(state, visual_property);
+	tube_radius(state, system, visual_property);
 	node_radius(state, visual_property);
 	mpos(state, visual_property);
 }

@@ -45,7 +45,7 @@ void simulate::Preparation::assign_initial_total_fluid_to_system(
 )
 {		
 	system.measured.initial_fluid = 
-		Measure::total_fluid_in_system(system);
+		Measure::fluid_in_system(system);
 }
 
 void simulate::Preparation::run(

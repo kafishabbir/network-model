@@ -4,13 +4,13 @@ void step::Part08Distribute::sort_id_tube_v_flow_out_at_node(
 	dst::System& system
 )
 {
-	for(auto& node: state.nodes)
+	for(auto& node: system.state.nodes)
 	{
 		auto& id_tube_v = node.calculated.flow_out_id_tube_v;
 		std::vector<std::pair<double, int>> radius_id_tube_v;
 		for(const int id_tube: id_tube_v)
 		{
-			const double radius = state.tubes[id_tube].radius;
+			const double radius = system.state.tubes[id_tube].radius;
 			radius_id_tube_v.push_back({radius, id_tube});
 		}
 
@@ -37,7 +37,7 @@ void step::Part08Distribute::assign_proportion_to_tube(
 
 	for(const int id_tube: flow_out_id_tube_v)
 	{
-		auto& tube = state.tubes[id_tube];
+		auto& tube = system.state.tubes[id_tube];
 		auto& add_p = tube.calculated.add_proportion;
 		const double capacity = tube.calculated.volume_displacement;
 
@@ -66,24 +66,23 @@ void step::Part08Distribute::assign_proportion_to_tube(
 	dst::System& system
 )
 {
-	for(auto& node: state.nodes)
+	for(auto& node: system.state.nodes)
 	{
 		const auto& id_tube_v = node.calculated.flow_out_id_tube_v;
 		const auto& node_tank = node.calculated.tank;
-		assign_proportion_to_tube(id_tube_v, node_tank, state);
+		assign_proportion_to_tube(id_tube_v, node_tank, system);
 	}
 }
-
-
 
 void step::Part08Distribute::distribute_fluids_from_node_to_tube(
 	dst::System& system
 )
 {
-	sort_id_tube_v_flow_out_at_node(state);
-	assign_proportion_to_tube(state);
+	sort_id_tube_v_flow_out_at_node(system);
+	assign_proportion_to_tube(system);
+	
 	// NUMERICAL-ERROR
-	for(auto& tube: state.tubes)
+	for(auto& tube: system.state.tubes)
 	{
 		auto& x = tube.calculated.add_proportion;
 		auto y = x;

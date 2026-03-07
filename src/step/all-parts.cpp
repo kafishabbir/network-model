@@ -23,7 +23,7 @@ void step::AllParts::run_single_time_step(
 	utility::Time time;
 	
 
-	step::Part01Reference::assign_resistance_and_capillary_pressure_to_tubes(system);
+	step::Part01Reference::run(system);
 		system.measured.time_taken_by_each_step[1] += time.passed();
 		//comment = "assign-resistance-and-capillary-pressure-to-tubes";
 		//states.push_back(system);
@@ -79,7 +79,7 @@ void step::AllParts::run_single_time_step(
 		//std::cout << "here" << j++ << std::endl;
 
 	
-	step::Part10Measure::measure(system);
+	step::Part10Measure::compulsory(system);
 		system.measured.time_taken_by_each_step[10] += time.passed();
 		//comment = "measure";
 		//states.push_back(system);

@@ -26,6 +26,7 @@ namespace dst
 			Reference();
 		};
 		
+	public:
 		struct Calculated
 		{
 			double time_step;
@@ -33,7 +34,7 @@ namespace dst
 			nst::Tank fluid_evacuated;
 			
 			// Fill these ones if I am saving a snap only
-			nst::Tank total_fluid_in_system;
+			nst::Tank fluid_in_system;
 			double saturation;
 			double volume_total_delta;
 			double water_volume_delta;

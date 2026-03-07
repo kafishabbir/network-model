@@ -1,23 +1,43 @@
 #include "step/part01-reference.h"
-#include "simulate/utility.h"
+#include "simulate/assign.h"
+
+void step::Part01Reference::reset_calculated(
+	dst::System& system
+)
+{
+	system.state.calculated = dst::State::Calculated();
+	
+	for(auto& node: system.state.nodes)
+	{
+		node.calculated = nst::Node::Calculated();
+	}
+	
+	for(auto& tube: system.state.tubes)
+	{
+		tube.calculated = nst::Tube::Calculated();
+	}
+}
 
 double step::Part01Reference::evaluate_mu(
 	const nst::Tube& tube,
 	const dst::System& system
 )
 {
-	std::vector<double> mu_v{state.water_viscosity(), state.oil_viscosity()};
+	const double mu_water = system.parameter.constant_physical.viscosity_water;
+	const double mu_oil = system.parameter.constant_physical.viscosity_oil;
+	std::vector<double> mu_v{mu_water, mu_oil};
+	
 	const auto& mpos_long = tube.mpos_long();
 	const int n = mpos_long.size();
 	double sum = 0;
+	
 	for(int i = 1; i < n; ++ i)
 	{
 		sum += (mpos_long[i] - mpos_long[i - 1]) * mu_v[(i + 1) % 2];
 	}
-
+	
 	return sum;
 }
-
 
 double step::Part01Reference::resistance_coefficient(
 	const nst::Tube& tube,
@@ -26,8 +46,20 @@ double step::Part01Reference::resistance_coefficient(
 {
 	const double r = tube.radius;
 	const double l = tube.length;
-	const double mu = evaluate_mu(tube, state);
+	const double mu = evaluate_mu(tube, system);
+	
 	return std::acos(-1) / 8 * std::pow(r, 4) / mu / l;
+}
+
+void step::Part01Reference::resistance_coefficient(
+	dst::System& system
+)
+{
+	for(auto& tube: system.state.tubes)
+	{
+		tube.calculated.resistance_coefficient =
+			resistance_coefficient(tube, system);
+	}
 }
 
 double step::Part01Reference::capillary_pressure_magnitude(
@@ -35,60 +67,32 @@ double step::Part01Reference::capillary_pressure_magnitude(
 	const dst::System& system
 )
 {
+	const double sigma = system.parameter.constant_physical.sigma;
+	const double value_single_meniscus = 2.0 * sigma / tube.radius;
+	
 	const double sign_id_fluid_first = ((tube.id_fluid_first == 0) ? 1 : -1);
 	const double sign_n_meniscus = (tube.mpos.size() % 2);
-
-	const double sigma = state.physical_constant.sigma;
-	const double value_single_meniscus = 2.0 * sigma / tube.radius;
-
+	
 	return sign_id_fluid_first * sign_n_meniscus * value_single_meniscus;
 }
-
 
 void step::Part01Reference::capillary_pressure_magnitude(
 	dst::System& system
 )
 {
-	for(auto& tube: state.tubes)
+	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated.capillary_pressure_magnitude =
-			capillary_pressure_magnitude(tube, state);
+			capillary_pressure_magnitude(tube, system);
 	}
 }
 
-
-void step::Part01Reference::resistance_coefficient(
+void step::Part01Reference::run(
 	dst::System& system
 )
 {
-	for(auto& tube: state.tubes)
-	{
-		tube.calculated.resistance_coefficient =
-			resistance_coefficient(tube, state);
-	}
+	reset_calculated(system);
+	resistance_coefficient(system);
+	capillary_pressure_magnitude(system);
+	simulate::Assign::assign_type_fluid_contact(system);
 }
-
-void step::Part01Reference::reset_calculated(dst::System& system)
-{
-	state.calculated = dst::State::Calculated();
-	for(auto& node: state.nodes)
-	{
-		node.calculated = nst::Node::Calculated();
-	}
-	for(auto& tube: state.tubes)
-	{
-		tube.calculated = nst::Tube::Calculated();
-	}
-}
-
-
-void step::Part01Reference::assign_resistance_and_capillary_pressure_to_tubes(
-	dst::System& system
-)
-{
-	reset_calculated(state);
-	resistance_coefficient(state);
-	capillary_pressure_magnitude(state);
-	simulate::Utility::assign_type_fluid_contact(state);
-}
-

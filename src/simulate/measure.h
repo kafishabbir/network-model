@@ -7,10 +7,10 @@ namespace simulate
 {
 	class Measure
 	{
-		static nst::Tank tube_inventory(const nst::Tube& tube);
 		
 	public:
-		static nst::Tank total_fluid_in_system(const dst::System& system);
+		static nst::Tank tube_inventory(const nst::Tube& tube);
+		static nst::Tank fluid_in_system(const dst::System& system);
 	};
 }
 

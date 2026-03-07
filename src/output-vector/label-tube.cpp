@@ -1,7 +1,7 @@
 #include "output-vector/label-tube.h"
 #include "output-vector/tikz.h"
 #include "output-vector/draw.h"
-
+#include <sstream>
 
 std::pair<int, int> output_vector::LabelTube::id_node_flow_direction(
 	const int id_node_first, 

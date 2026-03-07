@@ -59,7 +59,7 @@ nst::Tube step::Part09Displace::update_tube_mpos_according_to_proportion(
 	const double ap = tube.calculated.add_proportion;
 
 	auto tube_front = generate_tube_front(tube, lp, ap);
-	auto tube_back = (is_reverse_needed ? tube.reversed() :tube.original());
+	auto tube_back = (is_reverse_needed ? tube.reversed() : tube.original());
 	join_tubes(tube_front, tube_back, lp);
 
 	if(is_reverse_needed)
@@ -69,7 +69,6 @@ nst::Tube step::Part09Displace::update_tube_mpos_according_to_proportion(
 
 	return tube_front;
 }
-
 
 std::vector<double> step::Part09Displace::combine_swabs(
 	const nst::Tube& tube
@@ -91,7 +90,6 @@ std::vector<double> step::Part09Displace::combine_swabs(
 		const int end = begin + 1;
 		const double x = tube.mpos[begin];
 		const double y = tube.mpos[end];
-		//std::cout << "chose (" << x << "--" << y << ")\n";
 		const double m = y - x;
 		const double center = (y + x) / 2;
 		MX += (center * m);
@@ -100,7 +98,6 @@ std::vector<double> step::Part09Displace::combine_swabs(
 	const double center = MX / M;
 	const double x = center - M / 2;
 	const double y = center + M / 2;
-	//std::cout << "M=" << M << ", center=" << center << "\n";
 	const int begin = id;
 	const int end = 2 * n_swabs + begin;
 
@@ -110,12 +107,11 @@ std::vector<double> step::Part09Displace::combine_swabs(
 	return v;
 }
 
-
 void step::Part09Displace::update_tube_mpos_according_to_proportion(
 	dst::System& system
 )
 {
-	for(auto& tube: state.tubes)
+	for(auto& tube: system.state.tubes)
 	{
 		tube = update_tube_mpos_according_to_proportion(tube);
 		tube.mpos = combine_swabs(tube);

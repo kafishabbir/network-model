@@ -1,13 +1,15 @@
 #include "step/part06-pour.h"
+#include <algorithm>
+#include <cmath>
 
 void step::Part06Pour::assign_id_node_id_tube_flow_direction(
 	dst::System& system
 )
 {
-	const int n_tubes = state.tubes.size();
+	const int n_tubes = system.state.tubes.size();
 	for(int i = 0; i < n_tubes; ++ i)
 	{
-		auto& tube = state.tubes[i];
+		auto& tube = system.state.tubes[i];
 		const double flow_rate = tube.calculated.flow_rate;
 		int id_node_source = tube.id_node_first;
 		int id_node_sink = tube.id_node_second;
@@ -17,11 +19,9 @@ void step::Part06Pour::assign_id_node_id_tube_flow_direction(
 		}
 
 		tube.calculated.id_node_sink = id_node_sink;
-		state.nodes[id_node_source].calculated.flow_out_id_tube_v.push_back(i);
+		system.state.nodes[id_node_source].calculated.flow_out_id_tube_v.push_back(i);
 	}
 }
-
-
 
 std::vector<double> step::Part06Pour::mpos_long_until(
 	const nst::Tube& tube,
@@ -35,12 +35,10 @@ std::vector<double> step::Part06Pour::mpos_long_until(
 		{
 			mpos_new.push_back(x);
 		}
-
 	}
 	mpos_new.push_back(lp);
 	return mpos_new;
 }
-
 
 nst::Tank step::Part06Pour::produce_tank_with_fluids_flow_out_from_tube(
 	const nst::Tube& tube
@@ -65,40 +63,38 @@ nst::Tank step::Part06Pour::produce_tank_with_fluids_flow_out_from_tube(
 	return tank;
 }
 
-
 void step::Part06Pour::assign_tank_to_tubes(
 	dst::System& system
 )
 {
-	for(auto& tube: state.tubes)
+	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated.tank_pour_into_node = produce_tank_with_fluids_flow_out_from_tube(tube);
 	}
 }
 
-
 void step::Part06Pour::pour_from_tube_to_id_node_tank(
 	dst::System& system
 )
 {
-	for(auto& tube: state.tubes)
+	for(auto& tube: system.state.tubes)
 	{
 		const auto& tank_tube = tube.calculated.tank_pour_into_node;
-		auto& tank_target = state.nodes[tube.calculated.id_node_sink].calculated.tank;
+		auto& tank_target = system.state.nodes[tube.calculated.id_node_sink].calculated.tank;
 		tank_target.add_fluid(tank_tube);
 	}
 }
-
 
 void step::Part06Pour::pour_from_tubes_to_node_tank(
 	dst::System& system
 )
 {
-	assign_id_node_id_tube_flow_direction(state);
-	assign_tank_to_tubes(state);
-	pour_from_tube_to_id_node_tank(state);
+	assign_id_node_id_tube_flow_direction(system);
+	assign_tank_to_tubes(system);
+	pour_from_tube_to_id_node_tank(system);
+	
 	// NUMERICAL-ERROR
-	for(auto& node: state.nodes)
+	for(auto& node: system.state.nodes)
 	{
 		nst::Tank tmp;
 		if(node.calculated.tank.volume_water() / node.calculated.tank.volume_total() >= 1e-6)

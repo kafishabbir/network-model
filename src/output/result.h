@@ -13,10 +13,10 @@ namespace output
 	
 		static inline constexpr auto s = utility::Str::scientific;
 		
-		static const std::string path_flow;
-		static const std::string path_folder_figures;
-		static const std::string path_raw;
-		static const std::string file_name_full_raw;
+		static const std::string folder_run_results_flow;
+		static const std::string folder_run_results_flow_figures;
+		static const std::string path_run_results_plots;
+		static const std::string file_run_results_plots_data_json;
 		
 		static std::string generate_file_name_from_index(const int i);
 		
@@ -26,18 +26,16 @@ namespace output
 		Json json;
 		std::stringstream ss_flow;
 		
-		
 		std::string generate_flow_caption(
 			const dst::State& state,
 			const int count_simulations
 		);
 		
-		
 		std::string generate_flow_page_text(
 			const dst::State& state,
+			const dst::SystemOutput& system,
 			const int count_simulations
 		);
-		
 		
 		std::string save_figure_and_generate_inclusion_code(
 			const dst::State& state,
@@ -45,9 +43,9 @@ namespace output
 			const std::string& file_name
 		);
 		
-		
 		std::string plot_flow(
 			const dst::State& state,
+			const dst::SystemOutput& system,
 			const output::Property& visual_property,
 			const int count_figures
 		);

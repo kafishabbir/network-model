@@ -13,7 +13,6 @@ dst/parameter
 dst/measured
 
 nst/node
-nst/state
 nst/tank
 nst/tube
 
@@ -28,6 +27,7 @@ simulate/assign
 simulate/system-generator
 simulate/preparation
 simulate/set-solver
+simulate/capture
 
 step/all-parts
 step/part01-reference
@@ -41,7 +41,6 @@ step/part08-distribute
 step/part09-displace
 step/part10-measure
 
-utility/measure
 utility/random
 utility/str
 utility/time

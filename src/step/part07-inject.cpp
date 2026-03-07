@@ -34,32 +34,30 @@ nst::Tank step::Part07Inject::produce_tank_with_oil_sliced_out(
 	return tank_new;
 }
 
-
 void step::Part07Inject::assign_volume_flow_out_to_node(
 	dst::System& system
 )
 {
-	for(auto& node: state.nodes)
+	for(auto& node: system.state.nodes)
 	{
 		auto& volume = node.calculated.volume_fluid_flow_out;
 		volume = 0;
 		for(const int id_tube: node.calculated.flow_out_id_tube_v)
 		{
-			const auto& tube = state.tubes[id_tube];
+			const auto& tube = system.state.tubes[id_tube];
 			volume += tube.calculated.volume_displacement;
 		}
 	}
 }
 
-
 void step::Part07Inject::balance_flow_at_open_nodes(
 	dst::System& system
 )
 {
-	auto& addition_tank = state.calculated.fluid_added;
-	auto& evacuation_tank = state.calculated.fluid_evacuated;
+	auto& addition_tank = system.state.calculated.fluid_added;
+	auto& evacuation_tank = system.state.calculated.fluid_evacuated;
 
-	for(auto& node: state.nodes)
+	for(auto& node: system.state.nodes)
 	{
 		if(!node.is_open_boundary)
 		{
@@ -89,15 +87,14 @@ void step::Part07Inject::balance_flow_at_open_nodes(
 		}
 	}
 
-	state.measured.total_fluid_added.add_fluid(addition_tank);
-	state.measured.total_fluid_evacuated.add_fluid(evacuation_tank);
+	system.state.measured.fluid_added.add_fluid(addition_tank);
+	system.state.measured.fluid_evacuated.add_fluid(evacuation_tank);
 }
-
 
 void step::Part07Inject::inject_and_evacuate_fluid_from_system(
 	dst::System& system
 )
 {
-	assign_volume_flow_out_to_node(state);
-	balance_flow_at_open_nodes(state);
+	assign_volume_flow_out_to_node(system);
+	balance_flow_at_open_nodes(system);
 }

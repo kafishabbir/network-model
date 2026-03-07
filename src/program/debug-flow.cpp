@@ -9,22 +9,22 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 	// Set simulation type using the flags
 	parameter.simulation.is_flow_as_opposed_to_test = false;  // false = test simulation
 	parameter.simulation.is_flow_const_flow_rate = false;     // false = constant pressure
-	parameter.simulation.is_const_porosity = false;           // variable porosity
+	// parameter.simulation.is_const_porosity = false;           // variable porosity
 	parameter.simulation.id_fluid_inject = 0;
 	parameter.simulation.inlet_pressure = 1000;
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 4;
+	parameter.geometry.n_tube_rows = 2;
 	parameter.geometry.n_tube_cols = 4;
 	parameter.geometry.radius_contrast = 0.5;
 	parameter.geometry.length_scale = 10.0;
 	parameter.geometry.n_periods = 2;
-	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
+	parameter.geometry.n_inject_boundaries = -1;  // Will be set during initialization
 
 	// Physical constants
 	parameter.constant_physical.sigma = 100;
 	parameter.constant_physical.viscosity_water = 1.0;  // viscosity_ratio = 1.0, mu_scale = 1.0
-	parameter.constant_physical.viscosity_oil = 1.0;     // mu_scale / sqrt(viscosity_ratio)
+	parameter.constant_physical.viscosity_oil = 1.0;
 
 	// Computational constants
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default

@@ -1,5 +1,6 @@
 #include "output-vector/draw.h"
 #include "output-vector/tikz.h"
+#include <sstream>
 
 std::string output_vector::Draw::mpos_horizontal_rectangles(
 	const nst::Tube& tube,

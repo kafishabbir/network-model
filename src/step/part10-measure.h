@@ -20,11 +20,17 @@ namespace step
 		static std::vector<std::pair<double, double>> generate_saturation_vs_x(
 			const dst::System& system
 		);
-
+		
+		static void assign_saturation_and_pressure_vs_coordinate(dst::System& system);
+		
 	   public:
 
-		static void measure(dst::System& system);
-		static void assign_saturation_and_pressure_vs_coordinate(dst::System& system);
+		static void measure(dst::System& system); // delete this
+		
+		
+		compulsory(dst::System& system)
+		capture(dst::System& system)
+		high_frequency_measure(dst::System& system)
 	};
 }
 

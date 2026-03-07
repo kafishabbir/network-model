@@ -2,6 +2,7 @@
 
 #include "simulate/system-generator.h"
 #include "simulate/preparation.h"
+#include "simulate/set-solver.h"
 #include "step/all-parts.h"
 
 //#include <cmath>
@@ -25,6 +26,16 @@ void simulate::Menu::capture_this_state(dst::System& system)
 		// Conduct measurements
 		system.measured.states.push_back(system.state);
 	}
+}
+
+// DEEPSEEK
+high_frequency_measurement(system)
+{
+	if(system.state.reference.id % 10 == 0)
+	{
+		// add stuff to system.measurement.high_frequency_measurement_v
+	}
+	
 }
 
 void simulate::Menu::print_time_spent(const double time_program, const dst::System& system)
@@ -64,7 +75,8 @@ dst::SystemOutput simulate::Menu::run(
 		++ system.state.reference.id_step;
 		
 		step::AllParts::run_single_time_step(system);
-		capture_this_state(system);		
+		capture_this_state(system);
+		high_frequency_measurement(system);	
 	}
 
 	print_time_spent(time.passed(), system);

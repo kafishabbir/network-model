@@ -6,7 +6,6 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 {
 	dst::Parameter parameter;
 
-	// Set simulation type based on the enum selection
 	// Using periodic_const_volume_injection_const_porosity as the default
 	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
 	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
@@ -23,7 +22,7 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
 
 	// Physical constants
-	parameter.constant_physical.sigma = 0.0;
+	parameter.constant_physical.sigma = 10.0;
 	parameter.constant_physical.viscosity_water = 1.0;  // viscosity_ratio = 1.0, mu_scale = 1.0
 	parameter.constant_physical.viscosity_oil = 1.0;     // mu_scale / sqrt(viscosity_ratio)
 
