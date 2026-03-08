@@ -9,7 +9,7 @@ std::string output_vector::LabelNode::label_node_details(const nst::Node& node)
 	ss << "coordinate=$(" << s(node.x) << ", " << s(node.y) << ")$" << "\n\\\\";
 	ss << "id-symm=" << node.reference.id_for_symmetric_matrix << "\n\\\\";
 	ss << "open-bound=" << (node.is_open_boundary ? "true" : "false") << "\n\\\\";
-	ss << "contact=" << node.calculated.type_fluid_contact << "\n\\\\";
+	ss << "contact=" << node.calculated.type_fluid_contact() << "\n\\\\";
 	
 	if(node.is_open_boundary)
 	{

@@ -60,7 +60,6 @@ int simulate::SystemGenerator::count_inlet_nodes(
 	
 	return count;	
 }
-
 dst::Parameter::GeometryDistributions::Distribution
 simulate::SystemGenerator::find_distribution_radius(
 	const dst::State& state
@@ -85,14 +84,22 @@ simulate::SystemGenerator::find_distribution_radius(
 	dist.max = max_val;
 	dist.ratio = max_val / min_val;
 	
-	// Calculate variance
+	// Calculate variance first (for standard deviation)
 	double variance_sum = 0.0;
 	for (const auto& tube : state.tubes)
 	{
 		double diff = tube.radius - dist.average;
 		variance_sum += diff * diff;
 	}
-	dist.variance = variance_sum / state.tubes.size();
+	double variance = variance_sum / state.tubes.size();
+	
+	// Calculate coefficient of variation (sqrt(variance) / average) and store in dist.variance
+	double std_dev = std::sqrt(variance);
+	if (dist.average != 0.0) {
+		dist.variance = std_dev / dist.average;  // Now storing coefficient of variation
+	} else {
+		dist.variance = 0.0;
+	}
 	
 	return dist;
 }
@@ -121,14 +128,22 @@ simulate::SystemGenerator::find_distribution_length(
 	dist.max = max_val;
 	dist.ratio = max_val / min_val;
 	
-	// Calculate variance
+	// Calculate variance first (for standard deviation)
 	double variance_sum = 0.0;
 	for (const auto& tube : state.tubes)
 	{
 		double diff = tube.length - dist.average;
 		variance_sum += diff * diff;
 	}
-	dist.variance = variance_sum / state.tubes.size();
+	double variance = variance_sum / state.tubes.size();
+	
+	// Calculate coefficient of variation (sqrt(variance) / average) and store in dist.variance
+	double std_dev = std::sqrt(variance);
+	if (dist.average != 0.0) {
+		dist.variance = std_dev / dist.average;  // Now storing coefficient of variation
+	} else {
+		dist.variance = 0.0;
+	}
 	
 	return dist;
 }
@@ -157,14 +172,22 @@ simulate::SystemGenerator::find_distribution_volume(
 	dist.max = max_val;
 	dist.ratio = max_val / min_val;
 	
-	// Calculate variance
+	// Calculate variance first (for standard deviation)
 	double variance_sum = 0.0;
 	for (const auto& tube : state.tubes)
 	{
 		double diff = tube.volume() - dist.average;
 		variance_sum += diff * diff;
 	}
-	dist.variance = variance_sum / state.tubes.size();
+	double variance = variance_sum / state.tubes.size();
+	
+	// Calculate coefficient of variation (sqrt(variance) / average) and store in dist.variance
+	double std_dev = std::sqrt(variance);
+	if (dist.average != 0.0) {
+		dist.variance = std_dev / dist.average;  // Now storing coefficient of variation
+	} else {
+		dist.variance = 0.0;
+	}
 	
 	return dist;
 }

@@ -67,7 +67,7 @@ std::string output_vector::Draw::draw_node(
 		node.visual.x, 
 		node.visual.y,
 		node.visual.radius, 
-		colors[node.calculated.type_fluid_contact]
+		colors[node.calculated.type_fluid_contact()]
 	);
 }
 

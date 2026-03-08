@@ -41,38 +41,20 @@ void simulate::Assign::assign_pressures(
 }
 
 
-int simulate::Assign::find_type_fluid_contact(
-	const int existing,
-	const int addition
-)
+void simulate::Assign::update_node_contact_with_fluid(nst::Node& node, const int id_fluid_in_tube)
 {
-	if(existing == 2)
+	if(id_fluid_in_tube == 0)
 	{
-		return 2;
+		node.calculated.has_contact_with_water = true;
+		return;
 	}
-	if(existing == 0 && addition == 0)
+	else if(id_fluid_in_tube == 1)
 	{
-		return 0;
-	}
-	if(existing == 0 && addition == 1)
-	{
-		return 2;
-	}
-	if(existing == 1 && addition == 0)
-	{
-		return 2;
-	}
-	if(existing == 1 && addition == 1)
-	{
-		return 1;
-	}
-	if(existing == -1)
-	{
-		return addition;
-	}
+		node.calculated.has_contact_with_oil = true;
+		return;
+	}		
 	
-	throw std::invalid_argument("existing fluid in node not correct simulate::step::Part01Reference::find_type_fluid_contact()");
-	return -1;
+	throw std::invalid_argument("id_fluid_in_tube, invalid, in updating node contact");
 }
 
 void simulate::Assign::assign_type_fluid_contact(
@@ -81,7 +63,8 @@ void simulate::Assign::assign_type_fluid_contact(
 {
 	for(auto& node: system.state.nodes)
 	{
-		node.calculated.type_fluid_contact = -1;
+		node.calculated.has_contact_with_water = false;
+		node.calculated.has_contact_with_oil = false;
 	}
 	
 	for(const auto& tube: system.state.tubes)
@@ -89,11 +72,13 @@ void simulate::Assign::assign_type_fluid_contact(
 		const int id_fluid_begin = tube.id_fluid_first;
 		const int id_fluid_end = (tube.id_fluid_first + tube.mpos.size()) % 2;
 		
-		auto& contact_begin = system.state.nodes[tube.id_node_first].calculated.type_fluid_contact;
-		auto& contact_end = system.state.nodes[tube.id_node_second].calculated.type_fluid_contact;
 		
-		contact_begin = find_type_fluid_contact(contact_begin, id_fluid_begin);
-		contact_end = find_type_fluid_contact(contact_end, id_fluid_end);
+		auto& node_a = system.state.nodes[tube.id_node_first];
+		auto& node_b = system.state.nodes[tube.id_node_second];
+		
+		
+		update_node_contact_with_fluid(node_a, id_fluid_begin);
+		update_node_contact_with_fluid(node_b, id_fluid_end);
 	}
 }
 	

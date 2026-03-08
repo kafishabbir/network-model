@@ -20,7 +20,12 @@ namespace step
 			const nst::Tube& tube,
 			const dst::System& system
 		);
-
+		
+		static std::pair<int, int> add_pseudo_meniscus(
+			const nst::Tube& tube, 
+			const dst::System& system
+		);
+		
 		static double capillary_pressure_magnitude(
 			const nst::Tube& tube,
 			const dst::System& system

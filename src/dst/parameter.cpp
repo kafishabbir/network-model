@@ -52,12 +52,12 @@ std::string dst::Parameter::str_cmd() const
 	//~ ss << "  volume.max = " << geometry_distributions.volume.max << "\n";
 	//~ ss << "  volume.variance = " << geometry_distributions.volume.variance << "\n";
 	
-	//~ ss << "\n";
-	//~ ss << "PHYSICAL CONSTANTS:\n";
-	//~ ss << "-------------------\n";
-	//~ ss << "sigma = " << constant_physical.sigma << "\n";
-	//~ ss << "viscosity_water = " << constant_physical.viscosity_water << "\n";
-	//~ ss << "viscosity_oil = " << constant_physical.viscosity_oil << "\n";
+	ss << "\n";
+	ss << "PHYSICAL CONSTANTS:\n";
+	ss << "-------------------\n";
+	ss << "sigma = " << constant_physical.sigma << "\n";
+	ss << "viscosity_water = " << constant_physical.viscosity_water << "\n";
+	ss << "viscosity_oil = " << constant_physical.viscosity_oil << "\n";
 	
 	//~ ss << "\n";
 	//~ ss << "COMPUTATIONAL CONSTANTS:\n";

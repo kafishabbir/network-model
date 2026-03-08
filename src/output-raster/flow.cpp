@@ -16,7 +16,7 @@ void output_raster::Flow::code_node(
 	double x = node.visual.x;
 	double y = node.visual.y;
 	double radius = node.visual.radius;
-	const auto& color = colors_v[node.calculated.type_fluid_contact];
+	const auto& color = colors_v[node.calculated.type_fluid_contact()];
 	cairo.circle(x, y, radius, color);
 }
 

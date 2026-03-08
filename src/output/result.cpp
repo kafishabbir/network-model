@@ -122,7 +122,7 @@ std::string output::Result::save_figure_and_generate_inclusion_code(
 	std::stringstream ss;
 	const auto& file_full_path = folder_run_results_flow_figures + file_name;
 	
-	if(state.nodes.size() >= 20)
+	if(state.nodes.size() >= 40)
 	{ 
 		output_raster::Flow::print_figure(state, file_full_path, visual_property);
 		ss << "\\includegraphics[width=0.6\\textwidth]{" << "figures/" << file_name << "}" << '\n';

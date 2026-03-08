@@ -7,10 +7,6 @@ namespace simulate
 {
 	class Assign
 	{
-		static int find_type_fluid_contact(
-			const int existing,
-			const int addition
-		);
 
 	public:
 
@@ -34,6 +30,10 @@ namespace simulate
 			dst::System& system
 		);
 		
+		static void update_node_contact_with_fluid(
+			nst::Node& node,
+			const int id_fluid_in_tube
+		);
 	};
 }
 

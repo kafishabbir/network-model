@@ -27,7 +27,7 @@ namespace dst
 			double radius_contrast;
 			double length_scale;
 			double n_periods;
-			
+			bool shear;
 			int n_inject_boundaries; // to be filled by SystemGenerator
 		};
 		

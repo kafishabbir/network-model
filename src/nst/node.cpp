@@ -10,8 +10,30 @@ nst::Node::Calculated::Calculated():
 	flow_out_id_tube_v(),
 	volume_fluid_flow_out(0),
 	is_fluid_injected_from_external_to_this_node(false),
-	type_fluid_contact(-1)
+	has_contact_with_water(false),
+	has_contact_with_oil(false)
 {}
+
+
+int nst::Node::Calculated::type_fluid_contact() const
+{
+	if(has_contact_with_water && has_contact_with_oil)
+	{
+		return 2;
+	}
+	if(has_contact_with_oil)
+	{
+		return 1;
+	}
+	if(has_contact_with_water)
+	{
+		return 0;
+	}
+	
+	
+	
+	throw std::runtime_error("No fluid has contact with this node");
+}
 
 
 double nst::Node::Visual::distance(const Node& node) const

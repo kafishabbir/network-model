@@ -62,17 +62,48 @@ void step::Part01Reference::resistance_coefficient(
 	}
 }
 
+
+std::pair<int, int> step::Part01Reference::add_pseudo_meniscus(
+    const nst::Tube& tube, 
+    const dst::System& system
+)
+{
+	
+    int n_meniscus = tube.mpos.size();
+    int id_fluid_first = tube.id_fluid_first;
+    int id_fluid_last = (id_fluid_first + n_meniscus) % 2;
+    //return {id_fluid_first, n_meniscus};
+    const auto& node_begin = system.state.nodes[tube.id_node_first];
+    const auto& node_end = system.state.nodes[tube.id_node_second];
+    
+    if(node_begin.calculated.has_contact_with_water && (id_fluid_first == 1))
+    {
+        ++ n_meniscus;
+        id_fluid_first = 0;
+    }
+    
+    if(node_end.calculated.has_contact_with_water && (id_fluid_last == 1))
+    {
+        ++ n_meniscus;
+    }
+    
+    return {id_fluid_first, n_meniscus};
+}
+
 double step::Part01Reference::capillary_pressure_magnitude(
 	const nst::Tube& tube,
 	const dst::System& system
 )
 {
+	const auto& [id_fluid_first, n_meniscus] = add_pseudo_meniscus(tube, system);
+	
 	const double sigma = system.parameter.constant_physical.sigma;
 	const double value_single_meniscus = 2.0 * sigma / tube.radius;
 	
-	const double sign_id_fluid_first = ((tube.id_fluid_first == 0) ? 1 : -1);
-	const double sign_n_meniscus = (tube.mpos.size() % 2);
+	const double sign_id_fluid_first = ((id_fluid_first == 0) ? 1 : -1);
+	const double sign_n_meniscus = (n_meniscus % 2);
 	
+
 	return sign_id_fluid_first * sign_n_meniscus * value_single_meniscus;
 }
 

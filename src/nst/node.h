@@ -34,8 +34,11 @@ namespace nst
 			std::vector<int> flow_out_id_tube_v;
 			double volume_fluid_flow_out;
 			bool is_fluid_injected_from_external_to_this_node;
-			int type_fluid_contact; // 0 - water, 1 - oil, 2 - both
+			bool has_contact_with_water;
+			bool has_contact_with_oil;
+			//int type_fluid_contact; // 0 - water, 1 - oil, 2 - both
 			Calculated();
+			int type_fluid_contact() const;
 		};
 
 	public:
