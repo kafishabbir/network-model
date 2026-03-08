@@ -14,11 +14,11 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 	//parameter.simulation.inlet_pressure = 100;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 40;
-	parameter.geometry.n_tube_cols = 40;
-	parameter.geometry.radius_contrast = 0.5;
+	parameter.geometry.n_tube_rows = 10;
+	parameter.geometry.n_tube_cols = 10;
+	parameter.geometry.radius_contrast = 0.3;
 	parameter.geometry.length_scale = 10.0;
-	parameter.geometry.n_periods = 5.5;
+	parameter.geometry.n_periods = 1.5;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
 
 	// Physical constants
@@ -30,7 +30,7 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
+	parameter.plot.capture_frequency_in_volume_fraction = 0.01;
 	parameter.plot.volume_max_to_inject = 0.65;
 
 	return parameter;
@@ -49,10 +49,14 @@ output::Property program::FlowInPeriodicMedium::generate_visual_property()
 
 void program::FlowInPeriodicMedium::run()
 {
+	//~ std::vector<int> id_fluid_inject_v{0, 1};  // Changed from double to int
+	//~ std::vector<double> sigma_v{0, 10, 1000};
+	//~ std::vector<double> radius_contrast_v{0.5};
+	//~ std::vector<double> viscosity_ratio_v{10, 1, 0.1};
 	std::vector<int> id_fluid_inject_v{0, 1};  // Changed from double to int
-	std::vector<double> sigma_v{0, 10, 1000};
+	std::vector<double> sigma_v{10};
 	std::vector<double> radius_contrast_v{0.5};
-	std::vector<double> viscosity_ratio_v{10, 1, 0.1};
+	std::vector<double> viscosity_ratio_v{10, 0.1};
 	
 	output::Result output_result;
 	

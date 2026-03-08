@@ -1,5 +1,8 @@
 #include "nst/node.h"
 
+nst::Node::Reference::Reference():
+	id_for_symmetric_matrix(-1)
+{}
 
 nst::Node::Calculated::Calculated():
 	pressure(0),
@@ -7,7 +10,6 @@ nst::Node::Calculated::Calculated():
 	flow_out_id_tube_v(),
 	volume_fluid_flow_out(0),
 	is_fluid_injected_from_external_to_this_node(false),
-	id_symmetric_solver(-1),
 	type_fluid_contact(-1)
 {}
 

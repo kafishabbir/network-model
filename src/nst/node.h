@@ -9,8 +9,9 @@ namespace nst
 	{
 		struct Reference
 		{
-			std::vector<int> connections_id_tube_v;
 			int id_for_symmetric_matrix;
+			std::vector<int> connections_id_tube_v;
+			Reference();
 		};
 
 		struct Visual
@@ -33,7 +34,6 @@ namespace nst
 			std::vector<int> flow_out_id_tube_v;
 			double volume_fluid_flow_out;
 			bool is_fluid_injected_from_external_to_this_node;
-			int id_symmetric_solver;
 			int type_fluid_contact; // 0 - water, 1 - oil, 2 - both
 			Calculated();
 		};

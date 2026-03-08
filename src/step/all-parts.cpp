@@ -28,7 +28,7 @@ void step::AllParts::run_single_time_step(
 		//comment = "assign-resistance-and-capillary-pressure-to-tubes";
 		//states.push_back(system);
 		//std::cout << "here" << j++ << std::endl;
-
+		
 	step::Part02Pressure::run(system);
 	
 		system.measured.time_taken_by_each_step[2] += time.passed();
@@ -110,7 +110,8 @@ void step::AllParts::run_single_time_step_debug(
 		comment = "generate-linear-equations-and-assign-pressure-to-node";
 		system.measured.states.push_back(system.state);
 		std::cout << "here" << j++ << std::endl;
-
+// REMOVE
+//~ return;
 	step::Part03Velocity::calculate_and_assign_flow_rate_and_velocity_to_tube(system);
 		system.measured.time_taken_by_each_step[3] += time.passed();
 		comment = "calculate-and-assign-flow-rate-and-velocity-to-tube";

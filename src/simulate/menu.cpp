@@ -71,8 +71,10 @@ dst::SystemOutput simulate::Menu::run(
 	std::cout << "Simulation started\n" << system.parameter.str_cmd() << std::endl;
 	
 	Preparation::run(system);
-	SetSolver::run(system);
 	
+	
+	SetSolver::run(system);
+	system.print_matrix();
 	
 	system.state.reference.id_step = 0;
 	while(inject_more_fluid(system))
@@ -81,9 +83,13 @@ dst::SystemOutput simulate::Menu::run(
 		
 		step::AllParts::run_single_time_step(system);
 		//~ step::AllParts::run_single_time_step_debug(system);
+		
+		//REMOVE
+		//return dst::SystemOutput(system.parameter, system.measured);
+		
 		capture_this_state(system);
 		high_frequency_measurement(system);
-		//return dst::SystemOutput(system.parameter, system.measured);
+		
 	}
 
 	print_time_spent(time.passed(), system);

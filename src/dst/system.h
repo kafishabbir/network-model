@@ -7,6 +7,7 @@
 
 //#include <eigen3/Eigen/Sparse>           // For SparseMatrix
 #include <eigen3/Eigen/SparseCholesky>   // For SimplicialLLT 
+#include <fstream>
 
 namespace dst
 {
@@ -22,7 +23,12 @@ namespace dst
 		std::vector<int> id_nodes_unknown_pressure_v;
 		
 		System(const std::pair<Parameter, State>&);
+		
+		//REMOVE
+		void print_matrix() const;
 	};
 }
+
+
 
 #endif
