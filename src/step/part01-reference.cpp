@@ -123,7 +123,8 @@ void step::Part01Reference::run(
 )
 {
 	reset_calculated(system);
+	simulate::Assign::assign_type_fluid_contact(system);
 	resistance_coefficient(system);
 	capillary_pressure_magnitude(system);
-	simulate::Assign::assign_type_fluid_contact(system);
+	
 }

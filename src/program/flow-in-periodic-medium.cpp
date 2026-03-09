@@ -14,11 +14,11 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 	//parameter.simulation.inlet_pressure = 100;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 40;
-	parameter.geometry.n_tube_cols = 40;
+	parameter.geometry.n_tube_rows = 6;
+	parameter.geometry.n_tube_cols = 6;
 	parameter.geometry.radius_contrast = 0.8;
 	parameter.geometry.length_scale = 10.0;
-	parameter.geometry.n_periods = 2;
+	parameter.geometry.n_periods = 1;
 	parameter.geometry.shear = true;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
 
@@ -55,7 +55,7 @@ void program::FlowInPeriodicMedium::run()
 	//~ std::vector<double> radius_contrast_v{0.5};
 	//~ std::vector<double> viscosity_ratio_v{10, 1, 0.1};
 	std::vector<int> id_fluid_inject_v{0};  // Changed from double to int
-	std::vector<double> sigma_v{0, 1e2, 1e3, 1e4, 1e5};
+	std::vector<double> sigma_v{1e4};
 	std::vector<double> radius_contrast_v{0.8};
 	std::vector<double> viscosity_ratio_v{1.0};
 	

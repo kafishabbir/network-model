@@ -12,20 +12,50 @@
 
 bool simulate::Menu::inject_more_fluid(const dst::System& system)
 {
-	return system.state.measured.fluid_added.volume_total() < system.parameter.plot.volume_max_to_inject * system.measured.initial_fluid.volume_total();
+	const double volume_system = system.measured.initial_fluid.volume_total();
+	
+	if(system.parameter.simulation.is_flow_const_flow_rate && 
+		volume_system <= 1.1 &&
+		volume_system >= 0.9
+	)
+	{
+		return system.state.measured.time_elapsed < system.parameter.plot.volume_max_to_inject;
+	}
+	
+	return system.state.measured.fluid_added.volume_total() < 
+		system.parameter.plot.volume_max_to_inject *
+		volume_system;
+	
 }
 
 void simulate::Menu::capture_this_state(dst::System& system)
 {
-	const double vol = system.state.measured.fluid_added.volume_total() /
-		system.measured.initial_fluid.volume_total();
-		
 	const double target =
-		system.parameter.plot.capture_frequency_in_volume_fraction *
-		system.measured.states.size();
+			system.parameter.plot.capture_frequency_in_volume_fraction *
+			system.measured.states.size();
 	
-	//std::cout << "vol=" << vol << ", target=" << target << std::endl;
-	if(vol >= target)
+	const double volume_system = system.measured.initial_fluid.volume_total();
+	bool capture = false;
+	
+	if(system.parameter.simulation.is_flow_const_flow_rate && 
+		volume_system <= 1.1 &&
+		volume_system >= 0.9
+	)
+	{
+		// Need to capture based on time_elapsed and not volume injected
+		// Because for high sigmas, flow back happens,
+		// Fluid is added from the outlet boundary
+		
+		capture = (system.state.measured.time_elapsed >= target);
+	}
+	else
+	{
+		capture =
+			system.state.measured.fluid_added.volume_total() / volume_system >= target;
+	}
+	
+	
+	if(capture)
 	{
 		step::Part10Measure::capture(system);
 		system.measured.states.push_back(system.state);
