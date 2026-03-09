@@ -18,7 +18,8 @@ simulate::SystemGenerator::choose_network_geometry(
 				parameter.simulation.id_fluid_inject,
 				parameter.geometry.radius_contrast,
 				parameter.geometry.length_scale,
-				parameter.geometry.n_periods
+				parameter.geometry.n_periods,
+				parameter.geometry.is_skewed
 			);
 		}
 		else // is const length 
@@ -29,7 +30,8 @@ simulate::SystemGenerator::choose_network_geometry(
 				parameter.simulation.id_fluid_inject,
 				parameter.geometry.radius_contrast,
 				parameter.geometry.length_scale,
-				parameter.geometry.n_periods
+				parameter.geometry.n_periods,
+				parameter.geometry.is_skewed
 			);
 		}
 	}

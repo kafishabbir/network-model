@@ -18,6 +18,7 @@ namespace dst
 			int id_fluid_inject;
 			
 			double inlet_pressure; // Ignored by const_q simulations
+			bool is_initially_filled;
 		};
 		
 		struct Geometry
@@ -27,7 +28,7 @@ namespace dst
 			double radius_contrast;
 			double length_scale;
 			double n_periods;
-			bool shear;
+			bool is_skewed;
 			int n_inject_boundaries; // to be filled by SystemGenerator
 		};
 		

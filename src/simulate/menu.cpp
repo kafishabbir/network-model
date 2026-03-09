@@ -76,7 +76,6 @@ void simulate::Menu::print_time_spent(const double time_program, const dst::Syst
 	const auto& state = system.state;
 	std::cout << "Time simulation=" << d(time_program/1000) << "s" << std::endl;
 	std::cout << "Time per step=" << d(time_program/state.reference.id_step) << "ms, " << "n_steps=" << state.reference.id_step << std::endl;
-	std::cout <<  ", spent on linear equations." << std::endl;
 
 	int count = 0;
 	for(auto t_step: system.measured.time_taken_by_each_step)

@@ -29,7 +29,8 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry(
 	const int id_fluid_inject,
 	const double constant_radius_contrast,
 	const double constant_length_scale,
-	const double n_periods
+	const double n_periods,
+	const bool is_skewed
 )
 {
 	auto [nodes, tubes] = GeometryBase::rectangular(
@@ -50,9 +51,14 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry(
 		const double y1 = nodes[tube.id_node_first].y;
 		const double x2 = nodes[tube.id_node_second].x;
 		const double y2 = nodes[tube.id_node_second].y;
-		const double x = (x1 + x2) / 2 - x_center;
+		double x = (x1 + x2) / 2 - x_center;
 		const double y = (y1 + y2) / 2 - y_center;
-
+		
+		if(is_skewed)
+		{
+			x = x - 0.5 / n_periods * y;
+		}
+		
 		tube.radius = 1.0 - constant_radius_contrast * std::cos(omega * x) * std::cos(omega * y);
 	}
 
@@ -81,7 +87,8 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_const_porosity(
 	const int id_fluid_inject,
 	const double constant_radius_contrast,
 	const double constant_length_scale,
-	const double n_periods
+	const double n_periods,
+	const bool is_skewed
 )
 {
 	auto [nodes, tubes] = GeometryBase::rectangular(
@@ -105,9 +112,14 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_const_porosity(
 		const double y1 = nodes[tube.id_node_first].y;
 		const double x2 = nodes[tube.id_node_second].x;
 		const double y2 = nodes[tube.id_node_second].y;
-		const double x = (x1 + x2) / 2 - x_center;
+		double x = (x1 + x2) / 2 - x_center;
 		const double y = (y1 + y2) / 2 - y_center;
-
+		
+		if(is_skewed)
+		{
+			x = x - 0.65 / n_periods * y;
+		}
+		
 		tube.radius = A * (1.0 - constant_radius_contrast * std::cos(omega * x) * std::cos(omega * y));
 		tube.length = k / std::pow(tube.radius, 2);
 	}

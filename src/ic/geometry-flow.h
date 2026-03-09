@@ -18,7 +18,8 @@ namespace ic
 			const int id_fluid_inject,
 			const double constant_radius_contrast,
 			const double constant_length_scale,
-			const double n_periods
+			const double n_periods,
+			const bool is_skewed
 		);
 		
 		static type_pair_nodes_tubes network_geometry_const_porosity(
@@ -27,7 +28,8 @@ namespace ic
 			const int id_fluid_inject,
 			const double constant_radius_contrast,
 			const double constant_length_scale,
-			const double n_periods
+			const double n_periods,
+			const bool is_skewed
 		);
 	};
 }
