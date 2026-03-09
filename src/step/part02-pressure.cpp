@@ -40,7 +40,9 @@ step::Part02Pressure::Equation step::Part02Pressure::generate_equation_for_node(
 	// It is obvious that the only open bounday is where there is const flow rate injection
 	if(node.is_open_boundary)
 	{
-		equation.b += 1.0 / system.parameter.geometry.n_inject_boundaries;
+		equation.b += 1.0 /
+			(system.parameter.geometry.n_inject_boundaries - 1) *
+			(node.reference.connections_id_tube_v.size() == 1 ? 0.5 : 1.0);					
 	}
 	
 	equation.entry_v.push_back({node.reference.id_for_symmetric_matrix, diag_val});
