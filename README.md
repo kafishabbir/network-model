@@ -29,7 +29,7 @@ In the root folder for example network-model/
     make
     
 This will create
-- run/results/flow/flow.pdf is produced
+- run/results/flow/flow.pdf: file with all images labeled with simulation parameter, measurements, and network properties.
 - run/build/xxx_yyy.o: all the object files
 - run/results/: the other results
 - run/simulate.exe: the executables are produced here
@@ -41,14 +41,15 @@ It is not necessary to create any folders or run the main executable, it is hand
     
 ## Example results
 
-![drainage on 50 x 50 tubes](examples/flow-visualization-ab-labeled.png)
+![drainage on 50 x 50 tubes](examples/flow-visualization.png)
 Two phase drainage displacement. Initial wetting fluid is being displaced by non-wetting fluid (lighter color), at $$t = 0.6$$.
 - (a), the viscosity of the invading fluid is lower, and it is producing a large S(x) shock amplitude. 
 - (b), the viscosity of the invading fluid is higher, there is residue wetting fluid, and the amplitude is smaller.
 
-![s-vs-x-plots-of-drainahe](examples/s-vs-x-russian-labeled.png)
+![s-vs-x plots of drainage](examples/s-vs-x.png)
 The shock front for lower-viscosity-invading-fluid is more stable in the beginning, and it gets less stable towards the end. While the shock profile for higher viscosity ratio remains same:
 - (a) at $$t = 0.3$$, and
-- (b) $t = 0.6$$
+- (b) $$t = 0.6$$$
 
-
+![flow visualization as vector image](examples/flow-visualization-vector.png)
+Flow visualization as a vector image with extensive details for debug purpose.
