@@ -49,7 +49,7 @@ Two phase drainage displacement. Initial wetting fluid is being displaced by non
 ![s-vs-x plots of drainage](examples/s-vs-x.png)
 The shock front for lower-viscosity-invading-fluid is more stable in the beginning, and it gets less stable towards the end. While the shock profile for higher viscosity ratio remains same:
 - (a) at $$t = 0.3$$, and
-- (b) $$t = 0.6$$$
+- (b) $$t = 0.6$$
 
 ![flow visualization as vector image](examples/flow-visualization-vector.png)
 Flow visualization as a vector image with extensive details for debug purpose.
