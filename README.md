@@ -1,6 +1,30 @@
 # network-model
 A network model for simulating two phase flow in porous media.
 
+## Tasks for future:
+### Features to add:
+- __Separate concurrent plotter__: A plotting software is needed because:
+  1. for changing colors without repeating computation,
+  2. to not waste computation time for plotting images. The plotting software and the simulate software is run simultaneously, every time the plotting software detects a new simulation, it starts processing. The plotting software recalculates the velocities from the pressure values and checks the accuracy.
+
+- __Using multiple cores__:
+
+- __Initial conditions__: It should just take in dst::Parameter, and output a completely processed state. Which means the boundary type of the nodes should be saved. Make class hierarchy such that there are tools such as counting boundaries which are used by both initial-conditions-generator and the main simulate.
+
+### Manual
+The manual explains purpose on why the modifications and complexities were added.
+- __Geometry skew__: in unskewed the variance of radii along x axis periodically changes, this causes noticeable oscillations on the S(x) plots. These oscillations are suppressed by skewing along the x axis.
+- __something__
+
+### Further investigation
+- __Linear Equations:__ Compare performance difference between: gaussian-elimination,  Eigen::SimplicialLLT<Eigen::SparseMatrix<double>, and iterative solvers. Since the ratio between the resistances can be very high, the matrix maybe ill-conditioned.
+
+
+### Debug
+- __Viscosity ratio__: check if the viscosity values are correctly being used to generate tube resistance table.
+- __Multiple contact__: check if multiple contact meniscii are only created in case of alternating fluids and not created in case of same fluids.
+
+
 ## Packages required:
 ### Eigen
 For solving sparse linear equations.
