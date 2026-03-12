@@ -5,7 +5,8 @@ A network model for simulating two phase flow in porous media.
 ### Features to add:
 - __Separate concurrent plotter__: A plotting software is needed because:
   1. for changing colors without repeating computation,
-  2. to not waste computation time for plotting images. The plotting software and the simulate software is run simultaneously, every time the plotting software detects a new simulation, it starts processing. The plotting software recalculates the velocities from the pressure values and checks the accuracy.
+  2. to not waste computation time for plotting images.
+  The plotting software and the simulate software is run simultaneously, every time the plotting software detects a new simulation, it starts processing. The plotting software recalculates the velocities from the pressure values and checks the accuracy.
 
 - __Using multiple cores__:
 
