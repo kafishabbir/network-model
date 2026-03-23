@@ -7,15 +7,16 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 	dst::Parameter parameter;
 
 	// Set simulation type using the flags
-	parameter.simulation.is_flow_as_opposed_to_test = false;  // false = test simulation
+	parameter.simulation.is_flow_as_opposed_to_test = true;  // false = test simulation
 	parameter.simulation.is_flow_const_flow_rate = false;     // false = constant pressure
 	// parameter.simulation.is_const_porosity = false;           // variable porosity
 	parameter.simulation.id_fluid_inject = 0;
 	parameter.simulation.inlet_pressure = 1000;
+	parameter.simulation.is_initially_filled = true;
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 4;
-	parameter.geometry.n_tube_cols = 6;
+	parameter.geometry.n_tube_rows = 60;
+	parameter.geometry.n_tube_cols = 60;
 	parameter.geometry.radius_contrast = 0.5;
 	parameter.geometry.length_scale = 10.0;
 	parameter.geometry.n_periods = 2;
@@ -30,8 +31,8 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.capture_frequency_in_volume_fraction = 0.025;
-	parameter.plot.volume_max_to_inject = 0.6;
+	parameter.plot.capture_frequency_in_volume_fraction = 0.01;
+	parameter.plot.volume_max_to_inject = 0.015;
 
 	return parameter;
 }

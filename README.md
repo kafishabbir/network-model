@@ -4,10 +4,14 @@ A network model for simulating two phase flow in porous media.
 ## Tasks for future:
 
 ### Simulations to conduct
-1. __Viscosity with random tube-radii__: see how viscous fingering happens there, start in a prefilled system.
+1. __Viscosity with random tube-radii__: see how viscous fingering happens there, start in a pre-filled system.
+1. __Show viscous fingering__: 
 ### Debug
 - __Viscosity ratio__: check if the viscosity values are correctly being used to generate tube resistance table.
 - __Multiple contact__: check if multiple contact meniscii are only created in case of alternating fluids and not created in case of same fluids.
+- __Multiple contact, non-wetting__: oil reaches a node and extends contact.
+- __Range Kutta Scheme__: Need to compare with Euler.
+- __Hysteresis__: Quick reverals of flow direction and measure the permeability.
 
 ### Manual
 The manual explains purpose on why the modifications and complexities were added.

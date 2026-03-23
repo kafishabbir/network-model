@@ -7,6 +7,10 @@ namespace simulate
 {
 	class Preparation
 	{
+		static void fill_system_initial_upto_certain_x(
+			dst::System& system
+		);
+
 		static void set_inlet_outlet_boundaries(
 			dst::System& system
 		);

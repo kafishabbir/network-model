@@ -24,8 +24,8 @@
 int main()
 {
 	//program::Permeability::run();
-	program::FlowInPeriodicMedium::run();
-	//program::DebugFlow::run();
+	//~ program::FlowInPeriodicMedium::run();
+	program::DebugFlow::run();
 
 	//program::FunctionTrial trial;
 	//trial.flow();

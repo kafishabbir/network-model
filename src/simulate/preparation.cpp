@@ -57,42 +57,33 @@ void simulate::Preparation::fill_system_initial_upto_certain_x(
 		return;
 	}
 	
+	const double distance_x_fill = 0.3;
+	const double ratio_pull_parabola_towards_origin = 0.5;
+	const double delta_y = 1.0;
+	
+	const double a = distance_x_fill;
+	const double b = ratio_pull_parabola_towards_origin;
+	const double l = delta_y / 2;
+	
 	const auto& nodes = system.state.nodes;
-	auto& tubes = 
+	auto& tubes = system.state.tubes;
+	
 	for(auto& tube: tubes)
 	{
 		const double x1 = nodes[tube.id_node_first].x;
 		const double y1 = nodes[tube.id_node_first].y;
 		const double x2 = nodes[tube.id_node_second].x;
 		const double y2 = nodes[tube.id_node_second].y;
-		double x = (x1 + x2) / 2 - x_center;
-		const double y = (y1 + y2) / 2 - y_center;
+		const double x = (x1 + x2) / 2;
+		const double y = (y1 + y2) / 2;
 		
-		if(is_skewed)
+		const double x_parabola = a * (1.0 - b * std::pow(y / l - 1, 2));
+		if(x < x_parabola)
 		{
-			x = x - 0.5 / n_periods * y;
+			tube.id_fluid_first = system.parameter.simulation.id_fluid_inject;
+			tube.mpos = {};
 		}
-		
-		tube.radius = 1.0 - constant_radius_contrast * std::cos(omega * x) * std::cos(omega * y);
 	}
-
-	double sum_radius_square = 0;
-	for(const auto& tube: tubes)
-	{
-		sum_radius_square += std::pow(tube.radius, 2);
-	}
-
-	const double temp_radius_term = 1.0 / std::acos(-1) / constant_length_scale / sum_radius_square;
-	const double coefficient_radius_scale = std::pow(temp_radius_term, 1.0 / 3);
-
-	for(auto& tube: tubes)
-	{
-		tube.radius *= coefficient_radius_scale;
-		tube.length = coefficient_radius_scale * constant_length_scale;
-	}
-
-	return {nodes, tubes};
-	
 }
 
 void simulate::Preparation::run(
