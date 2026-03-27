@@ -2,6 +2,7 @@
 
 #include "simulate/measure.h"
 #include "simulate/assign.h"
+#include "ic/geometry-flow.h"
 
 void simulate::Preparation::set_inlet_outlet_boundaries(
 	dst::System& system
@@ -57,13 +58,13 @@ void simulate::Preparation::fill_system_initial_upto_certain_x(
 		return;
 	}
 	
-	const double distance_x_fill = 0.3;
-	const double ratio_pull_parabola_towards_origin = 0.5;
-	const double delta_y = 1.0;
 	
-	const double a = distance_x_fill;
-	const double b = ratio_pull_parabola_towards_origin;
-	const double l = delta_y / 2;
+	const auto& [x_min, y_min, x_max, y_max] = ic::GeometryFlow::find_min_max_coordinates(system.state.nodes);
+	const double L = y_max - y_min;
+	const double omega_base = 2 * std::acos(-1) / L;
+	const double omega_three_halfs = omega_base * 3.0 / 2.0;
+	const double omega = omega_base * system.parameter.simulation.n_periods_of_initial_disturbance;
+
 	
 	const auto& nodes = system.state.nodes;
 	auto& tubes = system.state.tubes;
@@ -74,11 +75,14 @@ void simulate::Preparation::fill_system_initial_upto_certain_x(
 		const double y1 = nodes[tube.id_node_first].y;
 		const double x2 = nodes[tube.id_node_second].x;
 		const double y2 = nodes[tube.id_node_second].y;
-		const double x = (x1 + x2) / 2;
-		const double y = (y1 + y2) / 2;
+		const double x = (x1 + x2) / 2 - x_min;
+		const double y = (y1 + y2) / 2 - y_min;
 		
-		const double x_parabola = a * (1.0 - b * std::pow(y / l - 1, 2));
-		if(x < x_parabola)
+		const double x_func =
+			2.0 / omega_three_halfs
+			+ 1.0 / omega * std::cos(omega * (y - L / 2.0));
+			
+		if(x < x_func)
 		{
 			tube.id_fluid_first = system.parameter.simulation.id_fluid_inject;
 			tube.mpos = {};

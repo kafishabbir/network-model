@@ -12,6 +12,7 @@ A network model for simulating two phase flow in porous media.
 - __Multiple contact, non-wetting__: oil reaches a node and extends contact.
 - __Range Kutta Scheme__: Need to compare with Euler.
 - __Hysteresis__: Quick reverals of flow direction and measure the permeability.
+- __Similar Nodes at boundaries__: In this modes the boundaries have nodes which have only one tube connected, half flow rate needs to be applied to this node to maintain a REASONABLE distribution of pressure with geometry, so that the "average-pressure" of the surface remains a REASONABLE value, but IT COULD BE EVEN BETTER to just have the present odd layer of nodes as the boundaries!
 
 ### Manual
 The manual explains purpose on why the modifications and complexities were added.

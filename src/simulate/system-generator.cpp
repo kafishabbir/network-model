@@ -12,6 +12,16 @@ simulate::SystemGenerator::choose_network_geometry(
 	{
 		if(parameter.simulation.is_const_porosity)
 		{
+			if(parameter.geometry.is_random_radius)
+			{
+				return ic::GeometryFlow::network_geometry_const_porosity_random_radius(
+					parameter.geometry.n_tube_rows,
+					parameter.geometry.n_tube_cols,
+					parameter.simulation.id_fluid_inject,
+					parameter.geometry.radius_contrast,
+					parameter.geometry.length_scale	
+				);
+			}
 			return ic::GeometryFlow::network_geometry_const_porosity(
 				parameter.geometry.n_tube_rows,
 				parameter.geometry.n_tube_cols,
@@ -24,6 +34,16 @@ simulate::SystemGenerator::choose_network_geometry(
 		}
 		else // is const length 
 		{
+			if(parameter.geometry.is_random_radius)
+			{
+				return ic::GeometryFlow::network_geometry_random_radius(
+					parameter.geometry.n_tube_rows,
+					parameter.geometry.n_tube_cols,
+					parameter.simulation.id_fluid_inject,
+					parameter.geometry.radius_contrast,
+					parameter.geometry.length_scale
+				);
+			}
 			return ic::GeometryFlow::network_geometry(
 				parameter.geometry.n_tube_rows,
 				parameter.geometry.n_tube_cols,

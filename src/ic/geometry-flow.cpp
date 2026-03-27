@@ -1,5 +1,5 @@
 #include "ic/geometry-flow.h"
-
+#include "utility/random.h"
 
 std::tuple<double, double, double, double> ic::GeometryFlow::find_min_max_coordinates(
 	const nst::Nodes& nodes
@@ -127,4 +127,94 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_const_porosity(
 	return {nodes, tubes};
 }
 
+ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_const_porosity_random_radius(
+	const int n_tube_rows,
+	const int n_tube_cols,
+	const int id_fluid_inject,
+	const double constant_radius_contrast,
+	const double constant_length_scale
+)
+{
+	static bool need_to_generate_random = true;
+	static nst::Nodes nodes_f;
+	static nst::Tubes tubes_f;
+	
+	if(need_to_generate_random)
+	{
+		auto [nodes, tubes] = GeometryBase::rectangular(
+			n_tube_rows,
+			n_tube_cols,
+			id_fluid_inject
+		);
+
+
+		const double k = 1.0 / std::acos(-1) / tubes.size();
+		const double A = std::pow(k / constant_length_scale, 1.0 / 3);
+		
+		for(auto& tube: tubes)
+		{
+			const double rational = utility::Random::rational_between_zero_and_one();
+			
+			tube.radius = A * (1.0 + constant_radius_contrast * 2.0 * (rational - 0.5));
+			tube.length = k / std::pow(tube.radius, 2);
+		}
+		
+		need_to_generate_random = false;
+		nodes_f = nodes;
+		tubes_f = tubes;
+	}
+
+	return {nodes_f, tubes_f};
+}
+
+
+ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_random_radius(
+	const int n_tube_rows,
+	const int n_tube_cols,
+	const int id_fluid_inject,
+	const double constant_radius_contrast,
+	const double constant_length_scale
+)
+{
+	static bool need_to_generate_random = true;
+	static nst::Nodes nodes_f;
+	static nst::Tubes tubes_f;
+	
+	if(need_to_generate_random)
+	{
+		auto [nodes, tubes] = GeometryBase::rectangular(
+			n_tube_rows,
+			n_tube_cols,
+			id_fluid_inject
+		);
+
+
+		for(auto& tube: tubes)
+		{
+			const double rational = utility::Random::rational_between_zero_and_one();
+			
+			tube.radius = 1.0 + constant_radius_contrast * 2.0 * (rational - 0.5);
+		}
+
+		double sum_radius_square = 0;
+		for(const auto& tube: tubes)
+		{
+			sum_radius_square += std::pow(tube.radius, 2);
+		}
+
+		const double temp_radius_term = 1.0 / std::acos(-1) / constant_length_scale / sum_radius_square;
+		const double coefficient_radius_scale = std::pow(temp_radius_term, 1.0 / 3);
+
+		for(auto& tube: tubes)
+		{
+			tube.radius *= coefficient_radius_scale;
+			tube.length = coefficient_radius_scale * constant_length_scale;
+		}
+		need_to_generate_random = false;
+		nodes_f = nodes;
+		tubes_f = tubes;
+	}
+
+	return {nodes_f, tubes_f};
+}
 

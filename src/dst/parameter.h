@@ -19,6 +19,7 @@ namespace dst
 			
 			double inlet_pressure; // Ignored by const_q simulations
 			bool is_initially_filled;
+			double n_periods_of_initial_disturbance;
 		};
 		
 		struct Geometry
@@ -29,6 +30,7 @@ namespace dst
 			double length_scale;
 			double n_periods;
 			bool is_skewed;
+			bool is_random_radius;
 			int n_inject_boundaries; // to be filled by SystemGenerator
 		};
 		
