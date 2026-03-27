@@ -10,21 +10,22 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
 	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
 	parameter.simulation.is_const_porosity = true;              // true = constant porosity
-	parameter.simulation.id_fluid_inject = 0;
-	parameter.simulation.is_initially_filled = false;
+	parameter.simulation.id_fluid_inject = 1;
+	parameter.simulation.is_initially_filled = true;
 	parameter.simulation.n_periods_of_initial_disturbance = 0.5;
-	//parameter.simulation.inlet_pressure = 100;  // Ignored for constant volume injection
+	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
 	parameter.geometry.n_tube_rows = 50;
-	parameter.geometry.n_tube_cols = 50;
+	parameter.geometry.n_tube_cols = 100;
 	parameter.geometry.radius_contrast = 0.1;
 	parameter.geometry.length_scale = 10.0;
 	parameter.geometry.n_periods = 3;
 	parameter.geometry.is_skewed = true;
 	parameter.geometry.is_random_radius = true;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
-
+	
+	
 	// Physical constants
 //	parameter.constant_physical.sigma = 10.0;
 //	parameter.constant_physical.viscosity_water = 1.0;  // viscosity_ratio = 1.0, mu_scale = 1.0
@@ -34,8 +35,8 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
-	parameter.plot.volume_max_to_inject = 0.61;
+	parameter.plot.capture_frequency_in_volume_fraction = 0.1;
+	parameter.plot.volume_max_to_inject = 0.505;
 
 	return parameter;
 }
@@ -61,37 +62,40 @@ void program::FlowInPeriodicMedium::run()
 	std::vector<int> id_fluid_inject_v{1};  // Changed from double to int
 	std::vector<double> radius_contrast_v{0.1};
 	std::vector<double> sigma_v{1e4}; //1e6 does not work with 50x50
-	std::vector<double> viscosity_ratio_v{1e-4, 1e-3, 1e-2, 1e-1, 1, 1e1, 1e2, 1e3, 1e4};
-	//std::vector<double> viscosity_ratio_v{1e-2, 1e4};
+	std::vector<double> viscosity_ratio_v{1e-1, 1, 1e1};
+	std::vector<double> n_initial_disturbance_v{0.5, 1.5, 3.5, 5.5};
 	
 	output::Result output_result;
 	
-	for(int id_fluid_inject : id_fluid_inject_v)
+	for(auto n_initial_disturbance :n_initial_disturbance_v)
 	{
-		for(auto radius_contrast : radius_contrast_v)
+		for(int id_fluid_inject : id_fluid_inject_v)
 		{
-			for(auto sigma : sigma_v)
+			for(auto radius_contrast : radius_contrast_v)
 			{
-				for(auto viscosity_ratio : viscosity_ratio_v)
+				for(auto sigma : sigma_v)
 				{
-					// Generate base parameter
-					auto parameter = generate_parameter();
-					
-					// Override with loop values
-					parameter.simulation.id_fluid_inject = id_fluid_inject;
-					parameter.constant_physical.sigma = sigma;
-					parameter.geometry.radius_contrast = radius_contrast;
-					
+					for(auto viscosity_ratio : viscosity_ratio_v)
+					{
+						// Generate base parameter
+						auto parameter = generate_parameter();
+						
+						// Override with loop values
+						parameter.simulation.id_fluid_inject = id_fluid_inject;
+						parameter.constant_physical.sigma = sigma;
+						parameter.geometry.radius_contrast = radius_contrast;
+						
 
-					parameter.constant_physical.viscosity_water = 1.0;
-					parameter.constant_physical.viscosity_oil = viscosity_ratio;
-					
-					
-					// Run simulation
-					auto system = simulate::Menu::run(parameter);
-					
-					// Add to results
-					output_result.add(system, generate_visual_property());
+						parameter.constant_physical.viscosity_water = 1.0;
+						parameter.constant_physical.viscosity_oil = viscosity_ratio;
+						parameter.simulation.n_periods_of_initial_disturbance = n_initial_disturbance;
+						
+						// Run simulation
+						auto system = simulate::Menu::run(parameter);
+						
+						// Add to results
+						output_result.add(system, generate_visual_property());
+					}
 				}
 			}
 		}

@@ -16,7 +16,7 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 	parameter.simulation.n_periods_of_initial_disturbance = 0.5;
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 100;
+	parameter.geometry.n_tube_rows = 50;
 	parameter.geometry.n_tube_cols = 100;
 	parameter.geometry.radius_contrast = 0.1;
 	parameter.geometry.length_scale = 10.0;
@@ -35,7 +35,7 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 
 	// Plot parameters
 	parameter.plot.capture_frequency_in_volume_fraction = 0.01;
-	parameter.plot.volume_max_to_inject = 0.012;
+	parameter.plot.volume_max_to_inject = 0.001;
 
 	return parameter;
 }
@@ -53,7 +53,7 @@ output::Property program::DebugFlow::generate_visual_property()
 
 void program::DebugFlow::run()
 {
-	std::vector<double> n_initial_disturbance_v{0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5};
+	std::vector<double> n_initial_disturbance_v{0.5, 1.5, 2.5, 3.5, 5.5, 7.5, 9.5};
 
 	
 	output::Result output_result;
