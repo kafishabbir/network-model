@@ -103,6 +103,25 @@ std::pair<double, double> output_raster::Flow::xy_max_nodes(
 	return {x_max, y_max};
 }
 
+void output_raster::Flow::plot_squares(
+	output_raster::Cairo& cairo,
+	const std::vector<dst::State::Calculated::SquaredData>& squared_data_v)
+{
+	
+	
+	for(const auto& squared_data: squared_data_v)
+	{
+		const double S = 0.3 + 0.5 * (1.0 - squared_data.saturation);
+		
+		cairo.rectangle(
+			squared_data.x_begin,
+			squared_data.y_begin,
+			squared_data.x_end - squared_data.x_begin,
+			squared_data.y_end - squared_data.y_begin,
+			Cairo::Color(S, S, S)
+		);
+	}
+}
 
 void output_raster::Flow::print_figure(
 	const dst::State& state,
@@ -112,6 +131,7 @@ void output_raster::Flow::print_figure(
 {
 	const auto& [x_max, y_max] = xy_max_nodes(state.nodes);
 	Cairo cairo(x_max, y_max, file_name);
-	code_nodes(cairo, state, visual_property);
-	code_tubes(cairo, state, visual_property);
+	plot_squares(cairo, state.calculated.squared_data_v);
+	//code_nodes(cairo, state, visual_property);
+	//code_tubes(cairo, state, visual_property);
 }

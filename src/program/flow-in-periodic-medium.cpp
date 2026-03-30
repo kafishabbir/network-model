@@ -10,19 +10,19 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
 	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
 	parameter.simulation.is_const_porosity = true;              // true = constant porosity
-	parameter.simulation.id_fluid_inject = 1;
+	parameter.simulation.id_fluid_inject = 0;
 	parameter.simulation.is_initially_filled = true;
 	parameter.simulation.n_periods_of_initial_disturbance = 0.5;
 	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
 	parameter.geometry.n_tube_rows = 50;
-	parameter.geometry.n_tube_cols = 100;
+	parameter.geometry.n_tube_cols = 50;
 	parameter.geometry.radius_contrast = 0.1;
 	parameter.geometry.length_scale = 10.0;
 	parameter.geometry.n_periods = 3;
-	parameter.geometry.is_skewed = true;
-	parameter.geometry.is_random_radius = true;
+	parameter.geometry.is_skewed = false;
+	parameter.geometry.is_random_radius = false;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
 	
 	
@@ -59,11 +59,11 @@ void program::FlowInPeriodicMedium::run()
 	//~ std::vector<double> radius_contrast_v{0.5};
 	//~ std::vector<double> viscosity_ratio_v{10, 1, 0.1};
 	
-	std::vector<int> id_fluid_inject_v{1};  // Changed from double to int
+	std::vector<int> id_fluid_inject_v{0};  // Changed from double to int
 	std::vector<double> radius_contrast_v{0.1};
-	std::vector<double> sigma_v{1e4}; //1e6 does not work with 50x50
-	std::vector<double> viscosity_ratio_v{1e-1, 1, 1e1};
-	std::vector<double> n_initial_disturbance_v{0.5, 1.5, 3.5, 5.5};
+	std::vector<double> sigma_v{1e2}; //1e6 does not work with 50x50
+	std::vector<double> viscosity_ratio_v{1e-1,  1e1};
+	std::vector<double> n_initial_disturbance_v{1.5, 3.5, 5.5};
 	
 	output::Result output_result;
 	

@@ -44,7 +44,14 @@ namespace output_raster
 		static std::pair<double, double> xy_max_nodes(
 			const nst::Nodes& nodes
 		);
-
+	
+	
+		static void plot_squares(
+		output_raster::Cairo& cairo,
+		const std::vector<dst::State::Calculated::SquaredData>& squared_data_v
+		);
+	
+	
 		public:
 		static void print_figure(
 			const dst::State& state,

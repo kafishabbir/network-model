@@ -42,6 +42,17 @@ namespace dst
 			double average_pressure;
 			std::vector<std::pair<double, double>> pressure_vs_y;
 			std::vector<std::pair<double, double>> saturation_vs_x;
+			
+			struct SquaredData
+			{
+				double x_begin;
+				double x_end;
+				double y_begin;
+				double y_end;
+				double saturation;
+			};
+			
+			std::vector<SquaredData> squared_data_v;
 			Calculated();
 		};
 		

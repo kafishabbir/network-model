@@ -15,6 +15,7 @@ void step::Part10Measure::capture(dst::System& system)
 	simulate::Assign::assign_type_fluid_contact(system);
 	system.state.calculated.pressure_vs_y = simulate::Measure::generate_pressure_vs_y(system);
 	system.state.calculated.saturation_vs_x = simulate::Measure::generate_saturation_vs_x(system);
+	system.state.calculated.squared_data_v = simulate::Measure::generate_squared_data(system);
 	
 	system.state.calculated.volume_total_delta = simulate::Accuracy::total_delta(system);
 	system.state.calculated.water_volume_delta = simulate::Accuracy::water_delta(system);

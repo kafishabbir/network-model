@@ -58,6 +58,71 @@ std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs
 	return v;
 }
 
+
+
+
+std::vector<dst::State::Calculated::SquaredData> simulate::Measure::generate_squared_data(
+	const dst::System& system
+)
+{
+	const int n_row_division = 10;
+	const int n_col_division = 10;
+	std::vector<std::vector<nst::Tank>> tanks(n_row_division, std::vector<nst::Tank>(n_col_division));
+	
+	for(const auto& tube: system.state.tubes)
+	{
+		const double x1 = system.state.nodes[tube.id_node_first].x;
+		const double x2 = system.state.nodes[tube.id_node_second].x;
+		const double x = (x1 + x2) / 2;
+		
+		
+		const double y1 = system.state.nodes[tube.id_node_first].y;
+		const double y2 = system.state.nodes[tube.id_node_second].y;
+		const double y = (y1 + y2) / 2;
+		
+		
+		const int index_x = std::floor(x * n_row_division);
+		const int index_y = std::floor(y * n_col_division);
+		
+		auto& tank_row = tanks.at(index_x);
+		auto& tank = tank_row.at(index_y);
+		tank.add_fluid(simulate::Measure::tube_inventory(tube));
+	}
+	
+	
+	
+	 std::vector<dst::State::Calculated::SquaredData> squared_data_v;
+	
+	
+	for(int row_i = 0; row_i < n_row_division; ++ row_i)
+	{
+		for(int col_i = 0; col_i < n_col_division; ++ col_i)
+		{
+			const auto& tank = tanks[row_i][col_i];
+			
+			dst::State::Calculated::SquaredData squared_data;
+			
+			squared_data.x_begin = row_i;
+			squared_data.x_end = row_i + 1;
+			squared_data.y_begin = col_i;
+			squared_data.y_end = col_i + 1;
+			
+			squared_data.x_begin /= n_row_division;
+			squared_data.x_end /= n_row_division;
+			squared_data.y_begin /= n_col_division;
+			squared_data.y_end /= n_col_division;
+			
+			squared_data.saturation = tank.saturation();
+			
+			squared_data_v.push_back(squared_data);
+		}
+	}
+			
+			
+	return squared_data_v;
+	 
+}
+
 std::vector<std::pair<double, double>> simulate::Measure::generate_pressure_vs_y(
 	const dst::System& system
 )
