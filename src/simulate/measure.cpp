@@ -65,8 +65,8 @@ std::vector<dst::State::Calculated::SquaredData> simulate::Measure::generate_squ
 	const dst::System& system
 )
 {
-	const int n_row_division = 10;
-	const int n_col_division = 10;
+	const int n_row_division = 20;
+	const int n_col_division = 20;
 	std::vector<std::vector<nst::Tank>> tanks(n_row_division, std::vector<nst::Tank>(n_col_division));
 	
 	for(const auto& tube: system.state.tubes)
