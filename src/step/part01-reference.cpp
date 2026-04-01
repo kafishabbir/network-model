@@ -33,7 +33,7 @@ double step::Part01Reference::evaluate_mu(
 	
 	for(int i = 1; i < n; ++ i)
 	{
-		sum += (mpos_long[i] - mpos_long[i - 1]) * mu_v[(i + 1) % 2];
+		sum += (mpos_long[i] - mpos_long[i - 1]) * mu_v[(tube.id_fluid_first + i + 1) % 2];
 	}
 	
 	return sum;

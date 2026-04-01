@@ -131,7 +131,7 @@ void output_raster::Flow::print_figure(
 {
 	const auto& [x_max, y_max] = xy_max_nodes(state.nodes);
 	Cairo cairo(x_max, y_max, file_name);
-	plot_squares(cairo, state.calculated.squared_data_v);
-	//code_nodes(cairo, state, visual_property);
-	//code_tubes(cairo, state, visual_property);
+	//plot_squares(cairo, state.calculated.squared_data_v);
+	code_nodes(cairo, state, visual_property);
+	code_tubes(cairo, state, visual_property);
 }
