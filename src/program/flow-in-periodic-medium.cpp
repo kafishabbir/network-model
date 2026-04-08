@@ -2,11 +2,10 @@
 #include "simulate/menu.h"
 #include "output/result.h"
 
-dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed from generate_property
+dst::Parameter program::FlowInPeriodicMedium::generate_parameter()
 {
 	dst::Parameter parameter;
 
-	// Using periodic_const_volume_injection_const_porosity as the default
 	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
 	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
 	parameter.simulation.is_const_porosity = true;              // true = constant porosity
@@ -16,13 +15,13 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 60;
-	parameter.geometry.n_tube_cols = 60;
+	parameter.geometry.n_tube_rows = 40;
+	parameter.geometry.n_tube_cols = 40;
 	parameter.geometry.radius_contrast = 0.2;
 	parameter.geometry.length_scale = 5.0;
-	parameter.geometry.n_periods = 3;
+	parameter.geometry.n_periods = 2.0;
 	parameter.geometry.is_skewed = true;
-	parameter.geometry.is_random_radius = true;
+	parameter.geometry.is_random_radius = false;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
 	
 	
@@ -36,7 +35,7 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()  // Renamed f
 
 	// Plot parameters
 	parameter.plot.capture_frequency_in_volume_fraction = 0.05;
-	parameter.plot.volume_max_to_inject = 0.405;
+	parameter.plot.volume_max_to_inject = 0.305;
 
 	return parameter;
 }
@@ -58,12 +57,13 @@ void program::FlowInPeriodicMedium::run()
 	//~ std::vector<double> sigma_v{0, 10, 1000};
 	//~ std::vector<double> radius_contrast_v{0.5};
 	//~ std::vector<double> viscosity_ratio_v{10, 1, 0.1};
+	//~ std::vector<double> n_initial_disturbance_v{1.5, 3.5, 5.5};
 	
-	std::vector<int> id_fluid_inject_v{0};  // Changed from double to int
+	std::vector<int> id_fluid_inject_v{0}; 
 	std::vector<double> radius_contrast_v{0.2};
-	std::vector<double> sigma_v{0.5e3}; //1e6 does not work with 50x50
-	std::vector<double> viscosity_ratio_v{1e-2, 1e-1, 1e1, 1e2};
-	//std::vector<double> n_initial_disturbance_v{1.5, 3.5, 5.5};
+	std::vector<double> sigma_v{500}; 
+	std::vector<double> viscosity_ratio_v{1e-2, 100};
+	
 	std::vector<double> n_initial_disturbance_v{1.5};
 	
 	output::Result output_result;

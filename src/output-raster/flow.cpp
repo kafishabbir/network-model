@@ -2,9 +2,9 @@
 
 const std::vector<output_raster::Cairo::Color> output_raster::Flow::colors_v =
 {
-	output_raster::Cairo::Color::grey_dark,
-	output_raster::Cairo::Color::grey_light,
-	output_raster::Cairo::Color::grey
+	output_raster::Cairo::Color(0, 0.2, 0.8),
+	output_raster::Cairo::Color(0.8, 0.8, 0.8),
+	output_raster::Cairo::Color(0.4, 0.5, 0.8)
 };
 
 void output_raster::Flow::code_node(
@@ -103,22 +103,34 @@ std::pair<double, double> output_raster::Flow::xy_max_nodes(
 	return {x_max, y_max};
 }
 
+double scale_color(double a, double b, double x)
+{
+	return a + (b - a) * (1.0 - x);
+}
+
 void output_raster::Flow::plot_squares(
 	output_raster::Cairo& cairo,
 	const std::vector<dst::State::Calculated::SquaredData>& squared_data_v)
 {
-	
+	const auto& ca = colors_v[0];
+	const auto& cb = colors_v[1];
 	
 	for(const auto& squared_data: squared_data_v)
 	{
-		const double S = 0.3 + 0.5 * (1.0 - squared_data.saturation);
+		const double S = squared_data.saturation;
+
+		Cairo::Color color(
+			scale_color(ca.r, cb.r, S),
+			scale_color(ca.g, cb.g, S),
+			scale_color(ca.b, cb.b, S)
+		);
 		
 		cairo.rectangle(
 			squared_data.x_begin,
 			squared_data.y_begin,
 			squared_data.x_end - squared_data.x_begin,
 			squared_data.y_end - squared_data.y_begin,
-			Cairo::Color(S, S, S)
+			color
 		);
 	}
 }

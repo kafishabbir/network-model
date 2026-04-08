@@ -44,8 +44,8 @@ output::Property program::DebugFlow::generate_visual_property()
 {
 	output::Property property;
 
-	property.tube_radius_min = 0.02;
-	property.tube_radius_max = 0.10;
+	property.tube_radius_min = 0.05;
+	property.tube_radius_max = 0.15;
 	property.largest_angle_tube_project_on_node = std::acos(-1) / 2.0;
 
 	return property;
