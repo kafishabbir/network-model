@@ -41,12 +41,18 @@ std::vector<double> step::Part06Pour::mpos_long_until(
 }
 
 nst::Tank step::Part06Pour::produce_tank_with_fluids_flow_out_from_tube(
-	const nst::Tube& tube
+	const nst::Tube& tube,
+	const dst::System& system
 )
 {
 	const double lp = tube.calculated.length_displacement_p;
-	const double volume_tube = tube.volume();
-
+	double volume_tube = tube.volume();
+	
+	if(system.parameter.simulation.is_tubes_divided)
+	{
+		volume_tube = system.parameter.geometry_distributions.volume.max;
+	}
+	
 	nst::Tube tube_new = ((tube.calculated.velocity < 0) ? tube.original() : tube.reversed());
 	const auto& mpos_long_sliced = mpos_long_until(tube_new, lp);
 
@@ -69,7 +75,7 @@ void step::Part06Pour::assign_tank_to_tubes(
 {
 	for(auto& tube: system.state.tubes)
 	{
-		tube.calculated.tank_pour_into_node = produce_tank_with_fluids_flow_out_from_tube(tube);
+		tube.calculated.tank_pour_into_node = produce_tank_with_fluids_flow_out_from_tube(tube, system);
 	}
 }
 

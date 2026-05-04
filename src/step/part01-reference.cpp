@@ -48,7 +48,15 @@ double step::Part01Reference::resistance_coefficient(
 	const double l = tube.length;
 	const double mu = evaluate_mu(tube, system);
 	
-	return std::acos(-1) / 8 * std::pow(r, 4) / mu / l;
+	const double resistance = std::acos(-1) / 8 * std::pow(r, 4) / mu / l;
+	if(system.parameter.simulation.is_tubes_divided)
+	{
+		const double R_max = system.parameter.geometry_distributions.radius.max;
+		const double n = std::pow(R_max / r, 2);
+		return n * resistance;
+	}
+	
+	return resistance;
 }
 
 void step::Part01Reference::resistance_coefficient(

@@ -9,7 +9,8 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 	// Set simulation type using the flags
 	parameter.simulation.is_flow_as_opposed_to_test = true;  // false = test simulation
 	parameter.simulation.is_flow_const_flow_rate = true;     // false = constant pressure
-	parameter.simulation.is_const_porosity = true;           // variable porosity
+	parameter.simulation.is_const_porosity = true;   
+	parameter.simulation.is_tubes_divided = false;            // variable porosity
 	parameter.simulation.id_fluid_inject = 1;
 	//parameter.simulation.inlet_pressure = 1000;
 	parameter.simulation.is_initially_filled = true;

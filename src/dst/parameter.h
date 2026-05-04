@@ -15,6 +15,7 @@ namespace dst
 			bool is_flow_as_opposed_to_test;
 			bool is_flow_const_flow_rate;
 			bool is_const_porosity;
+			bool is_tubes_divided;
 			int id_fluid_inject;
 			
 			double inlet_pressure; // Ignored by const_q simulations

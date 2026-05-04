@@ -20,6 +20,9 @@ program/debug-flow
 program/flow-in-periodic-medium
 program/function-trial
 program/permeability
+program/triangle-closed
+program/isolated-imbibition
+program/flow-with-divided-tubes
 
 simulate/accuracy
 simulate/menu

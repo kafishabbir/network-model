@@ -1,15 +1,15 @@
-#include "program/flow-in-periodic-medium.h"
+#include "program/flow-with-divided-tubes.h"
 #include "simulate/menu.h"
 #include "output/result.h"
 
-dst::Parameter program::FlowInPeriodicMedium::generate_parameter()
+dst::Parameter program::FlowWithDividedTubes::generate_parameter()
 {
 	dst::Parameter parameter;
 
 	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
 	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
-	parameter.simulation.is_const_porosity = true;              // true = constant porosity
-	parameter.simulation.is_tubes_divided = false;              // true = constant porosity
+	parameter.simulation.is_const_porosity = false;              // true = constant porosity
+	parameter.simulation.is_tubes_divided = true;
 	parameter.simulation.id_fluid_inject = 0;
 	parameter.simulation.is_initially_filled = false;
 	parameter.simulation.n_periods_of_initial_disturbance = 0.5;
@@ -17,14 +17,13 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()
 
 	// Geometry
 	parameter.geometry.n_tube_rows = 20;
-	parameter.geometry.n_tube_cols = 20;
-	parameter.geometry.radius_contrast = 0.2;
+	parameter.geometry.n_tube_cols = 100;
+	parameter.geometry.radius_contrast = 0.95;
 	parameter.geometry.length_scale = 5.0;
-	parameter.geometry.n_periods = 2;
+	parameter.geometry.n_periods = 5;
 	parameter.geometry.is_skewed = false;
 	parameter.geometry.is_random_radius = false;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
-	
 	
 	// Physical constants
 //	parameter.constant_physical.sigma = 10.0;
@@ -41,7 +40,7 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()
 	return parameter;
 }
 
-output::Property program::FlowInPeriodicMedium::generate_visual_property()
+output::Property program::FlowWithDividedTubes::generate_visual_property()
 {
 	output::Property property;
 
@@ -52,7 +51,7 @@ output::Property program::FlowInPeriodicMedium::generate_visual_property()
 	return property;
 }
 
-void program::FlowInPeriodicMedium::run()
+void program::FlowWithDividedTubes::run()
 {
 	//~ std::vector<int> id_fluid_inject_v{0, 1};
 	//~ std::vector<double> sigma_v{0, 10, 1000};
@@ -61,23 +60,23 @@ void program::FlowInPeriodicMedium::run()
 	//~ std::vector<double> n_initial_disturbance_v{1.5, 3.5, 5.5};
 	
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> radius_contrast_v{0.5};
-	std::vector<double> sigma_v{0, 1e3, 1e4}; 
-	std::vector<double> viscosity_ratio_v{2.5};
+	std::vector<double> radius_contrast_v{0.95};
+	std::vector<double> sigma_v{0, 1e1, 1e2, 1e3}; 
+	std::vector<double> viscosity_ratio_v{1};
 	
 	std::vector<double> n_initial_disturbance_v{1.5};
 	
 	output::Result output_result;
 	
-	for(auto n_initial_disturbance :n_initial_disturbance_v)
+	for(auto n_initial_disturbance: n_initial_disturbance_v)
 	{
-		for(int id_fluid_inject : id_fluid_inject_v)
+		for(int id_fluid_inject: id_fluid_inject_v)
 		{
-			for(auto radius_contrast : radius_contrast_v)
+			for(auto radius_contrast: radius_contrast_v)
 			{
-				for(auto sigma : sigma_v)
+				for(auto sigma: sigma_v)
 				{
-					for(auto viscosity_ratio : viscosity_ratio_v)
+					for(auto viscosity_ratio: viscosity_ratio_v)
 					{
 						// Generate base parameter
 						auto parameter = generate_parameter();
@@ -110,5 +109,4 @@ void program::FlowInPeriodicMedium::run()
 			}
 		}
 	}
-	
 }

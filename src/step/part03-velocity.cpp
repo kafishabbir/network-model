@@ -32,7 +32,15 @@ void step::Part03Velocity::velocity(
 {
 	for(auto& tube: system.state.tubes)
 	{
-		tube.calculated.velocity = tube.calculated.flow_rate / tube.area();
+		
+		double Area = tube.area();
+		
+		if(system.parameter.simulation.is_tubes_divided)
+		{
+			const double R_max = system.parameter.geometry_distributions.radius.max;
+			Area = std::acos(-1) * std::pow(R_max, 2);
+		}
+		tube.calculated.velocity = tube.calculated.flow_rate / Area;
 	}
 }
 

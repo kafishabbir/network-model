@@ -11,6 +11,7 @@ namespace utility
 
 		static int integer_from_zero_until_n(const int n);
 		static double rational_between_zero_and_one();
+		static double small_noise();
 	};
 }
 

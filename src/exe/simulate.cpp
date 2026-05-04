@@ -2,7 +2,7 @@
 #include "program/debug-flow.h"
 #include "program/function-trial.h"
 #include "program/permeability.h"
-
+#include "program/flow-with-divided-tubes.h"
 /**
  * @file exe/simulate.cpp
  * @brief executable that generates solutions
@@ -24,9 +24,10 @@
 int main()
 {
 	//program::Permeability::run();
-	program::FlowInPeriodicMedium::run();
+	// program::FlowInPeriodicMedium::run();
+	program::FlowWithDividedTubes::run();
 	//~ program::DebugFlow::run();
-
+ 
 	//program::FunctionTrial trial;
 	//trial.flow();
 	return 0;

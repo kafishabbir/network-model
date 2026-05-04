@@ -51,8 +51,8 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry(
 		const double y1 = nodes[tube.id_node_first].y;
 		const double x2 = nodes[tube.id_node_second].x;
 		const double y2 = nodes[tube.id_node_second].y;
-		double x = (x1 + x2) / 2 - x_center;
-		const double y = (y1 + y2) / 2 - y_center;
+		double x = (x1 + x2) / 2 - x_center + utility::Random::small_noise();
+		const double y = (y1 + y2) / 2 - y_center + utility::Random::small_noise();
 		
 		if(is_skewed)
 		{
@@ -77,6 +77,64 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry(
 		tube.length = coefficient_radius_scale * constant_length_scale;
 	}
 
+	return {nodes, tubes};
+}
+
+
+ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_divided_tubes(
+	const int n_tube_rows,
+	const int n_tube_cols,
+	const int id_fluid_inject,
+	const double constant_radius_contrast,
+	const double constant_length_scale,
+	const double n_periods,
+	const bool is_skewed
+)
+{
+	auto [nodes, tubes] = GeometryBase::rectangular(
+		n_tube_rows,
+		n_tube_cols,
+		id_fluid_inject
+	);
+
+	const auto& [x_min, y_min, x_max, y_max] = find_min_max_coordinates(nodes);
+	const double length_system = x_max - x_min;
+	const double omega = 2.0 * std::acos(-1) * n_periods / length_system;
+	const double x_center = (x_min + x_max) / 2;
+	const double y_center = (y_min + y_max) / 2;
+	
+	const double k = 1.0 / std::acos(-1) / tubes.size();
+	const double A = std::pow(k / constant_length_scale, 1.0 / 3);
+	
+	for(auto& tube: tubes)
+	{
+		const double x1 = nodes[tube.id_node_first].x;
+		const double y1 = nodes[tube.id_node_first].y;
+		const double x2 = nodes[tube.id_node_second].x;
+		const double y2 = nodes[tube.id_node_second].y;
+		double x = (x1 + x2) / 2 - x_center + utility::Random::small_noise();
+		const double y = (y1 + y2) / 2 - y_center + utility::Random::small_noise();
+		
+		if(is_skewed)
+		{
+			x = x - 0.65 / n_periods * y;
+		}
+		
+		tube.radius = A * (1.0 - constant_radius_contrast * std::cos(omega * x) * std::cos(omega * y));
+		
+	}
+
+	double tube_radius_max = -1;
+	for(const auto& tube: tubes)
+	{
+		tube_radius_max = std::max(tube_radius_max, tube.radius);
+	}
+	
+	for(auto& tube: tubes)
+	{
+		tube.length = k / std::pow(tube_radius_max, 2);
+	}
+	
 	return {nodes, tubes};
 }
 
@@ -112,8 +170,8 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_const_porosity(
 		const double y1 = nodes[tube.id_node_first].y;
 		const double x2 = nodes[tube.id_node_second].x;
 		const double y2 = nodes[tube.id_node_second].y;
-		double x = (x1 + x2) / 2 - x_center;
-		const double y = (y1 + y2) / 2 - y_center;
+		double x = (x1 + x2) / 2 - x_center + utility::Random::small_noise();
+		const double y = (y1 + y2) / 2 - y_center + utility::Random::small_noise();
 		
 		if(is_skewed)
 		{

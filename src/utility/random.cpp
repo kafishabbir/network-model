@@ -18,3 +18,8 @@ double utility::Random::rational_between_zero_and_one()
 
 	return dist(gen);
 }
+
+double utility::Random::small_noise()
+{
+	return 1e-10 * (rational_between_zero_and_one() - 0.5);
+}

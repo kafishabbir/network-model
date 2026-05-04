@@ -9,7 +9,8 @@ namespace step
 	{
 
 		static nst::Tank produce_tank_with_fluids_flow_out_from_tube(
-			const nst::Tube& tube
+			const nst::Tube& tube,
+			const dst::System& system
 		);
 
 		static std::vector<double> mpos_long_until(

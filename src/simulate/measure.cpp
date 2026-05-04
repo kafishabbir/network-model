@@ -2,11 +2,18 @@
 #include <algorithm>
 #include <cmath>
 
-nst::Tank simulate::Measure::tube_inventory(const nst::Tube& tube)
+nst::Tank simulate::Measure::tube_inventory(const nst::Tube& tube, const dst::System& system)
 {
 	const auto& v = tube.mpos_long();
 	const int n = v.size();
-	const double vol = tube.volume();
+	double vol = tube.volume();
+	
+	if(system.parameter.simulation.is_tubes_divided)
+	{
+		vol = system.parameter.geometry_distributions.volume.max;
+	}
+	
+	
 	nst::Tank tank;
 	for(int i = 1; i < n; ++ i)
 	{
@@ -23,7 +30,7 @@ nst::Tank simulate::Measure::fluid_in_system(const dst::System& system)
 	nst::Tank tank;
 	for(const auto& tube: system.state.tubes)
 	{
-		tank.add_fluid(tube_inventory(tube));
+		tank.add_fluid(tube_inventory(tube, system));
 	}
 
 	return tank;
@@ -44,7 +51,7 @@ std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs
 		const double x = (x1 + x2) / 2;
 		
 		const int index = std::floor(x * n_tanks);
-		tanks.at(index).add_fluid(simulate::Measure::tube_inventory(tube));
+		tanks.at(index).add_fluid(simulate::Measure::tube_inventory(tube, system));
 	}
 	
 	std::vector<std::pair<double, double>> v;
@@ -55,7 +62,24 @@ std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs
 		v.push_back({x, tanks[i].saturation()});
 	}
 	
-	return v;
+	const int number_groups = system.parameter.geometry.n_periods;
+	const int group_size = system.parameter.geometry.n_tube_cols / system.parameter.geometry.n_periods;
+	
+	std::vector<std::pair<double, double>> w;
+	for(int group_i = 0; group_i < number_groups; ++ group_i)
+	{
+		double saturation_sum = 0;
+		double x_sum = 0;
+		for(int local_i = 0; local_i < group_size; ++ local_i)
+		{
+			const int i = group_i * group_size + local_i;
+			x_sum += v.at(i).first;
+			saturation_sum += v.at(i).second;
+		}
+		w.push_back({x_sum / group_size, saturation_sum / group_size});
+	}
+	
+	return w;
 }
 
 
@@ -86,7 +110,7 @@ std::vector<dst::State::Calculated::SquaredData> simulate::Measure::generate_squ
 		
 		auto& tank_row = tanks.at(index_x);
 		auto& tank = tank_row.at(index_y);
-		tank.add_fluid(simulate::Measure::tube_inventory(tube));
+		tank.add_fluid(simulate::Measure::tube_inventory(tube, system));
 	}
 	
 	
