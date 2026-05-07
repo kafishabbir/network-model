@@ -1,4 +1,6 @@
 #include "step/part07-inject.h"
+#include <omp.h>
+
 
 nst::Tank step::Part07Inject::produce_tank_with_oil_sliced_out(
 	const nst::Tank& tank,
@@ -38,6 +40,7 @@ void step::Part07Inject::assign_volume_flow_out_to_node(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& node: system.state.nodes)
 	{
 		auto& volume = node.calculated.volume_fluid_flow_out;
@@ -79,7 +82,7 @@ void step::Part07Inject::balance_flow_at_open_nodes(
 		}
 		else
 		{
-			//evacualate
+			//evacuate
 			const auto& tank_with_oil_sliced_out =
 				produce_tank_with_oil_sliced_out(node_tank, delta_volume);
 			evacuation_tank.add_fluid(tank_with_oil_sliced_out);

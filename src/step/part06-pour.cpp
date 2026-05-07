@@ -1,6 +1,7 @@
 #include "step/part06-pour.h"
 #include <algorithm>
 #include <cmath>
+#include <omp.h>
 
 void step::Part06Pour::assign_id_node_id_tube_flow_direction(
 	dst::System& system
@@ -24,21 +25,27 @@ void step::Part06Pour::assign_id_node_id_tube_flow_direction(
 }
 
 std::vector<double> step::Part06Pour::mpos_long_until(
-	const nst::Tube& tube,
+	const std::vector<double>& mpos,
 	const double lp
 )
 {
 	std::vector<double> mpos_new{0};
-	for(const auto& x: tube.mpos)
+	for(const auto& x: mpos)
 	{
 		if(x < lp)
 		{
 			mpos_new.push_back(x);
 		}
+		else
+		{
+			break;
+		}
 	}
 	mpos_new.push_back(lp);
 	return mpos_new;
 }
+ 
+
 
 nst::Tank step::Part06Pour::produce_tank_with_fluids_flow_out_from_tube(
 	const nst::Tube& tube,
@@ -53,14 +60,14 @@ nst::Tank step::Part06Pour::produce_tank_with_fluids_flow_out_from_tube(
 		volume_tube = system.parameter.geometry_distributions.volume.max;
 	}
 	
-	nst::Tube tube_new = ((tube.calculated.velocity < 0) ? tube.original() : tube.reversed());
-	const auto& mpos_long_sliced = mpos_long_until(tube_new, lp);
+	const auto [id_fluid_first, mpos] = tube.return_simple_tube_from_orientation(tube.calculated.velocity < 0);
+	const auto& mpos_long_sliced = mpos_long_until(mpos, lp);
 
 	nst::Tank tank;
 	const int n_mpos_long_sliced = mpos_long_sliced.size();
 	for(int i = 1; i < n_mpos_long_sliced; ++ i)
 	{
-		const int current_id_fluid = (tube_new.id_fluid_first + 1 + i) % 2;
+		const int current_id_fluid = (id_fluid_first + 1 + i) % 2;
 		const double delta_lp = mpos_long_sliced[i] - mpos_long_sliced[i - 1];
 		const double volume_fluid = volume_tube * delta_lp;
 		tank.add_fluid(volume_fluid, current_id_fluid);
@@ -73,6 +80,7 @@ void step::Part06Pour::assign_tank_to_tubes(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated.tank_pour_into_node = produce_tank_with_fluids_flow_out_from_tube(tube, system);
@@ -100,6 +108,7 @@ void step::Part06Pour::pour_from_tubes_to_node_tank(
 	pour_from_tube_to_id_node_tank(system);
 	
 	// NUMERICAL-ERROR
+	#pragma omp parallel for
 	for(auto& node: system.state.nodes)
 	{
 		nst::Tank tmp;

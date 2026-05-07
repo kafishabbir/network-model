@@ -12,6 +12,12 @@
 
 bool simulate::Menu::inject_more_fluid(const dst::System& system)
 {
+	if(!system.parameter.simulation.is_flow_as_opposed_to_test)
+	{
+		static int count_steps = 0;
+		return (count_steps++) < system.parameter.plot.max_time_steps_for_debug;
+	}
+	
 	const double volume_system = system.measured.initial_fluid.volume_total();
 	
 	if(system.parameter.simulation.is_flow_const_flow_rate && 
@@ -30,6 +36,12 @@ bool simulate::Menu::inject_more_fluid(const dst::System& system)
 
 void simulate::Menu::capture_this_state(dst::System& system)
 {
+	if(!system.parameter.simulation.is_flow_as_opposed_to_test)
+	{
+		system.measured.states.push_back(system.state);
+		return;
+	}
+	
 	const double target =
 			system.parameter.plot.capture_frequency_in_volume_fraction *
 			system.measured.states.size();
@@ -106,9 +118,14 @@ dst::SystemOutput simulate::Menu::run(
 	while(inject_more_fluid(system))
 	{
 		++ system.state.reference.id_step;
-		
-		step::AllParts::run_single_time_step(system);
-		//~ step::AllParts::run_single_time_step_debug(system);
+		if(system.parameter.simulation.is_flow_as_opposed_to_test)
+		{
+			step::AllParts::run_single_time_step(system);
+		}
+		else
+		{
+			step::AllParts::run_single_time_step_debug(system);
+		}
 		
 		//REMOVE
 		//return dst::SystemOutput(system.parameter, system.measured);

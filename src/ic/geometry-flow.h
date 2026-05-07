@@ -43,7 +43,15 @@ namespace ic
 			const bool is_skewed
 		);
 		
-		
+		static type_pair_nodes_tubes network_geometry_divided_tubes_real(
+			const int n_tube_rows,
+			const int n_tube_cols,
+			const int id_fluid_inject,
+			const double constant_radius_contrast,
+			const double constant_length_scale,
+			const double n_periods,
+			const bool is_skewed
+		);
 		
 		static type_pair_nodes_tubes network_geometry_random_radius(
 			const int n_tube_rows,

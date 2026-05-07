@@ -81,6 +81,52 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry(
 }
 
 
+ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_divided_tubes_real(
+	const int n_tube_rows,
+	const int n_tube_cols,
+	const int id_fluid_inject,
+	const double constant_radius_contrast,
+	const double constant_length_scale,
+	const double n_periods,
+	const bool is_skewed
+)
+{
+	const double radius_scale = 0.001;
+	auto [nodes, tubes] = GeometryBase::rectangular(
+		n_tube_rows,
+		n_tube_cols,
+		id_fluid_inject
+	);
+
+	const auto& [x_min, y_min, x_max, y_max] = find_min_max_coordinates(nodes);
+	const double length_system = x_max - x_min;
+	const double omega = 2.0 * std::acos(-1) * n_periods / length_system;
+	const double x_center = (x_min + x_max) / 2;
+	const double y_center = (y_min + y_max) / 2;
+	
+	for(auto& tube: tubes)
+	{
+		const double x1 = nodes[tube.id_node_first].x;
+		const double y1 = nodes[tube.id_node_first].y;
+		const double x2 = nodes[tube.id_node_second].x;
+		const double y2 = nodes[tube.id_node_second].y;
+		double x = (x1 + x2) / 2 - x_center + utility::Random::small_noise();
+		const double y = (y1 + y2) / 2 - y_center + utility::Random::small_noise();
+		
+		if(is_skewed)
+		{
+			x = x - 0.65 / n_periods * y;
+		}
+		
+		tube.radius = radius_scale * (1.0 - constant_radius_contrast * std::cos(omega * x) * std::cos(omega * y));
+		tube.length = constant_length_scale * radius_scale;
+	}
+	
+	return {nodes, tubes};
+}
+
+
+
 ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_divided_tubes(
 	const int n_tube_rows,
 	const int n_tube_cols,

@@ -41,27 +41,39 @@ nst::Tube::Tube():
 	calculated()
 {}
 
-
-nst::Tube nst::Tube::original() const
+std::pair<int, std::vector<double>> nst::Tube::tube_simple_reversed(
+	std::pair<int, std::vector<double>> tube
+)
 {
-	return *this;
-}
-
-void nst::Tube::reverse()
-{
-	for(auto& x: mpos)
+	tube.first = (tube.first + tube.second.size()) % 2;
+	for(auto& x: tube.second)
 	{
 		x = 1.0 - x;
 	}
-	std::reverse(mpos.begin(), mpos.end());
-	id_fluid_first = (id_fluid_first + mpos.size()) % 2;
-}
-
-nst::Tube nst::Tube::reversed() const
-{
-	nst::Tube tube(*this);
-	tube.reverse();
+	
+	std::reverse(tube.second.begin(), tube.second.end());
 	return tube;
 }
+
+std::pair<int, std::vector<double>> nst::Tube::tube_simple() const
+{
+	return {id_fluid_first, mpos};
+}
+
+std::pair<int, std::vector<double>> nst::Tube::tube_simple_reversed() const
+{
+	return tube_simple_reversed(tube_simple());
+}
+
+std::pair<int, std::vector<double>> nst::Tube::return_simple_tube_from_orientation(const bool direction_forward) const 
+{
+	if(direction_forward)
+	{
+		return tube_simple();
+	}
+	
+	return tube_simple_reversed();	
+}
+
 
 

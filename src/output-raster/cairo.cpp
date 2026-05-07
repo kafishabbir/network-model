@@ -2,7 +2,7 @@
 #include "global/decl.h"
 #include <filesystem>
 
-const int output_raster::Cairo::length_shortest_side = 400;
+const int output_raster::Cairo::length_shortest_side = 1000;
 const int output_raster::Cairo::margin = 30;
 
 const output_raster::Cairo::Color output_raster::Cairo::Color::white = output_raster::Cairo::Color(1.00, 1.00, 1.00);

@@ -1,56 +1,53 @@
 #include "step/part09-displace.h"
+#include <omp.h>
 
-nst::Tube step::Part09Displace::generate_tube_front(
-	const nst::Tube& tube,
-	const double lp,
-	const double ap
-)
-{
-	nst::Tube tube_front(tube);
-	if(ap == 1.0)
-	{
-		tube_front.id_fluid_first = 0;
-	}
-	else
-	{
-		tube_front.id_fluid_first = 1;
-	}
-
-	tube_front.mpos.clear();
-
-	if((ap > 0.0) && (ap < 1.0))
-	{
-		tube_front.mpos.push_back((1.0 - ap) * lp);
-	}
-
-	return tube_front;
-}
-
-void step::Part09Displace::join_tubes(
-	nst::Tube& tube_front,
-	const nst::Tube& tube_back,
+std::pair<int, std::vector<double>> step::Part09Displace::generate_tube_front(
+	const double ap,
 	const double lp
 )
 {
-	const int id_fluid_tube_front_end = (tube_front.id_fluid_first + tube_front.mpos.size()) % 2;
-	const int id_fluid_tube_back_begin = tube_back.id_fluid_first;
+	int id_fluid_first = (ap < 1.0);
 
-	if(id_fluid_tube_front_end != id_fluid_tube_back_begin)
+	if((ap > 0.0) && (ap < 1.0))
 	{
-		tube_front.mpos.push_back(lp);
+		return {id_fluid_first, {(1.0 - ap) * lp}};
+	}
+
+	return {id_fluid_first, {}};
+}
+
+std::pair<int, std::vector<double>> step::Part09Displace::join_tubes(
+	const std::pair<int, std::vector<double>>& tube_front,
+	const std::pair<int, std::vector<double>>& tube_back,
+	const double lp
+)
+{
+	auto [id, mpos] = tube_front;
+	const auto& [id_back, mpos_back] = tube_back;
+	const int id_front_end = (id + mpos.size()) % 2;
+	
+	if(id_front_end != id_back)
+	{
+		mpos.push_back(lp);
 	}
 	// NUMERICAL-ERROR
-	for(const double x: tube_back.mpos)
+	for(const double x: mpos_back)
 	{
 		const double x_add = x + lp;
 		if(x_add < (1.0 - 1e-6))
 		{
-			tube_front.mpos.push_back(x_add);
+			mpos.push_back(x_add);
+		}
+		else
+		{
+			break;
 		}
 	}
+	
+	return {id, mpos};
 }
 
-nst::Tube step::Part09Displace::update_tube_mpos_according_to_proportion(
+std::pair<int, std::vector<double>> step::Part09Displace::generate_new_mpos_from_add_proportion(
 	const nst::Tube& tube
 )
 {
@@ -58,16 +55,16 @@ nst::Tube step::Part09Displace::update_tube_mpos_according_to_proportion(
 	const double lp = tube.calculated.length_displacement_p;
 	const double ap = tube.calculated.add_proportion;
 
-	auto tube_front = generate_tube_front(tube, lp, ap);
-	auto tube_back = (is_reverse_needed ? tube.reversed() : tube.original());
-	join_tubes(tube_front, tube_back, lp);
+	const auto& tube_front = generate_tube_front(ap, lp);
+	const auto& tube_back = tube.return_simple_tube_from_orientation(tube.calculated.velocity > 0);	
+	const auto& joined = join_tubes(tube_front, tube_back, lp);
 
 	if(is_reverse_needed)
 	{
-		tube_front.reverse();
+		return nst::Tube::tube_simple_reversed(joined);
 	}
 
-	return tube_front;
+	return joined;
 }
 
 std::vector<double> step::Part09Displace::combine_swabs(
@@ -107,13 +104,16 @@ std::vector<double> step::Part09Displace::combine_swabs(
 	return v;
 }
 
-void step::Part09Displace::update_tube_mpos_according_to_proportion(
+void step::Part09Displace::generate_new_mpos_from_add_proportion(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
-		tube = update_tube_mpos_according_to_proportion(tube);
+		const auto& [id, mpos] = generate_new_mpos_from_add_proportion(tube);
+		tube.id_fluid_first = id;
+		tube.mpos = mpos;
 		tube.mpos = combine_swabs(tube);
 	}
 }

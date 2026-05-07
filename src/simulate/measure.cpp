@@ -62,8 +62,9 @@ std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs
 		v.push_back({x, tanks[i].saturation()});
 	}
 	
-	const int number_groups = system.parameter.geometry.n_periods;
-	const int group_size = system.parameter.geometry.n_tube_cols / system.parameter.geometry.n_periods;
+	//~ const int number_groups = system.parameter.geometry.n_periods;
+	const int number_groups = system.parameter.geometry.n_periods * 2;
+	const int group_size = system.parameter.geometry.n_tube_cols / number_groups;
 	
 	std::vector<std::pair<double, double>> w;
 	for(int group_i = 0; group_i < number_groups; ++ group_i)

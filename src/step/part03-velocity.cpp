@@ -1,4 +1,5 @@
 #include "step/part03-velocity.h"
+#include <omp.h>
 
 double step::Part03Velocity::flow_rate(
 	const nst::Tube& tube,
@@ -20,6 +21,7 @@ void step::Part03Velocity::flow_rate(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated.flow_rate = flow_rate(tube, system);
@@ -30,6 +32,7 @@ void step::Part03Velocity::velocity(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		

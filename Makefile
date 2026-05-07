@@ -37,318 +37,318 @@ edit:
 
 
 run/simulate.exe: run/build/exe_simulate.o run/build/dst_measured.o run/build/dst_parameter.o run/build/dst_state.o run/build/dst_system.o run/build/dst_system-output.o run/build/ic_geometry-base.o run/build/ic_geometry-flow.o run/build/ic_geometry-rand.o run/build/nst_node.o run/build/nst_tank.o run/build/nst_tube.o run/build/output-raster_cairo.o run/build/output-raster_flow.o run/build/output-vector_draw.o run/build/output-vector_flow.o run/build/output-vector_label-node.o run/build/output-vector_label-tube.o run/build/output-vector_tikz.o run/build/output_json.o run/build/output_latex.o run/build/output_property.o run/build/output_result.o run/build/output_visual-dimension.o run/build/program_debug-flow.o run/build/program_flow-in-periodic-medium.o run/build/program_flow-with-divided-tubes.o run/build/program_function-trial.o run/build/program_isolated-imbibition.o run/build/program_permeability.o run/build/program_triangle-closed.o run/build/simulate_accuracy.o run/build/simulate_assign.o run/build/simulate_measure.o run/build/simulate_menu.o run/build/simulate_preparation.o run/build/simulate_set-solver.o run/build/simulate_system-generator.o run/build/step_all-parts.o run/build/step_part01-reference.o run/build/step_part02-pressure.o run/build/step_part03-velocity.o run/build/step_part04-time.o run/build/step_part05-displacement.o run/build/step_part06-pour.o run/build/step_part07-inject.o run/build/step_part08-distribute.o run/build/step_part09-displace.o run/build/step_part10-measure.o run/build/utility_random.o run/build/utility_str.o run/build/utility_time.o
-	g++  run/build/exe_simulate.o run/build/dst_measured.o run/build/dst_parameter.o run/build/dst_state.o run/build/dst_system.o run/build/dst_system-output.o run/build/ic_geometry-base.o run/build/ic_geometry-flow.o run/build/ic_geometry-rand.o run/build/nst_node.o run/build/nst_tank.o run/build/nst_tube.o run/build/output-raster_cairo.o run/build/output-raster_flow.o run/build/output-vector_draw.o run/build/output-vector_flow.o run/build/output-vector_label-node.o run/build/output-vector_label-tube.o run/build/output-vector_tikz.o run/build/output_json.o run/build/output_latex.o run/build/output_property.o run/build/output_result.o run/build/output_visual-dimension.o run/build/program_debug-flow.o run/build/program_flow-in-periodic-medium.o run/build/program_flow-with-divided-tubes.o run/build/program_function-trial.o run/build/program_isolated-imbibition.o run/build/program_permeability.o run/build/program_triangle-closed.o run/build/simulate_accuracy.o run/build/simulate_assign.o run/build/simulate_measure.o run/build/simulate_menu.o run/build/simulate_preparation.o run/build/simulate_set-solver.o run/build/simulate_system-generator.o run/build/step_all-parts.o run/build/step_part01-reference.o run/build/step_part02-pressure.o run/build/step_part03-velocity.o run/build/step_part04-time.o run/build/step_part05-displacement.o run/build/step_part06-pour.o run/build/step_part07-inject.o run/build/step_part08-distribute.o run/build/step_part09-displace.o run/build/step_part10-measure.o run/build/utility_random.o run/build/utility_str.o run/build/utility_time.o -o run/simulate.exe -lcairo
+	g++ -fopenmp  run/build/exe_simulate.o run/build/dst_measured.o run/build/dst_parameter.o run/build/dst_state.o run/build/dst_system.o run/build/dst_system-output.o run/build/ic_geometry-base.o run/build/ic_geometry-flow.o run/build/ic_geometry-rand.o run/build/nst_node.o run/build/nst_tank.o run/build/nst_tube.o run/build/output-raster_cairo.o run/build/output-raster_flow.o run/build/output-vector_draw.o run/build/output-vector_flow.o run/build/output-vector_label-node.o run/build/output-vector_label-tube.o run/build/output-vector_tikz.o run/build/output_json.o run/build/output_latex.o run/build/output_property.o run/build/output_result.o run/build/output_visual-dimension.o run/build/program_debug-flow.o run/build/program_flow-in-periodic-medium.o run/build/program_flow-with-divided-tubes.o run/build/program_function-trial.o run/build/program_isolated-imbibition.o run/build/program_permeability.o run/build/program_triangle-closed.o run/build/simulate_accuracy.o run/build/simulate_assign.o run/build/simulate_measure.o run/build/simulate_menu.o run/build/simulate_preparation.o run/build/simulate_set-solver.o run/build/simulate_system-generator.o run/build/step_all-parts.o run/build/step_part01-reference.o run/build/step_part02-pressure.o run/build/step_part03-velocity.o run/build/step_part04-time.o run/build/step_part05-displacement.o run/build/step_part06-pour.o run/build/step_part07-inject.o run/build/step_part08-distribute.o run/build/step_part09-displace.o run/build/step_part10-measure.o run/build/utility_random.o run/build/utility_str.o run/build/utility_time.o -o run/simulate.exe -lcairo
 	@echo "run/simulate.exe created."
 	@echo " "
 
 
 run/build/dst_measured.o: src/dst/measured.cpp src/dst/measured.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/dst/measured.cpp -o run/build/dst_measured.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/dst/measured.cpp -o run/build/dst_measured.o
 	@echo "run/build/dst_measured.o created."
 	@echo " "
 
 
 run/build/dst_parameter.o: src/dst/parameter.cpp src/dst/parameter.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/dst/parameter.cpp -o run/build/dst_parameter.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/dst/parameter.cpp -o run/build/dst_parameter.o
 	@echo "run/build/dst_parameter.o created."
 	@echo " "
 
 
 run/build/dst_state.o: src/dst/state.cpp src/dst/state.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/dst/state.cpp -o run/build/dst_state.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/dst/state.cpp -o run/build/dst_state.o
 	@echo "run/build/dst_state.o created."
 	@echo " "
 
 
 run/build/dst_system.o: src/dst/system.cpp src/dst/system.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/dst/system.cpp -o run/build/dst_system.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/dst/system.cpp -o run/build/dst_system.o
 	@echo "run/build/dst_system.o created."
 	@echo " "
 
 
 run/build/dst_system-output.o: src/dst/system-output.cpp src/dst/system-output.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/dst/system-output.cpp -o run/build/dst_system-output.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/dst/system-output.cpp -o run/build/dst_system-output.o
 	@echo "run/build/dst_system-output.o created."
 	@echo " "
 
 
 run/build/exe_simulate.o: src/exe/simulate.cpp src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/exe/simulate.cpp -o run/build/exe_simulate.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/exe/simulate.cpp -o run/build/exe_simulate.o
 	@echo "run/build/exe_simulate.o created."
 	@echo " "
 
 
 run/build/ic_geometry-base.o: src/ic/geometry-base.cpp src/ic/geometry-base.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/ic/geometry-base.cpp -o run/build/ic_geometry-base.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/ic/geometry-base.cpp -o run/build/ic_geometry-base.o
 	@echo "run/build/ic_geometry-base.o created."
 	@echo " "
 
 
 run/build/ic_geometry-flow.o: src/ic/geometry-flow.cpp src/ic/geometry-flow.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/ic/geometry-flow.cpp -o run/build/ic_geometry-flow.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/ic/geometry-flow.cpp -o run/build/ic_geometry-flow.o
 	@echo "run/build/ic_geometry-flow.o created."
 	@echo " "
 
 
 run/build/ic_geometry-rand.o: src/ic/geometry-rand.cpp src/ic/geometry-rand.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/ic/geometry-rand.cpp -o run/build/ic_geometry-rand.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/ic/geometry-rand.cpp -o run/build/ic_geometry-rand.o
 	@echo "run/build/ic_geometry-rand.o created."
 	@echo " "
 
 
 run/build/nst_node.o: src/nst/node.cpp src/nst/node.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/nst/node.cpp -o run/build/nst_node.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/nst/node.cpp -o run/build/nst_node.o
 	@echo "run/build/nst_node.o created."
 	@echo " "
 
 
 run/build/nst_tank.o: src/nst/tank.cpp src/nst/tank.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/nst/tank.cpp -o run/build/nst_tank.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/nst/tank.cpp -o run/build/nst_tank.o
 	@echo "run/build/nst_tank.o created."
 	@echo " "
 
 
 run/build/nst_tube.o: src/nst/tube.cpp src/nst/tube.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/nst/tube.cpp -o run/build/nst_tube.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/nst/tube.cpp -o run/build/nst_tube.o
 	@echo "run/build/nst_tube.o created."
 	@echo " "
 
 
 run/build/output-raster_cairo.o: src/output-raster/cairo.cpp src/output-raster/cairo.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output-raster/cairo.cpp -o run/build/output-raster_cairo.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output-raster/cairo.cpp -o run/build/output-raster_cairo.o
 	@echo "run/build/output-raster_cairo.o created."
 	@echo " "
 
 
 run/build/output-raster_flow.o: src/output-raster/flow.cpp src/output-raster/flow.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output-raster/flow.cpp -o run/build/output-raster_flow.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output-raster/flow.cpp -o run/build/output-raster_flow.o
 	@echo "run/build/output-raster_flow.o created."
 	@echo " "
 
 
 run/build/output-vector_draw.o: src/output-vector/draw.cpp src/output-vector/draw.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output-vector/draw.cpp -o run/build/output-vector_draw.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output-vector/draw.cpp -o run/build/output-vector_draw.o
 	@echo "run/build/output-vector_draw.o created."
 	@echo " "
 
 
 run/build/output-vector_flow.o: src/output-vector/flow.cpp src/output-vector/flow.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output-vector/flow.cpp -o run/build/output-vector_flow.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output-vector/flow.cpp -o run/build/output-vector_flow.o
 	@echo "run/build/output-vector_flow.o created."
 	@echo " "
 
 
 run/build/output-vector_label-node.o: src/output-vector/label-node.cpp src/output-vector/label-node.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output-vector/label-node.cpp -o run/build/output-vector_label-node.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output-vector/label-node.cpp -o run/build/output-vector_label-node.o
 	@echo "run/build/output-vector_label-node.o created."
 	@echo " "
 
 
 run/build/output-vector_label-tube.o: src/output-vector/label-tube.cpp src/output-vector/label-tube.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output-vector/label-tube.cpp -o run/build/output-vector_label-tube.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output-vector/label-tube.cpp -o run/build/output-vector_label-tube.o
 	@echo "run/build/output-vector_label-tube.o created."
 	@echo " "
 
 
 run/build/output-vector_tikz.o: src/output-vector/tikz.cpp src/output-vector/tikz.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output-vector/tikz.cpp -o run/build/output-vector_tikz.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output-vector/tikz.cpp -o run/build/output-vector_tikz.o
 	@echo "run/build/output-vector_tikz.o created."
 	@echo " "
 
 
 run/build/output_json.o: src/output/json.cpp src/output/json.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output/json.cpp -o run/build/output_json.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output/json.cpp -o run/build/output_json.o
 	@echo "run/build/output_json.o created."
 	@echo " "
 
 
 run/build/output_latex.o: src/output/latex.cpp src/output/latex.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output/latex.cpp -o run/build/output_latex.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output/latex.cpp -o run/build/output_latex.o
 	@echo "run/build/output_latex.o created."
 	@echo " "
 
 
 run/build/output_property.o: src/output/property.cpp src/output/property.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output/property.cpp -o run/build/output_property.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output/property.cpp -o run/build/output_property.o
 	@echo "run/build/output_property.o created."
 	@echo " "
 
 
 run/build/output_result.o: src/output/result.cpp src/output/result.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output/result.cpp -o run/build/output_result.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output/result.cpp -o run/build/output_result.o
 	@echo "run/build/output_result.o created."
 	@echo " "
 
 
 run/build/output_visual-dimension.o: src/output/visual-dimension.cpp src/output/visual-dimension.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/output/visual-dimension.cpp -o run/build/output_visual-dimension.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/output/visual-dimension.cpp -o run/build/output_visual-dimension.o
 	@echo "run/build/output_visual-dimension.o created."
 	@echo " "
 
 
 run/build/program_debug-flow.o: src/program/debug-flow.cpp src/program/debug-flow.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/program/debug-flow.cpp -o run/build/program_debug-flow.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/program/debug-flow.cpp -o run/build/program_debug-flow.o
 	@echo "run/build/program_debug-flow.o created."
 	@echo " "
 
 
 run/build/program_flow-in-periodic-medium.o: src/program/flow-in-periodic-medium.cpp src/program/flow-in-periodic-medium.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/program/flow-in-periodic-medium.cpp -o run/build/program_flow-in-periodic-medium.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/program/flow-in-periodic-medium.cpp -o run/build/program_flow-in-periodic-medium.o
 	@echo "run/build/program_flow-in-periodic-medium.o created."
 	@echo " "
 
 
 run/build/program_flow-with-divided-tubes.o: src/program/flow-with-divided-tubes.cpp src/program/flow-with-divided-tubes.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/program/flow-with-divided-tubes.cpp -o run/build/program_flow-with-divided-tubes.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/program/flow-with-divided-tubes.cpp -o run/build/program_flow-with-divided-tubes.o
 	@echo "run/build/program_flow-with-divided-tubes.o created."
 	@echo " "
 
 
 run/build/program_function-trial.o: src/program/function-trial.cpp src/program/function-trial.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/program/function-trial.cpp -o run/build/program_function-trial.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/program/function-trial.cpp -o run/build/program_function-trial.o
 	@echo "run/build/program_function-trial.o created."
 	@echo " "
 
 
 run/build/program_isolated-imbibition.o: src/program/isolated-imbibition.cpp src/program/isolated-imbibition.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/program/isolated-imbibition.cpp -o run/build/program_isolated-imbibition.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/program/isolated-imbibition.cpp -o run/build/program_isolated-imbibition.o
 	@echo "run/build/program_isolated-imbibition.o created."
 	@echo " "
 
 
 run/build/program_permeability.o: src/program/permeability.cpp src/program/permeability.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/program/permeability.cpp -o run/build/program_permeability.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/program/permeability.cpp -o run/build/program_permeability.o
 	@echo "run/build/program_permeability.o created."
 	@echo " "
 
 
 run/build/program_triangle-closed.o: src/program/triangle-closed.cpp src/program/triangle-closed.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/program/triangle-closed.cpp -o run/build/program_triangle-closed.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/program/triangle-closed.cpp -o run/build/program_triangle-closed.o
 	@echo "run/build/program_triangle-closed.o created."
 	@echo " "
 
 
 run/build/simulate_accuracy.o: src/simulate/accuracy.cpp src/simulate/accuracy.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/accuracy.cpp -o run/build/simulate_accuracy.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/simulate/accuracy.cpp -o run/build/simulate_accuracy.o
 	@echo "run/build/simulate_accuracy.o created."
 	@echo " "
 
 
 run/build/simulate_assign.o: src/simulate/assign.cpp src/simulate/assign.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/assign.cpp -o run/build/simulate_assign.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/simulate/assign.cpp -o run/build/simulate_assign.o
 	@echo "run/build/simulate_assign.o created."
 	@echo " "
 
 
 run/build/simulate_measure.o: src/simulate/measure.cpp src/simulate/measure.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/measure.cpp -o run/build/simulate_measure.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/simulate/measure.cpp -o run/build/simulate_measure.o
 	@echo "run/build/simulate_measure.o created."
 	@echo " "
 
 
 run/build/simulate_menu.o: src/simulate/menu.cpp src/simulate/menu.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/menu.cpp -o run/build/simulate_menu.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/simulate/menu.cpp -o run/build/simulate_menu.o
 	@echo "run/build/simulate_menu.o created."
 	@echo " "
 
 
 run/build/simulate_preparation.o: src/simulate/preparation.cpp src/simulate/preparation.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/preparation.cpp -o run/build/simulate_preparation.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/simulate/preparation.cpp -o run/build/simulate_preparation.o
 	@echo "run/build/simulate_preparation.o created."
 	@echo " "
 
 
 run/build/simulate_set-solver.o: src/simulate/set-solver.cpp src/simulate/set-solver.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/set-solver.cpp -o run/build/simulate_set-solver.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/simulate/set-solver.cpp -o run/build/simulate_set-solver.o
 	@echo "run/build/simulate_set-solver.o created."
 	@echo " "
 
 
 run/build/simulate_system-generator.o: src/simulate/system-generator.cpp src/simulate/system-generator.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/simulate/system-generator.cpp -o run/build/simulate_system-generator.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/simulate/system-generator.cpp -o run/build/simulate_system-generator.o
 	@echo "run/build/simulate_system-generator.o created."
 	@echo " "
 
 
 run/build/step_all-parts.o: src/step/all-parts.cpp src/step/all-parts.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/all-parts.cpp -o run/build/step_all-parts.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/all-parts.cpp -o run/build/step_all-parts.o
 	@echo "run/build/step_all-parts.o created."
 	@echo " "
 
 
 run/build/step_part01-reference.o: src/step/part01-reference.cpp src/step/part01-reference.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part01-reference.cpp -o run/build/step_part01-reference.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part01-reference.cpp -o run/build/step_part01-reference.o
 	@echo "run/build/step_part01-reference.o created."
 	@echo " "
 
 
 run/build/step_part02-pressure.o: src/step/part02-pressure.cpp src/step/part02-pressure.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part02-pressure.cpp -o run/build/step_part02-pressure.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part02-pressure.cpp -o run/build/step_part02-pressure.o
 	@echo "run/build/step_part02-pressure.o created."
 	@echo " "
 
 
 run/build/step_part03-velocity.o: src/step/part03-velocity.cpp src/step/part03-velocity.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part03-velocity.cpp -o run/build/step_part03-velocity.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part03-velocity.cpp -o run/build/step_part03-velocity.o
 	@echo "run/build/step_part03-velocity.o created."
 	@echo " "
 
 
 run/build/step_part04-time.o: src/step/part04-time.cpp src/step/part04-time.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part04-time.cpp -o run/build/step_part04-time.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part04-time.cpp -o run/build/step_part04-time.o
 	@echo "run/build/step_part04-time.o created."
 	@echo " "
 
 
 run/build/step_part05-displacement.o: src/step/part05-displacement.cpp src/step/part05-displacement.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part05-displacement.cpp -o run/build/step_part05-displacement.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part05-displacement.cpp -o run/build/step_part05-displacement.o
 	@echo "run/build/step_part05-displacement.o created."
 	@echo " "
 
 
 run/build/step_part06-pour.o: src/step/part06-pour.cpp src/step/part06-pour.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part06-pour.cpp -o run/build/step_part06-pour.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part06-pour.cpp -o run/build/step_part06-pour.o
 	@echo "run/build/step_part06-pour.o created."
 	@echo " "
 
 
 run/build/step_part07-inject.o: src/step/part07-inject.cpp src/step/part07-inject.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part07-inject.cpp -o run/build/step_part07-inject.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part07-inject.cpp -o run/build/step_part07-inject.o
 	@echo "run/build/step_part07-inject.o created."
 	@echo " "
 
 
 run/build/step_part08-distribute.o: src/step/part08-distribute.cpp src/step/part08-distribute.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part08-distribute.cpp -o run/build/step_part08-distribute.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part08-distribute.cpp -o run/build/step_part08-distribute.o
 	@echo "run/build/step_part08-distribute.o created."
 	@echo " "
 
 
 run/build/step_part09-displace.o: src/step/part09-displace.cpp src/step/part09-displace.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part09-displace.cpp -o run/build/step_part09-displace.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part09-displace.cpp -o run/build/step_part09-displace.o
 	@echo "run/build/step_part09-displace.o created."
 	@echo " "
 
 
 run/build/step_part10-measure.o: src/step/part10-measure.cpp src/step/part10-measure.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/step/part10-measure.cpp -o run/build/step_part10-measure.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/step/part10-measure.cpp -o run/build/step_part10-measure.o
 	@echo "run/build/step_part10-measure.o created."
 	@echo " "
 
 
 run/build/utility_random.o: src/utility/random.cpp src/utility/random.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/utility/random.cpp -o run/build/utility_random.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/utility/random.cpp -o run/build/utility_random.o
 	@echo "run/build/utility_random.o created."
 	@echo " "
 
 
 run/build/utility_str.o: src/utility/str.cpp src/utility/str.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/utility/str.cpp -o run/build/utility_str.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/utility/str.cpp -o run/build/utility_str.o
 	@echo "run/build/utility_str.o created."
 	@echo " "
 
 
 run/build/utility_time.o: src/utility/time.cpp src/utility/time.h src/global/decl.h
-	g++ -c -Wall -std=c++17 -Isrc/ src/utility/time.cpp -o run/build/utility_time.o
+	g++ -c -Wall -std=c++17 -Isrc/ -fopenmp src/utility/time.cpp -o run/build/utility_time.o
 	@echo "run/build/utility_time.o created."
 	@echo " "

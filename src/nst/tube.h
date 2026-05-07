@@ -48,10 +48,13 @@ namespace nst
 		double volume() const;
 
 		std::vector<double> mpos_long() const;
-
-		Tube original() const;
-		Tube reversed() const;
-		void reverse();
+		
+		static std::pair<int, std::vector<double>> tube_simple_reversed(
+			std::pair<int, std::vector<double>> tube
+		);
+		std::pair<int, std::vector<double>> tube_simple() const;
+		std::pair<int, std::vector<double>> tube_simple_reversed() const;
+		std::pair<int, std::vector<double>> return_simple_tube_from_orientation(const bool) const;
 	};
 	
 	typedef std::vector<nst::Tube> Tubes;

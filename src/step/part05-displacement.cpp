@@ -1,4 +1,5 @@
 #include "step/part05-displacement.h"
+#include <omp.h>
 
 void step::Part05Displacement::assign_volume_length_displacement(
 	dst::System& system
@@ -6,6 +7,7 @@ void step::Part05Displacement::assign_volume_length_displacement(
 {
 	const double time_step = system.state.calculated.time_step;
 	
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated.length_displacement_p = time_step * std::abs(tube.calculated.velocity) / tube.length;

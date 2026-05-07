@@ -1,9 +1,11 @@
 #include "step/part04-time.h"
+#include <omp.h>
 
 void step::Part04Time::time_for_each_tube(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated.time = (tube.length / std::abs(tube.calculated.velocity));

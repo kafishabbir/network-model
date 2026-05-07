@@ -72,7 +72,7 @@ void step::AllParts::run_single_time_step(
 		//states.push_back(system);
 		//std::cout << "here" << j++ << std::endl;
 
-	step::Part09Displace::update_tube_mpos_according_to_proportion(system);
+	step::Part09Displace::generate_new_mpos_from_add_proportion(system);
 		system.measured.time_taken_by_each_step[9] += time.passed();
 		//comment = "update-tube-mpos-according-to-proportion";
 		//states.push_back(system);
@@ -148,7 +148,7 @@ void step::AllParts::run_single_time_step_debug(
 		system.measured.states.push_back(system.state);
 		std::cout << "here" << j++ << std::endl;
 
-	step::Part09Displace::update_tube_mpos_according_to_proportion(system);
+	step::Part09Displace::generate_new_mpos_from_add_proportion(system);
 		system.measured.time_taken_by_each_step[9] += time.passed();
 		comment = "update-tube-mpos-according-to-proportion";
 		system.measured.states.push_back(system.state);

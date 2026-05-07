@@ -1,5 +1,6 @@
 #include "step/part02-pressure.h"
 
+
 step::Part02Pressure::Equation step::Part02Pressure::generate_equation_for_node(
 	const int id_node,
 	const dst::System& system
@@ -40,7 +41,7 @@ step::Part02Pressure::Equation step::Part02Pressure::generate_equation_for_node(
 	// It is obvious that the only open bounday is where there is const flow rate injection
 	if(node.is_open_boundary)
 	{
-		equation.b += 1.0 /
+		equation.b += system.parameter.simulation.flow_rate_in_pore_volumes * system.measured.initial_fluid.volume_total() /
 			(system.parameter.geometry.n_inject_boundaries - 1) *
 			(node.reference.connections_id_tube_v.size() == 1 ? 0.5 : 1.0);					
 	}
@@ -50,7 +51,7 @@ step::Part02Pressure::Equation step::Part02Pressure::generate_equation_for_node(
 	return equation;
 }
 
-void step::Part02Pressure::run(
+void step::Part02Pressure::run_direct(
 	dst::System& system
 )
 {
@@ -96,5 +97,90 @@ void step::Part02Pressure::run(
 	}
 }
 
+void step::Part02Pressure::run_iterative(
+    dst::System& system
+)
+{
+    const int n_variables = system.id_nodes_unknown_pressure_v.size();
+    Eigen::VectorXd b(n_variables);
+    
+    // Build the system matrix (same as before)
+    for(int i = 0; i < n_variables; ++ i)
+    {
+        const int id_node = system.id_nodes_unknown_pressure_v[i];
+        const auto equation = generate_equation_for_node(id_node, system);
+        
+        for(const auto& [id_col, val] : equation.entry_v)
+        {
+            system.sparse_matrix.coeffRef(i, id_col) = val;
+        }
+        
+        b(i) = equation.b;
+    }
+    
+    // Initialize solver only once (first call or if not initialized)
+    if(!system.solver_initialized)
+    {
+        system.iterative_solver.setTolerance(1e-6);
+        system.iterative_solver.setMaxIterations(1000);
+        system.iterative_solver.compute(system.sparse_matrix);
+        system.solver_initialized = true;
+    }
+    else
+    {
+        // Just update the matrix values without re-analyzing structure
+        system.iterative_solver.factorize(system.sparse_matrix);
+    }
+    
+    // Solve with warm start (always have previous solution after first call)
+    Eigen::VectorXd solution;
+    if(system.has_previous_solution)
+    {
+        solution = system.iterative_solver.solveWithGuess(b, system.pressure_previous_solution);
+    }
+    else
+    {
+        solution = system.iterative_solver.solve(b);
+        system.has_previous_solution = true;
+    }
+    
+    if(system.iterative_solver.info() != Eigen::Success)
+    {
+        throw std::runtime_error("Part02Pressure: iterative solving failed. "
+                                 "Iterations: " + std::to_string(system.iterative_solver.iterations()));
+    }
+    
+    // Store for next warm start
+    system.pressure_previous_solution = solution;
+    
+    // Assign pressures back to nodes
+    for(int i = 0; i < n_variables; ++ i)
+    {
+        const int id_node = system.id_nodes_unknown_pressure_v[i];
+        system.state.nodes[id_node].calculated.pressure = solution(i);
+    }
+    
+    for(auto& node: system.state.nodes)
+    {
+        if(node.is_pressure_known)
+        {
+            node.calculated.pressure = node.pressure;
+        }
+    }
+}
 
 
+void step::Part02Pressure::run(
+	dst::System& system
+)
+{
+	if(system.parameter.simulation.run_iterative)
+	{
+		run_iterative(system);
+	}
+	else
+	{
+		run_direct(system);
+	}
+	
+}

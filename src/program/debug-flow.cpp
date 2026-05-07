@@ -7,27 +7,26 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 	dst::Parameter parameter;
 
 	// Set simulation type using the flags
-	parameter.simulation.is_flow_as_opposed_to_test = true;  // false = test simulation
-	parameter.simulation.is_flow_const_flow_rate = true;     // false = constant pressure
-	parameter.simulation.is_const_porosity = true;   
+	parameter.simulation.is_flow_as_opposed_to_test = false;  // false = test simulation
+	parameter.simulation.is_flow_const_flow_rate = false;     // false = constant pressure
+	parameter.simulation.is_const_porosity = false;   
 	parameter.simulation.is_tubes_divided = false;            // variable porosity
-	parameter.simulation.id_fluid_inject = 1;
-	//parameter.simulation.inlet_pressure = 1000;
-	parameter.simulation.is_initially_filled = true;
-	parameter.simulation.n_periods_of_initial_disturbance = 0.5;
+	parameter.simulation.id_fluid_inject = 0;
+	parameter.simulation.inlet_pressure = 1000;
 
+	
 	// Geometry
-	parameter.geometry.n_tube_rows = 50;
-	parameter.geometry.n_tube_cols = 100;
-	parameter.geometry.radius_contrast = 0.1;
-	parameter.geometry.length_scale = 10.0;
+	parameter.geometry.n_tube_rows = 2;
+	parameter.geometry.n_tube_cols = 2;
+	parameter.geometry.radius_contrast = 0.2;
+	parameter.geometry.length_scale = 5.0;
 	parameter.geometry.is_random_radius = true;
 	//parameter.geometry.n_periods = 3;
 	//parameter.geometry.is_skewed = true;
 	//parameter.geometry.n_inject_boundaries = -1;  // Will be set during initialization
 
 	// Physical constants
-	parameter.constant_physical.sigma = 1e4;
+	parameter.constant_physical.sigma = 1e2;
 	parameter.constant_physical.viscosity_water = 1.0;  // viscosity_ratio = 1.0, mu_scale = 1.0
 	parameter.constant_physical.viscosity_oil = 1.0;
 
@@ -36,8 +35,9 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 
 	// Plot parameters
 	parameter.plot.capture_frequency_in_volume_fraction = 0.01;
-	parameter.plot.volume_max_to_inject = 0.001;
-
+	parameter.plot.volume_max_to_inject = 0.1;
+	parameter.plot.max_time_steps_for_debug = 20;
+	
 	return parameter;
 }
 
@@ -54,23 +54,8 @@ output::Property program::DebugFlow::generate_visual_property()
 
 void program::DebugFlow::run()
 {
-	std::vector<double> n_initial_disturbance_v{0.5, 1.5, 2.5, 3.5, 5.5, 7.5, 9.5};
-
-	
 	output::Result output_result;
-
-	for(auto n_initial_disturbance :n_initial_disturbance_v)
-	{
-		// Generate base parameter
-		auto parameter = generate_parameter();
-		
-		// Override with loop values
-		parameter.simulation.n_periods_of_initial_disturbance = n_initial_disturbance;
-		
-		// Run simulation
-		auto system = simulate::Menu::run(parameter);
-		
-		// Add to results
-		output_result.add(system, generate_visual_property());
-	}
+	auto parameter = generate_parameter();
+	auto system = simulate::Menu::run(parameter);
+	output_result.add(system, generate_visual_property());
 }

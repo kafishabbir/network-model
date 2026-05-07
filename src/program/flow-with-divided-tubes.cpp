@@ -10,17 +10,20 @@ dst::Parameter program::FlowWithDividedTubes::generate_parameter()
 	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
 	parameter.simulation.is_const_porosity = false;              // true = constant porosity
 	parameter.simulation.is_tubes_divided = true;
+	parameter.simulation.run_iterative = true;
+	parameter.simulation.flow_rate_in_pore_volumes = 0.1;
 	parameter.simulation.id_fluid_inject = 0;
 	parameter.simulation.is_initially_filled = false;
 	parameter.simulation.n_periods_of_initial_disturbance = 0.5;
+	parameter.simulation.real_geometry = true;
 	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 20;
-	parameter.geometry.n_tube_cols = 100;
+	parameter.geometry.n_tube_rows = 18;
+	parameter.geometry.n_tube_cols = 180;
 	parameter.geometry.radius_contrast = 0.95;
 	parameter.geometry.length_scale = 5.0;
-	parameter.geometry.n_periods = 5;
+	parameter.geometry.n_periods = 10;
 	parameter.geometry.is_skewed = false;
 	parameter.geometry.is_random_radius = false;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
@@ -60,8 +63,8 @@ void program::FlowWithDividedTubes::run()
 	//~ std::vector<double> n_initial_disturbance_v{1.5, 3.5, 5.5};
 	
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> radius_contrast_v{0.95};
-	std::vector<double> sigma_v{0, 1e1, 1e2, 1e3}; 
+	std::vector<double> radius_contrast_v{0.9};
+	std::vector<double> sigma_v{0.0, 0.01, 0.07}; 
 	std::vector<double> viscosity_ratio_v{1};
 	
 	std::vector<double> n_initial_disturbance_v{1.5};

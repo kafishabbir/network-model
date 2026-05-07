@@ -1,9 +1,11 @@
 #include "step/part08-distribute.h"
+#include <omp.h>
 
 void step::Part08Distribute::sort_id_tube_v_flow_out_at_node(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& node: system.state.nodes)
 	{
 		auto& id_tube_v = node.calculated.flow_out_id_tube_v;
@@ -66,6 +68,7 @@ void step::Part08Distribute::assign_proportion_to_tube(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& node: system.state.nodes)
 	{
 		const auto& id_tube_v = node.calculated.flow_out_id_tube_v;
@@ -82,6 +85,7 @@ void step::Part08Distribute::distribute_fluids_from_node_to_tube(
 	assign_proportion_to_tube(system);
 	
 	// NUMERICAL-ERROR
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		auto& x = tube.calculated.add_proportion;

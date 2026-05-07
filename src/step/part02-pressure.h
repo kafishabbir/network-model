@@ -18,6 +18,14 @@ namespace step
 			const dst::System& system
 		);
 		
+		static void run_direct(
+			dst::System& system
+		);
+		
+		static void run_iterative(
+			dst::System& system
+		);
+		
 	public:
 		static void run(
 			dst::System& system

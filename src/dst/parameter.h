@@ -16,11 +16,16 @@ namespace dst
 			bool is_flow_const_flow_rate;
 			bool is_const_porosity;
 			bool is_tubes_divided;
+			bool real_geometry;
+			bool run_iterative;
 			int id_fluid_inject;
 			
 			double inlet_pressure; // Ignored by const_q simulations
 			bool is_initially_filled;
 			double n_periods_of_initial_disturbance;
+			
+			double flow_rate_in_pore_volumes = 1.0;
+			
 		};
 		
 		struct Geometry
@@ -52,7 +57,8 @@ namespace dst
 		struct Plot
 		{
 			double volume_max_to_inject;
-			double capture_frequency_in_volume_fraction;			
+			double capture_frequency_in_volume_fraction;	
+			int max_time_steps_for_debug;		
 		};
 	public:
 	

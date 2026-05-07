@@ -1,5 +1,7 @@
 #include "step/part01-reference.h"
 #include "simulate/assign.h"
+#include <omp.h>
+#include <iostream>
 
 void step::Part01Reference::reset_calculated(
 	dst::System& system
@@ -7,11 +9,13 @@ void step::Part01Reference::reset_calculated(
 {
 	system.state.calculated = dst::State::Calculated();
 	
+	#pragma omp parallel for
 	for(auto& node: system.state.nodes)
 	{
 		node.calculated = nst::Node::Calculated();
 	}
 	
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated = nst::Tube::Calculated();
@@ -63,6 +67,7 @@ void step::Part01Reference::resistance_coefficient(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated.resistance_coefficient =
@@ -119,6 +124,7 @@ void step::Part01Reference::capillary_pressure_magnitude(
 	dst::System& system
 )
 {
+	#pragma omp parallel for
 	for(auto& tube: system.state.tubes)
 	{
 		tube.calculated.capillary_pressure_magnitude =

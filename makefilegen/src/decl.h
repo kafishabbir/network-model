@@ -16,8 +16,8 @@ namespace decl
 	const std::string terminal_rmrf = "rm -rf ";
 	const std::string terminal_geany_open = "geany -i ";
 
-	const std::string compile_command_object = "g++ -c -Wall -std=c++17 -Isrc/ ";
-	const std::string compile_command_exe = "g++ ";
+	const std::string compile_command_object = "g++ -c -Wall -std=c++17 -Isrc/ -fopenmp ";
+	const std::string compile_command_exe = "g++ -fopenmp ";
 	const std::string input_file_name = "makefilegen-config.txt";
 
 	const std::vector<std::string> folder_exist_check

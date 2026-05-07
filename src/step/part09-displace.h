@@ -7,19 +7,19 @@ namespace step
 {
 	class Part09Displace
 	{
-		static nst::Tube generate_tube_front(
-			const nst::Tube& tube,
-			const double lp,
-			const double ap
-		);
-
-		static void join_tubes(
-			nst::Tube& tube_front,
-			const nst::Tube& tube_back,
+		static std::pair<int, std::vector<double>> generate_tube_front(
+			const double ap,
 			const double lp
 		);
 
-		static nst::Tube update_tube_mpos_according_to_proportion(
+		
+		static std::pair<int, std::vector<double>> join_tubes(
+			const std::pair<int, std::vector<double>>& tube_front,
+			const std::pair<int, std::vector<double>>& tube_back,
+			const double lp
+		);
+
+		static std::pair<int, std::vector<double>> generate_new_mpos_from_add_proportion(
 			const nst::Tube& tube
 		);
 
@@ -29,7 +29,7 @@ namespace step
 
 
 		public:
-		static void update_tube_mpos_according_to_proportion(
+		static void generate_new_mpos_from_add_proportion(
 			dst::System& system
 		);
 

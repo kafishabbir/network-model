@@ -14,7 +14,7 @@ namespace step
 		);
 
 		static std::vector<double> mpos_long_until(
-			const nst::Tube& tube,
+			const std::vector<double>& mpos,
 			const double lp
 		);
 
