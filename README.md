@@ -3,6 +3,14 @@ A network model for simulating two phase flow in porous media.
 
 ## Tasks for future:
 
+##Emergency required
+- Different types of simulations must be run as modes
+- The modes should be enum in a struct
+- It should be possible to convert each of the modes into strings
+- A separate parameter is generated based on the mode
+- This separate parameter generated determines boundary conditions and geometry selections through bools.
+
+
 ### Simulations to conduct
 1. __Viscosity with random tube-radii__: see how viscous fingering happens there, start in a pre-filled system.
 1. __Show viscous fingering__: 

@@ -5,6 +5,7 @@ global/decl
 ic/geometry-base
 ic/geometry-flow
 ic/geometry-rand
+ic/geometry-multiple-tubes-between-nodes
 
 dst/system-output
 dst/system
