@@ -91,7 +91,7 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_divided_tubes_real(
 	const bool is_skewed
 )
 {
-	const double radius_scale = 0.001;
+	const double radius_scale = 0.0001;
 	auto [nodes, tubes] = GeometryBase::rectangular(
 		n_tube_rows,
 		n_tube_cols,

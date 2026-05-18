@@ -19,11 +19,11 @@ dst::Parameter program::FlowWithDividedTubes::generate_parameter()
 	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 18;
-	parameter.geometry.n_tube_cols = 180;
+	parameter.geometry.n_tube_rows = 20;
+	parameter.geometry.n_tube_cols = 400;
 	parameter.geometry.radius_contrast = 0.95;
 	parameter.geometry.length_scale = 5.0;
-	parameter.geometry.n_periods = 10;
+	parameter.geometry.n_periods = 20;
 	parameter.geometry.is_skewed = false;
 	parameter.geometry.is_random_radius = false;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
@@ -63,8 +63,8 @@ void program::FlowWithDividedTubes::run()
 	//~ std::vector<double> n_initial_disturbance_v{1.5, 3.5, 5.5};
 	
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> radius_contrast_v{0.9};
-	std::vector<double> sigma_v{0.0, 0.01, 0.07}; 
+	std::vector<double> radius_contrast_v{0.95};
+	std::vector<double> sigma_v{0.0, 0.1, 1}; 
 	std::vector<double> viscosity_ratio_v{1};
 	
 	std::vector<double> n_initial_disturbance_v{1.5};

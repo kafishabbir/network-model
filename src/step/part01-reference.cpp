@@ -110,7 +110,13 @@ double step::Part01Reference::capillary_pressure_magnitude(
 {
 	const auto& [id_fluid_first, n_meniscus] = add_pseudo_meniscus(tube, system);
 	
-	const double sigma = system.parameter.constant_physical.sigma;
+	//~ const double sigma = system.parameter.constant_physical.sigma;
+	const double r = tube.radius;
+	const double R_max = system.parameter.geometry_distributions.radius.max;
+	const double R_min = system.parameter.geometry_distributions.radius.min;
+	 
+	const double sigma_scale = std::pow((R_max - r) / (R_max - R_min), 2.0); //make this parameter LATER
+	const double sigma = system.parameter.constant_physical.sigma * sigma_scale;
 	const double value_single_meniscus = 2.0 * sigma / tube.radius;
 	
 	const double sign_id_fluid_first = ((id_fluid_first == 0) ? 1 : -1);

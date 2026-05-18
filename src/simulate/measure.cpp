@@ -36,11 +36,14 @@ nst::Tank simulate::Measure::fluid_in_system(const dst::System& system)
 	return tank;
 }
 
+
 std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs_x(
 	const dst::System& system
 )
 {
-	std::vector<nst::Tank> tanks(system.parameter.geometry.n_tube_cols);
+	const double n_col_division_double = system.parameter.geometry.n_periods;
+	const int n_col_division = n_col_division_double; 
+	std::vector<nst::Tank> tanks(n_col_division);
 	
 	const int n_tanks = tanks.size();
 	
@@ -50,7 +53,7 @@ std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs
 		const double x2 = system.state.nodes[tube.id_node_second].x;
 		const double x = (x1 + x2) / 2;
 		
-		const int index = std::floor(x * n_tanks);
+		const int index = std::floor(x * n_col_division_double);
 		tanks.at(index).add_fluid(simulate::Measure::tube_inventory(tube, system));
 	}
 	
@@ -62,25 +65,7 @@ std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs
 		v.push_back({x, tanks[i].saturation()});
 	}
 	
-	//~ const int number_groups = system.parameter.geometry.n_periods;
-	const int number_groups = system.parameter.geometry.n_periods * 2;
-	const int group_size = system.parameter.geometry.n_tube_cols / number_groups;
-	
-	std::vector<std::pair<double, double>> w;
-	for(int group_i = 0; group_i < number_groups; ++ group_i)
-	{
-		double saturation_sum = 0;
-		double x_sum = 0;
-		for(int local_i = 0; local_i < group_size; ++ local_i)
-		{
-			const int i = group_i * group_size + local_i;
-			x_sum += v.at(i).first;
-			saturation_sum += v.at(i).second;
-		}
-		w.push_back({x_sum / group_size, saturation_sum / group_size});
-	}
-	
-	return w;
+	return v;
 }
 
 

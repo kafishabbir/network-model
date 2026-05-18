@@ -10,21 +10,35 @@ simulate::SystemGenerator::choose_network_geometry(
 {
 	if(parameter.simulation.is_flow_as_opposed_to_test)
 	{
-		if(parameter.simulation.is_tubes_divided)
+
+		if(parameter.simulation.is_tubes_divided && parameter.simulation.real_geometry)
 		{
-			if(parameter.simulation.real_geometry)
-			{
-				return ic::GeometryFlow::network_geometry_divided_tubes_real(
-					parameter.geometry.n_tube_rows,
-					parameter.geometry.n_tube_cols,
-					parameter.simulation.id_fluid_inject,
-					parameter.geometry.radius_contrast,
-					parameter.geometry.length_scale,
-					parameter.geometry.n_periods,
-					parameter.geometry.is_skewed
-				);
-				
-			}
+			return ic::GeometryFlow::network_geometry_divided_tubes_real(
+				parameter.geometry.n_tube_rows,
+				parameter.geometry.n_tube_cols,
+				parameter.simulation.id_fluid_inject,
+				parameter.geometry.radius_contrast,
+				parameter.geometry.length_scale,
+				parameter.geometry.n_periods,
+				parameter.geometry.is_skewed
+			);
+			
+		}
+		
+		if(parameter.simulation.real_geometry)
+		{
+			return ic::GeometryFlow::network_geometry_divided_tubes_real(
+				parameter.geometry.n_tube_rows,
+				parameter.geometry.n_tube_cols,
+				parameter.simulation.id_fluid_inject,
+				parameter.geometry.radius_contrast,
+				parameter.geometry.length_scale,
+				parameter.geometry.n_periods,
+				parameter.geometry.is_skewed
+			);
+		}
+		if(parameter.simulation.is_tubes_divided) // scaled
+		{
 			return ic::GeometryFlow::network_geometry_divided_tubes(
 				parameter.geometry.n_tube_rows,
 				parameter.geometry.n_tube_cols,
