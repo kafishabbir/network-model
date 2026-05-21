@@ -11,7 +11,7 @@ namespace output_raster
 	class Cairo
 	{
 	private:
-		static const int length_shortest_side;
+		static const int length_longest_side;
 		static const int margin;
 
 

@@ -6,8 +6,6 @@ dst::Parameter program::OverlappingTubesOfDifferingRadii::generate_parameter()
 {	
 	dst::Parameter parameter;
 
-	parameter.simulation.run_iterative = false;
-	
 	parameter.simulation.is_mode_overlapping_tubes_of_various_radii = true;
 	parameter.simulation.is_flow_as_opposed_to_test = true; 
 	parameter.simulation.is_const_porosity = false;
@@ -15,7 +13,7 @@ dst::Parameter program::OverlappingTubesOfDifferingRadii::generate_parameter()
 	parameter.simulation.inlet_pressure = -1;
 	
 	parameter.simulation.is_tubes_divided = true;
-	parameter.simulation.run_iterative = true;
+	parameter.simulation.run_iterative = false;
 	parameter.simulation.flow_rate_in_pore_volumes = 0.1;
 	parameter.simulation.id_fluid_inject = 0;
 
@@ -23,11 +21,11 @@ dst::Parameter program::OverlappingTubesOfDifferingRadii::generate_parameter()
 	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 10;
-	parameter.geometry.n_tube_cols = 80;
+	parameter.geometry.n_tube_rows = 2;
+	parameter.geometry.n_tube_cols = 300;
 	parameter.geometry.radius_contrast = 0.95;
 	parameter.geometry.length_scale = 5.0;
-	parameter.geometry.n_periods = 20;
+	parameter.geometry.n_periods = 40;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
 	
 	// Computational constants
@@ -55,7 +53,7 @@ output::Property program::OverlappingTubesOfDifferingRadii::generate_visual_prop
 void program::OverlappingTubesOfDifferingRadii::run()
 {
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> sigma_v{0, 0.01, 0.1, 1}; 
+	std::vector<double> sigma_v{0, 1, 10, 100}; 
 	std::vector<double> viscosity_ratio_v{1};
 	
 

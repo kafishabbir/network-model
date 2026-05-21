@@ -10,7 +10,7 @@ ic::type_pair_nodes_tubes ic::GeometryMultipleTubesBetweenNodes::network_geometr
 {
 	const double radius_thickest_tube = 1e-4;
 	const int n_tubes_between_a_pair_of_nodes = 3;
-	const double ratio_between_radii_tubes = 4;
+	const double ratio_between_radii_tubes = 5;
 	const double length_tubes = constant_length_scale * radius_thickest_tube;
 	
 	static bool is_generation_needed_with_rand = true;

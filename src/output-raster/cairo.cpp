@@ -2,7 +2,7 @@
 #include "global/decl.h"
 #include <filesystem>
 
-const int output_raster::Cairo::length_shortest_side = 1000;
+const int output_raster::Cairo::length_longest_side = 1000;
 const int output_raster::Cairo::margin = 30;
 
 const output_raster::Cairo::Color output_raster::Cairo::Color::white = output_raster::Cairo::Color(1.00, 1.00, 1.00);
@@ -126,8 +126,8 @@ void output_raster::Cairo::circle(
 
 double output_raster::Cairo::find_scale(const double width, const double height)
 {
-	const double short_side = (length_shortest_side - 2 * margin);
-	return short_side / std::min(width, height);
+	const double long_side = (length_longest_side - 2 * margin);
+	return long_side / std::max(width, height);
 }
 
 int output_raster::Cairo::find_width(const double width, const double height)
