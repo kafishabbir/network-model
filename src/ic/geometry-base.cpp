@@ -7,8 +7,8 @@ nst::Nodes ic::GeometryBase::rectangular_nodes(
 	const int id_fluid_evacuate
 )
 {
-	const int n_cols_node_at_even_rows = n_tube_cols / 2 + 1;
-	const int n_cols_node_at_odd_rows  = (n_tube_cols + 1) / 2;
+	const int n_cols_node_at_even_rows = (n_tube_cols + 1) / 2;
+	const int n_cols_node_at_odd_rows  = n_tube_cols / 2 + 1;
 
 	const int n_even_rows_node = n_tube_rows / 2 + 1;
 	const int n_odd_rows_node = (n_tube_rows + 1) / 2;
@@ -32,9 +32,9 @@ nst::Nodes ic::GeometryBase::rectangular_nodes(
 		const bool is_it_even_row = ((i % 2) == 0);
 		const int n_cols_node =
 			(is_it_even_row ? n_cols_node_at_even_rows : n_cols_node_at_odd_rows);
-		double x = (is_it_even_row ? 0 : displacement_step);
+		double x = (is_it_even_row ? displacement_step : 0);
 
-		if(is_it_even_row)
+		if(!is_it_even_row)
 		{
 			nodes[id_node].is_open_boundary = true;
 			nodes[id_node].is_inlet = true;
@@ -50,7 +50,7 @@ nst::Nodes ic::GeometryBase::rectangular_nodes(
 			x += 2.0 * displacement_step;
 		}
 
-		if(is_it_even_row)
+		if(!is_it_even_row)
 		{
 			nodes[id_node - 1].is_open_boundary = true;
 			nodes[id_node - 1].is_inlet = false;
@@ -71,15 +71,15 @@ std::vector<nst::Tube> ic::GeometryBase::rectangular_tubes(
 	const int id_fluid_saturate
 )
 {
-	const int n_cols_node_at_even_rows = n_tube_cols / 2 + 1;
+	const int n_cols_node_at_even_rows = n_tube_cols / 2;
 	int node_up = 0;
 	int node_down = n_cols_node_at_even_rows;
 	const int n_tubes = n_tube_rows * n_tube_cols;
 	std::vector<nst::Tube> tubes(n_tubes);
 	for(int i = 0; i < n_tube_rows; ++ i)
 	{
-		int up_adder = (i + 1) % 2;
-		int down_adder = i % 2;
+		int up_adder = i % 2;
+		int down_adder = (i + 1) % 2;
 		for(int j = 0; j < n_tube_cols; ++ j)
 		{
 			auto& tube = tubes[i * n_tube_cols + j];

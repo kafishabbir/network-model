@@ -11,6 +11,7 @@ step::Part02Pressure::Equation step::Part02Pressure::generate_equation_for_node(
 	
 	const auto& node = system.state.nodes[id_node];
 	double diag_val = 0;
+	std::map<int, double> coefficients;
 	
 	for(const int id_tube: node.reference.connections_id_tube_v)
 	{
@@ -32,7 +33,7 @@ step::Part02Pressure::Equation step::Part02Pressure::generate_equation_for_node(
 		}
 		else
 		{
-			equation.entry_v.push_back({node_b.reference.id_for_symmetric_matrix, -resistance});
+			coefficients[node_b.reference.id_for_symmetric_matrix] -= resistance;
 		}
 		
 		equation.b -= resistance * capillary_pressure;
@@ -42,8 +43,12 @@ step::Part02Pressure::Equation step::Part02Pressure::generate_equation_for_node(
 	if(node.is_open_boundary)
 	{
 		equation.b += system.parameter.simulation.flow_rate_in_pore_volumes * system.measured.initial_fluid.volume_total() /
-			(system.parameter.geometry.n_inject_boundaries - 1) *
-			(node.reference.connections_id_tube_v.size() == 1 ? 0.5 : 1.0);					
+			system.parameter.geometry.n_inject_boundaries;					
+	}
+	
+	for(const auto& entry_id_and_value: coefficients)
+	{
+		equation.entry_v.push_back(entry_id_and_value);
 	}
 	
 	equation.entry_v.push_back({node.reference.id_for_symmetric_matrix, diag_val});
@@ -73,6 +78,11 @@ void step::Part02Pressure::run_direct(
 	}
 	
 	// Factorize and solve
+	//~ if(system.parameter.constant_physical.viscosity_water != system.parameter.constant_physical.viscosity_oil)
+	//~ {
+		//~ system.solver.factorize(system.sparse_matrix);
+	//~ }
+	
 	system.solver.factorize(system.sparse_matrix);
 	Eigen::VectorXd solution = system.solver.solve(b);
 	
@@ -121,7 +131,7 @@ void step::Part02Pressure::run_iterative(
     // Initialize solver only once (first call or if not initialized)
     if(!system.solver_initialized)
     {
-        system.iterative_solver.setTolerance(1e-3);
+        system.iterative_solver.setTolerance(1e-6);
         system.iterative_solver.setMaxIterations(800);
         system.iterative_solver.compute(system.sparse_matrix);
         system.solver_initialized = true;

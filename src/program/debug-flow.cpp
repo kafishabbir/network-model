@@ -7,6 +7,7 @@ dst::Parameter program::DebugFlow::generate_parameter()  // Renamed from generat
 	dst::Parameter parameter;
 
 	// Set simulation type using the flags
+	parameter.simulation.is_mode_overlapping_tubes_of_various_radii = false;
 	parameter.simulation.is_flow_as_opposed_to_test = false;  // false = test simulation
 	parameter.simulation.is_flow_const_flow_rate = false;     // false = constant pressure
 	parameter.simulation.is_const_porosity = false;   

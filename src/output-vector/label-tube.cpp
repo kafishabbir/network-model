@@ -113,7 +113,7 @@ std::string output_vector::LabelTube::label_tube_details(
 	
 	ss << "vol=$" << s(tube.volume()) << "$, ";
 	ss << "resis=$" << s(tube.calculated.resistance_coefficient) << "$, ";
-	ss << "$p_c=" << s(tube.calculated.capillary_pressure_magnitude) << "$, ";
+	ss << "$p_c=" << tube.calculated.capillary_pressure_magnitude << "$, ";
 	ss << "\n\\\\";
 		
 	ss << "v=$" << s(tube.calculated.velocity) << "$, ";
@@ -131,7 +131,7 @@ std::string output_vector::LabelTube::label_tube_details(
 	// Create the text node
 	std::string text_node = Tikz::node_long(
 		tube.visual.length * 0.5,
-		0.03,
+		0.03 - 2.0 * tube.visual.radius,
 		ss.str()
 	);
 	

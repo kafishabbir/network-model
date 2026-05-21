@@ -2,12 +2,22 @@
 
 #include "ic/geometry-rand.h"
 #include "ic/geometry-flow.h"
+#include "ic/geometry-multiple-tubes-between-nodes.h"
 
 std::pair<nst::Nodes, nst::Tubes>
 simulate::SystemGenerator::choose_network_geometry(
 	const dst::Parameter& parameter
 )
 {
+	if(parameter.simulation.is_mode_overlapping_tubes_of_various_radii)
+	{
+		return ic::GeometryMultipleTubesBetweenNodes::network_geometry_real(
+			parameter.geometry.n_tube_rows,
+			parameter.geometry.n_tube_cols,
+			parameter.simulation.id_fluid_inject,
+			parameter.geometry.length_scale
+		);
+	}
 	if(parameter.simulation.is_flow_as_opposed_to_test)
 	{
 

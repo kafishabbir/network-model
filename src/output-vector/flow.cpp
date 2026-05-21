@@ -28,7 +28,7 @@ void output_vector::Flow::save_latex_code_of_figure(
 	ss << LabelTube::basic(state) << '\n';
 	if(visual_property.vector_image_label_tube_detail)
 	{
-		ss << LabelTube::details(state) << '\n';
+		//ss << LabelTube::details(state) << '\n';
 	}
 
 	std::ofstream fout(file_name + ".tex");

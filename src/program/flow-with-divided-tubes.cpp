@@ -6,6 +6,7 @@ dst::Parameter program::FlowWithDividedTubes::generate_parameter()
 {
 	dst::Parameter parameter;
 
+	parameter.simulation.is_mode_overlapping_tubes_of_various_radii = true;
 	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
 	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
 	parameter.simulation.is_const_porosity = false;              // true = constant porosity

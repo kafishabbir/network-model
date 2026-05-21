@@ -110,19 +110,25 @@ double step::Part01Reference::capillary_pressure_magnitude(
 {
 	const auto& [id_fluid_first, n_meniscus] = add_pseudo_meniscus(tube, system);
 	
-	//~ const double sigma = system.parameter.constant_physical.sigma;
-	const double r = tube.radius;
-	const double R_max = system.parameter.geometry_distributions.radius.max;
-	const double R_min = system.parameter.geometry_distributions.radius.min;
+	const double sigma = system.parameter.constant_physical.sigma;
+	//~ const double r = tube.radius;
+	//~ const double R_max = system.parameter.geometry_distributions.radius.max;
+	//~ const double R_min = system.parameter.geometry_distributions.radius.min;
 	 
-	const double sigma_scale = std::pow((R_max - r) / (R_max - R_min), 2.0); //make this parameter LATER
-	const double sigma = system.parameter.constant_physical.sigma * sigma_scale;
+	//~ const double sigma_scale = std::pow((R_max - r) / (R_max - R_min), 2.0); //make this parameter LATER
+	//~ const double sigma = system.parameter.constant_physical.sigma * sigma_scale;
+
 	const double value_single_meniscus = 2.0 * sigma / tube.radius;
 	
 	const double sign_id_fluid_first = ((id_fluid_first == 0) ? 1 : -1);
 	const double sign_n_meniscus = (n_meniscus % 2);
 	
-
+	//~ std::cout << ", id-fluid-first=" << id_fluid_first << ", n-mns=" << n_meniscus;
+	
+	//~ std::cout << ", sign_id_fluid_first=" << sign_id_fluid_first 
+          //~ << " sign_n_meniscus=" << sign_n_meniscus 
+          //~ << " sign_single_meniscus=" << value_single_meniscus;
+          
 	return sign_id_fluid_first * sign_n_meniscus * value_single_meniscus;
 }
 
@@ -131,11 +137,21 @@ void step::Part01Reference::capillary_pressure_magnitude(
 )
 {
 	#pragma omp parallel for
+	
+	//~ int i = 0;
 	for(auto& tube: system.state.tubes)
 	{
+		//~ std::cout << "tube=" << i << " n-mns=" << tube.mpos.size() << " bt=(" << tube.id_node_first << ", " << tube.id_node_second << ") ";
+		//~ std::cout << ", con(" << system.state.nodes[tube.id_node_first].calculated.has_contact_with_water << ", " << system.state.nodes[tube.id_node_second].calculated.has_contact_with_water << ": "; 
 		tube.calculated.capillary_pressure_magnitude =
 			capillary_pressure_magnitude(tube, system);
+		
+		
+		//~ std::cout << ", p_c=" << tube.calculated.capillary_pressure_magnitude << std::endl;
+		
+		//~ ++ i;
 	}
+	//~ std::cout << "\n\n\n\n==============================" << std::endl;
 }
 
 void step::Part01Reference::run(

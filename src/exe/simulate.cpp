@@ -3,6 +3,7 @@
 #include "program/function-trial.h"
 #include "program/permeability.h"
 #include "program/flow-with-divided-tubes.h"
+#include "program/overlapping-tubes-of-differing-radii.h"
 
 #include <omp.h>
 #include <thread>
@@ -31,7 +32,8 @@ int main()
 	
 	//program::Permeability::run();
 	//program::FlowInPeriodicMedium::run();
-	program::FlowWithDividedTubes::run();
+//	program::FlowWithDividedTubes::run();
+	program::OverlappingTubesOfDifferingRadii::run();
 	//program::DebugFlow::run();
  
 	//program::FunctionTrial trial;
