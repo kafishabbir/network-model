@@ -21,5 +21,5 @@ double utility::Random::rational_between_zero_and_one()
 
 double utility::Random::small_noise()
 {
-	return 1e-10 * (rational_between_zero_and_one() - 0.5);
+	return 1e-14 * (rational_between_zero_and_one() - 0.5);
 }

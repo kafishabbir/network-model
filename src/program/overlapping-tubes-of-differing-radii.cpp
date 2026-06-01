@@ -21,8 +21,8 @@ dst::Parameter program::OverlappingTubesOfDifferingRadii::generate_parameter()
 	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 2;
-	parameter.geometry.n_tube_cols = 300;
+	parameter.geometry.n_tube_rows = 4;
+	parameter.geometry.n_tube_cols = 200;
 	parameter.geometry.radius_contrast = 0.95;
 	parameter.geometry.length_scale = 5.0;
 	parameter.geometry.n_periods = 40;
@@ -32,7 +32,7 @@ dst::Parameter program::OverlappingTubesOfDifferingRadii::generate_parameter()
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
+	parameter.plot.capture_frequency_in_volume_fraction = 0.1;
 	parameter.plot.volume_max_to_inject = 0.605;
 	
 	parameter.plot.max_time_steps_for_debug = 1;
@@ -53,10 +53,8 @@ output::Property program::OverlappingTubesOfDifferingRadii::generate_visual_prop
 void program::OverlappingTubesOfDifferingRadii::run()
 {
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> sigma_v{0, 1, 10, 100}; 
+	std::vector<double> sigma_v{0, 0.5, 1, 5}; 
 	std::vector<double> viscosity_ratio_v{1};
-	
-
 	
 	output::Result output_result;
 

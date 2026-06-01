@@ -15,16 +15,16 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()
 	parameter.simulation.flow_rate_in_pore_volumes = 0.1;
 	parameter.simulation.id_fluid_inject = 0;
 	parameter.simulation.is_initially_filled = false;
-	parameter.simulation.n_periods_of_initial_disturbance = 0.5;
+	parameter.simulation.n_periods_of_initial_disturbance = 4;
 	parameter.simulation.real_geometry = true;
 	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 16;
-	parameter.geometry.n_tube_cols = 128;
+	parameter.geometry.n_tube_rows = 50;
+	parameter.geometry.n_tube_cols = 50;
 	parameter.geometry.radius_contrast = 0.95;
 	parameter.geometry.length_scale = 5.0;
-	parameter.geometry.n_periods = 8;
+	parameter.geometry.n_periods = 4;
 	parameter.geometry.is_skewed = false;
 	parameter.geometry.is_random_radius = false;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
@@ -38,8 +38,8 @@ dst::Parameter program::FlowInPeriodicMedium::generate_parameter()
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
-	parameter.plot.volume_max_to_inject = 0.601;
+	parameter.plot.capture_frequency_in_volume_fraction = 0.05;
+	parameter.plot.volume_max_to_inject = 0.201;
 
 	return parameter;
 }
@@ -65,7 +65,7 @@ void program::FlowInPeriodicMedium::run()
 	
 	std::vector<int> id_fluid_inject_v{0}; 
 	std::vector<double> radius_contrast_v{0.85};
-	std::vector<double> sigma_v{0, 0.5, 1, 2}; 
+	std::vector<double> sigma_v{0, 1}; 
 	std::vector<double> viscosity_ratio_v{1};
 	
 	std::vector<double> n_initial_disturbance_v{1.5};
