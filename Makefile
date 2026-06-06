@@ -1,5 +1,6 @@
 
 
+
 all: folder_check compile_necessary run_program
 	@echo "Command executed = all"
 	@echo " "
