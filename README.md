@@ -1,9 +1,12 @@
 # network-model
 A network model for simulating two phase flow in porous media.
 
+## Tasks for 2026-06-06:
+- 
+
 ## Tasks for future:
 
-##Emergency required
+## Emergency required
 - Different types of simulations must be run as modes
 - The modes should be enum in a struct
 - It should be possible to convert each of the modes into strings

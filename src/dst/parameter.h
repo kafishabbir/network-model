@@ -19,6 +19,7 @@ namespace dst
 			bool is_tubes_divided;
 			bool real_geometry;
 			bool run_iterative;
+			bool is_biscuit = false;
 			int id_fluid_inject;
 			
 			double inlet_pressure; // Ignored by const_q simulations

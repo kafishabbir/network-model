@@ -9,6 +9,18 @@ simulate::SystemGenerator::choose_network_geometry(
 	const dst::Parameter& parameter
 )
 {
+	if(parameter.simulation.is_biscuit)
+	{
+		return ic::GeometryFlow::biscuits(
+			parameter.geometry.n_tube_rows,
+			parameter.geometry.n_tube_cols,
+			parameter.simulation.id_fluid_inject,
+			parameter.geometry.n_periods,
+			parameter.geometry.radius_contrast,
+			parameter.geometry.length_scale
+		);		
+	}
+	
 	if(parameter.simulation.is_mode_overlapping_tubes_of_various_radii)
 	{
 		return ic::GeometryMultipleTubesBetweenNodes::network_geometry_real(

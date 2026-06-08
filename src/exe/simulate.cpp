@@ -31,8 +31,8 @@ int main()
 	omp_set_num_threads(3);
 	
 	//program::Permeability::run();
-	program::FlowInPeriodicMedium::run();
-//	program::FlowWithDividedTubes::run();
+	//program::FlowInPeriodicMedium::run();
+ program::FlowWithDividedTubes::run();
 //	program::OverlappingTubesOfDifferingRadii::run();
 	//program::DebugFlow::run();
  

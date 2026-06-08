@@ -1,5 +1,6 @@
 #include "ic/geometry-flow.h"
 #include "utility/random.h"
+#include <iomanip>
 
 std::tuple<double, double, double, double> ic::GeometryFlow::find_min_max_coordinates(
 	const nst::Nodes& nodes
@@ -321,4 +322,68 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::network_geometry_random_radius(
 
 	return {nodes_f, tubes_f};
 }
+
+
+
+ic::type_pair_nodes_tubes ic::GeometryFlow::biscuits(
+	const int n_tube_rows,
+	const int n_tube_cols,
+	const int id_fluid_inject,
+	const int n_periods,
+	const double constant_radius_contrast,
+	const double constant_length_scale
+)
+{
+	const double radius_small = 0.0001;
+	
+	const double radius_thick = constant_radius_contrast * radius_small;
+	
+	std::cout << std::setprecision(10) << "thick=" << radius_thick << ", thin=" << radius_small << std::endl;
+	auto [nodes, tubes] = GeometryBase::rectangular(
+		n_tube_rows,
+		n_tube_cols,
+		id_fluid_inject
+	);
+
+	const auto& [x_min, y_min, x_max, y_max] = find_min_max_coordinates(nodes);
+	const double length_system_x = x_max - x_min;
+	const double length_system_y = y_max - y_min;
+	const int lambda = std::floor(length_system_x / n_periods * n_tube_cols);
+	
+	const double x_center = (x_min + x_max) / 2;
+	const double y_center = (y_min + y_max) / 2;
+	
+	const bool n_rows_divisible_by_4 = (n_tube_rows % 4 == 0);
+	for(auto& tube: tubes)
+	{
+		const double x1 = nodes[tube.id_node_first].x;
+		const double y1 = nodes[tube.id_node_first].y;
+		const double x2 = nodes[tube.id_node_second].x;
+		const double y2 = nodes[tube.id_node_second].y;
+		const double x = (x1 + x2) / 2;
+		const double y = (y1 + y2) / 2 - y_center;
+		
+		const int i = std::floor(x / length_system_x * n_tube_cols);
+		const int j = std::floor(y / length_system_y * n_tube_rows);
+		
+		
+		if(
+			((i - j + n_rows_divisible_by_4) % lambda == 0)
+			||
+			((i + j + (!n_rows_divisible_by_4)) % lambda == 0)
+		)
+		{
+			tube.radius = radius_thick + utility::Random::small_noise();
+		}
+		else
+		{
+			tube.radius = radius_small + utility::Random::small_noise();
+		}
+		
+		tube.length = constant_length_scale * radius_thick;
+	}
+	
+	return {nodes, tubes};
+}
+
 

@@ -6,25 +6,26 @@ dst::Parameter program::FlowWithDividedTubes::generate_parameter()
 {
 	dst::Parameter parameter;
 
-	parameter.simulation.is_mode_overlapping_tubes_of_various_radii = true;
+	parameter.simulation.is_mode_overlapping_tubes_of_various_radii = false;
 	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
 	parameter.simulation.is_flow_const_flow_rate = true;        // true = constant volume injection
 	parameter.simulation.is_const_porosity = false;              // true = constant porosity
 	parameter.simulation.is_tubes_divided = true;
-	parameter.simulation.run_iterative = true;
+	parameter.simulation.run_iterative = false;
 	parameter.simulation.flow_rate_in_pore_volumes = 0.1;
 	parameter.simulation.id_fluid_inject = 0;
 	parameter.simulation.is_initially_filled = false;
 	parameter.simulation.n_periods_of_initial_disturbance = 0.5;
 	parameter.simulation.real_geometry = true;
 	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
-
+	parameter.simulation.is_biscuit = true;
+	
 	// Geometry
-	parameter.geometry.n_tube_rows = 20;
-	parameter.geometry.n_tube_cols = 400;
-	parameter.geometry.radius_contrast = 0.95;
+	parameter.geometry.n_tube_rows = 60;
+	parameter.geometry.n_tube_cols = 60;
+	parameter.geometry.radius_contrast = 2;
 	parameter.geometry.length_scale = 5.0;
-	parameter.geometry.n_periods = 20;
+	parameter.geometry.n_periods = 6;
 	parameter.geometry.is_skewed = false;
 	parameter.geometry.is_random_radius = false;
 	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
@@ -38,7 +39,7 @@ dst::Parameter program::FlowWithDividedTubes::generate_parameter()
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
+	parameter.plot.capture_frequency_in_volume_fraction = 0.05;
 	parameter.plot.volume_max_to_inject = 0.605;
 
 	return parameter;
@@ -64,9 +65,9 @@ void program::FlowWithDividedTubes::run()
 	//~ std::vector<double> n_initial_disturbance_v{1.5, 3.5, 5.5};
 	
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> radius_contrast_v{0.95};
-	std::vector<double> sigma_v{0.0, 0.1, 1}; 
-	std::vector<double> viscosity_ratio_v{1};
+	std::vector<double> radius_contrast_v{10};
+	std::vector<double> sigma_v{20}; 
+	std::vector<double> viscosity_ratio_v{0.01, 1, 10};
 	
 	std::vector<double> n_initial_disturbance_v{1.5};
 	
