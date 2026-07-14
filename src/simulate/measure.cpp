@@ -41,7 +41,7 @@ std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs
 	const dst::System& system
 )
 {
-	const double n_col_division_double = system.parameter.geometry.n_periods;
+	const double n_col_division_double = system.parameter.geometry.n_periods * 2;
 	const int n_col_division = n_col_division_double; 
 	std::vector<nst::Tank> tanks(n_col_division);
 	
@@ -75,8 +75,8 @@ std::vector<dst::State::Calculated::SquaredData> simulate::Measure::generate_squ
 	const dst::System& system
 )
 {
-	const int n_row_division = 20;
-	const int n_col_division = 20;
+	const int n_row_division = 18;
+	const int n_col_division = 18;
 	std::vector<std::vector<nst::Tank>> tanks(n_row_division, std::vector<nst::Tank>(n_col_division));
 	
 	for(const auto& tube: system.state.tubes)

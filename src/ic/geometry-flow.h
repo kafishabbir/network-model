@@ -79,6 +79,15 @@ namespace ic
 			const double constant_radius_contrast,
 			const double constant_length_scale
 		);
+		
+		static type_pair_nodes_tubes periodic_real_geometry(
+			const int n_tube_rows,
+			const int n_tube_cols,
+			const int id_fluid_inject,
+			const int n_periods,
+			const double constant_radius_contrast,
+			const double constant_length_scale
+		);
 	};
 }
 

@@ -11,14 +11,26 @@ simulate::SystemGenerator::choose_network_geometry(
 {
 	if(parameter.simulation.is_biscuit)
 	{
-		return ic::GeometryFlow::biscuits(
+		
+		
+		return ic::GeometryFlow::periodic_real_geometry(
 			parameter.geometry.n_tube_rows,
 			parameter.geometry.n_tube_cols,
 			parameter.simulation.id_fluid_inject,
 			parameter.geometry.n_periods,
 			parameter.geometry.radius_contrast,
 			parameter.geometry.length_scale
-		);		
+		);	
+		
+		
+		//~ return ic::GeometryFlow::biscuits(
+			//~ parameter.geometry.n_tube_rows,
+			//~ parameter.geometry.n_tube_cols,
+			//~ parameter.simulation.id_fluid_inject,
+			//~ parameter.geometry.n_periods,
+			//~ parameter.geometry.radius_contrast,
+			//~ parameter.geometry.length_scale
+		//~ );		
 	}
 	
 	if(parameter.simulation.is_mode_overlapping_tubes_of_various_radii)
