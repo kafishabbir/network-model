@@ -22,7 +22,7 @@ dst::Parameter program::FlowWithDividedTubes::generate_parameter()
 	
 	// Geometry
 	parameter.geometry.n_tube_rows = 20;
-	parameter.geometry.n_tube_cols = 120;
+	parameter.geometry.n_tube_cols = 60;
 	parameter.geometry.radius_contrast = 0.999;
 	parameter.geometry.length_scale = 5.0;
 	parameter.geometry.n_periods = 6;
@@ -39,8 +39,8 @@ dst::Parameter program::FlowWithDividedTubes::generate_parameter()
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.capture_frequency_in_volume_fraction = 0.1;
-	parameter.plot.volume_max_to_inject = 0.601;
+	parameter.plot.capture_frequency_in_volume_fraction = 0.05;
+	parameter.plot.volume_max_to_inject = 0.501;
 
 	return parameter;
 }
@@ -59,8 +59,8 @@ output::Property program::FlowWithDividedTubes::generate_visual_property()
 void program::FlowWithDividedTubes::run()
 {
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> radius_contrast_v{0.99};
-	std::vector<double> sigma_v{0, 0.01, 0.8, 1.2, 2}; 
+	std::vector<double> radius_contrast_v{10};
+	std::vector<double> sigma_v{0, 10, 30, 50}; 
 	std::vector<double> viscosity_ratio_v{1};
 	
 	std::vector<double> n_initial_disturbance_v{1.5};
