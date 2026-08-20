@@ -40,7 +40,7 @@ dst::Parameter program::Permeability::generate_parameter()
 
 	// Plot parameters
 	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
-	parameter.plot.volume_max_to_inject = 1.0;
+	parameter.plot.volume_max_to_inject = 1.2;
 
 	return parameter;
 }
@@ -64,7 +64,7 @@ void program::Permeability::run()
 	//std::cout << "Executed" << std::endl;
 	//return;
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> inlet_pressure_v{1e5, 1e6, 1e7};
+	std::vector<double> inlet_pressure_v{1e5, 1e4, 1e3};
 	
 	output::Result output_result;
 	

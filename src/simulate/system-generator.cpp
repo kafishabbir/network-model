@@ -11,11 +11,12 @@ simulate::SystemGenerator::choose_network_geometry(
 {
 	if(parameter.simulation.is_permeability_test)
 	{
-		return ic::GeometryFlow::homogenous_real_geometry(
+		static auto set_once = ic::GeometryFlow::homogenous_real_geometry(
 			parameter.geometry.n_tube_rows,
 			parameter.geometry.n_tube_cols,
 			parameter.simulation.id_fluid_inject
 		);
+		return set_once;
 	}
 	
 	if(parameter.simulation.is_biscuit)

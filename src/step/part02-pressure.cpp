@@ -131,8 +131,8 @@ void step::Part02Pressure::run_iterative(
     // Initialize solver only once (first call or if not initialized)
     if(!system.solver_initialized)
     {
-        system.iterative_solver.setTolerance(1e-6);
-        system.iterative_solver.setMaxIterations(800);
+        system.iterative_solver.setTolerance(1e-8);
+        system.iterative_solver.setMaxIterations(1000);
         system.iterative_solver.compute(system.sparse_matrix);
         system.solver_initialized = true;
     }
