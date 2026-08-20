@@ -12,6 +12,7 @@ namespace dst
 		
 		struct Simulation
 		{
+			bool is_permeability_test = false;
 			bool is_mode_overlapping_tubes_of_various_radii;
 			bool is_flow_as_opposed_to_test;
 			bool is_flow_const_flow_rate;

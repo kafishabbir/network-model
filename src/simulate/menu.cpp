@@ -28,6 +28,11 @@ bool simulate::Menu::inject_more_fluid(const dst::System& system)
 		return system.state.measured.time_elapsed < system.parameter.plot.volume_max_to_inject;
 	}
 	
+	//~ std::cout << "continue at this loop=" << (system.state.measured.fluid_added.volume_total() < system.parameter.plot.volume_max_to_inject * volume_system) << ";\n"
+		//~ << "vol-total=" << system.state.measured.fluid_added.volume_total() << ";\n"
+		//~ << "vol max to inject=" << system.parameter.plot.volume_max_to_inject << ";\n"
+		//~ << "volume_system=" << volume_system << std::endl;
+		
 	return system.state.measured.fluid_added.volume_total() < 
 		system.parameter.plot.volume_max_to_inject *
 		volume_system;

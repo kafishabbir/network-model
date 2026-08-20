@@ -6,31 +6,41 @@ dst::Parameter program::Permeability::generate_parameter()
 {
 	dst::Parameter parameter;
 
-	// Simulation type
-	parameter.simulation.is_flow_as_opposed_to_test = true;
-	parameter.simulation.is_flow_const_flow_rate = false;  // Using constant pressure (not constant flow rate)
-	parameter.simulation.is_const_porosity = false;        // Variable porosity
+	parameter.simulation.is_permeability_test = true;
+	parameter.simulation.is_mode_overlapping_tubes_of_various_radii = false; 
+	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
+	parameter.simulation.is_flow_const_flow_rate = false;        // true = constant volume injection
+	parameter.simulation.is_const_porosity = false;              // true = constant porosity
+	parameter.simulation.is_tubes_divided = false;
+	parameter.simulation.run_iterative = true;
+	parameter.simulation.flow_rate_in_pore_volumes = -1;
 	parameter.simulation.id_fluid_inject = 0;
-	parameter.simulation.inlet_pressure = 1e6;
+	parameter.simulation.is_initially_filled = false;
+	parameter.simulation.n_periods_of_initial_disturbance = 4;
+	parameter.simulation.real_geometry = true;
+	parameter.simulation.inlet_pressure = -1;  // Ignored for constant volume injection
 
 	// Geometry
-	parameter.geometry.n_tube_rows = 60;
-	parameter.geometry.n_tube_cols = 60;
-	parameter.geometry.radius_contrast = 0.9;
-	parameter.geometry.length_scale = 10.0;
-	parameter.geometry.n_periods = 5.5;
-
+	parameter.geometry.n_tube_rows = 40;
+	parameter.geometry.n_tube_cols = 40;
+	parameter.geometry.radius_contrast = 0.95;
+	parameter.geometry.length_scale = 5.0;
+	parameter.geometry.n_periods = 4;
+	parameter.geometry.is_skewed = false;
+	parameter.geometry.is_random_radius = false;
+	parameter.geometry.n_inject_boundaries = 0;  // Will be set during initialization
+	
 	// Physical constants
-	parameter.constant_physical.sigma = 10.0;
-	parameter.constant_physical.viscosity_water = 1.0;  // mu_scale * mu1_by_mu2
-	parameter.constant_physical.viscosity_oil = 1.0;    // mu_scale
+	parameter.constant_physical.sigma = 0.0728;
+	parameter.constant_physical.viscosity_water = 1e-3;  // viscosity_ratio = 1.0, mu_scale = 1.0
+	parameter.constant_physical.viscosity_oil = 1e-3;     // mu_scale / sqrt(viscosity_ratio)
 
 	// Computational constants
-	parameter.constant_computational.time_step_resolution = 0.01;  // Default value
+	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.volume_max_to_inject = 0.61;
 	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
+	parameter.plot.volume_max_to_inject = 1.0;
 
 	return parameter;
 }
@@ -50,45 +60,28 @@ output::Property program::Permeability::generate_visual_property()
 
 void program::Permeability::run()
 {
-	std::vector<int> id_fluid_inject_v{0, 1};  // Changed from double to int
-	std::vector<double> sigma_v{10};
-	std::vector<double> radius_contrast_v{0.8};
-	std::vector<double> viscosity_ratio_v{1};
-	std::vector<double> inlet_pressure_v{1e5, 1e6, 1e7};  // Renamed to avoid conflict with parameter member
+	
+	//std::cout << "Executed" << std::endl;
+	//return;
+	std::vector<int> id_fluid_inject_v{0}; 
+	std::vector<double> inlet_pressure_v{1e5, 1e6, 1e7};
 	
 	output::Result output_result;
 	
-	for(int id_fluid_inject : id_fluid_inject_v)
+	for(int id_fluid_inject: id_fluid_inject_v)
 	{
-		for(auto radius_contrast : radius_contrast_v)
+		for(auto pressure: inlet_pressure_v)
 		{
-			for(auto sigma : sigma_v)
-			{
-				for(auto viscosity_ratio : viscosity_ratio_v)
-				{
-					for(auto pressure : inlet_pressure_v)
-					{
-						// Generate base parameter
-						auto parameter = generate_parameter();
-						
-						// Override with loop values
-						parameter.simulation.id_fluid_inject = id_fluid_inject;
-						parameter.constant_physical.sigma = sigma;
-						parameter.geometry.radius_contrast = radius_contrast;
-						
-						parameter.constant_physical.viscosity_water = viscosity_ratio;
-						parameter.constant_physical.viscosity_oil = 1.0;
-						
-						parameter.simulation.inlet_pressure = pressure;
-						
-						// Run simulation
-						auto system = simulate::Menu::run(parameter);
-						
-						// Add to results
-						output_result.add(system, generate_visual_property());
-					}
-				}
-			}
+			auto parameter = generate_parameter();
+			
+			parameter.simulation.id_fluid_inject = id_fluid_inject;
+			parameter.simulation.inlet_pressure = pressure;
+			
+			// Run simulation
+			auto system = simulate::Menu::run(parameter);
+			
+			// Add to results
+			output_result.add(system, generate_visual_property());
 		}
-	}	
+	}
 }

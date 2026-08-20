@@ -432,3 +432,45 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::periodic_real_geometry(
 }
 
 
+
+ic::type_pair_nodes_tubes ic::GeometryFlow::homogenous_real_geometry(
+	const int n_tube_rows,
+	const int n_tube_cols,
+	const int id_fluid_inject
+)
+{
+	const double radius_constant = 1e-4;
+	const double length_constant = 1e-3;
+	const double difference_radius_constant = 0.1;
+	
+	auto [nodes, tubes] = GeometryBase::rectangular(
+		n_tube_rows,
+		n_tube_cols,
+		id_fluid_inject
+	);
+
+	//~ const auto& [x_min, y_min, x_max, y_max] = find_min_max_coordinates(nodes);
+	//~ const double length_system_x = x_max - x_min;
+	//~ const double length_system_y = y_max - y_min;
+	//~ const double omega = 2.0 * std::acos(-1) * n_periods / length_system_x;
+	
+	//~ const double x_center = (x_min + x_max) / 2;
+	//~ const double y_center = (y_min + y_max) / 2;
+	
+	for(auto& tube: tubes)
+	{
+		//~ const double x1 = nodes[tube.id_node_first].x;
+		//~ const double y1 = nodes[tube.id_node_first].y;
+		//~ const double x2 = nodes[tube.id_node_second].x;
+		//~ const double y2 = nodes[tube.id_node_second].y;
+		//~ const double x = (x1 + x2) / 2 - x_center;
+		//~ const double y = (y1 + y2) / 2 - y_center;
+		
+		
+		tube.radius = radius_constant * (1.0 + difference_radius_constant * (utility::Random::rational_between_zero_and_one() - 0.5));
+		tube.length = length_constant;
+	}
+	
+	return {nodes, tubes};
+}
+
