@@ -441,7 +441,7 @@ ic::type_pair_nodes_tubes ic::GeometryFlow::homogenous_real_geometry(
 {
 	const double radius_constant = 1e-4;
 	const double length_constant = 1e-3;
-	const double difference_radius_constant = 0.1;
+	const double difference_radius_constant = 0.001;
 	
 	auto [nodes, tubes] = GeometryBase::rectangular(
 		n_tube_rows,

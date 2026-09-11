@@ -81,7 +81,10 @@ void output::Json::add(const dst::SystemOutput& system, int id_simulation)
 			{"time", hf.time},
 			{"pressure", hf.pressure},
 			{"saturation", hf.saturation},
-			{"flow_rate", hf.flow_rate}
+			{"flow_rate", hf.flow_rate},
+			{"average_velocity_water", hf.average_velocity_water},
+			{"permeability_using_flow_rate", hf.permeability_using_flow_rate},
+			{"permeability_using_average_velocity_water", hf.permeability_using_average_velocity_water}
 		});
 	}
 	

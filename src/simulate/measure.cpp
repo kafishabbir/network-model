@@ -37,6 +37,46 @@ nst::Tank simulate::Measure::fluid_in_system(const dst::System& system)
 }
 
 
+double simulate::Measure::determine_velocity_x_direction(const nst::Tube& tube, const dst::System& system)
+{
+	const double& node_a_x = system.state.nodes[tube.id_node_first].x;
+	const double& node_b_x = system.state.nodes[tube.id_node_second].x;
+	
+	
+	const double coefficient_velocity = (node_a_x < node_b_x ? 1: -1);
+	
+	return coefficient_velocity * tube.calculated.velocity;
+}
+
+double simulate::Measure::average_velocity_water(const dst::System& system)
+{
+	double volume_water_sum = 0;
+	double velocity_times_volume_sum = 0;
+	
+	for(const auto& tube: system.state.tubes)
+	{
+		const auto& tube_tank = tube_inventory(tube, system);
+		if(!tube_tank.is_contain_water())
+		{
+			continue;
+		}
+		const double delta_volume = tube_tank.volume_water();
+		const double velocity = determine_velocity_x_direction(tube, system);
+		
+		velocity_times_volume_sum += delta_volume * velocity;
+		volume_water_sum += delta_volume;
+	}
+	
+	if(volume_water_sum == 0)
+	{
+		return 0;
+	}
+	
+	return velocity_times_volume_sum / volume_water_sum;
+}
+
+
+
 std::vector<std::pair<double, double>> simulate::Measure::generate_saturation_vs_x(
 	const dst::System& system
 )

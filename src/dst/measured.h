@@ -15,6 +15,9 @@ namespace dst
 			double pressure;
 			double saturation;
 			double flow_rate;
+			double average_velocity_water;
+			double permeability_using_flow_rate;
+			double permeability_using_average_velocity_water;
 		};
 		
 	public:

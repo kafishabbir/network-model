@@ -64,7 +64,7 @@ void program::Permeability::run()
 	//std::cout << "Executed" << std::endl;
 	//return;
 	std::vector<int> id_fluid_inject_v{0}; 
-	std::vector<double> inlet_pressure_v{1e5, 1e4, 1e3};
+	std::vector<double> inlet_pressure_v{1e6, 1e4, 7.5e3, 5e3, 2.5e3};
 	
 	output::Result output_result;
 	
