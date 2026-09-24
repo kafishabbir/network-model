@@ -11,7 +11,10 @@ dst::State::Measured::Measured():
 	time_elapsed(0),
 	
 	fluid_added(),
-	fluid_evacuated()
+	fluid_evacuated(),
+	
+	fluid_added_input_boundaries(),
+	fluid_evacuated_output_boundaries()
 	
 {}
 
@@ -26,7 +29,10 @@ dst::State::Reference::Reference():
 dst::State::Calculated::Calculated():
 	time_step(-1),
 	fluid_added(),
-	fluid_evacuated()
+	fluid_evacuated(),
+	
+	fluid_added_input_boundaries(),
+	fluid_evacuated_output_boundaries()
 {}
 
 

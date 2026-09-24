@@ -59,7 +59,9 @@ void step::Part07Inject::balance_flow_at_open_nodes(
 {
 	auto& addition_tank = system.state.calculated.fluid_added;
 	auto& evacuation_tank = system.state.calculated.fluid_evacuated;
-
+	
+	auto& addition_tank_input_boundaries = system.state.calculated.fluid_added_input_boundaries;
+	auto& evacuation_tank_output_boundaries = system.state.calculated.fluid_evacuated_output_boundaries;
 	for(auto& node: system.state.nodes)
 	{
 		if(!node.is_open_boundary)
@@ -78,6 +80,10 @@ void step::Part07Inject::balance_flow_at_open_nodes(
 			const int id_fluid = node.id_fluid_inject;
 			node_tank.add_fluid(delta_volume, id_fluid);
 			addition_tank.add_fluid(delta_volume, id_fluid);
+			if(node.is_inlet)
+			{
+				addition_tank_input_boundaries.add_fluid(delta_volume, id_fluid);
+			}
 			node.calculated.is_fluid_injected_from_external_to_this_node = true;
 		}
 		else
@@ -86,12 +92,20 @@ void step::Part07Inject::balance_flow_at_open_nodes(
 			const auto& tank_with_oil_sliced_out =
 				produce_tank_with_oil_sliced_out(node_tank, delta_volume);
 			evacuation_tank.add_fluid(tank_with_oil_sliced_out);
+			
+			if(!node.is_inlet)
+			{
+				evacuation_tank_output_boundaries.add_fluid(tank_with_oil_sliced_out);
+			}
 			node.calculated.is_fluid_injected_from_external_to_this_node = false;
 		}
 	}
 
 	system.state.measured.fluid_added.add_fluid(addition_tank);
 	system.state.measured.fluid_evacuated.add_fluid(evacuation_tank);
+	
+	system.state.measured.fluid_added_input_boundaries.add_fluid(addition_tank_input_boundaries);
+	system.state.measured.fluid_evacuated_output_boundaries.add_fluid(evacuation_tank_output_boundaries);
 }
 
 void step::Part07Inject::inject_and_evacuate_fluid_from_system(

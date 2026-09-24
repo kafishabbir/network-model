@@ -5,6 +5,7 @@
 #include "simulate/set-solver.h"
 #include "step/all-parts.h"
 #include "step/part10-measure.h"
+#include "simulate/measure.h"
 
 //#include <cmath>
 #include <iomanip>
@@ -139,7 +140,8 @@ dst::SystemOutput simulate::Menu::run(
 		high_frequency_measurement(system);
 		
 	}
-
+	
+	simulate::Measure::permeability(system);
 	print_time_spent(time.passed(), system);
 	
 	return dst::SystemOutput(system.parameter, system.measured);

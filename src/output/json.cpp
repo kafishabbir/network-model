@@ -74,17 +74,24 @@ void output::Json::add(const dst::SystemOutput& system, int id_simulation)
 		{"capture_frequency_in_volume_fraction", system.parameter.plot.capture_frequency_in_volume_fraction}
 	};
 	
-	
+		
 	sim_json["measured"]["high_frequency_data_v"] = nlohmann::json::array();
 	for (const auto& hf : system.measured.high_frequency_data_v) {
 		sim_json["measured"]["high_frequency_data_v"].push_back({
 			{"time", hf.time},
 			{"pressure", hf.pressure},
 			{"saturation", hf.saturation},
-			{"flow_rate", hf.flow_rate},
+			
 			{"average_velocity_water", hf.average_velocity_water},
-			{"permeability_using_flow_rate", hf.permeability_using_flow_rate},
-			{"permeability_using_average_velocity_water", hf.permeability_using_average_velocity_water}
+			{"flow_rate_all_fluids_all_boundaries", hf.flow_rate_all_fluids_all_boundaries},
+			{"flow_rate_inject_fluid_input_boundary", hf.flow_rate_inject_fluid_input_boundary},
+			{"flow_rate_inject_fluid_output_boundary", hf.flow_rate_inject_fluid_output_boundary},
+			
+			{"permeability_using_average_velocity_water", hf.permeability_using_average_velocity_water},
+			{"permeability_using_total_flow_rate", hf.permeability_using_total_flow_rate},
+			{"permeability_using_inject_fluid_injected", hf.permeability_using_inject_fluid_injected},
+			{"permeability_using_inject_fluid_evacuated", hf.permeability_using_inject_fluid_evacuated}
+			
 		});
 	}
 	

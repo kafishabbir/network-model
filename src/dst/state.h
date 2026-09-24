@@ -15,6 +15,9 @@ namespace dst
 			nst::Tank fluid_added;
 			nst::Tank fluid_evacuated;
 			
+			nst::Tank fluid_added_input_boundaries;
+			nst::Tank fluid_evacuated_output_boundaries;
+			
 			Measured();
 		};
 		
@@ -32,8 +35,13 @@ namespace dst
 			double time_step;
 			nst::Tank fluid_added;
 			nst::Tank fluid_evacuated;
-			
+		
 			// Fill these ones if I am saving a snap only
+			
+			nst::Tank fluid_added_input_boundaries;
+			nst::Tank fluid_evacuated_output_boundaries;
+			
+			
 			nst::Tank fluid_in_system;
 			double saturation;
 			double volume_total_delta;

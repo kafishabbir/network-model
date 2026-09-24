@@ -207,3 +207,43 @@ double simulate::Measure::find_average_pressure(
 	
 	return sum / system.parameter.geometry.n_inject_boundaries;
 }
+
+			
+void simulate::Measure::permeability(dst::System& system)
+{
+	const int count_hf_snaps = system.measured.high_frequency_data_v.size();
+	
+	const double viscosity = (system.parameter.simulation.id_fluid_inject == 0 ? system.parameter.constant_physical.viscosity_water: system.parameter.constant_physical.viscosity_oil);
+	
+	for(int i = 1; i < count_hf_snaps; ++ i)
+	{
+		const auto& previous = system.measured.high_frequency_data_v[i - 1];
+		auto& current = system.measured.high_frequency_data_v[i];
+		const double delta_time = current.time - previous.time;
+		
+		const double delta_volume_total_fluid = current.volume_total_fluid_injected - previous.volume_total_fluid_injected;
+		const double delta_volume_inject_fluid_injected = current.volume_inject_fluid_injected - previous.volume_inject_fluid_injected;
+		const double delta_volume_inject_fluid_removed = current.volume_inject_fluid_removed - previous.volume_inject_fluid_removed;
+		
+		current.flow_rate_all_fluids_all_boundaries = delta_volume_total_fluid / delta_time;
+		current.flow_rate_inject_fluid_input_boundary = delta_volume_inject_fluid_injected / delta_time;
+		current.flow_rate_inject_fluid_output_boundary = delta_volume_inject_fluid_removed / delta_time;
+		
+		current.permeability_using_average_velocity_water = current.average_velocity_water * viscosity / current.pressure; 
+		current.permeability_using_total_flow_rate = current.flow_rate_all_fluids_all_boundaries * viscosity / current.pressure; 
+		current.permeability_using_inject_fluid_injected = current.flow_rate_inject_fluid_input_boundary * viscosity / current.pressure; 
+		current.permeability_using_inject_fluid_evacuated = current.flow_rate_inject_fluid_output_boundary  * viscosity / current.pressure;
+	}
+	
+	auto& first = system.measured.high_frequency_data_v[0];
+	const auto& second = system.measured.high_frequency_data_v[1];
+	first.flow_rate_all_fluids_all_boundaries = second.flow_rate_all_fluids_all_boundaries;
+	first.flow_rate_inject_fluid_input_boundary = second.flow_rate_inject_fluid_input_boundary;
+	first.flow_rate_inject_fluid_output_boundary = second.flow_rate_inject_fluid_output_boundary;
+	
+	first.permeability_using_average_velocity_water = second.permeability_using_average_velocity_water; 
+	first.permeability_using_total_flow_rate = second.permeability_using_total_flow_rate ; 
+	first.permeability_using_inject_fluid_injected = second.permeability_using_inject_fluid_injected; 
+	first.permeability_using_inject_fluid_evacuated = second.permeability_using_inject_fluid_evacuated;
+}
+		

@@ -31,6 +31,9 @@ namespace simulate
 		);
 		
 		static double average_velocity_water(const dst::System& system);
+		
+		
+		static void permeability(dst::System& system);
 	};
 }
 

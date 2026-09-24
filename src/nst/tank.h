@@ -29,6 +29,7 @@ namespace nst
 		double volume_water() const;
 		double volume_oil() const;
 		double volume_total() const;
+		double volume_fluid(const int id_fluid) const;
 		double saturation() const;
 		std::string str() const;
 

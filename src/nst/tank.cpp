@@ -97,3 +97,9 @@ double nst::Tank::saturation() const
 {
 	return volume_water() / volume_total();
 }
+
+
+double nst::Tank::volume_fluid(const int id_fluid) const
+{
+	return fluid_v[id_fluid].volume;
+}

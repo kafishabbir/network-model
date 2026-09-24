@@ -14,10 +14,20 @@ namespace dst
 			double time;
 			double pressure;
 			double saturation;
-			double flow_rate;
+			
+			double volume_total_fluid_injected;
+			double volume_inject_fluid_injected;
+			double volume_inject_fluid_removed;
+			
 			double average_velocity_water;
-			double permeability_using_flow_rate;
+			double flow_rate_all_fluids_all_boundaries;
+			double flow_rate_inject_fluid_input_boundary;
+			double flow_rate_inject_fluid_output_boundary;
+			
 			double permeability_using_average_velocity_water;
+			double permeability_using_total_flow_rate;
+			double permeability_using_inject_fluid_injected;
+			double permeability_using_inject_fluid_evacuated;
 		};
 		
 	public:

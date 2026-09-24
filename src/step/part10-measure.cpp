@@ -29,9 +29,12 @@ void step::Part10Measure::high_frequency_data(dst::System& system)
 	hf_data.time = system.state.measured.time_elapsed;
 	hf_data.pressure = system.state.calculated.average_pressure;
 	hf_data.saturation = system.state.calculated.saturation;
-	hf_data.flow_rate = system.state.calculated.fluid_added.volume_total() / system.state.calculated.time_step;
+	
+	hf_data.volume_total_fluid_injected = system.state.measured.fluid_added.volume_total();
+	hf_data.volume_inject_fluid_injected = system.state.measured.fluid_added_input_boundaries.volume_fluid(system.parameter.simulation.id_fluid_inject);
+	hf_data.volume_inject_fluid_removed = system.state.measured.fluid_evacuated_output_boundaries.volume_fluid(system.parameter.simulation.id_fluid_inject);
+					
 	hf_data.average_velocity_water = simulate::Measure::average_velocity_water(system);
-	hf_data.permeability_using_flow_rate = hf_data.flow_rate * system.parameter.constant_physical.viscosity_water / hf_data.pressure;
-	hf_data.permeability_using_average_velocity_water = hf_data.average_velocity_water * system.parameter.constant_physical.viscosity_water / hf_data.pressure;
+		
 	system.measured.high_frequency_data_v.push_back(hf_data);
 }
