@@ -11,6 +11,22 @@ simulate::SystemGenerator::choose_network_geometry(
 {
 	if(parameter.simulation.is_permeability_test)
 	{
+		if(parameter.simulation.is_permeability_test_dual_porosity_media)
+		{
+			
+			static auto set_once = ic::GeometryFlow::biscuits(
+				parameter.geometry.n_tube_rows,
+				parameter.geometry.n_tube_cols,
+				parameter.simulation.id_fluid_inject,
+				parameter.geometry.n_periods,
+				parameter.geometry.radius_contrast,
+				parameter.geometry.length_scale
+			);
+			return set_once;
+		
+			
+		}
+		
 		static auto set_once = ic::GeometryFlow::homogenous_real_geometry(
 			parameter.geometry.n_tube_rows,
 			parameter.geometry.n_tube_cols,

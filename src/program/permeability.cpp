@@ -7,6 +7,7 @@ dst::Parameter program::Permeability::generate_parameter()
 	dst::Parameter parameter;
 
 	parameter.simulation.is_permeability_test = true;
+	parameter.simulation.is_permeability_test_dual_porosity_media = true;
 	parameter.simulation.is_mode_overlapping_tubes_of_various_radii = false; 
 	parameter.simulation.is_flow_as_opposed_to_test = true;     // true = flow simulation
 	parameter.simulation.is_flow_const_flow_rate = false;        // true = constant volume injection
@@ -23,8 +24,8 @@ dst::Parameter program::Permeability::generate_parameter()
 	// Geometry
 	parameter.geometry.n_tube_rows = 40;
 	parameter.geometry.n_tube_cols = 40;
-	parameter.geometry.radius_contrast = 0.95;
-	parameter.geometry.length_scale = 5.0;
+	parameter.geometry.radius_contrast = 10;
+	parameter.geometry.length_scale = 10.0;
 	parameter.geometry.n_periods = 4;
 	parameter.geometry.is_skewed = false;
 	parameter.geometry.is_random_radius = false;
@@ -39,8 +40,8 @@ dst::Parameter program::Permeability::generate_parameter()
 	parameter.constant_computational.time_step_resolution = 0.1;  // Default
 
 	// Plot parameters
-	parameter.plot.capture_frequency_in_volume_fraction = 0.2;
-	parameter.plot.volume_max_to_inject = 1.2;
+	parameter.plot.capture_frequency_in_volume_fraction = 0.25;
+	parameter.plot.volume_max_to_inject = 2.6;
 
 	return parameter;
 }
@@ -64,8 +65,9 @@ void program::Permeability::run()
 	//std::cout << "Executed" << std::endl;
 	//return;
 	std::vector<int> id_fluid_inject_v{0}; 
-	//std::vector<double> inlet_pressure_v{7.5e3};
-	std::vector<double> inlet_pressure_v{1e6, 2e4, 1e4, 7.5e3};
+	//std::vector<double> inlet_pressure_v{5e4};
+	//std::vector<double> inlet_pressure_v{1e6, 2e4, 1e4, 7.5e3};
+	std::vector<double> inlet_pressure_v{1e6, 1e3, 5e2, 2e2, 1e2, 5e1};
 	
 	output::Result output_result;
 	
