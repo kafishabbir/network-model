@@ -22,6 +22,8 @@ namespace dst
 			bool real_geometry;
 			bool run_iterative;
 			bool is_biscuit = false;
+			bool is_inject_mixture = false;
+			double inlet_water_saturation = 1.0;
 			int id_fluid_inject;
 			
 			double inlet_pressure; // Ignored by const_q simulations

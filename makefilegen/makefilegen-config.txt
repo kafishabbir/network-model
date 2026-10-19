@@ -25,6 +25,7 @@ program/triangle-closed
 program/isolated-imbibition
 program/flow-with-divided-tubes
 program/overlapping-tubes-of-differing-radii
+program/permeability-mixture
 
 simulate/accuracy
 simulate/menu

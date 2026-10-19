@@ -4,6 +4,7 @@
 #include "program/permeability.h"
 #include "program/flow-with-divided-tubes.h"
 #include "program/overlapping-tubes-of-differing-radii.h"
+#include "program/permeability-mixture.h"
 
 #include <omp.h>
 #include <thread>
@@ -30,7 +31,8 @@ int main()
 {
 	omp_set_num_threads(3);
 	
-	program::Permeability::run();
+	program::PermeabilityMixture::run();
+	//~ program::Permeability::run();
 	//~ program::FlowInPeriodicMedium::run();
 	//~ program::FlowWithDividedTubes::run();
 	//~ program::OverlappingTubesOfDifferingRadii::run();

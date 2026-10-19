@@ -1,8 +1,12 @@
 # network-model
 A network model for simulating two phase flow in porous media.
 
-## Tasks for 2026-06-06:
-- 
+## Tasks for 2026-10-16:
+1. Permeability measurements while injecting a mixture.
+2. Hypre instead of Eigen
+3. Article-1 all old results.
+4. Article-2 results for viscosity.
+
 
 ## Tasks for future:
 

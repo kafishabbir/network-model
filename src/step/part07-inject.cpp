@@ -77,12 +77,28 @@ void step::Part07Inject::balance_flow_at_open_nodes(
 		if(flow_in_total < flow_out_total)
 		{
 			// add
-			const int id_fluid = node.id_fluid_inject;
-			node_tank.add_fluid(delta_volume, id_fluid);
-			addition_tank.add_fluid(delta_volume, id_fluid);
+			nst::Tank tank_add_boundary;
+			if(system.parameter.simulation.is_inject_mixture)
+			{
+				const auto& saturation = system.parameter.simulation.inlet_water_saturation;
+				
+				const double volume_water = delta_volume * saturation;
+				const double volume_oil = delta_volume * (1.0 - saturation);
+				
+				tank_add_boundary.add_fluid(volume_water, 0);
+				tank_add_boundary.add_fluid(volume_oil, 1);
+			}
+			else
+			{
+				const int id_fluid = node.id_fluid_inject;
+				tank_add_boundary.add_fluid(delta_volume, id_fluid);	
+			}
+			
+			node_tank.add_fluid(tank_add_boundary);
+			addition_tank.add_fluid(tank_add_boundary);
 			if(node.is_inlet)
 			{
-				addition_tank_input_boundaries.add_fluid(delta_volume, id_fluid);
+				addition_tank_input_boundaries.add_fluid(tank_add_boundary);
 			}
 			node.calculated.is_fluid_injected_from_external_to_this_node = true;
 		}

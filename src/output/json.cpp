@@ -26,7 +26,8 @@ void output::Json::add(const dst::SystemOutput& system, int id_simulation)
 		{"is_flow_const_flow_rate", system.parameter.simulation.is_flow_const_flow_rate},
 		{"is_const_porosity", system.parameter.simulation.is_const_porosity},
 		{"id_fluid_inject", system.parameter.simulation.id_fluid_inject},
-		{"inlet_pressure", system.parameter.simulation.inlet_pressure}
+		{"inlet_pressure", system.parameter.simulation.inlet_pressure},
+		{"inlet_water_saturation", system.parameter.simulation.inlet_water_saturation}
 	};
 	
 	sim_json["parameter"]["geometry"] = {
